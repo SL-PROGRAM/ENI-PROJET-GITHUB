@@ -1,6 +1,7 @@
 package fr.eni.same.dal.jdbc;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.VenteDAO;
@@ -58,5 +59,47 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	public List<Vente> selectAll() throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	//***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+	//***********************************************************************************************//
+	
+	
+	@Override
+	public boolean venteVerifNomArticleLongeurMax(String nomArticle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean venteVerifNomArticleLongeurMin(String nomArticle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean venteVerifdescriptionLongeurMax(String description) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean venteVerifdescriptionLongeurMin(String description) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean venteVerifdateFinEnchere(LocalDateTime dateFinEnchere) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean venteVerifPrixInitialPositif(int prixInitial) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
