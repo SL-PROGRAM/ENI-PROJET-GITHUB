@@ -66,6 +66,12 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 		return null;
 	}
 
+	
+	/**
+	 * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD
+	 */
+	
+	
 	@Override
 	public boolean categorieUnique(List<Categorie> list, String libelle) {
 		boolean isUnique = true;
