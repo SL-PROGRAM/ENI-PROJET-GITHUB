@@ -1,55 +1,56 @@
 package fr.eni.same.dal;
 
-import fr.eni.same.bo.Vente;
+import fr.eni.same.bo.Retrait;
 
 /**
  * Interface contenant les informations spécifiques à implémenter pour les retraits
  * @author etienne
  */
-public interface RetraitDAO extends DAO<Vente> {
+public interface RetraitDAO extends DAO<Retrait> {
 
-	
+
 	/**
-	 * Verifie si le libelle fait moins de 30 caracteres
-	 * @param libelle
+	 * verif max 30
+	 * @param rue
 	 * @return
 	 */
-	public boolean venteVerifRueLongeurMax(String libelle);
+	public boolean retraitVerifRueLongeurMax(String rue);
 	
 	/**
-	 * Verifie si le libelle fait plus de 4 caracteres
-	 * @param libelle
+	 * verif min 4
+	 * @param rue
 	 * @return
 	 */
-	public boolean venteVerifRueLongeurMin(String libelle);
+	public boolean retraitVerifRueLongeurMin(String rue);
+
+	/**
+	 * verif max 5
+	 * @param codePostal
+	 * @return
+	 */
+	public boolean retraitVerifCPLongeurMax(String codePostal);
 	
 	/**
-	 * Verifie si le libelle fait 5 caracteres MAX
-	 * @param libelle
+	 * verif min 5
+	 * @param codePostal
 	 * @return
 	 */
-	public boolean venteVerifCPLongeurMax(String libelle);
-	
-	
-	/**
-	 * Verifie si le libelle fait moins de 5 caracteres
-	 * @param libelle
-	 * @return
-	 */
-	public boolean venteVerifCPLongeurMin(String libelle);
-	/**
-	 * Verifie si le libelle fait moins de 30 caracteres
-	 * @param libelle
-	 * @return
-	 */
-	public boolean venteVerifVilleLongeurMax(String libelle);
+
+	public boolean retraitVerifCPLongeurMin(String codePostal);
 	
 	/**
-	 * Verifie si le libelle fait plus de 1 caracteres et different de ""
-	 * @param libelle
+	 * verif max 30
+	 * @param ville
 	 * @return
 	 */
-	public boolean venteVerifVilleLongeurMin(String libelle);
+	public boolean retraitVerifVilleLongeurMax(String ville);
+	
+	/**
+	 * verif min 4
+	 * @param ville
+	 * @return
+	 */
+	public boolean retraitVerifVilleLongeurMin(String ville);
 	
 	
 }

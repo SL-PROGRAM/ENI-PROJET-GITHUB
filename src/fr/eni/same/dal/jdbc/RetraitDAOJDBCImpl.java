@@ -1,6 +1,8 @@
 package fr.eni.same.dal.jdbc;
 
 import java.util.List;
+
+import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.RetraitDAO;
 import fr.eni.same.exception.BusinessException;
@@ -35,97 +37,98 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
         return instance;
     }
     
-	@Override
-	public void insert(Vente t) throws BusinessException {
-		// TODO Auto-generated method stub
 
+
+	@Override
+	public void insert(Retrait t) throws BusinessException {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void update(Vente t) throws BusinessException {
+	public void update(Retrait t) throws BusinessException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void delete(Vente t) throws BusinessException {
+	public void delete(Retrait t) throws BusinessException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public Vente select(int id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Vente> selectAll() throws BusinessException {
+	public Retrait select(int id) throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
-	
-	/**
-	 * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD
-	 */
-	
 	@Override
-	public boolean venteVerifRueLongeurMax(String libelle) {
-		boolean isUnique = true;
-		if(libelle.length() > RUE_LONGEUR_MAX) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-	@Override
-	public boolean venteVerifRueLongeurMin(String libelle) {
-		boolean isUnique = true;
-		if(libelle.length() < RUE_LONGEUR_MIN) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-
-	@Override
-	public boolean venteVerifVilleLongeurMax(String libelle) {
-		boolean isUnique = true;
-		if(libelle.length() > VILLE_LONGEUR_MAX) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-	@Override
-	public boolean venteVerifVilleLongeurMin(String libelle) {
-		boolean isUnique = true;
-		if(libelle.length() < VILLE_LONGEUR_MIN) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-	@Override
-	public boolean venteVerifCPLongeurMax(String libelle) {
-		boolean isUnique = true;
-		if(libelle.length() > CP_LONGEUR_MAX) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-	@Override
-	public boolean venteVerifCPLongeurMin(String libelle) {
-		boolean isUnique = true;
-		if(libelle.length() < CP_LONGEUR_MIN) {
-			isUnique = false;
-		}
-		return isUnique;
+	public List<Retrait> selectAll() throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
+	
+	
+	//***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+	//***********************************************************************************************//
+	
+	@Override
+	public boolean retraitVerifRueLongeurMax(String rue) {
+		boolean isUnique = true;
+		if(rue.length() > RUE_LONGEUR_MAX) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean retraitVerifRueLongeurMin(String rue) {
+		boolean isUnique = true;
+		if(rue.length() < RUE_LONGEUR_MIN) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+
+	@Override
+	public boolean retraitVerifVilleLongeurMax(String ville) {
+		boolean isUnique = true;
+		if(ville.length() > VILLE_LONGEUR_MAX) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean retraitVerifVilleLongeurMin(String ville) {
+		boolean isUnique = true;
+		if(ville.length() < VILLE_LONGEUR_MIN) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean retraitVerifCPLongeurMax(String codePostal) {
+		boolean isUnique = true;
+		if(codePostal.length() > CP_LONGEUR_MAX) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean retraitVerifCPLongeurMin(String codePostal) {
+		boolean isUnique = true;
+		if(codePostal.length() < CP_LONGEUR_MIN) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
 
 }
