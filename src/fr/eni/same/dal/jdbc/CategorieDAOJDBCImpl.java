@@ -13,8 +13,12 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	/**
 	 * mise en place d'un singleton pour garantir la cohérence des données
 	 */
-	
 	private static CategorieDAOJDBCImpl instance;
+	private final int LIBELLE_LONGEUR_MAX = 30;
+	private final int LIBELLE_LONGEUR_MIN = 4;
+
+	
+
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
@@ -61,5 +65,40 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean categorieUnique(List<Categorie> list, String libelle) {
+		boolean isUnique = true;
+		for (Categorie categorie : list) {
+			if(categorie.getLibelle() == libelle) {
+				isUnique = false;
+				break;
+			}
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean categorieVerifLibelleLongeurMax(String libelle) {
+		boolean isUnique = true;
+		if(libelle.length() > LIBELLE_LONGEUR_MAX) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean categorieVerifLibelleLongeurMin(String libelle) {
+		boolean isUnique = true;
+		if(libelle.length() <= LIBELLE_LONGEUR_MIN) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	
+
+	
+	
 
 }
