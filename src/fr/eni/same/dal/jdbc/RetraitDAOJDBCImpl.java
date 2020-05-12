@@ -67,67 +67,13 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
 	
 	
 	//***********************************************************************************************//
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
 	
-	@Override
-	public boolean isRueLongeurMax(String rue) {
-		boolean isUnique = true;
-		if(rue.length() > RUE_LONGEUR_MAX) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-	@Override
-	public boolean isRueLongeurMin(String rue) {
-		boolean isUnique = true;
-		if(rue.length() < RUE_LONGEUR_MIN) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-
-	@Override
-	public boolean isVilleLongeurMax(String ville) {
-		boolean isUnique = true;
-		if(ville.length() > VILLE_LONGEUR_MAX) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-	@Override
-	public boolean isVilleLongeurMin(String ville) {
-		boolean isUnique = true;
-		if(ville.length() < VILLE_LONGEUR_MIN) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-	@Override
-	public boolean isCPLongeurMax(String codePostal) {
-		boolean isUnique = true;
-		if(codePostal.length() > CP_LONGEUR_MAX) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
-	@Override
-	public boolean isCPLongeurMin(String codePostal) {
-		boolean isUnique = true;
-		if(codePostal.length() < CP_LONGEUR_MIN) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
+	
 
 }

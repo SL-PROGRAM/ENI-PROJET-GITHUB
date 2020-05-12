@@ -85,24 +85,8 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 		return isUnique;
 	}
 
-	@Override
-	public boolean isLibelleLongeurMax(String libelle) {
-		boolean isUnique = true;
-		if(libelle.length() > LIBELLE_LONGEUR_MAX) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
 
-	@Override
-	public boolean isLibelleLongeurMin(String libelle) {
-		boolean isUnique = true;
-		if(libelle.length() <= LIBELLE_LONGEUR_MIN) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-
+	
 	
 
 	

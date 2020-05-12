@@ -66,30 +66,6 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
 	
-	
-	@Override
-	public boolean isNomArticleLongeurMax(String nomArticle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isNomArticleLongeurMin(String nomArticle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isdescriptionLongeurMax(String description) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isdescriptionLongeurMin(String description) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean isdateFinEnchere(LocalDateTime dateFinEnchere) {

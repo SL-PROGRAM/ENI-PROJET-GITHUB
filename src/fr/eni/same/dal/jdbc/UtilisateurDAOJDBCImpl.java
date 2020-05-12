@@ -85,89 +85,10 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
-	//***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
-	//***********************************************************************************************//
-	
-	
-	
-
-	@Override
-	public boolean isRueLongeurMax(String rue) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isRueLongeurMin(String rue) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCPLongeurMax(String codePostal) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCPLongeurMin(String codePostal) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isVilleLongeurMax(String ville) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isVilleLongeurMin(String ville) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public boolean isPseudoUnique(String pseudo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPseudoLongeurMax(String pseudo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPseudoLongeurMin(String pseudo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isNomLongeurMax(String nom) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isNomLongeurMin(String nom) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPrenomLongeurMax(String prenom) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPrenomLongeurMin(String prenom) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -179,46 +100,18 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	}
 
 	@Override
-	public boolean isEmailLongeurMax(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEmailLongeurMin(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isTelephoneLongeurMax(String telephone) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isTelephonelLongeurMin(String telephone) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isMotDePasseLongeurMax(String telephone) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isMotDePasselLongeurMin(String telephone) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean isCreditPositif(int credit) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+
+	//***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+	//***********************************************************************************************//
+	
+	
+	
 
 
 
