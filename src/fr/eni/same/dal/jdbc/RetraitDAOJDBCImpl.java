@@ -11,6 +11,12 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	 */
 	
 	private static RetraitDAOJDBCImpl instance;
+	private final int RUE_LONGEUR_MAX = 30;
+	private final int RUE_LONGEUR_MIN = 4;
+	private final int CP_LONGEUR_MAX = 5;
+	private final int CP_LONGEUR_MIN = 5;
+	private final int VILLE_LONGEUR_MAX = 30;
+	private final int VILLE_LONGEUR_MIN = 4;
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
@@ -58,5 +64,68 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+	
+	/**
+	 * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD
+	 */
+	
+	@Override
+	public boolean venteVerifRueLongeurMax(String libelle) {
+		boolean isUnique = true;
+		if(libelle.length() > RUE_LONGEUR_MAX) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean venteVerifRueLongeurMin(String libelle) {
+		boolean isUnique = true;
+		if(libelle.length() < RUE_LONGEUR_MIN) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+
+	@Override
+	public boolean venteVerifVilleLongeurMax(String libelle) {
+		boolean isUnique = true;
+		if(libelle.length() > VILLE_LONGEUR_MAX) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean venteVerifVilleLongeurMin(String libelle) {
+		boolean isUnique = true;
+		if(libelle.length() < VILLE_LONGEUR_MIN) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean venteVerifCPLongeurMax(String libelle) {
+		boolean isUnique = true;
+		if(libelle.length() > CP_LONGEUR_MAX) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+
+	@Override
+	public boolean venteVerifCPLongeurMin(String libelle) {
+		boolean isUnique = true;
+		if(libelle.length() < CP_LONGEUR_MIN) {
+			isUnique = false;
+		}
+		return isUnique;
+	}
+	
+	
 
 }
