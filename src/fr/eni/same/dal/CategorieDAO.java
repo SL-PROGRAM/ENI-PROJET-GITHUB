@@ -18,18 +18,5 @@ public interface CategorieDAO extends DAO<Categorie> {
 	 */
 	public boolean isLibelleUnique(List<Categorie> list, String libelle);
 	
-	/**
-	 * Verifie si le libelle fait moins de 30 caracteres
-	 * @param libelle
-	 * @return
-	 */
-	public boolean isLibelleLongeurMax(String libelle);
 	
-	/**
-	 * Verifie si le libelle fait plus de 4 caracteres
-	 * @param libelle
-	 * @return
-	 */
-	public boolean isLibelleLongeurMin(String libelle);
-
 }
