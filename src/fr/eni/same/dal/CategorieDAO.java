@@ -16,20 +16,20 @@ public interface CategorieDAO extends DAO<Categorie> {
 	 * @param libelle
 	 * @return
 	 */
-	public boolean categorieUnique(List<Categorie> list, String libelle);
+	public boolean isLibelleUnique(List<Categorie> list, String libelle);
 	
 	/**
 	 * Verifie si le libelle fait moins de 30 caracteres
 	 * @param libelle
 	 * @return
 	 */
-	public boolean categorieVerifLibelleLongeurMax(String libelle);
+	public boolean isLibelleLongeurMax(String libelle);
 	
 	/**
 	 * Verifie si le libelle fait plus de 4 caracteres
 	 * @param libelle
 	 * @return
 	 */
-	public boolean categorieVerifLibelleLongeurMin(String libelle);
+	public boolean isLibelleLongeurMin(String libelle);
 
 }

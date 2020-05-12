@@ -68,37 +68,37 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	
 	
 	@Override
-	public boolean venteVerifNomArticleLongeurMax(String nomArticle) {
+	public boolean isNomArticleLongeurMax(String nomArticle) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean venteVerifNomArticleLongeurMin(String nomArticle) {
+	public boolean isNomArticleLongeurMin(String nomArticle) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean venteVerifdescriptionLongeurMax(String description) {
+	public boolean isdescriptionLongeurMax(String description) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean venteVerifdescriptionLongeurMin(String description) {
+	public boolean isdescriptionLongeurMin(String description) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean venteVerifdateFinEnchere(LocalDateTime dateFinEnchere) {
+	public boolean isdateFinEnchere(LocalDateTime dateFinEnchere) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean venteVerifPrixInitialPositif(int prixInitial) {
+	public boolean isPrixInitialPositif(int prixInitial) {
 		// TODO Auto-generated method stub
 		return false;
 	}

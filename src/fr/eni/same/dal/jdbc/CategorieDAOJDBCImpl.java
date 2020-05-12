@@ -74,7 +74,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	
 	
 	@Override
-	public boolean categorieUnique(List<Categorie> list, String libelle) {
+	public boolean isLibelleUnique(List<Categorie> list, String libelle) {
 		boolean isUnique = true;
 		for (Categorie categorie : list) {
 			if(categorie.getLibelle() == libelle) {
@@ -86,7 +86,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	}
 
 	@Override
-	public boolean categorieVerifLibelleLongeurMax(String libelle) {
+	public boolean isLibelleLongeurMax(String libelle) {
 		boolean isUnique = true;
 		if(libelle.length() > LIBELLE_LONGEUR_MAX) {
 			isUnique = false;
@@ -95,7 +95,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	}
 
 	@Override
-	public boolean categorieVerifLibelleLongeurMin(String libelle) {
+	public boolean isLibelleLongeurMin(String libelle) {
 		boolean isUnique = true;
 		if(libelle.length() <= LIBELLE_LONGEUR_MIN) {
 			isUnique = false;

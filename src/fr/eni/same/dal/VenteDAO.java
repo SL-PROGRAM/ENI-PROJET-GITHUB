@@ -17,42 +17,42 @@ public interface VenteDAO extends DAO<Vente> {
 	 * @param nomArticle
 	 * @return
 	 */
-	public boolean venteVerifNomArticleLongeurMax(String nomArticle);
+	public boolean isNomArticleLongeurMax(String nomArticle);
 	
 	/**
 	 * vérif longeur min 3
 	 * @param nomArticle
 	 * @return
 	 */
-	public boolean venteVerifNomArticleLongeurMin(String nomArticle);
+	public boolean isNomArticleLongeurMin(String nomArticle);
 	
 	/**
 	 * vérif longeur max 300
 	 * @param description
 	 * @return
 	 */
-	public boolean venteVerifdescriptionLongeurMax(String description);
+	public boolean isdescriptionLongeurMax(String description);
 	
 	/**
 	 * vérif longeur min 2
 	 * @param description
 	 * @return
 	 */
-	public boolean venteVerifdescriptionLongeurMin(String description);
+	public boolean isdescriptionLongeurMin(String description);
 
 	/**
 	 * vérifier que date fin min +24h
 	 * @param description
 	 * @return
 	 */
-	public boolean venteVerifdateFinEnchere(LocalDateTime dateFinEnchere);
+	public boolean isdateFinEnchere(LocalDateTime dateFinEnchere);
 	
 	/**
 	 * Veref prixInitial > 0
 	 * @param prixInitial
 	 * @return
 	 */
-	public boolean venteVerifPrixInitialPositif(int prixInitial);
+	public boolean isPrixInitialPositif(int prixInitial);
 
 	
 

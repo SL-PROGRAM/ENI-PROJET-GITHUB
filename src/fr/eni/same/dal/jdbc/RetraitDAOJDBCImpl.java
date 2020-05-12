@@ -3,7 +3,6 @@ package fr.eni.same.dal.jdbc;
 import java.util.List;
 
 import fr.eni.same.bo.Retrait;
-import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.RetraitDAO;
 import fr.eni.same.exception.BusinessException;
 
@@ -77,7 +76,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	//***********************************************************************************************//
 	
 	@Override
-	public boolean retraitVerifRueLongeurMax(String rue) {
+	public boolean isRueLongeurMax(String rue) {
 		boolean isUnique = true;
 		if(rue.length() > RUE_LONGEUR_MAX) {
 			isUnique = false;
@@ -86,7 +85,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	}
 
 	@Override
-	public boolean retraitVerifRueLongeurMin(String rue) {
+	public boolean isRueLongeurMin(String rue) {
 		boolean isUnique = true;
 		if(rue.length() < RUE_LONGEUR_MIN) {
 			isUnique = false;
@@ -96,7 +95,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 
 
 	@Override
-	public boolean retraitVerifVilleLongeurMax(String ville) {
+	public boolean isVilleLongeurMax(String ville) {
 		boolean isUnique = true;
 		if(ville.length() > VILLE_LONGEUR_MAX) {
 			isUnique = false;
@@ -105,7 +104,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	}
 
 	@Override
-	public boolean retraitVerifVilleLongeurMin(String ville) {
+	public boolean isVilleLongeurMin(String ville) {
 		boolean isUnique = true;
 		if(ville.length() < VILLE_LONGEUR_MIN) {
 			isUnique = false;
@@ -114,7 +113,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	}
 
 	@Override
-	public boolean retraitVerifCPLongeurMax(String codePostal) {
+	public boolean isCPLongeurMax(String codePostal) {
 		boolean isUnique = true;
 		if(codePostal.length() > CP_LONGEUR_MAX) {
 			isUnique = false;
@@ -123,7 +122,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	}
 
 	@Override
-	public boolean retraitVerifCPLongeurMin(String codePostal) {
+	public boolean isCPLongeurMin(String codePostal) {
 		boolean isUnique = true;
 		if(codePostal.length() < CP_LONGEUR_MIN) {
 			isUnique = false;
