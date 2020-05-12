@@ -1,6 +1,6 @@
 package fr.eni.same.dal;
 
-public class LongeurStringDAO {
+public class FonctionGeneriqueDAO {
 
 
 	public static boolean isLongeurMax(String stingAtest, int longeurMax) {
