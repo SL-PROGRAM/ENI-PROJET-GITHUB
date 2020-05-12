@@ -67,9 +67,10 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	}
 
 	
-	/**
-	 * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD
-	 */
+	
+	//***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+	//***********************************************************************************************//
 	
 	
 	@Override
