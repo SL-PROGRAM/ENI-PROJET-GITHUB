@@ -3,10 +3,11 @@ package fr.eni.same.dal.jdbc;
 import java.util.List;
 
 import fr.eni.same.bo.Categorie;
+import fr.eni.same.dal.CategorieDAO;
 import fr.eni.same.dal.DAO;
 import fr.eni.same.exception.BusinessException;
 
-public class CategorieDAO implements DAO<Categorie> {
+public class CategorieDAOjdbc implements CategorieDAO {
 
 	@Override
 	public void insert(Categorie t) throws BusinessException {
