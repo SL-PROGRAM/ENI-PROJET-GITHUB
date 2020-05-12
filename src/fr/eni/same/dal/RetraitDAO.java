@@ -1,7 +1,12 @@
 package fr.eni.same.dal;
 
-import fr.eni.same.bo.Retrait;
+import fr.eni.same.bo.Vente;
 
-public interface RetraitDAO extends DAO<Retrait> {
+/**
+ * Interface contenant les informations spécifiques à implémenter pour les retraits
+ * @author etienne
+ */
+public interface RetraitDAO extends DAO<Vente> {
 
+	
 }
