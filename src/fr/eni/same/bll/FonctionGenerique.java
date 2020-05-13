@@ -1,6 +1,6 @@
-package fr.eni.same.dal;
+package fr.eni.same.bll;
 
-public class FonctionGeneriqueDAO {
+public class FonctionGenerique {
 
 
 	public static boolean isLongeurMax(String stingAtest, int longeurMax) {
