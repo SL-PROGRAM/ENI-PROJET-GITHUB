@@ -21,7 +21,7 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//TODO : passer les fichiers en .jsp lorsque se sera prêt
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/InformationsUtilisateur.html");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/InformationsUtilisateur.jsp");
 		rd.forward(request, response);
 	}
 
