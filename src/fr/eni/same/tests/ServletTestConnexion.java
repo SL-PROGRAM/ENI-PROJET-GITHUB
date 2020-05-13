@@ -24,10 +24,17 @@ public class ServletTestConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		testJDBCUtilisateurs();
+	}
 
-		/**
-		 * Test de remplissage de la table utilisateurs avec tous les constructeurs différents
-		 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
+	/**
+	 * Test des fonctionnalités JDBC de la table utilisateurs
+	 */
+	private void testJDBCUtilisateurs() {
 		Utilisateur standardA = new Utilisateur(1, "aArtiste","Artiste","alain","a@laposte.net","0656467616","rue","35000","Rennes","123",155,false);
 		Utilisateur standardB = new Utilisateur("bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
 		Utilisateur constructeurSansTel = new Utilisateur(21, "cCailloux","Cailloux","console","c@hotmail.fr","rue","75000","Paris","789",845,false);
@@ -47,12 +54,7 @@ public class ServletTestConnexion extends HttpServlet {
 			Utilisateur u = DALFactory.getUtilisateurDAOJdbcImpl().select(4);
 			List<Utilisateur> userList = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 }
