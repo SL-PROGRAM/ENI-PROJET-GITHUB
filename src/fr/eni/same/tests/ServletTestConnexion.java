@@ -1,6 +1,7 @@
 package fr.eni.same.tests;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,13 +24,20 @@ public class ServletTestConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		testJDBCUtilisateurs();
+	}
 
-		/**
-		 * Test de remplissage de la table utilisateurs avec tous les constructeurs différents
-		 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
+	/**
+	 * Test des fonctionnalités JDBC de la table utilisateurs
+	 */
+	private void testJDBCUtilisateurs() {
 		Utilisateur standardA = new Utilisateur(1, "aArtiste","Artiste","alain","a@laposte.net","0656467616","rue","35000","Rennes","123",155,false);
-		Utilisateur standardB = new Utilisateur(2, "bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
-		Utilisateur constructeurSansTel = new Utilisateur(4, "cCailloux","Cailloux","console","c@hotmail.fr","rue","75000","Paris","789",845,false);
+		Utilisateur standardB = new Utilisateur("bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
+		Utilisateur constructeurSansTel = new Utilisateur(21, "cCailloux","Cailloux","console","c@hotmail.fr","rue","75000","Paris","789",845,false);
 		Utilisateur constructeurSansPK = new Utilisateur("dDouble","Double","gras","d@gmail.com","0645789876","avenue des tulipes","88465","Atlantide","4496",800,false);
 		Utilisateur constructeurSansPKSansTel = new Utilisateur("eEtienne","Etoile","plop","etienne@hotmail.fr","rue","35000","Marseille","13000",12000,true);
 		
@@ -39,13 +47,14 @@ public class ServletTestConnexion extends HttpServlet {
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansTel);
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPK);
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPKSansTel);
+			standardA.setPrenom("Prenom update");
+			standardA.setTelephone("0123456789");
+			DALFactory.getUtilisateurDAOJdbcImpl().update(standardA);
+			DALFactory.getUtilisateurDAOJdbcImpl().delete(standardB);
+			Utilisateur u = DALFactory.getUtilisateurDAOJdbcImpl().select(4);
+			List<Utilisateur> userList = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 }
