@@ -65,7 +65,7 @@
 			</div>
 			<!-- Infos retrait pour version mobile -->
 			<div class="col-12">
-				<fieldset class="border border-dark p-2 d-block d-sm-none">
+				<fieldset class="border border-dark p-2 d-block d-lg-none">
 					<legend class="w-auto">Retrait</legend>
 					<p class="mb-0">10 allée des Alouettes</p>
 					<p>44 800 Saint Herblain</p>
@@ -84,18 +84,18 @@
 				</fieldset>
 			</div>
 			<!-- Infos retrait pour version desktop -->
-			<div class="col-lg-3 offset-lg-4 order-lg-7 d-none d-sm-block">
+			<div class="col-lg-3 offset-lg-4 order-lg-7 d-none d-lg-block">
 				<p>Retrait : </p>
 			</div>
-			<div class="col-lg-3 order-lg-8 d-none d-sm-block">	
+			<div class="col-lg-3 order-lg-8 d-none d-lg-block">	
 				<p class="mb-0">10 allée des Alouettes</p>
 				<p>44 800 Saint Herblain</p>
 			</div>
-			<div class="col-lg-3 offset-lg-4 order-lg-9 d-none d-sm-block">	
+			<div class="col-lg-3 offset-lg-4 order-lg-9 d-none d-lg-block">	
 				<p>Vendeur : </p>
 				<p>Tel : </p>
 			</div>
-			<div class="col-lg-3 order-lg-10 d-none d-sm-block">
+			<div class="col-lg-3 order-lg-10 d-none d-lg-block">
 				<p>jojo44</p>
 				<p>06 06 06 06 06</p>
 			</div>
