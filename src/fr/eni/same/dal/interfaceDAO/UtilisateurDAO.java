@@ -1,4 +1,4 @@
-package fr.eni.same.dal;
+package fr.eni.same.dal.interfaceDAO;
 
 import fr.eni.same.bo.Utilisateur;
 
@@ -8,5 +8,7 @@ import fr.eni.same.bo.Utilisateur;
  *
  */
 public interface UtilisateurDAO extends DAO<Utilisateur>{
+	
+	
 	
 }
