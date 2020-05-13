@@ -3,6 +3,7 @@ package fr.eni.same.tests;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,9 +38,12 @@ public class ServletTestConnexion extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	/**
-	 * Test des fonctionnalités JDBC de la table utilisateurs
-	 */
+	
+	//**************************************************************//
+	//*** Test des fonctionnalités JDBC de la table Utilisateur  ***//
+	//**************************************************************//
+	
+	
 	private void testJDBCUtilisateurs() {
 		Utilisateur standardA = new Utilisateur(1, "aArtiste","Artiste","alain","a@laposte.net","0656467616","rue","35000","Rennes","123",155,false);
 		Utilisateur standardB = new Utilisateur("bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
@@ -64,6 +68,10 @@ public class ServletTestConnexion extends HttpServlet {
 		}
 	}
 	
+	//*********************************************************//
+	//*** Test des fonctionnalités JDBC de la table Ventes  ***//
+	//*********************************************************//
+	
 	private void testJDBCVentes() {
 		try {
 			Utilisateur acheteur = DALFactory.getUtilisateurDAOJdbcImpl().select(22);
@@ -72,6 +80,7 @@ public class ServletTestConnexion extends HttpServlet {
 			Timestamp t = Timestamp.valueOf(LocalDateTime.now());
 			Vente vente = new Vente("plop","description",t,5000,6000,acheteur,vendeur,categorie);
 			DALFactory.getVenteDAOJdbcImpl().insert(vente);
+			//TODO TEST UPDATE
 			DALFactory.getVenteDAOJdbcImpl().delete(vente);
 			DALFactory.getVenteDAOJdbcImpl().select(9);
 			DALFactory.getVenteDAOJdbcImpl().selectAll();
@@ -81,9 +90,10 @@ public class ServletTestConnexion extends HttpServlet {
 		}
 	}
 	
-	/**
-	 * Test des fonctionnalités JDBC de la table Categorie
-	 */
+		//************************************************************//
+		//*** Test des fonctionnalités JDBC de la table Categorie  ***//
+		//************************************************************//
+	
 	private void testJDBCCategories() {
 		Categorie categorieSansPK = new Categorie("Cat-1");
 		Categorie categorieAvecPK = new Categorie(1, "Cat-2");
@@ -109,9 +119,9 @@ public class ServletTestConnexion extends HttpServlet {
 	
 	
 	
-	/**
-	 * Test des fonctionnalités JDBC de la table Enchere
-	 */
+	//**********************************************************//
+	//*** Test des fonctionnalités JDBC de la table enchere  ***//
+	//**********************************************************//
 	
 	private void testJDBCEnchere() {
 		Utilisateur standardA = new Utilisateur("aArtiste","Artiste","alain","a@laposte.net","0656467616","rue","35000","Rennes","123",155,false);
