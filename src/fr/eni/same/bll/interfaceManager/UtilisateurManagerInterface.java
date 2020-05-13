@@ -2,7 +2,7 @@ package fr.eni.same.bll.interfaceManager;
 
 import fr.eni.same.bo.Utilisateur;
 
-public interface UtilisateurManagerInterface extends ManagerInterface<Utilisateur>, AdresseInterface {
+public interface UtilisateurManagerInterface extends ManagerInterface<Utilisateur> {
 
 	/**
 	 * Vérifie longeur max et min correct
