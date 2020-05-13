@@ -1,6 +1,8 @@
 package fr.eni.same.tests;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.same.bo.Categorie;
+import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BusinessException;
+import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 
 /**
  * Servlet de connexion à la base de donnée
@@ -61,7 +66,7 @@ public class ServletTestConnexion extends HttpServlet {
 	}
 	
 	/**
-	 * Test des fonctionnalités JDBC de la table utilisateurs
+	 * Test des fonctionnalités JDBC de la table Categorie
 	 */
 	private void testJDBCCategories() {
 		Categorie categorieSansPK = new Categorie("Cat-1");
@@ -80,15 +85,22 @@ public class ServletTestConnexion extends HttpServlet {
 			DALFactory.getCategorieDAOJdbcImpl().delete(categorieSansPK);
 			Categorie test = DALFactory.getCategorieDAOJdbcImpl().select(2);
 			List<Categorie> categoriesList = DALFactory.getCategorieDAOJdbcImpl().selectAll();
-
-
-
-			
-
-
 		} catch (BusinessException e) {
 			// TODO: handle exception
 		}
 
 	}
+	
+	
+	
+	/**
+	 * Test des fonctionnalités JDBC de la table Enchere
+	 */
+	
+	private void testJDBCEnchere() {
+		Utilisateur standardA = new Utilisateur("aArtiste","Artiste","alain","a@laposte.net","0656467616","rue","35000","Rennes","123",155,false);
+//		Vente vente = new Vente(1, "1", "vente", Timestamp.valueOf(LocalDateTime.now()), );
+//		Enchere enchere1 = new Enchere(Timestamp.valueOf(LocalDateTime.now()), standardA, );
+	}
+	
 }
