@@ -17,7 +17,6 @@ import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BusinessException;
-import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 
 /**
  * Servlet de connexion à la base de donnée

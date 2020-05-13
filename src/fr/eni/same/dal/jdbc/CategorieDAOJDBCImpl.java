@@ -58,12 +58,13 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			{
 				t.setNoCategorie(rs.getInt(1));
 			}
-			System.out.println("Categorie insérée en base de donnée : " + t.toString());
-			con = ConnectionProvider.closeConnection();
-			
+			System.out.println("Categorie insérée en base de donnée : " + t.toString());			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			con=ConnectionProvider.closeConnection();		
 		}
 	}
 
@@ -78,10 +79,12 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			stmt.executeUpdate();
 			System.out.println("Update réalisée sur la categorie : " + t.toString());
 			stmt.close();
-			con = ConnectionProvider.closeConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			con=ConnectionProvider.closeConnection();		
 		}
 	}
 
@@ -103,7 +106,9 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		con=ConnectionProvider.closeConnection();
+		finally {
+			con=ConnectionProvider.closeConnection();		
+		}
 	}
 
 	@Override
@@ -123,11 +128,12 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 				BusinessException businessException = new BusinessException();
 				throw businessException;
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			}
-		con=ConnectionProvider.closeConnection();
-		
+		}
+		finally {
+			con=ConnectionProvider.closeConnection();		
+		}		
 		return categorie;
 	}
 
@@ -148,8 +154,9 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		con=ConnectionProvider.closeConnection();		
-		
+		finally {
+			con=ConnectionProvider.closeConnection();		
+		}		
 		return listCategories;
 	}
 
