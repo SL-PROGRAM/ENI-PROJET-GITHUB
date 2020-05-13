@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.same.bo.Utilisateur;
@@ -154,7 +155,32 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public List<Utilisateur> selectAll() throws BusinessException {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		List<Utilisateur> _userList = new ArrayList<Utilisateur>();
+		try {
+			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				Utilisateur _utilisateur = new Utilisateur();
+				_utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				_utilisateur.setPseudo(rs.getString("pseudo"));
+				_utilisateur.setNom(rs.getString("nom"));
+				_utilisateur.setPrenom(rs.getString("prenom"));
+				_utilisateur.setEmail(rs.getString("email"));
+				_utilisateur.setTelephone(rs.getString("telephone"));
+				_utilisateur.setRue(rs.getString("rue"));
+				_utilisateur.setCodePostal(rs.getString("code_postal"));
+				_utilisateur.setVille(rs.getString("ville"));
+				_utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+				_utilisateur.setCredit(rs.getInt("credit"));
+				_utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+				_userList.add(_utilisateur);
+				System.out.println(_utilisateur.toString());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
