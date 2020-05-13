@@ -67,7 +67,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			if(rs.next()) {
 				t.setNoVente(rs.getInt(1));
 			}
-			System.out.println("Personne insérée en base de donnée : " + t.toString());
+			System.out.println("Vente insérée en base de donnée : " + t.toString());
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,6 +91,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			stmt.setInt(7, t.getCategorie().getNoCategorie());
 			stmt.executeUpdate();
 			stmt.close();
+			System.out.println("Update vente réalisée en base de donnée : " + t.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -158,16 +159,24 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-//				Vente _vente = new Vente(rs.getInt(1),
-//										rs.getString(2),
-//										rs.getString(3),
-//										rs.getDate(4),
-//										rs.getInt(5),
-//										rs.getInt(6),
-//										rs.getInt(7),
-//										rs.getInt(8));
-//				_venteList.add(_vente);
-//				System.out.println(_vente.toString());
+				Vente _vente = new Vente();
+				int noVente = rs.getInt(1);
+				_vente.setNoVente(rs.getInt(1));
+				_vente.setNomArticle(rs.getString(2));
+				_vente.setDescription(rs.getString(3));
+				_vente.setDateFinEncheres(rs.getTimestamp(4));
+				_vente.setMiseAPrix(rs.getInt(5));
+				_vente.setPrixVente(rs.getInt(6));
+				int idUtilisateur = rs.getInt(7);
+				int idCategorie = rs.getInt(8);
+				Utilisateur _utilisateur = DALFactory.getUtilisateurDAOJdbcImpl().select(idUtilisateur);
+				Categorie _categorie = DALFactory.getCategorieDAOJdbcImpl().select(idCategorie);	
+				_vente.setUtilisateurVendeur(_utilisateur);
+				_vente.setCategorie(_categorie);
+				_venteList.add(_vente);
+			}
+			for (int i = 0; i < _venteList.size(); i++) {
+				System.out.println(_venteList.get(i).toString());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -176,6 +185,4 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 		}
 		return _venteList;
 	}
-
-
 }

@@ -65,14 +65,15 @@ public class ServletTestConnexion extends HttpServlet {
 	
 	private void testJDBCVentes() {
 		try {
-//			Utilisateur acheteur = DALFactory.getUtilisateurDAOJdbcImpl().select(22);
-//			Utilisateur vendeur = DALFactory.getUtilisateurDAOJdbcImpl().select(24);
-//			Categorie categorie = DALFactory.getCategorieDAOJdbcImpl().select(3);
-//			Timestamp t = Timestamp.valueOf(LocalDateTime.now());
-//			Vente vente = new Vente("plop","description",t,5000,6000,acheteur,vendeur,categorie);
-//			DALFactory.getVenteDAOJdbcImpl().insert(vente);
-//			DALFactory.getVenteDAOJdbcImpl().delete(vente);
+			Utilisateur acheteur = DALFactory.getUtilisateurDAOJdbcImpl().select(22);
+			Utilisateur vendeur = DALFactory.getUtilisateurDAOJdbcImpl().select(24);
+			Categorie categorie = DALFactory.getCategorieDAOJdbcImpl().select(3);
+			Timestamp t = Timestamp.valueOf(LocalDateTime.now());
+			Vente vente = new Vente("plop","description",t,5000,6000,acheteur,vendeur,categorie);
+			DALFactory.getVenteDAOJdbcImpl().insert(vente);
+			DALFactory.getVenteDAOJdbcImpl().delete(vente);
 			DALFactory.getVenteDAOJdbcImpl().select(9);
+			DALFactory.getVenteDAOJdbcImpl().selectAll();
 		} catch (BusinessException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
