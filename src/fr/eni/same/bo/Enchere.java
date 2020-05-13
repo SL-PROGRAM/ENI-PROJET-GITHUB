@@ -1,6 +1,6 @@
 package fr.eni.same.bo;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 /**
  * Enchere permet de faire le lien entre l'utilisateur qui fait l'enchere et le produit vendu
  * sert a enregistrer la date et heure de l'enchere a la ms
@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
  *
  */
 public class Enchere {
-	private LocalDateTime dateEnchere; //doit prendre en compte les ms
+	private Timestamp dateEnchere; //doit prendre en compte les ms
 	private Utilisateur utilisateurEnchere;
 	private Vente venteEnchere;
 	
 	
-	public LocalDateTime getDateEnchere() {
+	public Timestamp getDateEnchere() {
 		return dateEnchere;
 	}
-	public void setDateEnchere(LocalDateTime dateEnchere) {
+	public void setDateEnchere(Timestamp dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 	public Utilisateur getUtilisateurEnchere() {
@@ -38,7 +38,7 @@ public class Enchere {
 	 * @param utilisateurEnchere
 	 * @param venteEnchere
 	 */
-	public Enchere(LocalDateTime dateEnchere, Utilisateur utilisateurEnchere, Vente venteEnchere) {
+	public Enchere(Timestamp dateEnchere, Utilisateur utilisateurEnchere, Vente venteEnchere) {
 		super();
 		this.dateEnchere = dateEnchere;
 		this.utilisateurEnchere = utilisateurEnchere;
