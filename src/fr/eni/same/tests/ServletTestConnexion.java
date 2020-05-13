@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
+import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
@@ -29,10 +30,10 @@ public class ServletTestConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		testJDBCUtilisateurs();
-		testJDBCCategories();
-		testJDBCVentes();
-		testJDBCEnchere();
+//		testJDBCUtilisateurs();
+//		testJDBCCategories();
+//		testJDBCVentes();
+//		testJDBCEnchere();
 		testJDBCretrait();
 		
 	}
@@ -169,6 +170,26 @@ public class ServletTestConnexion extends HttpServlet {
 	//**********************************************************//
 
 	private void testJDBCretrait() {
+		try {
+			Vente vente = DALFactory.getVenteDAOJdbcImpl().select(5);
+			Retrait retrait = new Retrait("rue","codePostal","Ville", vente);
+			
+			DALFactory.getRetraitDAOJdbcImpl().insert(retrait);
+			retrait.setRue("rue-2");
+			DALFactory.getRetraitDAOJdbcImpl().update(retrait);
+			DALFactory.getRetraitDAOJdbcImpl().select(retrait.getVente().getNoVente());
+			DALFactory.getRetraitDAOJdbcImpl().selectAll();
+			DALFactory.getRetraitDAOJdbcImpl().delete(retrait);
+			
+			
+
+			
+			
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 

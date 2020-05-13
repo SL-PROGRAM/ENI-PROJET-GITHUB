@@ -24,8 +24,8 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	
 	private static RetraitDAOJDBCImpl instance;
 	private static final String INSERT="INSERT INTO retraits(no_vente, rue, code_postal, ville) VALUES(?, ?, ?, ?);";
-	private static final String UPDATE="UPDATE `retraits` SET `rue`=?,`code_postal`=?,`ville`=? WHERE ?"; 
-	private static final String DELETE="DELETE FORM retraits WHERE id = ?"; 
+	private static final String UPDATE="UPDATE `retraits` SET `rue`=?,`code_postal`=?,`ville`=? WHERE no_vente=?"; 
+	private static final String DELETE="DELETE FROM `retraits` WHERE no_vente=?"; 
 	private static final String SELECT_BY_ID = "SELECT * FROM retraits WHERE `no_vente`=?";
 	private static final String SELECT_ALL = "SELECT * FROM retraits";
 
@@ -75,7 +75,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
-			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, t.getRue());
 			pstmt.setString(2, t.getCodePostal());
 			pstmt.setString(3, t.getVille());
@@ -103,9 +103,12 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 
 			stmt.execute();
 			System.out.println("Retrait " + t.getVente().getNoVente()+" supprimé en base de donnée");
+			System.out.println("Retrait Delete en base de donnée : " + t.toString());			
 			stmt.close();
 			} catch (SQLException e) {
+				System.out.println("Erreur delete");
 			e.printStackTrace();
+
 		}
 		finally {
 			con=ConnectionProvider.closeConnection();		
