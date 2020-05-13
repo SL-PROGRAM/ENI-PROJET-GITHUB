@@ -185,4 +185,10 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 		}
 		return _venteList;
 	}
+
+	@Override
+	public void selectAcheteur(Vente t) {
+		// TODO Auto-generated method stub
+		
+	}
 }
