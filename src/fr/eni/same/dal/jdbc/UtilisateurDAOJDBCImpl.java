@@ -15,7 +15,6 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	/**
 	 * mise en place d'un singleton pour garantir la cohérence des données
 	 */
-	
 	private static UtilisateurDAOJDBCImpl instance;
 
 	/**
@@ -34,15 +33,20 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
         }
         return instance;
     }
-
+	
+    private static final String INSERT="INSERT INTO utilisateurs VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String UPDATE="UPDATE utilisateurs SET pseudo=?, nom=?, prenom=?, email=?, "
+									+ "telephone=?, rue=?, code_postal=?,ville=?,mot_de_passe=?, credit=?,administrateur=? WHERE no_utilisateur = ?";
+	private static final String DELETE="DELETE FROM utilisateurs WHERE id = ?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
+	private static final String SELECT_ALL = "SELECT * FROM utilisateurs";
+	
 	@Override
 	public void insert(Utilisateur t) throws BusinessException {
-
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
-		String query = "INSERT INTO utilisateurs VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
-			PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, 0);
 			stmt.setString(2, t.getPseudo());
 			stmt.setString(3, t.getNom());
@@ -67,8 +71,30 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public void update(Utilisateur t) throws BusinessException {
-		// TODO Auto-generated method stub
-		
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(UPDATE);
+			stmt.setString(1, t.getPseudo());
+			stmt.setString(2, t.getNom());
+			stmt.setString(3, t.getPrenom());
+			stmt.setString(4, t.getEmail());
+			stmt.setString(5, t.getTelephone());
+			stmt.setString(6, t.getRue());
+			stmt.setString(7, t.getCodePostal());
+			stmt.setString(8, t.getVille());
+			stmt.setString(9, t.getMotDePasse());
+			stmt.setInt(10, t.getCredit());
+			stmt.setByte(11, (byte) 0);
+			stmt.setInt(12, t.getNoUtilisateur());
+			stmt.executeUpdate();
+			System.out.println("Update réalisée sur la personne : " + t.toString());
+			stmt.close();
+			con = ConnectionProvider.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
