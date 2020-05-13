@@ -12,12 +12,6 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	 */
 	
 	private static RetraitDAOJDBCImpl instance;
-	private final int RUE_LONGEUR_MAX = 30;
-	private final int RUE_LONGEUR_MIN = 4;
-	private final int CP_LONGEUR_MAX = 5;
-	private final int CP_LONGEUR_MIN = 5;
-	private final int VILLE_LONGEUR_MAX = 30;
-	private final int VILLE_LONGEUR_MIN = 4;
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
