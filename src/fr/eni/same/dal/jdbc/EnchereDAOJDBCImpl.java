@@ -54,7 +54,6 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 			pstmt.setInt(2, t.getUtilisateurEnchere().getNoUtilisateur());
 			pstmt.setInt(3, t.getVenteEnchere().getNoVente());
 			pstmt.execute();
-			ResultSet rs = pstmt.getGeneratedKeys();
 		
 			System.out.println("Enchere insérée en base de donnée : " + t.toString());
 			
