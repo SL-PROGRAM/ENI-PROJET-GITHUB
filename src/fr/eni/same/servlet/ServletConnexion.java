@@ -19,9 +19,12 @@ public class ServletConnexion extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * doGet : redirection vers la page de connexion (connexion.jsp)
+	 * doPost : Auto-appel de la page connexion pour vérification des informations de connexion de l'utilisateur.
+	 * 			Si informations incorrectes : affichage d'un message d'erreur et reset des champs de saisie
+	 * 			Si informations correctes : redirection et envoie des informations utilisateur vers la page affichant la liste des enchères (listeEncheres.jsp)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : passer les fichiers en .jsp lorsque se sera prêt
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
 		rd.forward(request, response);
 	}
