@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.TPSuiviDesRepas.bo.Aliments;
-import fr.eni.TPSuiviDesRepas.dal.CodesResultatDAL;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.CategorieDAO;
