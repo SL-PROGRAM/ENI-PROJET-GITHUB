@@ -1,6 +1,7 @@
 package fr.eni.same.tests;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +45,7 @@ public class ServletTestConnexion extends HttpServlet {
 			DALFactory.getUtilisateurDAOJdbcImpl().update(standardA);
 			DALFactory.getUtilisateurDAOJdbcImpl().delete(standardB);
 			Utilisateur u = DALFactory.getUtilisateurDAOJdbcImpl().select(4);
+			List<Utilisateur> userList = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
