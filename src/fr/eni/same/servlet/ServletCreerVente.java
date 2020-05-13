@@ -18,10 +18,11 @@ public class ServletCreerVente extends HttpServlet {
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * doGet : redirection vers la page permettant de créer une nouvelle vente (vendreArticle.jsp)
+	 * doPost : Récupération des informations de l'utilisateur, notemment l'adresse afin de l'afficher automatiquement comme point de retrait
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : passer les fichiers en .jsp lorsque se sera prêt
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/CreerVente.html");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/vendreArticle.jsp");
 		rd.forward(request, response);
 	}
 
