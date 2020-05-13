@@ -69,10 +69,10 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			System.out.println("Personne insérée en base de donnée : " + t.toString());
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		con = ConnectionProvider.closeConnection();
 	}
 
 	@Override
@@ -99,8 +99,9 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		con = ConnectionProvider.closeConnection();
 	}
 
 	@Override
@@ -118,10 +119,11 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			stmt.execute();
 			System.out.println("Utilisateur: " + t.getPrenom() + " supprimé en base de donnée");
 			stmt.close();
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		con=ConnectionProvider.closeConnection();
 	}
 
 	@Override
@@ -152,8 +154,9 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		con = ConnectionProvider.closeConnection();
 		return _utilisateur;
 	}
 
@@ -185,8 +188,9 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		con = ConnectionProvider.closeConnection();
 		return _userList;
 	}
 }
