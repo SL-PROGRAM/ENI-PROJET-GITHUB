@@ -65,7 +65,7 @@ public class ServletTestConnexion extends HttpServlet {
 	 */
 	private void testJDBCCategories() {
 		Categorie categorieSansPK = new Categorie("Cat-1");
-		Categorie categorieAvecPK = new Categorie("1, Cat-1");
+		Categorie categorieAvecPK = new Categorie(1, "Cat-2");
 		
 		
 		
