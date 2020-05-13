@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BusinessException;
@@ -25,6 +26,7 @@ public class ServletTestConnexion extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		testJDBCUtilisateurs();
+		testJDBCCategories();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,5 +58,24 @@ public class ServletTestConnexion extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Test des fonctionnalités JDBC de la table utilisateurs
+	 */
+	private void testJDBCCategories() {
+		Categorie categorieSansPK = new Categorie("Cat-1");
+		Categorie categorieAvecPK = new Categorie("1, Cat-1");
+		
+		
+		
+		try {
+			DALFactory.getCategorieDAOJdbcImpl().insert(categorieSansPK);
+			DALFactory.getCategorieDAOJdbcImpl().insert(categorieAvecPK);
+
+		} catch (BusinessException e) {
+			// TODO: handle exception
+		}
+
 	}
 }
