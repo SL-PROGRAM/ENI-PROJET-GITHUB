@@ -1,4 +1,4 @@
-package fr.eni.same.dal;
+package fr.eni.same.dal.interfaceDAO;
 
 import fr.eni.same.bo.Retrait;
 

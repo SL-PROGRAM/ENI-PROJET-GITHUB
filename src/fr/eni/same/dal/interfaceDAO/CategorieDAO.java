@@ -1,4 +1,4 @@
-package fr.eni.same.dal;
+package fr.eni.same.dal.interfaceDAO;
 
 import java.util.List;
 
@@ -10,13 +10,7 @@ import fr.eni.same.bo.Categorie;
  */
 public interface CategorieDAO extends DAO<Categorie> {
 	
-	/**
-	 * Vérifie si la catégorie existe déja
-	 * @param list
-	 * @param libelle
-	 * @return
-	 */
-	public boolean isLibelleUnique(List<Categorie> list, String libelle);
+	
 	
 	
 }

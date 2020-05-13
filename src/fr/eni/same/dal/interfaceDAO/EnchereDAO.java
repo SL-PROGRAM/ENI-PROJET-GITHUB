@@ -1,4 +1,4 @@
-package fr.eni.same.dal;
+package fr.eni.same.dal.interfaceDAO;
 
 import java.util.List;
 

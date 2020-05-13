@@ -1,4 +1,4 @@
-package fr.eni.same.dal;
+package fr.eni.same.dal.interfaceDAO;
 
 
 import java.util.List;
@@ -51,6 +51,6 @@ public interface DAO<T> {
 	 * @throws BusinessException
 	 */
 	public List<T> selectAll() throws BusinessException;
-	
+	  
 	
 }
