@@ -18,10 +18,11 @@ public class ServletEncherir extends HttpServlet {
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * doGet : redirection vers la page permettant d'enchérir sur une vente (pageEncherir.jsp)
+	 * doPost : Récupération des informations liées à la vente sur laquelle je veux enchérir.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : passer les fichiers en .jsp lorsque se sera prêt
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/Encherir.html");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
 		rd.forward(request, response);
 	}
 
