@@ -47,8 +47,16 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 									+ "prix_vente=?, no_utilisateur=?, no_categorie=?";
 	private static final String DELETE ="DELETE FROM ventes WHERE no_vente=?";
 	private static final String SELECT_BY_ID = "SELECT * FROM ventes WHERE no_vente=?";
+//	private static final String SELECT_BY_ID = "SELECT ventes.no_vente, ventes.nomarticle, ventes.description, ventes.date_fin_encheres,"
+//										+ " ventes.prix_initial, ventes.prix_vente, ventes.no_utilisateur, ventes.no_categorie"
+//										+ " FROM ventes" 
+//										+ " JOIN utilisateurs" 
+//										+ " ON ventes.no_utilisateur = utilisateurs.no_utilisateur" 
+//										+ " JOIN categories"
+//										+ " ON ventes.no_categorie = categories.no_categorie";
 	private static final String SELECT_ALL = "SELECT * FROM ventes";
-    
+    private static final String SELECT_ACHETEUR = "";
+	
 	@Override
 	public void insert(Vente t) throws BusinessException {
 		Connection con = null;
@@ -188,7 +196,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 
 	@Override
 	public void selectAcheteur(Vente t) {
-		// TODO Auto-generated method stub
-		
+		//Récupérer le dernier no_utilisateur de la table enchère en joignant le no_vente
+		//Sélectionner le 
 	}
 }
