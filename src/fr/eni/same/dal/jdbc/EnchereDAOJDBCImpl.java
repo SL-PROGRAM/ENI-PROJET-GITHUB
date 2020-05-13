@@ -3,7 +3,7 @@ package fr.eni.same.dal.jdbc;
 import java.util.List;
 
 import fr.eni.same.bo.Enchere;
-import fr.eni.same.dal.EnchereDAO;
+import fr.eni.same.dal.interfaceDAO.EnchereDAO;
 import fr.eni.same.exception.BusinessException;
 
 public class EnchereDAOJDBCImpl implements EnchereDAO {
@@ -12,6 +12,11 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 	 */
 	
 	private static EnchereDAOJDBCImpl instance;
+	private static final String INSERT="INSERT INTO ENCHERES(date_enchere, no_utilisateur, no_vente) VALUES(?, ?,?);";
+	private static final String UPDATE="UPDATE `ENCHERES` SET `date_enchere`=?,`no_utilisateur`=?,`no_vente`=? WHERE ?"; 
+	private static final String DELETE="DELETE FORM ENCHERES WHERE id = ?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM ENCHERES FROM `ENCHERES` WHERE `no_utilisateur`=? AND `no_vente`=?";
+	private static final String SELECT_ALL = "SELECT * FROM ENCHERES";
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
@@ -59,5 +64,11 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	//***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+	//***********************************************************************************************//
+	
 
 }

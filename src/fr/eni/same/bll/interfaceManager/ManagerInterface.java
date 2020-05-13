@@ -1,25 +1,18 @@
-package fr.eni.same.dal;
-
+package fr.eni.same.bll.interfaceManager;
 
 import java.util.List;
 
+import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.BusinessException;
 
 /**
- * DAO générique d'un CRUD, toutes les boDAO devront extends cette interface
- * 
+ * Interface de gestion des fonctions a ajouter au manager
  * @author sl
  *
- * @param <T>
  */
-
-public interface DAO<T> {
-	/**
-	 * En cas d'erreur, le code d'erreur est enregistré dans l'objet businessException.
-	 * @param T
-	 * @throws BusinessException
-	 */
-	public void insert(T t) throws BusinessException;
+public interface ManagerInterface<T> {
+	
+	public void insert(T t) throws BllException;
 
 
 	/**
@@ -27,7 +20,7 @@ public interface DAO<T> {
 	 * @param T
 	 * @throws BusinessException
 	 */
-	public void update(T t) throws BusinessException;
+	public void update(T t) throws BllException;
 
 
 	/**
@@ -35,7 +28,7 @@ public interface DAO<T> {
 	 * @param T
 	 * @throws BusinessException
 	 */
-	public void delete(T t) throws BusinessException;
+	public void delete(T t) throws BllException;
 
 
 	/**
@@ -43,14 +36,13 @@ public interface DAO<T> {
 	 * @param T
 	 * @throws BusinessException
 	 */
-	public T select(int id) throws BusinessException;
+	public T select(int id) throws BllException;
 	
 	/**
 	 * En cas d'erreur, le code d'erreur est enregistré dans l'objet businessException.
 	 * @param T
 	 * @throws BusinessException
 	 */
-	public List<T> selectAll() throws BusinessException;
-	
-	
+	public List<T> selectAll() throws BllException;
+
 }

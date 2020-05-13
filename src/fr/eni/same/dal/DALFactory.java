@@ -1,5 +1,10 @@
 package fr.eni.same.dal;
 
+import fr.eni.same.dal.interfaceDAO.CategorieDAO;
+import fr.eni.same.dal.interfaceDAO.EnchereDAO;
+import fr.eni.same.dal.interfaceDAO.RetraitDAO;
+import fr.eni.same.dal.interfaceDAO.UtilisateurDAO;
+import fr.eni.same.dal.interfaceDAO.VenteDAO;
 import fr.eni.same.dal.jdbc.CategorieDAOJDBCImpl;
 import fr.eni.same.dal.jdbc.EnchereDAOJDBCImpl;
 import fr.eni.same.dal.jdbc.RetraitDAOJDBCImpl;
