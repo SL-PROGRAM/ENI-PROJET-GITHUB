@@ -2,7 +2,7 @@ package fr.eni.same.dal.jdbc;
 
 import java.util.List;
 import fr.eni.same.bo.Utilisateur;
-import fr.eni.same.dal.UtilisateurDAO;
+import fr.eni.same.dal.interfaceDAO.UtilisateurDAO;
 import fr.eni.same.exception.BusinessException;
 
 public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
@@ -87,31 +87,8 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	}
 
 
-	@Override
-	public boolean isPseudoUnique(String pseudo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEmailValide(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCreditPositif(int credit) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 
-	//***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
-	//***********************************************************************************************//
-	
-	
-	
 
 
 

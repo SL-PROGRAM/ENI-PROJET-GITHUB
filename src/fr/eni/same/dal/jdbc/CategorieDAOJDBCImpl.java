@@ -3,7 +3,7 @@ package fr.eni.same.dal.jdbc;
 import java.util.List;
 
 import fr.eni.same.bo.Categorie;
-import fr.eni.same.dal.CategorieDAO;
+import fr.eni.same.dal.interfaceDAO.CategorieDAO;
 import fr.eni.same.exception.BusinessException;
 
 
@@ -14,12 +14,8 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	 * mise en place d'un singleton pour garantir la cohérence des données
 	 */
 	private static CategorieDAOJDBCImpl instance;
-	private final int LIBELLE_LONGEUR_MAX = 30;
-	private final int LIBELLE_LONGEUR_MIN = 4;
-
 	
-
-
+	
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
 	 */
@@ -68,27 +64,6 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 
 	
 	
-	//***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
-	//***********************************************************************************************//
-	
-	
-	@Override
-	public boolean isLibelleUnique(List<Categorie> list, String libelle) {
-		boolean isUnique = true;
-		for (Categorie categorie : list) {
-			if(categorie.getLibelle() == libelle) {
-				isUnique = false;
-				break;
-			}
-		}
-		return isUnique;
-	}
-
-
-	
-	
-
 	
 	
 

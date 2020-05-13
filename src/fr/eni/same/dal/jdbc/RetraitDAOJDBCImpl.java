@@ -3,7 +3,7 @@ package fr.eni.same.dal.jdbc;
 import java.util.List;
 
 import fr.eni.same.bo.Retrait;
-import fr.eni.same.dal.RetraitDAO;
+import fr.eni.same.dal.interfaceDAO.RetraitDAO;
 import fr.eni.same.exception.BusinessException;
 
 public class RetraitDAOJDBCImpl implements RetraitDAO {

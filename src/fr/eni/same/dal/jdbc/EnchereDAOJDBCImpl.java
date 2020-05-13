@@ -3,7 +3,7 @@ package fr.eni.same.dal.jdbc;
 import java.util.List;
 
 import fr.eni.same.bo.Enchere;
-import fr.eni.same.dal.EnchereDAO;
+import fr.eni.same.dal.interfaceDAO.EnchereDAO;
 import fr.eni.same.exception.BusinessException;
 
 public class EnchereDAOJDBCImpl implements EnchereDAO {
