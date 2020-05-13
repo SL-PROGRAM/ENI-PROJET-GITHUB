@@ -1,7 +1,13 @@
 package fr.eni.same.dal.jdbc;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.UtilisateurDAO;
 import fr.eni.same.exception.BusinessException;
 
@@ -31,35 +37,32 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public void insert(Utilisateur t) throws BusinessException {
-		//TODO Code non fonctionnel, ne pas tester
-//		Connection con = null;
-//		con = ConnectionProvider.openConnection();
-//		String query = "INSERT INTO utilisateurs VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-//		
-//		try {
-//			PreparedStatement stmt = con.prepareStatement(query);
-//			stmt.executeQuery(query);
-//			stmt.execute();
-//			stmt.setInt(1, stmt.RETURN_GENERATED_KEYS);
-//			stmt.setString(2, t.getPseudo());
-//			stmt.setString(3, t.getNom());
-//			stmt.setString(4, t.getPrenom());
-//			stmt.setString(5, t.getEmail());
-//			stmt.setString(6, t.getTelephone());
-//			stmt.setString(7, t.getRue());
-//			stmt.setString(8, t.getCodePostal());
-//			stmt.setString(9, t.getVille());
-//			stmt.setString(10, t.getMotDePasse());
-//			stmt.setInt(11, t.getCredit());
-//			stmt.setByte(12, (byte) 0);
-//			int i = stmt.executeUpdate();
-//			System.out.println(i + " records inserted");
-//			System.out.println("Personne insérée en base de donnée : " + t.toString());
-//			con = ConnectionProvider.closeConnection();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		String query = "INSERT INTO utilisateurs VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
+			PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, 0);
+			stmt.setString(2, t.getPseudo());
+			stmt.setString(3, t.getNom());
+			stmt.setString(4, t.getPrenom());
+			stmt.setString(5, t.getEmail());
+			stmt.setString(6, t.getTelephone());
+			stmt.setString(7, t.getRue());
+			stmt.setString(8, t.getCodePostal());
+			stmt.setString(9, t.getVille());
+			stmt.setString(10, t.getMotDePasse());
+			stmt.setInt(11, t.getCredit());
+			stmt.setByte(12, (byte) 0);
+			stmt.execute();
+			System.out.println("Personne insérée en base de donnée : " + t.toString());
+			stmt.close();
+			con = ConnectionProvider.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
