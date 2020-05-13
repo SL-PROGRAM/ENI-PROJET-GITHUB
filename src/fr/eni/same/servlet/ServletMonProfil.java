@@ -18,9 +18,12 @@ public class ServletMonProfil extends HttpServlet {
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * doGet : redirection vers la page affichant les informations du profil utilisateur (monProfil.jsp)
+	 * doPost : 
+	 * 			1- Récupération des informations de l'utilisateur lors de la création d'un nouveau compte
+	 * 			2- Récupération des informations de l'utilisateur lorsque l'utilisateur veut modifier ses propres informations personnelles.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : passer les fichiers en .jsp lorsque se sera prêt
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/monProfil.jsp");
 		rd.forward(request, response);
 	}
