@@ -1,8 +1,9 @@
 package fr.eni.same.dal.jdbc;
 
 import java.util.List;
-import fr.eni.same.bo.Vente;
-import fr.eni.same.dal.RetraitDAO;
+
+import fr.eni.same.bo.Retrait;
+import fr.eni.same.dal.interfaceDAO.RetraitDAO;
 import fr.eni.same.exception.BusinessException;
 
 public class RetraitDAOJDBCImpl implements RetraitDAO {
@@ -11,6 +12,11 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	 */
 	
 	private static RetraitDAOJDBCImpl instance;
+	private static final String INSERT="INSERT INTO RETRAITS(rue, code_postal, ville) VALUES(?, ?,?);";
+	private static final String UPDATE="UPDATE `RETRAITS` SET `rue`=?,`code_postal`=?,`ville`=? WHERE ?"; 
+	private static final String DELETE="DELETE FORM RETRAITS WHERE id = ?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM RETRAITS FROM `ENCHERES` WHERE `no_vente`=?";
+	private static final String SELECT_ALL = "SELECT * FROM RETRAITS";
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
@@ -29,34 +35,44 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
         return instance;
     }
     
-	@Override
-	public void insert(Vente t) throws BusinessException {
-		// TODO Auto-generated method stub
 
+
+	@Override
+	public void insert(Retrait t) throws BusinessException {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void update(Vente t) throws BusinessException {
+	public void update(Retrait t) throws BusinessException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void delete(Vente t) throws BusinessException {
+	public void delete(Retrait t) throws BusinessException {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public Vente select(int id) throws BusinessException {
+	public Retrait select(int id) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Retrait> selectAll() throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public List<Vente> selectAll() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
+	//***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+	//***********************************************************************************************//
+	
+	
 
 }

@@ -1,4 +1,6 @@
-package fr.eni.same.dal;
+package fr.eni.same.dal.interfaceDAO;
+
+import java.util.List;
 
 import fr.eni.same.bo.Categorie;
 
@@ -7,5 +9,8 @@ import fr.eni.same.bo.Categorie;
  * @author etienne
  */
 public interface CategorieDAO extends DAO<Categorie> {
+	
+	
+	
 	
 }
