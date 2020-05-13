@@ -1,5 +1,6 @@
 package fr.eni.same.dal.jdbc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.same.bo.Categorie;
@@ -14,6 +15,12 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	 * mise en place d'un singleton pour garantir la cohérence des données
 	 */
 	private static CategorieDAOJDBCImpl instance;
+	
+	private static final String INSERT="INSERT INTO CATEGORIE(libelle) VALUES(?);";
+	private static final String UPDATE="UPDATE CATEGORIE SET (libelle = ?) WHERE id = ?"; 
+	private static final String DELETE="DELETE FORM CATEGORIE WHERE id = ?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM CATEGORIE WHERE no_categorie=?";
+	private static final String SELECT_ALL = "SELECT * FROM CATEGORIE";
 	
 	
 	/**
@@ -58,8 +65,12 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 
 	@Override
 	public List<Categorie> selectAll() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Categorie> listCategories = new ArrayList<Categorie>();
+		
+		
+		
+		
+		return listCategories;
 	}
 
 	
