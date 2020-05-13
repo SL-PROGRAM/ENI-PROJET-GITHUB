@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Page Profil</title>
+<meta name="viewport" content="width=device-width"/>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="ThemesCss/profile.css">
+
 
 </head>
 <body>
@@ -12,34 +13,44 @@
 	<div class="container">
 		
 		<header class="row">
-			<div class="col-lg-12">
+			<div class="col-12">
 				<h3>TrocEncheres.org</h3>
 			</div>
 		</header>
 		
 		<div class ="row">
-			<div class="col-lg-12 profil">
+			<div class="col-12 text-center">
 				<h3> JOJO44</h3>
 			</div>
 		</div>
 		
 			<div class="row">
-				<div class="col-lg-6 col-sm-6 label">
+				<div class="col-6 text-right">
 					<p>Pseudo:</p>
-					<p>Adresse:</p>	
+					<p>Nom:</p>
+					<p>Prénom:</p>
+					<p>Email:</p>
 					<p>Telephone:</p>
+					<p>Rue:</p>
+					<p>Code Postal:</p>
+					<p>Ville:</p>
 				</div>
 				
 			
-				<div class="col-lg-6 col-sm-6 insert">
-					<p>recup info pseudo </p>
-					<p>recup info rue, ville , code postali</p>
-					<p>recup info tel, msg si existe pas</p>
-
+				<div class="col-6 c">
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+			
 				</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12 bouton">
+			<div class="col-12 text-center">
 				<button type="button" class="btn btn-outline-dark"><a href="#">Retour</a></button>
 			
 			</div>
@@ -49,7 +60,15 @@
 		
 		
 	</div>
-	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
