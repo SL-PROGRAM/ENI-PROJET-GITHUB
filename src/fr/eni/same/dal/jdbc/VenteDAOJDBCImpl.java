@@ -9,8 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.same.bo.Categorie;
+import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.ConnectionProvider;
+import fr.eni.same.dal.DALFactory;
 import fr.eni.same.dal.interfaceDAO.VenteDAO;
 import fr.eni.same.exception.BusinessException;
 
@@ -30,6 +33,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
      * methode Get pour récupérer l'instance et la créer si elle n'existe pas
      * @return
      */
+    
     public static synchronized VenteDAOJDBCImpl getVenteDAOJDBCImpl() {
         if(instance == null){
             instance = new VenteDAOJDBCImpl();
@@ -37,7 +41,8 @@ public class VenteDAOJDBCImpl implements VenteDAO{
         return instance;
     }
 
-    private static final String INSERT="INSERT INTO ventes VALUES (?,?,?,?,?,?,?,?)";
+    private static final String INSERT="INSERT INTO ventes (nomarticle, description, date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)"
+    											+ " VALUES (?,?,?,?,?,?,?)";
 	private static final String UPDATE="UPDATE ventes SET nomarticle=?, description=?, date_fin_encheres=?, prix_initial=?, "
 									+ "prix_vente=?, no_utilisateur=?, no_categorie=?";
 	private static final String DELETE ="DELETE FROM ventes WHERE no_vente=?";
@@ -50,22 +55,25 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 		con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, 0);
-			stmt.setString(2, t.getNomArticle());
-			stmt.setString(3, t.getDescription());
-			stmt.setTimestamp(4, t.getDateFinEncheres());
-			stmt.setInt(5, t.getMiseAPrix());
-			stmt.setInt(6, t.getPrixVente());
-			stmt.setInt(7, t.getUtilisateurVendeur().getNoUtilisateur());
-			stmt.setInt(8, t.getCategorie().getNoCategorie());
+			stmt.setString(1, t.getNomArticle());
+			stmt.setString(2, t.getDescription());
+			stmt.setTimestamp(3, t.getDateFinEncheres());
+			stmt.setInt(4, t.getMiseAPrix());
+			stmt.setInt(5, t.getPrixVente());
+			stmt.setInt(6, t.getUtilisateurVendeur().getNoUtilisateur());
+			stmt.setInt(7, t.getCategorie().getNoCategorie());
 			stmt.execute();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if(rs.next()) {
+				t.setNoVente(rs.getInt(1));
+			}
 			System.out.println("Personne insérée en base de donnée : " + t.toString());
 			stmt.close();
-			con = ConnectionProvider.closeConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		} finally {
+			con = ConnectionProvider.closeConnection();
+		}	
 	}
 
 	@Override
@@ -82,11 +90,12 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			stmt.setInt(6, t.getUtilisateurVendeur().getNoUtilisateur());
 			stmt.setInt(7, t.getCategorie().getNoCategorie());
 			stmt.executeUpdate();
-			stmt.close();			
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		con = ConnectionProvider.closeConnection();
 	}
 
 	@Override
@@ -98,20 +107,24 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			stmt.setInt(1, t.getNoVente());
 			stmt.execute();
 			stmt.close();
+			System.out.println("Vente supprimée de la base de donnée : " + t.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		con = ConnectionProvider.closeConnection();
 	}
 
 	@Override
 	public Vente select(int id) throws BusinessException {
 		Connection con = null;
 		Vente _vente = new Vente();
-		con = ConnectionProvider.openConnection();
+		con = ConnectionProvider.openConnection();			
 		try {
-			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
+			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID, PreparedStatement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
+			
 			while(rs.next()) {
 				_vente.setNoVente(rs.getInt(1));
 				_vente.setNomArticle(rs.getString(2));
@@ -119,14 +132,21 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 				_vente.setDateFinEncheres(rs.getTimestamp(4));
 				_vente.setMiseAPrix(rs.getInt(5));
 				_vente.setPrixVente(rs.getInt(6));
-//				_vente.setUtilisateurVendeur(rs.getInt(7));
-//				_vente.setCategorie(rs.getInt(8));
+				int idUtilisateur = rs.getInt(7);
+				int idCategorie = rs.getInt(8);
+				Utilisateur _utilisateur = DALFactory.getUtilisateurDAOJdbcImpl().select(idUtilisateur);
+				Categorie _categorie = DALFactory.getCategorieDAOJdbcImpl().select(idCategorie);	
+				_vente.setUtilisateurVendeur(_utilisateur);
+				_vente.setCategorie(_categorie);
+				System.out.println("Vente sélectionnée dans la base de donnée : " + _vente.toString());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		return null;
+		return _vente;
 	}
 
 	@Override
@@ -151,8 +171,9 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
 		}
-		con = ConnectionProvider.closeConnection();
 		return _venteList;
 	}
 
