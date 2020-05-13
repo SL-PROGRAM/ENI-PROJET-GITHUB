@@ -36,7 +36,8 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
         return instance;
     }
 	
-    private static final String INSERT="INSERT INTO utilisateurs VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String INSERT="INSERT INTO utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
+    										+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE="UPDATE utilisateurs SET pseudo=?, nom=?, prenom=?, email=?, "
 									+ "telephone=?, rue=?, code_postal=?,ville=?,mot_de_passe=?, credit=?,administrateur=? WHERE no_utilisateur = ?";
 	private static final String DELETE ="DELETE FROM utilisateurs WHERE no_utilisateur=?";
@@ -48,20 +49,23 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
-			PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, 0);
-			stmt.setString(2, t.getPseudo());
-			stmt.setString(3, t.getNom());
-			stmt.setString(4, t.getPrenom());
-			stmt.setString(5, t.getEmail());
-			stmt.setString(6, t.getTelephone());
-			stmt.setString(7, t.getRue());
-			stmt.setString(8, t.getCodePostal());
-			stmt.setString(9, t.getVille());
-			stmt.setString(10, t.getMotDePasse());
-			stmt.setInt(11, t.getCredit());
-			stmt.setByte(12, (byte) 0);
+			PreparedStatement stmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, t.getPseudo());
+			stmt.setString(2, t.getNom());
+			stmt.setString(3, t.getPrenom());
+			stmt.setString(4, t.getEmail());
+			stmt.setString(5, t.getTelephone());
+			stmt.setString(6, t.getRue());
+			stmt.setString(7, t.getCodePostal());
+			stmt.setString(8, t.getVille());
+			stmt.setString(9, t.getMotDePasse());
+			stmt.setInt(10, t.getCredit());
+			stmt.setBoolean(11, t.isAdministrateur());
 			stmt.execute();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if(rs.next()) {
+				t.setNoUtilisateur(rs.getInt(1));
+			}
 			System.out.println("Personne insérée en base de donnée : " + t.toString());
 			stmt.close();
 		} catch (SQLException e) {
@@ -176,6 +180,8 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 															rs.getBoolean("administrateur"));
 				_userList.add(_utilisateur);
 				System.out.println(_utilisateur.toString());
+				rs.close();
+				stmt.close();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
