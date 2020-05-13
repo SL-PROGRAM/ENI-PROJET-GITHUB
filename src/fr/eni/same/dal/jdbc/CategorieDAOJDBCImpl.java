@@ -47,14 +47,41 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
     }
 	@Override
 	public void insert(Categorie t) throws BusinessException {
-		// TODO Auto-generated method stub
-
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt.setString(1, t.getLibelle());
+			pstmt.execute();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next())
+			{
+				t.setNoCategorie(rs.getInt(1));
+			}
+			System.out.println("Personne insérée en base de donnée : " + t.toString());
+			con = ConnectionProvider.closeConnection();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void update(Categorie t) throws BusinessException {
-		// TODO Auto-generated method stub
-
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(UPDATE);
+			stmt.setString(1, t.getLibelle());
+			stmt.executeUpdate();
+			System.out.println("Update réalisée sur la personne : " + t.toString());
+			stmt.close();
+			con = ConnectionProvider.closeConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -117,16 +144,9 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		con=ConnectionProvider.closeConnection();
-		
-		
+		con=ConnectionProvider.closeConnection();		
 		
 		return listCategories;
 	}
-
-	
-	
-	
-	
 
 }
