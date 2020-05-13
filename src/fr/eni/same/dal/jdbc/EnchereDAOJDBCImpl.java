@@ -64,11 +64,6 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	//***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
-	//***********************************************************************************************//
-	
+
 
 }
