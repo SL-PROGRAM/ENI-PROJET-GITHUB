@@ -63,18 +63,19 @@ public class ServletTestConnexion extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
 	private void testJDBCVentes() {
-		Date date = Date.valueOf(LocalDate.now());
-		Utilisateur acheteur = new Utilisateur("bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
-		Utilisateur vendeur = new Utilisateur(21, "cCailloux","Cailloux","console","c@hotmail.fr","rue","75000","Paris","789",845,false);
-		Categorie categorie = new Categorie(1,"première catégorie");
-		Vente v = new Vente(1,"chaussure","Une superbe chaussure",date,1000,2000,acheteur,vendeur,categorie);
-		try {
-			DALFactory.getVenteDAOJdbcImpl().insert(v);
-		} catch (BusinessException e) {
-			e.printStackTrace();
-		}
+//		Utilisateur acheteur = new Utilisateur("bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
+//		Utilisateur vendeur = new Utilisateur(21, "cCailloux","Cailloux","console","c@hotmail.fr","rue","75000","Paris","789",845,false);
+//		Categorie categorie = new Categorie(1,"première catégorie");
+//		Vente v = new Vente("chaussure","Une superbe chaussure",LocalDate.now(),1000,2000,acheteur,vendeur,categorie);
+//		try {
+//			DALFactory.getVenteDAOJdbcImpl().insert(v);
+//		} catch (BusinessException e) {
+//			e.printStackTrace();
+//		}
 	}
+	
 	private void testJDBCCategories() {
 		Categorie c = new Categorie(1,"première catégorie");
 		try {

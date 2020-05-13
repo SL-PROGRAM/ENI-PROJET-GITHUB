@@ -2,10 +2,12 @@ package fr.eni.same.dal.jdbc;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.VenteDAO;
@@ -51,7 +53,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			stmt.setInt(1, 0);
 			stmt.setString(2, t.getNomArticle());
 			stmt.setString(3, t.getDescription());
-			stmt.setDate(4, t.getDateFinEncheres());
+			stmt.setDate(4, Date.valueOf(t.getDateFinEncheres()));
 			stmt.setInt(5, t.getMiseAPrix());
 			stmt.setInt(6, t.getPrixVente());
 			stmt.setInt(7, t.getUtilisateurVendeur().getNoUtilisateur());
@@ -68,8 +70,23 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 
 	@Override
 	public void update(Vente t) throws BusinessException {
-		// TODO Auto-generated method stub
-		
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(UPDATE);
+			stmt.setString(1, t.getNomArticle());
+			stmt.setString(2, t.getDescription());
+			stmt.setDate(3, Date.valueOf(t.getDateFinEncheres()));
+			stmt.setInt(4, t.getMiseAPrix());
+			stmt.setInt(5, t.getPrixVente());
+			stmt.setInt(6, t.getUtilisateurVendeur().getNoUtilisateur());
+			stmt.setInt(7, t.getCategorie().getNoCategorie());
+			stmt.executeUpdate();
+			stmt.close();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con = ConnectionProvider.closeConnection();
 	}
 
 	@Override
