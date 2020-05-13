@@ -17,6 +17,11 @@ public interface CategorieManagerInetrface extends ManagerInterface<Categorie> {
 	 */
 	public boolean isLibelleUnique(List<Categorie> list, String libelle) throws UniqueException;
 	
+	/**
+	 * Vérifie longeur max et min correct
+	 * @param libelle
+	 * @return
+	 */
 	public boolean isLibelleLongeurCorrect(String libelle); 
 	
 	
