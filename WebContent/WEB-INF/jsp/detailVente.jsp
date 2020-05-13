@@ -10,16 +10,16 @@
 <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
-	<header>TrocEnchere.org</header>
+	<header><%@include file="header.jspf"%></header>
 	<div class="container">
 		<div class="row">
 			<div class="col-12 col-lg-8 offset-lg-4 text-center">
-				<h1>RandomDu35 a remporté l'enchère !</h1>
+				<h2>RandomDu35 a remporté l'enchère !</h2>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-12 col-lg-6 order-lg-2">
-				<h2>PC Gamer pour travailler</h2>
+				<h3>PC Gamer pour travailler</h3>
 			</div>
 			<div class="col-lg-3 offset-lg-4 d-none d-lg-block order-lg-3">
 				<p>Description :</p>
@@ -67,7 +67,7 @@
 				<p>175 points</p>
 				<p>09/10/2018</p>
 			</div>
-			<div class="col-4 col-lg-3 offset-lg-4 order-lg-7">
+			<div class="col-6 col-lg-3 offset-lg-4 order-lg-7">
 				<p>Retrait :</p>
 			</div>
 
