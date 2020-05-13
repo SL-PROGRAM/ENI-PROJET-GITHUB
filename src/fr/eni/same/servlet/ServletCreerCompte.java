@@ -18,9 +18,10 @@ public class ServletCreerCompte extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * doGet : redirection vers la page de création de compte (creerCompte.jsp)
+	 * doPost : redirection vers le doGet. On ne passera jamais par le doPost sur cette servlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : passer les fichiers en .jsp lorsque se sera prêt
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/creerCompte.jsp");
 		rd.forward(request, response);
 	}
