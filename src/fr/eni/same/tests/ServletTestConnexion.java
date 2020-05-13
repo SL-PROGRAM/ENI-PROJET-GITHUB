@@ -33,6 +33,7 @@ public class ServletTestConnexion extends HttpServlet {
 		testJDBCCategories();
 		testJDBCVentes();
 		testJDBCEnchere();
+		testJDBCretrait();
 		
 	}
 
@@ -152,11 +153,7 @@ public class ServletTestConnexion extends HttpServlet {
 			System.out.println(enchere1.getUtilisateurEnchere().getNoUtilisateur());
 			System.out.println(enchere1.getVenteEnchere().getNoVente());
 			DALFactory.getEnchereDAOJdbcImpl().select(enchere1.getUtilisateurEnchere().getNoUtilisateur(), enchere1.getVenteEnchere().getNoVente());
-//			DALFactory.getEnchereDAOJdbcImpl().selectAll();
-			
-			
-			
-
+			DALFactory.getEnchereDAOJdbcImpl().selectAll();
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,4 +161,31 @@ public class ServletTestConnexion extends HttpServlet {
 		
 	}
 	
+
+
+	
+	//**********************************************************//
+	//*** Test des fonctionnalités JDBC de la table retrait  ***//
+	//**********************************************************//
+
+	private void testJDBCretrait() {
+		
+	}
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
