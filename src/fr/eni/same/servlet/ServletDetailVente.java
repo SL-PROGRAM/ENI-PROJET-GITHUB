@@ -18,9 +18,12 @@ public class ServletDetailVente extends HttpServlet {
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * doGet : redirection vers la page affichant les informations de la vente côté vendeur (detailVente.jsp)
+	 * doPost : 
+	 * 			1- récupération des informations de la vente
+	 * 			2- Gestion de la fin d'une vente afin d'afficher l'acheteur ayant remporté la vente 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : passer les fichiers en .jsp lorsque se sera prêt
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 		rd.forward(request, response);
 	}
