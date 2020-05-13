@@ -64,11 +64,11 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			stmt.execute();
 			System.out.println("Personne insérée en base de donnée : " + t.toString());
 			stmt.close();
-			con = ConnectionProvider.closeConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		con = ConnectionProvider.closeConnection();
 	}
 
 	@Override
@@ -92,11 +92,11 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			stmt.executeUpdate();
 			System.out.println("Update réalisée sur la personne : " + t.toString());
 			stmt.close();
-			con = ConnectionProvider.closeConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		con = ConnectionProvider.closeConnection();
 	}
 
 	@Override
@@ -146,10 +146,10 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			System.out.println("Utilisateur récupéré : " + _utilisateur.toString());
 			rs.close();
 			stmt.close();
-			con = ConnectionProvider.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		con = ConnectionProvider.closeConnection();
 		return _utilisateur;
 	}
 
@@ -180,6 +180,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		con = ConnectionProvider.closeConnection();
+		return _userList;
 	}
 }
