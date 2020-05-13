@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Page Profil</title>
+<meta name="viewport" content="width=device-width"/>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="ThemesCss/profile.css">
 
@@ -24,7 +25,7 @@
 		</div>
 		
 			<div class="row">
-				<div class="col-lg-6 col-sm-6 label">
+				<div class="col-6label">
 					<p>Pseudo:</p>
 					<p>Nom:</p>
 					<p>Prénom:</p>
@@ -36,7 +37,7 @@
 				</div>
 				
 			
-				<div class="col-lg-6 col-sm-6 insert">
+				<div class="col-6  insert">
 					<p>recup info</p>
 					<p>recup info</p>
 					<p>recup info</p>
