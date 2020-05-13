@@ -3,7 +3,7 @@
  */
 package fr.eni.same.bo;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 /**
  * vente represente l'objet vendu
@@ -19,7 +19,7 @@ public class Vente {
 	private int noVente;
 	private String nomArticle;
 	private String description;
-	private LocalDate dateFinEncheres;
+	private Timestamp dateFinEncheres;
 	private int miseAPrix;
 	private int prixVente;
 	private Utilisateur utilisateurAcheteur;
@@ -46,10 +46,10 @@ public class Vente {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public LocalDate getDateFinEncheres() {
+	public Timestamp getDateFinEncheres() {
 		return dateFinEncheres;
 	}
-	public void setDateFinEncheres(LocalDate dateFinEncheres) {
+	public void setDateFinEncheres(Timestamp dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
 	public int getMiseAPrix() {
@@ -96,7 +96,7 @@ public class Vente {
 	 * @param utilisateurVendeur
 	 * @param categorie
 	 */
-	public Vente(int noVente, String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix,
+	public Vente(int noVente, String nomArticle, String description, Timestamp dateFinEncheres, int miseAPrix,
 			int prixVente, Utilisateur utilisateurAcheteur, Utilisateur utilisateurVendeur, Categorie categorie) {
 		super();
 		this.noVente = noVente;
@@ -122,7 +122,7 @@ public class Vente {
 	 * @param utilisateurVendeur
 	 * @param categorie
 	 */
-	public Vente(String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix,
+	public Vente(String nomArticle, String description, Timestamp dateFinEncheres, int miseAPrix,
 			int prixVente, Utilisateur utilisateurAcheteur, Utilisateur utilisateurVendeur, Categorie categorie) {
 		super();
 		this.nomArticle = nomArticle;
@@ -147,7 +147,7 @@ public class Vente {
 	 * @param utilisateurVendeur
 	 * @param categorie
 	 */
-	public Vente(int noVente, String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix,
+	public Vente(int noVente, String nomArticle, String description, Timestamp dateFinEncheres, int miseAPrix,
 			Utilisateur utilisateurAcheteur, Utilisateur utilisateurVendeur, Categorie categorie) {
 		super();
 		this.noVente = noVente;
@@ -172,7 +172,7 @@ public class Vente {
 	 * @param utilisateurVendeur
 	 * @param categorie
 	 */
-	public Vente(String nomArticle, String description, LocalDate dateFinEncheres, int miseAPrix,
+	public Vente(String nomArticle, String description, Timestamp dateFinEncheres, int miseAPrix,
 			Utilisateur utilisateurAcheteur, Utilisateur utilisateurVendeur, Categorie categorie) {
 		super();
 		this.nomArticle = nomArticle;
@@ -196,7 +196,7 @@ public class Vente {
 	 * @param utilisateurVendeur
 	 * @param categorie
 	 */
-	public Vente(int noVente, String nomArticle, String description, LocalDate dateFinEncheres,
+	public Vente(int noVente, String nomArticle, String description, Timestamp dateFinEncheres,
 			Utilisateur utilisateurAcheteur, Utilisateur utilisateurVendeur, Categorie categorie) {
 		super();
 		this.noVente = noVente;
@@ -219,7 +219,7 @@ public class Vente {
 	 * @param utilisateurVendeur
 	 * @param categorie
 	 */
-	public Vente(String nomArticle, String description, LocalDate dateFinEncheres,
+	public Vente(String nomArticle, String description, Timestamp dateFinEncheres,
 			Utilisateur utilisateurVendeur, Categorie categorie) {
 		super();
 		this.nomArticle = nomArticle;
@@ -241,7 +241,7 @@ public class Vente {
 	 * @param utilisateurVendeur
 	 * @param categorie
 	 */
-	public Vente(int noVente, String nomArticle, String description, LocalDate dateFinEncheres,
+	public Vente(int noVente, String nomArticle, String description, Timestamp dateFinEncheres,
 			Utilisateur utilisateurVendeur, Categorie categorie) {
 		super();
 		this.noVente = noVente;
@@ -264,7 +264,7 @@ public class Vente {
 	 * @param utilisateurVendeur
 	 * @param categorie
 	 */
-	public Vente(String nomArticle, String description, LocalDate dateFinEncheres,
+	public Vente(String nomArticle, String description, Timestamp dateFinEncheres,
 			Utilisateur utilisateurAcheteur, Utilisateur utilisateurVendeur, Categorie categorie) {
 		super();
 		this.nomArticle = nomArticle;

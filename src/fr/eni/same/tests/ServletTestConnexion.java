@@ -1,7 +1,8 @@
 package fr.eni.same.tests;
 
 import java.io.IOException;
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BusinessException;
 
@@ -25,6 +27,7 @@ public class ServletTestConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		testJDBCVentes();
 		testJDBCUtilisateurs();
 		testJDBCCategories();
 	}
@@ -45,18 +48,35 @@ public class ServletTestConnexion extends HttpServlet {
 		
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardA);
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardB);
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansTel);
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPK);
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPKSansTel);
-			standardA.setPrenom("Prenom update");
-			standardA.setTelephone("0123456789");
-			DALFactory.getUtilisateurDAOJdbcImpl().update(standardA);
-			DALFactory.getUtilisateurDAOJdbcImpl().delete(standardB);
-			Utilisateur u = DALFactory.getUtilisateurDAOJdbcImpl().select(4);
-			List<Utilisateur> userList = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardB);
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansTel);
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPK);
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPKSansTel);
+//			standardA.setPrenom("Prenom update");
+//			standardA.setTelephone("0123456789");
+//			DALFactory.getUtilisateurDAOJdbcImpl().update(standardA);
+//			DALFactory.getUtilisateurDAOJdbcImpl().delete(standardB);
+//			Utilisateur u = DALFactory.getUtilisateurDAOJdbcImpl().select(4);
+//			List<Utilisateur> userList = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
 		} catch (BusinessException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void testJDBCVentes() {
+		try {
+			Utilisateur acheteur = DALFactory.getUtilisateurDAOJdbcImpl().select(22);
+			Utilisateur vendeur = DALFactory.getUtilisateurDAOJdbcImpl().select(24);
+			Categorie categorie = DALFactory.getCategorieDAOJdbcImpl().select(3);
+			Timestamp t = Timestamp.valueOf(LocalDateTime.now());
+			Vente vente = new Vente("plop","description",t,5000,6000,acheteur,vendeur,categorie);
+			DALFactory.getVenteDAOJdbcImpl().insert(vente);
+			DALFactory.getVenteDAOJdbcImpl().delete(vente);
+			DALFactory.getVenteDAOJdbcImpl().select(9);
+			DALFactory.getVenteDAOJdbcImpl().selectAll();
+		} catch (BusinessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	
