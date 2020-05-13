@@ -1,6 +1,8 @@
 package fr.eni.same.tests;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BusinessException;
 
@@ -24,7 +28,9 @@ public class ServletTestConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		testJDBCUtilisateurs();
+//		testJDBCUtilisateurs();
+//		testJDBCVentes();
+//		testJDBCCategories();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,6 +59,26 @@ public class ServletTestConnexion extends HttpServlet {
 			DALFactory.getUtilisateurDAOJdbcImpl().delete(standardB);
 			Utilisateur u = DALFactory.getUtilisateurDAOJdbcImpl().select(4);
 			List<Utilisateur> userList = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+	}
+	private void testJDBCVentes() {
+		Date date = Date.valueOf(LocalDate.now());
+		Utilisateur acheteur = new Utilisateur("bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
+		Utilisateur vendeur = new Utilisateur(21, "cCailloux","Cailloux","console","c@hotmail.fr","rue","75000","Paris","789",845,false);
+		Categorie categorie = new Categorie(1,"première catégorie");
+		Vente v = new Vente(1,"chaussure","Une superbe chaussure",date,1000,2000,acheteur,vendeur,categorie);
+		try {
+			DALFactory.getVenteDAOJdbcImpl().insert(v);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+	}
+	private void testJDBCCategories() {
+		Categorie c = new Categorie(1,"première catégorie");
+		try {
+			DALFactory.getCategorieDAOJdbcImpl().insert(c);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
