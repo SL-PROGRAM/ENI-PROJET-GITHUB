@@ -121,8 +121,35 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public Utilisateur select(int id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		Utilisateur _utilisateur = new Utilisateur();
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				_utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				_utilisateur.setPseudo(rs.getString("pseudo"));
+				_utilisateur.setNom(rs.getString("nom"));
+				_utilisateur.setPrenom(rs.getString("prenom"));
+				_utilisateur.setEmail(rs.getString("email"));
+				_utilisateur.setTelephone(rs.getString("telephone"));
+				_utilisateur.setRue(rs.getString("rue"));
+				_utilisateur.setCodePostal(rs.getString("code_postal"));
+				_utilisateur.setVille(rs.getString("ville"));
+				_utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+				_utilisateur.setCredit(rs.getInt("credit"));
+				_utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+			}
+			System.out.println("Utilisateur récupéré : " + _utilisateur.toString());
+			rs.close();
+			stmt.close();
+			con = ConnectionProvider.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return _utilisateur;
 	}
 
 	@Override
