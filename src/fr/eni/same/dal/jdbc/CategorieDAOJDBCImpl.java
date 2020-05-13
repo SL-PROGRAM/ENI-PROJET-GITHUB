@@ -16,11 +16,11 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	 */
 	private static CategorieDAOJDBCImpl instance;
 	
-	private static final String INSERT="INSERT INTO CATEGORIE(libelle) VALUES(?);";
-	private static final String UPDATE="UPDATE CATEGORIE SET (libelle = ?) WHERE id = ?"; 
-	private static final String DELETE="DELETE FORM CATEGORIE WHERE id = ?"; 
-	private static final String SELECT_BY_ID = "SELECT * FROM CATEGORIE WHERE no_categorie=?";
-	private static final String SELECT_ALL = "SELECT * FROM CATEGORIE";
+	private static final String INSERT="INSERT INTO categories(libelle) VALUES(?);";
+	private static final String UPDATE="UPDATE categories SET (libelle = ?) WHERE id = ?"; 
+	private static final String DELETE="DELETE FORM categories WHERE id = ?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM categories WHERE no_categorie=?";
+	private static final String SELECT_ALL = "SELECT * FROM categories";
 	
 	
 	/**
