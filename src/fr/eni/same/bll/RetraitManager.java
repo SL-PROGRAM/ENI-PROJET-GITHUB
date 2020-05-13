@@ -6,8 +6,8 @@ import fr.eni.same.bll.interfaceManager.RetraitManagerInterface;
 import fr.eni.same.bo.Retrait;
 import fr.eni.same.exception.BllException;
 
-public class RetraitManager implements RetraitManagerInterface {
-
+public class RetraitManager extends AdresseManager implements RetraitManagerInterface {
+	
 	@Override
 	public void insert(Retrait t) throws BllException {
 		// TODO Auto-generated method stub
@@ -42,25 +42,6 @@ public class RetraitManager implements RetraitManagerInterface {
 	//***********************************************************************************************//
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
-	
-	
-	@Override
-	public boolean isRueLongeurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCodePostalLongeurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isVilleLongeurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	
 
