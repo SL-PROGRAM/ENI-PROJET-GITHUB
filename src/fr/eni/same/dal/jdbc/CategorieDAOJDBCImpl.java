@@ -58,7 +58,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			{
 				t.setNoCategorie(rs.getInt(1));
 			}
-			System.out.println("Personne insérée en base de donnée : " + t.toString());
+			System.out.println("Categorie insérée en base de donnée : " + t.toString());
 			con = ConnectionProvider.closeConnection();
 			
 		} catch (SQLException e) {
@@ -75,7 +75,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			PreparedStatement stmt = con.prepareStatement(UPDATE);
 			stmt.setString(1, t.getLibelle());
 			stmt.executeUpdate();
-			System.out.println("Update réalisée sur la personne : " + t.toString());
+			System.out.println("Update réalisée sur la categorie : " + t.toString());
 			stmt.close();
 			con = ConnectionProvider.closeConnection();
 		} catch (SQLException e) {
@@ -97,7 +97,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			}
 			stmt.setInt(1, t.getNoCategorie());				
 			stmt.execute();
-			System.out.println("Utilisateur: " + t.getNoCategorie() + " supprimé en base de donnée");
+			System.out.println("Categorie: " + t.getNoCategorie() + " supprimé en base de donnée");
 			stmt.close();
 			} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,15 +131,16 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	@Override
 	public List<Categorie> selectAll() throws BusinessException {
 		List<Categorie> listCategories = new ArrayList<Categorie>();
-		Categorie categorie = null;
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL, PreparedStatement.RETURN_GENERATED_KEYS);
 			ResultSet rs = pstmt.executeQuery();
 	        while (rs.next()) {
-	        	Categorie aliments = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
-	        	listCategories.add(aliments);
+	        	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
+	        	listCategories.add(categorie);
+				System.out.println("Categorie: " + categorie.toString();
+
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
