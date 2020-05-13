@@ -12,6 +12,14 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	 */
 	
 	private static VenteDAOJDBCImpl instance;
+	private static final String INSERT="INSERT INTO "
+			+ "`ventes`(`nomarticle`, `description`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie`) "
+			+ "VALUES (?,?,?,?,?,?,?)";
+	private static final String UPDATE="UPDATE `ventes` SET "
+			+ "`nomarticle`=?,`description`=?,`date_fin_encheres`=?,`prix_initial`=?,`prix_vente`=?,`no_utilisateur`=?,`no_categorie`=? WHERE no_vente=? "; 
+	private static final String DELETE="DELETE FORM ventes WHERE id = ?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM `ventes` WHERE no_vente=? ";
+	private static final String SELECT_ALL = "SELECT * FROM `ventes`";
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
