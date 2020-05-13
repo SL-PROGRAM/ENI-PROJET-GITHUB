@@ -62,4 +62,52 @@ public class UtilisateurManager implements UtilisateurManagerInterface {
 		return false;
 	}
 
+	@Override
+	public boolean isRueLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCodePostalLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isVilleLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isPseudoLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isNomLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isPrenomLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isTelephoneLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isMotDePasseValide(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

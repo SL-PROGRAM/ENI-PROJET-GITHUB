@@ -38,4 +38,30 @@ public class RetraitManager implements RetraitManagerInterface {
 		return null;
 	}
 
+
+	//***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+	//***********************************************************************************************//
+	
+	
+	@Override
+	public boolean isRueLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCodePostalLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isVilleLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+
 }

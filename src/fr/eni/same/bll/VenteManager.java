@@ -57,6 +57,18 @@ public class VenteManager implements VenteManagerInterface {
 		return false;
 	}
 
+	@Override
+	public boolean isNomArticleLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isDescriptionLongeurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 
 }
