@@ -8,7 +8,7 @@ import java.util.List;
 
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.ConnectionProvider;
-import fr.eni.same.dal.UtilisateurDAO;
+import fr.eni.same.dal.interfaceDAO.UtilisateurDAO;
 import fr.eni.same.exception.BusinessException;
 
 public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
@@ -88,6 +88,10 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	
+
 
 
 

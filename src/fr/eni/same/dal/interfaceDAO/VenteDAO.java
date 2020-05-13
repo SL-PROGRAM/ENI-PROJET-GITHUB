@@ -1,4 +1,6 @@
-package fr.eni.same.dal;
+package fr.eni.same.dal.interfaceDAO;
+
+import java.time.LocalDateTime;
 
 import fr.eni.same.bo.Vente;
 
@@ -7,5 +9,9 @@ import fr.eni.same.bo.Vente;
  * @author etienne
  */
 public interface VenteDAO extends DAO<Vente> {
+	
+	
+
+	
 
 }

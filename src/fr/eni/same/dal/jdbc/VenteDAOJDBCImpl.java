@@ -3,7 +3,7 @@ package fr.eni.same.dal.jdbc;
 
 import java.util.List;
 import fr.eni.same.bo.Vente;
-import fr.eni.same.dal.VenteDAO;
+import fr.eni.same.dal.interfaceDAO.VenteDAO;
 import fr.eni.same.exception.BusinessException;
 
 public class VenteDAOJDBCImpl implements VenteDAO{
@@ -59,4 +59,6 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 }
