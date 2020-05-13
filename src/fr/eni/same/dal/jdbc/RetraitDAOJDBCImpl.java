@@ -12,6 +12,11 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	 */
 	
 	private static RetraitDAOJDBCImpl instance;
+	private static final String INSERT="INSERT INTO RETRAITS(rue, code_postal, ville) VALUES(?, ?,?);";
+	private static final String UPDATE="UPDATE `RETRAITS` SET `rue`=?,`code_postal`=?,`ville`=? WHERE ?"; 
+	private static final String DELETE="DELETE FORM RETRAITS WHERE id = ?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM RETRAITS FROM `ENCHERES` WHERE `no_vente`=?";
+	private static final String SELECT_ALL = "SELECT * FROM RETRAITS";
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
