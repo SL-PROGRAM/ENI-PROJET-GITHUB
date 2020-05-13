@@ -162,19 +162,18 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				Utilisateur _utilisateur = new Utilisateur();
-				_utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
-				_utilisateur.setPseudo(rs.getString("pseudo"));
-				_utilisateur.setNom(rs.getString("nom"));
-				_utilisateur.setPrenom(rs.getString("prenom"));
-				_utilisateur.setEmail(rs.getString("email"));
-				_utilisateur.setTelephone(rs.getString("telephone"));
-				_utilisateur.setRue(rs.getString("rue"));
-				_utilisateur.setCodePostal(rs.getString("code_postal"));
-				_utilisateur.setVille(rs.getString("ville"));
-				_utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
-				_utilisateur.setCredit(rs.getInt("credit"));
-				_utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+				Utilisateur _utilisateur = new Utilisateur(rs.getInt("no_utilisateur"),
+															rs.getString("pseudo"),
+															rs.getString("nom"),
+															rs.getString("prenom"),
+															rs.getString("email"),
+															rs.getString("telephone"),
+															rs.getString("rue"),
+															rs.getString("code_postal"),
+															rs.getString("ville"),
+															rs.getString("mot_de_passe"),
+															rs.getInt("credit"),
+															rs.getBoolean("administrateur"));
 				_userList.add(_utilisateur);
 				System.out.println(_utilisateur.toString());
 			}
@@ -183,11 +182,4 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 		}
 		return null;
 	}
-
-
-	
-
-
-
-
 }
