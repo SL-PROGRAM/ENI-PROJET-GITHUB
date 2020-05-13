@@ -4,7 +4,7 @@ package fr.eni.same.dal.jdbc;
 import java.time.LocalDateTime;
 import java.util.List;
 import fr.eni.same.bo.Vente;
-import fr.eni.same.dal.VenteDAO;
+import fr.eni.same.dal.interfaceDAO.VenteDAO;
 import fr.eni.same.exception.BusinessException;
 
 public class VenteDAOJDBCImpl implements VenteDAO{
@@ -62,20 +62,4 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	}
 
 
-	//***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
-	//***********************************************************************************************//
-	
-
-	@Override
-	public boolean isdateFinEnchere(LocalDateTime dateFinEnchere) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPrixInitialPositif(int prixInitial) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
