@@ -18,9 +18,10 @@ public class ServletEnchereGagnee extends HttpServlet {
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * doGet : redirection vers la page affichant les informations de l'enchère gagnée (enchereGagnee.jsp)
+	 * doPost : Récupération des informations liées à la vente que l'utilisateur a remporté
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : passer les fichiers en .jsp lorsque se sera prêt
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/enchereGagnee.jsp");
 		rd.forward(request, response);
 	}
