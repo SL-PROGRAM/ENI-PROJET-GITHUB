@@ -12,7 +12,6 @@ public class Enchere {
 	private Utilisateur utilisateurEnchere;
 	private Vente venteEnchere;
 	
-	
 	public Timestamp getDateEnchere() {
 		return dateEnchere;
 	}

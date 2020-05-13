@@ -1,7 +1,5 @@
 package fr.eni.same.dal.interfaceDAO;
 
-import java.time.LocalDateTime;
-
 import fr.eni.same.bo.Vente;
 
 /**
@@ -10,8 +8,6 @@ import fr.eni.same.bo.Vente;
  */
 public interface VenteDAO extends DAO<Vente> {
 	
-	
-
-	
+	public void selectAcheteur(Vente t);
 
 }
