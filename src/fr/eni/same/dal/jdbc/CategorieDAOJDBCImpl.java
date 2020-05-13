@@ -1,9 +1,17 @@
 package fr.eni.same.dal.jdbc;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.TPSuiviDesRepas.bo.Aliments;
+import fr.eni.TPSuiviDesRepas.dal.CodesResultatDAL;
 import fr.eni.same.bo.Categorie;
+import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.CategorieDAO;
 import fr.eni.same.exception.BusinessException;
 
@@ -53,20 +61,65 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 
 	@Override
 	public void delete(Categorie t) throws BusinessException {
-		// TODO Auto-generated method stub
-
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement stmt = null;
+			if(t.getNoCategorie() != 0) {
+				stmt = con.prepareStatement(DELETE);
+			}else {
+				stmt = con.prepareStatement(DELETE, Statement.RETURN_GENERATED_KEYS);
+			}
+			stmt.setInt(1, t.getNoCategorie());				
+			stmt.execute();
+			System.out.println("Utilisateur: " + t.getNoCategorie() + " supprimé en base de donnée");
+			stmt.close();
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con=ConnectionProvider.closeConnection();
 	}
 
 	@Override
 	public Categorie select(int id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		Categorie categorie = null;
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
+			}else {
+				BusinessException businessException = new BusinessException();
+				throw businessException;
+			}
+			} catch (SQLException e) {
+			e.printStackTrace();
+			}
+		con=ConnectionProvider.closeConnection();
+		
+		return categorie;
 	}
 
 	@Override
 	public List<Categorie> selectAll() throws BusinessException {
 		List<Categorie> listCategories = new ArrayList<Categorie>();
-		
+		Categorie categorie = null;
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL, PreparedStatement.RETURN_GENERATED_KEYS);
+			ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	        	Categorie aliments = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
+	        	listCategories.add(aliments);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con=ConnectionProvider.closeConnection();
 		
 		
 		
