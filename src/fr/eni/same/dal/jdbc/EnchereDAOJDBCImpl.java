@@ -4,11 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
@@ -24,8 +22,8 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 	
 	private static EnchereDAOJDBCImpl instance;
 	private static final String INSERT="INSERT INTO encheres(date_enchere, no_utilisateur, no_vente) VALUES(?, ?,?);";
-	private static final String UPDATE="UPDATE `encheres` SET `date_enchere`=?,`no_utilisateur`=?,`no_vente`=? WHERE ?"; 
-	private static final String DELETE="DELETE FORM encheres WHERE id = ?"; 
+	private static final String UPDATE="UPDATE `encheres` SET `date_enchere`=? WHERE `no_utilisateur`=? AND `no_vente`=?"; 
+	private static final String DELETE="DELETE FROM `encheres` WHERE `no_utilisateur`=? AND `no_vente`=?"; 
 	private static final String SELECT_BY_ID = "SELECT * FROM encheres WHERE `no_utilisateur`=? AND `no_vente`=?";
 	private static final String SELECT_ALL = "SELECT * FROM encheres";
 
@@ -56,6 +54,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 			pstmt.setInt(2, t.getUtilisateurEnchere().getNoUtilisateur());
 			pstmt.setInt(3, t.getVenteEnchere().getNoVente());
 			pstmt.execute();
+			ResultSet rs = pstmt.getGeneratedKeys();
 		
 			System.out.println("Enchere insérée en base de donnée : " + t.toString());
 			
@@ -95,11 +94,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 		con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement stmt = null;
-			if(t.getUtilisateurEnchere().getNoUtilisateur() != 0 && t.getVenteEnchere().getNoVente() != 0) {
-				stmt = con.prepareStatement(DELETE);
-			}else {
-				stmt = con.prepareStatement(DELETE, Statement.RETURN_GENERATED_KEYS);
-			}
+			stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, t.getUtilisateurEnchere().getNoUtilisateur());		
 			stmt.setInt(2, t.getVenteEnchere().getNoVente());				
 
@@ -115,19 +110,21 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 		}	}
 
 	@Override
-	public Enchere select(int id) throws BusinessException {
+	public Enchere select(int noUtlisateur, int noVente) throws BusinessException {
 		Enchere enchere=null;
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID, PreparedStatement.RETURN_GENERATED_KEYS);
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, noUtlisateur);
+			pstmt.setInt(2, noVente);
+
 			ResultSet rs = pstmt.executeQuery();
 			
 			if (rs.next()) {		
 				Utilisateur utilisateur = DALFactory.getUtilisateurDAOJdbcImpl().select(rs.getInt("no_utilisateur"));
 				Vente vente = DALFactory.getVenteDAOJdbcImpl().select(rs.getInt("no_vente"));
-				enchere = new Enchere(rs.getTimestamp(""), utilisateur, vente);
+				enchere = new Enchere(rs.getTimestamp("date_enchere"), utilisateur, vente);
 				System.out.println("select Enchere: " + enchere.toString());
 
 			}else {
@@ -154,10 +151,9 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 	        while (rs.next()) {
 	        	Utilisateur utilisateur = DALFactory.getUtilisateurDAOJdbcImpl().select(rs.getInt("no_utilisateur"));
 				Vente vente = DALFactory.getVenteDAOJdbcImpl().select(rs.getInt("no_vente"));
-				Enchere enchere = new Enchere(rs.getTimestamp(""), utilisateur, vente);
+				Enchere enchere = new Enchere(rs.getTimestamp("date_enchere"), utilisateur, vente);
 	        	listEnchere.add(enchere);
 				System.out.println("Categorie: " + enchere.toString());
-
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -166,6 +162,11 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 			con=ConnectionProvider.closeConnection();		
 		}
 		return listEnchere;
+	}
+
+	@Override
+	public Enchere select(int id) throws BusinessException {
+		throw new BusinessException();
 	}
 
 
