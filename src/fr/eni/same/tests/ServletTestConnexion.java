@@ -34,11 +34,14 @@ public class ServletTestConnexion extends HttpServlet {
 		Utilisateur constructeurSansPKSansTel = new Utilisateur("eEtienne","Etoile","plop","etienne@hotmail.fr","rue","35000","Marseille","13000",12000,true);
 		
 		try {
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardA);
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardB);
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansTel);
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPK);
-			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPKSansTel);
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardA);
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardB);
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansTel);
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPK);
+//			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPKSansTel);
+			standardA.setPrenom("Prenom update");
+			standardA.setTelephone("0123456789");
+			DALFactory.getUtilisateurDAOJdbcImpl().update(standardA);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
