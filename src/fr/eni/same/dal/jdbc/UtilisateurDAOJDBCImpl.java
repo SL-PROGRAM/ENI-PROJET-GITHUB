@@ -2,6 +2,7 @@ package fr.eni.same.dal.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -37,7 +38,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
     private static final String INSERT="INSERT INTO utilisateurs VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE="UPDATE utilisateurs SET pseudo=?, nom=?, prenom=?, email=?, "
 									+ "telephone=?, rue=?, code_postal=?,ville=?,mot_de_passe=?, credit=?,administrateur=? WHERE no_utilisateur = ?";
-	private static final String DELETE="DELETE FROM utilisateurs WHERE id = ?"; 
+	private static final String DELETE ="DELETE FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_BY_ID = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_ALL = "SELECT * FROM utilisateurs";
 	
@@ -99,8 +100,23 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public void delete(Utilisateur t) throws BusinessException {
-		// TODO Auto-generated method stub
-		
+		Connection con = null;
+		con = ConnectionProvider.openConnection();
+		try {
+			PreparedStatement stmt = null;
+			if(t.getNoUtilisateur() != 0) {
+				stmt = con.prepareStatement(DELETE);
+			}else {
+				stmt = con.prepareStatement(DELETE, Statement.RETURN_GENERATED_KEYS);
+			}
+			stmt.setInt(1, t.getNoUtilisateur());				
+			stmt.execute();
+			System.out.println("Utilisateur: " + t.getPrenom() + " supprimé en base de donnée");
+			stmt.close();
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con=ConnectionProvider.closeConnection();
 	}
 
 	@Override
