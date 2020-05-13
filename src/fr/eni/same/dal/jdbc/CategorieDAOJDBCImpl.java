@@ -23,10 +23,10 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	private static CategorieDAOJDBCImpl instance;
 	
 	private static final String INSERT="INSERT INTO categories(libelle) VALUES(?);";
-	private static final String UPDATE="UPDATE categories SET (libelle = ?) WHERE id = ?"; 
-	private static final String DELETE="DELETE FORM categories WHERE id = ?"; 
-	private static final String SELECT_BY_ID = "SELECT * FROM categories WHERE no_categorie=?";
-	private static final String SELECT_ALL = "SELECT * FROM categories";
+	private static final String UPDATE="UPDATE `categories` SET `libelle`=? WHERE `no_categorie`=?"; 
+	private static final String DELETE="DELETE FROM `categories` WHERE no_categorie=?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM `categories` WHERE `no_categorie`=?";
+	private static final String SELECT_ALL = "SELECT * FROM `categories`";
 	
 	
 	/**
@@ -74,6 +74,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 		try {
 			PreparedStatement stmt = con.prepareStatement(UPDATE);
 			stmt.setString(1, t.getLibelle());
+			stmt.setInt(2, t.getNoCategorie());
 			stmt.executeUpdate();
 			System.out.println("Update réalisée sur la categorie : " + t.toString());
 			stmt.close();
@@ -115,7 +116,9 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
+				categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+				System.out.println("select Categorie: " + categorie.toString());
+
 			}else {
 				BusinessException businessException = new BusinessException();
 				throw businessException;
@@ -137,7 +140,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL, PreparedStatement.RETURN_GENERATED_KEYS);
 			ResultSet rs = pstmt.executeQuery();
 	        while (rs.next()) {
-	        	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
+	        	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
 	        	listCategories.add(categorie);
 				System.out.println("Categorie: " + categorie.toString());
 
