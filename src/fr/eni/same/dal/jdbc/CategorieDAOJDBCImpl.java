@@ -139,7 +139,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	        while (rs.next()) {
 	        	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
 	        	listCategories.add(categorie);
-				System.out.println("Categorie: " + categorie.toString();
+				System.out.println("Categorie: " + categorie.toString());
 
 			}
 		}catch (SQLException e) {
