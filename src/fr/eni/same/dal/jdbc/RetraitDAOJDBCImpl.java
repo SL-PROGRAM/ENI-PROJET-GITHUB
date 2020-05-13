@@ -67,12 +67,5 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 		return null;
 	}
 
-	
-	
-	//***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
-	//***********************************************************************************************//
-	
-	
 
 }
