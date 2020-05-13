@@ -23,10 +23,10 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	private static CategorieDAOJDBCImpl instance;
 	
 	private static final String INSERT="INSERT INTO categories(libelle) VALUES(?);";
-	private static final String UPDATE="UPDATE categories SET (libelle = ?) WHERE id = ?"; 
-	private static final String DELETE="DELETE FORM categories WHERE id = ?"; 
-	private static final String SELECT_BY_ID = "SELECT * FROM categories WHERE no_categorie=?";
-	private static final String SELECT_ALL = "SELECT * FROM categories";
+	private static final String UPDATE="UPDATE `categories` SET `libelle`=? WHERE `no_categorie`=?"; 
+	private static final String DELETE="DELETE FROM `categories` WHERE no_categorie=?"; 
+	private static final String SELECT_BY_ID = "SELECT * FROM `categories` WHERE `no_categorie`=?";
+	private static final String SELECT_ALL = "SELECT * FROM `categories`";
 	
 	
 	/**
@@ -58,12 +58,13 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			{
 				t.setNoCategorie(rs.getInt(1));
 			}
-			System.out.println("Categorie insérée en base de donnée : " + t.toString());
-			con = ConnectionProvider.closeConnection();
-			
+			System.out.println("Categorie insérée en base de donnée : " + t.toString());			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			con=ConnectionProvider.closeConnection();		
 		}
 	}
 
@@ -74,13 +75,16 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 		try {
 			PreparedStatement stmt = con.prepareStatement(UPDATE);
 			stmt.setString(1, t.getLibelle());
+			stmt.setInt(2, t.getNoCategorie());
 			stmt.executeUpdate();
 			System.out.println("Update réalisée sur la categorie : " + t.toString());
 			stmt.close();
-			con = ConnectionProvider.closeConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			con=ConnectionProvider.closeConnection();		
 		}
 	}
 
@@ -102,7 +106,9 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		con=ConnectionProvider.closeConnection();
+		finally {
+			con=ConnectionProvider.closeConnection();		
+		}
 	}
 
 	@Override
@@ -115,16 +121,19 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
+				categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+				System.out.println("select Categorie: " + categorie.toString());
+
 			}else {
 				BusinessException businessException = new BusinessException();
 				throw businessException;
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			}
-		con=ConnectionProvider.closeConnection();
-		
+		}
+		finally {
+			con=ConnectionProvider.closeConnection();		
+		}		
 		return categorie;
 	}
 
@@ -137,7 +146,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL, PreparedStatement.RETURN_GENERATED_KEYS);
 			ResultSet rs = pstmt.executeQuery();
 	        while (rs.next()) {
-	        	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("nom"));
+	        	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
 	        	listCategories.add(categorie);
 				System.out.println("Categorie: " + categorie.toString());
 
@@ -145,8 +154,9 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		con=ConnectionProvider.closeConnection();		
-		
+		finally {
+			con=ConnectionProvider.closeConnection();		
+		}		
 		return listCategories;
 	}
 
