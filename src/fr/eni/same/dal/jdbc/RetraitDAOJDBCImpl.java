@@ -109,7 +109,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 		}
 		finally {
 			con=ConnectionProvider.closeConnection();		
-		}	}		
+		}		
 	}
 
 	@Override
