@@ -18,9 +18,11 @@ public class ServletListeEncheres extends HttpServlet {
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * doGet : redirection vers la page affichant la liste des enchères disponibles (listeEnchere.jsp)
+	 * doPost : Récupération des identifiants de l'utilisateur, affichage des informations de l'utilisateur.
+	 * /!\ TODO : Penser à créer les filtres : "Mes ventes", "Mes enchères en cours", "Mes acquisitions", "Autres enchères". 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : passer les fichiers en .jsp lorsque se sera prêt
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 		rd.forward(request, response);
 	}
