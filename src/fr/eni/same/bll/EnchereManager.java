@@ -9,6 +9,26 @@ import fr.eni.same.exception.BllException;
 
 public class EnchereManager implements EnchereManagerInterface {
 
+	private static EnchereManager instance;
+
+	/**
+	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 */
+    private EnchereManager() {
+	}
+
+    /**
+     * methode Get pour récupérer l'instance et la créer si elle n'existe pas
+     * @return
+     */
+    public static synchronized  EnchereManager getEnchereManager () {
+        if(instance == null){
+            instance = new EnchereManager();
+        }
+        return instance;
+    }
+    
+    
 	@Override
 	public void insert(Enchere t) throws BllException {
 		// TODO Auto-generated method stub

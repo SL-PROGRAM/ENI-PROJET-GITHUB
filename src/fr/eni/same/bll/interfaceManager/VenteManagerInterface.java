@@ -1,5 +1,6 @@
 package fr.eni.same.bll.interfaceManager;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import fr.eni.same.bo.Vente;
@@ -26,7 +27,7 @@ public interface VenteManagerInterface extends ManagerInterface<Vente> {
 	 * @param description
 	 * @return
 	 */
-	public void dateFinEnchere(LocalDateTime dateFinEnchere) throws BllException;
+	public void dateFinEnchere(Timestamp dateFinEnchere) throws BllException;
 	
 	/**
 	 * Veref prixInitial > 0
