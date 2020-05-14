@@ -27,7 +27,8 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			+ " VALUES (?,?,?,?,?,?,?)";
 	private static final String UPDATE="UPDATE ventes"
 			+ " SET nomarticle=?, description=?, date_fin_encheres=?, prix_initial=?,"
-			+ " prix_vente=?, no_utilisateur=?, no_categorie=?";
+			+ " prix_vente=?, no_utilisateur=?, no_categorie=?"
+			+ " WHERE no_vente=?";
 	private static final String DELETE ="DELETE FROM ventes WHERE no_vente=?";
 	private static final String SELECT_BY_ID = "SELECT *" + 
 			" FROM ventes" + 
@@ -105,6 +106,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			stmt.setInt(5, t.getPrixVente());
 			stmt.setInt(6, t.getUtilisateurVendeur().getNoUtilisateur());
 			stmt.setInt(7, t.getCategorie().getNoCategorie());
+			stmt.setInt(8, t.getNoVente());
 			stmt.executeUpdate();
 			stmt.close();
 //			System.out.println("Update vente réalisée en base de donnée : " + t.toString());
@@ -208,10 +210,8 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 				_vente.setUtilisateurVendeur(_utilisateur);
 				_vente.setCategorie(_categorie);
 				_venteList.add(_vente);
+				System.out.println(_vente.toString());
 			}
-//			for (int i = 0; i < _venteList.size(); i++) {
-//				System.out.println(_venteList.get(i).toString());
-//			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
