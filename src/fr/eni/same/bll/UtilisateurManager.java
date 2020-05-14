@@ -112,6 +112,9 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		TelephoneLongueurCorrect(t.getTelephone());
 		MotDePasseValide(t.getEmail());
 		CreditPositif(t.getCredit());
+		RueLongueurCorrect(t.getRue());
+		VilleLongueurCorrect(t.getVille());
+		CodePostalLongueurCorrect(t.getCodePostal());
 	}
 
 	//***********************************************************************************************//
