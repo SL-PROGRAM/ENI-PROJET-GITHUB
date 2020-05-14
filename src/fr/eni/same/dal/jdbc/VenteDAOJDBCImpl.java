@@ -15,7 +15,7 @@ import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.dal.interfaceDAO.VenteDAO;
-import fr.eni.same.exception.BusinessException;
+import fr.eni.same.exception.DALException;
 
 public class VenteDAOJDBCImpl implements VenteDAO{
 	/**
@@ -52,7 +52,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 
 	
 	@Override
-	public void insert(Vente t) throws BusinessException {
+	public void insert(Vente t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -79,7 +79,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	}
 
 	@Override
-	public void update(Vente t) throws BusinessException {
+	public void update(Vente t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -102,7 +102,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	}
 
 	@Override
-	public void delete(Vente t) throws BusinessException {
+	public void delete(Vente t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -119,7 +119,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	}
 
 	@Override
-	public Vente select(int id) throws BusinessException {
+	public Vente select(int id) throws DALException {
 		Connection con = null;
 		Vente _vente = new Vente();
 		con = ConnectionProvider.openConnection();			
@@ -153,7 +153,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	}
 
 	@Override
-	public List<Vente> selectAll() throws BusinessException {
+	public List<Vente> selectAll() throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		List<Vente> _venteList = new ArrayList<Vente>();

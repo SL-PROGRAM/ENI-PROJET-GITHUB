@@ -13,7 +13,7 @@ import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.dal.interfaceDAO.EnchereDAO;
-import fr.eni.same.exception.BusinessException;
+import fr.eni.same.exception.DALException;
 
 public class EnchereDAOJDBCImpl implements EnchereDAO {
 	/**
@@ -45,7 +45,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
     }
 	
 	@Override
-	public void insert(Enchere t) throws BusinessException {
+	public void insert(Enchere t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -67,7 +67,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 	}
 
 	@Override
-	public void update(Enchere t) throws BusinessException {
+	public void update(Enchere t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -88,7 +88,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 	}
 
 	@Override
-	public void delete(Enchere t) throws BusinessException {
+	public void delete(Enchere t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -109,7 +109,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 		}	}
 
 	@Override
-	public Enchere select(int noUtlisateur, int noVente) throws BusinessException {
+	public Enchere select(int noUtlisateur, int noVente) throws DALException {
 		Enchere enchere=null;
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
@@ -127,7 +127,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 				System.out.println("select Enchere: " + enchere.toString());
 
 			}else {
-				BusinessException businessException = new BusinessException();
+				DALException businessException = new DALException();
 				throw businessException;
 			}
 			} catch (SQLException e) {
@@ -140,7 +140,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 	}
 
 	@Override
-	public List<Enchere> selectAll() throws BusinessException {
+	public List<Enchere> selectAll() throws DALException {
 		List<Enchere> listEnchere = new ArrayList<Enchere>();
 		Connection con = null;
 		con = ConnectionProvider.openConnection();

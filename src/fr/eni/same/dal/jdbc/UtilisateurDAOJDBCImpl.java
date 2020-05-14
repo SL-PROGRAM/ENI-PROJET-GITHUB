@@ -11,7 +11,7 @@ import java.util.List;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.UtilisateurDAO;
-import fr.eni.same.exception.BusinessException;
+import fr.eni.same.exception.DALException;
 
 public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	/**
@@ -45,7 +45,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	private static final String SELECT_ALL = "SELECT * FROM utilisateurs";
 	
 	@Override
-	public void insert(Utilisateur t) throws BusinessException {
+	public void insert(Utilisateur t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -67,7 +67,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 				t.setNoUtilisateur(rs.getInt(1));
 			}
 			stmt.close();
-			System.out.println("Personne insérée en base de donnée : " + t.toString());
+//			System.out.println("Personne insérée en base de donnée : " + t.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -76,7 +76,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	}
 
 	@Override
-	public void update(Utilisateur t) throws BusinessException {
+	public void update(Utilisateur t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -95,7 +95,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			stmt.setInt(12, t.getNoUtilisateur());
 			stmt.executeUpdate();
 			stmt.close();
-			System.out.println("Update réalisée sur la personne : " + t.toString());
+//			System.out.println("Update réalisée sur la personne : " + t.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -104,7 +104,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	}
 
 	@Override
-	public void delete(Utilisateur t) throws BusinessException {
+	public void delete(Utilisateur t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -112,7 +112,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			stmt.setInt(1, t.getNoUtilisateur());
 			stmt.execute();
 			stmt.close();
-			System.out.println("Utilisateur: " + t.getPrenom() + " supprimé en base de donnée");
+//			System.out.println("Utilisateur: " + t.getPrenom() + " supprimé en base de donnée");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -121,7 +121,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	}
 
 	@Override
-	public Utilisateur select(int id) throws BusinessException {
+	public Utilisateur select(int id) throws DALException {
 		Utilisateur _utilisateur = new Utilisateur();
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
@@ -143,7 +143,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 				_utilisateur.setCredit(rs.getInt(11));
 				_utilisateur.setAdministrateur(rs.getBoolean(12));
 			}
-			System.out.println("Utilisateur récupéré : " + _utilisateur.toString());
+//			System.out.println("Utilisateur récupéré : " + _utilisateur.toString());
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
@@ -155,7 +155,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	}
 
 	@Override
-	public List<Utilisateur> selectAll() throws BusinessException {
+	public List<Utilisateur> selectAll() throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		List<Utilisateur> _userList = new ArrayList<Utilisateur>();
@@ -176,7 +176,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 															rs.getInt(11),
 															rs.getBoolean(12));
 				_userList.add(_utilisateur);
-				System.out.println(_utilisateur.toString());
+//				System.out.println(_utilisateur.toString());
 			}
 			rs.close();
 			stmt.close();
