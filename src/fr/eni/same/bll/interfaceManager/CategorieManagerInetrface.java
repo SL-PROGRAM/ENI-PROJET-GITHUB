@@ -22,7 +22,7 @@ public interface CategorieManagerInetrface extends ManagerInterface<Categorie> {
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isLibelleLongeurCorrect(String libelle); 
+	public boolean isLibelleLongueurCorrect(String libelle); 
 	
 	
 }

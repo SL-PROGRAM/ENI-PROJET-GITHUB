@@ -9,7 +9,7 @@ public interface UtilisateurManagerInterface extends ManagerInterface<Utilisateu
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isPseudoLongeurCorrect(String libelle); 
+	public boolean isPseudoLongueurCorrect(String libelle); 
 	/**
 	 * Vérifie que le Pseudo n'existe pas déja
 	 * @param pseudo
@@ -22,14 +22,14 @@ public interface UtilisateurManagerInterface extends ManagerInterface<Utilisateu
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isNomLongeurCorrect(String libelle); 
+	public boolean isNomLongueurCorrect(String libelle); 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isPrenomLongeurCorrect(String libelle); 
+	public boolean isPrenomLongueurCorrect(String libelle); 
 	
 	/**
 	 * Vérifie longeur max et min correct
@@ -44,7 +44,7 @@ public interface UtilisateurManagerInterface extends ManagerInterface<Utilisateu
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isTelephoneLongeurCorrect(String libelle); 
+	public boolean isTelephoneLongueurCorrect(String libelle); 
 	
 	/**
 	 * Vérifie longeur max et min correct

@@ -1,4 +1,4 @@
-package fr.eni.same.bll;
+package fr.eni.same.helpers;
 
 public class FonctionGenerique {
 

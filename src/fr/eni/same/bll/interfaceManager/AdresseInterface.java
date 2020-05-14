@@ -7,19 +7,19 @@ public  interface AdresseInterface {
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isRueLongeurCorrect(String libelle); 
+	public boolean isRueLongueurCorrect(String libelle); 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isCodePostalLongeurCorrect(String libelle); 
+	public boolean isCodePostalLongueurCorrect(String libelle); 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isVilleLongeurCorrect(String libelle); 
+	public boolean isVilleLongueurCorrect(String libelle); 
 }
