@@ -10,21 +10,25 @@
 <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
-	<header><%@include file="header.jspf"%></header>
+	<header><%@include file="jspf/header.jspf"%></header>
 	<div class="container">
+	
+		<!-- Message à afficher uniquement pour la Maquette 10 -->
 		<div class="row">
-			<div class="col-12 col-lg-8 offset-lg-4 text-center">
+			<div class="col-12 col-lg-8 offset-lg-3 text-center">
 				<h2>RandomDu35 a remporté l'enchère !</h2>
 			</div>
 		</div>
+		<!-- ------------------------------------------------- -->
+		
 		<div class="row">
 			<div class="col-12 col-lg-6 order-lg-2">
 				<h3>PC Gamer pour travailler</h3>
 			</div>
-			<div class="col-lg-3 offset-lg-4 d-none d-lg-block order-lg-3">
+			<div class="col-lg-3 offset-lg-3 d-none d-lg-block order-lg-3">
 				<p>Description :</p>
 			</div>
-			<div class="col-lg-5 d-none d-lg-block order-lg-4">
+			<div class="col-lg-6 d-none d-lg-block order-lg-4">
 				<p>Insérer la description voulue. Exsistit autem hoc loco
 					quaedam quaestio subdifficilis, num quando amici novi, digni
 					amicitia, veteribus sint anteponendi, ut equis vetulis teneros
@@ -52,12 +56,12 @@
 					satisfaceret atque monstraret, quam ob causam annonae convectio sit
 					impedita.</p>
 			</div>
-			<div class="col-12 col-lg-4 order-lg-1">
+			<div class="col-12 col-lg-3 order-lg-1">
 				<p>
 					<img alt="Image descriptve du produit en vente" src="">
 				</p>
 			</div>
-			<div class="col-6 col-lg-3 offset-lg-4 order-lg-5">
+			<div class="col-6 col-lg-3 offset-lg-3 order-lg-5">
 				<p>Meilleure offre :</p>
 				<p>Mise à prix :</p>
 				<p>Fin de l'enchère :</p>
@@ -67,7 +71,7 @@
 				<p>175 points</p>
 				<p>09/10/2018</p>
 			</div>
-			<div class="col-6 col-lg-3 offset-lg-4 order-lg-7">
+			<div class="col-6 col-lg-3 offset-lg-3 order-lg-7">
 				<p>Retrait :</p>
 			</div>
 
@@ -75,35 +79,49 @@
 				<p class="mb-0">5 rue des Pinsons</p>
 				<p>44 000 Nantes</p>
 			</div>
-			<div class="col-6 col-lg-3 offset-lg-4 order-lg-5 order-lg-10">
+			<div class="col-6 col-lg-3 offset-lg-3 order-lg-5 order-lg-10">
 				<p>Vendeur :</p>
 			</div>
 			<div class="col-6 col-lg-3 order-lg-11">
 				<p>NineJea</p>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-3 col-lg-2 offset-lg-4">
-				<a class="btn btn-primary btn-block" href="" role="button">
-					Annuler la vente
-				</a>
+		<!-- Création d'un formulaire juste pour pouvoir passer des informations en POST grâce aux différents boutons -->
+		<form action=""> 
+			<!-- Boutons à afficher dans la version Maquette 9 -->
+			<div class="row">
+				<div class="offset-1 col-5 col-lg-4 offset-lg-3">
+					<button class="btn btn-primary btn-block" role="button">
+						Annuler la vente
+					</button>
+				</div>
+				<div class="col-5 col-lg-4">
+					<button class="btn btn-danger btn-block" role="button">
+						Retour
+					</button>
+				</div>
 			</div>
-			<div class="col-3 col-lg-2">
-				<a class="btn btn-primary btn-block" href="" role="button">
-					Retrait effectué
-				</a>
+			
+			<!-- Boutons à afficher dans la version Maquette 10 -->
+			
+			<div class="row">
+				<div class="col-4 offset-lg-3 col-lg-3">
+					<button class="btn btn-primary btn-block" role="button">
+						Retrait effectué
+					</button>
+				</div>
+				<div class="col-4 col-lg-3">
+					<button class="btn btn-primary btn-block" role="button">
+						Contacter jojo44
+					</button>
+				</div>
+				<div class="col-4 col-lg-3">
+					<button class="btn btn-danger btn-block" role="button">
+						Retour
+					</button>
+				</div>
 			</div>
-			<div class="col-3 col-lg-2">
-				<a class="btn btn-primary btn-block" href="" role="button">
-					Contacter jojo44
-				</a>
-			</div>
-			<div class="col-3 col-lg-2">
-				<a class="btn btn-primary btn-block" href="" role="button">
-					Retour
-				</a>
-			</div>
-		</div>
+		</form>
 	</div>
 </body>
 </html>
