@@ -9,9 +9,8 @@ import fr.eni.same.bo.Vente;
 public interface VenteDAO extends DAO<Vente>, selectDAO<Vente> {
 	
 	/**
-	 * Sélectionne le gagnant de l'enchère depuis une vente
+	 * Update l'acheteur de la vente
 	 * @param t
 	 */
-	public void selectAcheteur(Vente t);
-
+	Vente updateAcheteur(Vente t);
 }
