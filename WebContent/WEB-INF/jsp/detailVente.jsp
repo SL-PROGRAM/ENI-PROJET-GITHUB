@@ -10,9 +10,9 @@
 <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
-	<header><%@include file="jspf/header.jspf"%></header>
+		
 	<div class="container">
-	
+		<%@ include file="jspf/header.jspf" %>
 		<!-- Message à afficher uniquement pour la Maquette 10 -->
 		<div class="row">
 			<div class="col-12 col-lg-8 offset-lg-3 text-center">

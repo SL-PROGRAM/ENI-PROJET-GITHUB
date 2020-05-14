@@ -1,1 +1,5 @@
-<h3>TrocEncheres.org</h3>
+<header class="row">
+	<div class="col-12">
+		<h3>TrocEncheres.org</h3>
+	</div>
+</header>

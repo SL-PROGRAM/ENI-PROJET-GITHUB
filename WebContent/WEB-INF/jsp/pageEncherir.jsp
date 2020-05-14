@@ -12,11 +12,7 @@
 <body>
 	
 	<div class="container">
-		<header class="row">
-			<div class="col-12">
-				<h3>TrocEncheres.org</h3>
-			</div>
-		</header>
+			<%@ include file="jspf/header.jspf" %>
 		<div class="row">
 			<div class="col-12 col-lg-8 offset-lg-4 text-center">
 				<h1>Détail vente</h1>

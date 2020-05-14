@@ -12,11 +12,7 @@
 
 	<div class="container">
 		
-		<header class="row">
-			<div class="col-12">
-				<h3>TrocEncheres.org</h3>
-			</div>
-		</header>
+		<%@ include file="jspf/header.jspf" %>
 		
 		<div class ="row">
 			<div class="col-12 text-center">
@@ -28,7 +24,7 @@
 				<div class="col-6 text-right">
 					<p>Pseudo:</p>
 					<p>Nom:</p>
-					<p>Prï¿½nom:</p>
+					<p>Prénom:</p>
 					<p>Email:</p>
 					<p>Telephone:</p>
 					<p>Rue:</p>
@@ -37,7 +33,7 @@
 				</div>
 				
 			
-				<div class="col-6 c">
+				<div class="col-6 ">
 					<p>recup info</p>
 					<p>recup info</p>
 					<p>recup info</p>
