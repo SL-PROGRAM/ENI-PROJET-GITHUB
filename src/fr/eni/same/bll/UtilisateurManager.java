@@ -110,21 +110,30 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		
 
 	@Override
-	public void TelephoneLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
+	public void TelephoneLongueurCorrect(String libelle) throws BllException {
+		if(!FonctionGenerique.isLongeurMax(libelle, TELEPHONE_LONGUEUR_MAX)) {
+			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ TELEPHONE_LONGUEUR_MAX);
+		}
+		if(!FonctionGenerique.isLongeurMax(libelle, TELEPHONE_LONGUEUR_MIN)) {
+			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ TELEPHONE_LONGUEUR_MIN);
+		}				
 	}
 
 	@Override
-	public void MotDePasseValide(String email) {
-		// TODO Auto-generated method stub
-		
+	public void MotDePasseValide(String email) throws BllException {
+		if(!FonctionGenerique.isLongeurMax(email, MOT_DE_PASSE_LONGUEUR_MAX)) {
+			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ MOT_DE_PASSE_LONGUEUR_MAX);
+		}
+		if(!FonctionGenerique.isLongeurMax(email, MOT_DE_PASSE_LONGEUR_MIN)) {
+			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ MOT_DE_PASSE_LONGEUR_MIN);
+		}			
 	}
 
 	@Override
-	public void CreditPositif(int credit) {
-		// TODO Auto-generated method stub
-		
+	public void CreditPositif(int credit) throws BllException {
+		if (credit < 0) {
+			throw new BllException("credit insufissant");
+		}
 	}
 
 }
