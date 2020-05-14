@@ -36,13 +36,6 @@ public interface ManagerInterface<T> {
 	 * @param T
 	 * @throws DALException
 	 */
-	public T select(int id) throws BllException;
-	
-	/**
-	 * En cas d'erreur, le code d'erreur est enregistré dans l'objet businessException.
-	 * @param T
-	 * @throws DALException
-	 */
 	public List<T> selectAll() throws BllException;
 
 }

@@ -3,6 +3,7 @@ package fr.eni.same.bll;
 import java.util.List;
 
 import fr.eni.same.bll.interfaceManager.EnchereManagerInterface;
+import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.exception.BllException;
 
@@ -27,7 +28,7 @@ public class EnchereManager implements EnchereManagerInterface {
 	}
 
 	@Override
-	public Enchere select(int id) throws BllException {
+	public Enchere select(int noVente, int noUtlisateur) throws BllException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -37,5 +38,7 @@ public class EnchereManager implements EnchereManagerInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

@@ -3,6 +3,7 @@ package fr.eni.same.bll;
 import java.util.List;
 
 import fr.eni.same.bll.interfaceManager.CategorieManagerInetrface;
+import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
@@ -10,7 +11,7 @@ import fr.eni.same.exception.DALException;
 import fr.eni.same.exception.UniqueException;
 import fr.eni.same.helpers.FonctionGenerique;
 
-public class CategorieManager implements CategorieManagerInetrface {
+public class CategorieManager implements CategorieManagerInetrface, SelectMAnagerInterface<Categorie> {
 
 	private final int LIBELLE_LONGUEUR_MAX = 30;
 	private final int LIBELLE_LONGUEUR_MIN = 4;
@@ -62,30 +63,25 @@ public class CategorieManager implements CategorieManagerInetrface {
 	
 	
 	@Override
-	public boolean isLibelleUnique(List<Categorie> list, String libelle) throws UniqueException {
+	public void LibelleUnique(List<Categorie> list, String libelle) throws BllException {
 		boolean isUnique = true;
 		for (Categorie categorie : list) {
 			if(categorie.getLibelle() == libelle) {
 				isUnique = false;
-				throw new UniqueException("Cette Catégorie existe déja");
+				throw new BllException("Cette Catégorie existe déja");
 			}
 		}
-		return isUnique;
 	}
 
 
 	@Override
-	public boolean isLibelleLongueurCorrect(String libelle) {
-		// TODO test longeur min et max avec fonction générique
-		return false;
+	public void LibelleLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
-	
 
-
-	
-	
 	
 
 }
