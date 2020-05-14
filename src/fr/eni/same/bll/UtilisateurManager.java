@@ -1,5 +1,6 @@
 package fr.eni.same.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,7 +8,9 @@ import java.util.regex.Pattern;
 import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bll.interfaceManager.UtilisateurManagerInterface;
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
+import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
 public class UtilisateurManager extends AdresseManager implements UtilisateurManagerInterface, SelectMAnagerInterface<Utilisateur> {
@@ -19,46 +22,85 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	private final int PRENOM_LONGUEUR_MIN = 5;
 	private final int EMAIL_LONGUEUR_MAX = 30;
 	private final int EMAIL_LONGUEUR_MIN = 4;
-	private final String EMAIL_REGEX = "^(.+)@(.+)$";
 	private final int TELEPHONE_LONGUEUR_MAX = 15;
 	private final int TELEPHONE_LONGUEUR_MIN = 10;
 	private final int MOT_DE_PASSE_LONGUEUR_MAX = 30;
 	private final int MOT_DE_PASSE_LONGEUR_MIN = 4;
-	
-	
-	
-	
+	private final String EMAIL_REGEX = "^(.+)@(.+)$";
+	private static UtilisateurManager instance;
+
+	/**
+	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 */
+    private UtilisateurManager() {
+	}
+
+    /**
+     * methode Get pour récupérer l'instance et la créer si elle n'existe pas
+     * @return
+     */
+    public static synchronized  UtilisateurManager getUtilisateurManager() {
+        if(instance == null){
+            instance = new UtilisateurManager();
+        }
+        return instance;
+    }
 	
 	@Override
 	public void insert(Utilisateur t) throws BllException {
 		controleUpdateAndInsert(t);
+		try {
+			DALFactory.getUtilisateurDAOJdbcImpl().insert(t);
+		} catch (DALException e) {
+			throw new BllException("Impossible d'inserer en base de donnée l'utilisateur");
+		}
 		
 	}
-
-	
 
 	@Override
 	public void update(Utilisateur t) throws BllException {
 		controleUpdateAndInsert(t);
-
+		try {
+			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
+		} catch (DALException e) {
+			throw new BllException("Impossible de modifier en base de donnée l'utilisateur");
+		}
 	}
 
 	@Override
 	public void delete(Utilisateur t) throws BllException {
-		// TODO Auto-generated method stub
-
+		try {
+			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
+		} catch (DALException e) {
+			throw new BllException("Impossible de supprimer en base de donnée l'utilisateur");
+		}
 	}
 
 	@Override
 	public Utilisateur select(int id) throws BllException {
-		// TODO Auto-generated method stub
-		return null;
+		if (id <= 0) {
+			throw new BllException("Erreur référence interdite");
+		}
+		Utilisateur utilisateur;
+		try {
+			utilisateur = DALFactory.getUtilisateurDAOJdbcImpl().select(id);
+			
+		} catch (DALException e) {
+			throw new BllException("l'utilisateur que vous demandez n'est pas référencé");
+		}
+		return utilisateur;
 	}
 
 	@Override
 	public List<Utilisateur> selectAll() throws BllException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Utilisateur> listUtilisateurs = new ArrayList<Utilisateur>();
+		try {
+			listUtilisateurs = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
+			
+		} catch (DALException e) {
+			throw new BllException("erreur de récupération des données");
+		}		
+		return listUtilisateurs;
 	}
 	
 	
