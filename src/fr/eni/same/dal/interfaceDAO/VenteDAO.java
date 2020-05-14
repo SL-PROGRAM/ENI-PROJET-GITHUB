@@ -8,6 +8,9 @@ import fr.eni.same.bo.Vente;
  */
 public interface VenteDAO extends DAO<Vente>, selectDAO<Vente> {
 	
-	public void selectAcheteur(Vente t);
-
+	/**
+	 * Update l'acheteur de la vente
+	 * @param t
+	 */
+	Vente updateAcheteur(Vente t);
 }
