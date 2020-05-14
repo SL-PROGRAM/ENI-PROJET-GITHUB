@@ -107,8 +107,8 @@ public class ServletTestConnexion extends HttpServlet {
 			DALFactory.getCategorieDAOJdbcImpl().insert(categorieSansPK);
 			categorieSansPK.setLibelle("modif-test");
 			DALFactory.getCategorieDAOJdbcImpl().update(categorieSansPK);
-			Categorie test = DALFactory.getCategorieDAOJdbcImpl().select(categorieSansPK.getNoCategorie());
-			List<Categorie> categoriesList = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+			DALFactory.getCategorieDAOJdbcImpl().select(categorieSansPK.getNoCategorie());
+			DALFactory.getCategorieDAOJdbcImpl().selectAll();
 			DALFactory.getCategorieDAOJdbcImpl().delete(categorieSansPK);
 
 		} catch (BusinessException e) {
