@@ -66,8 +66,8 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			if(rs.next()) {
 				t.setNoUtilisateur(rs.getInt(1));
 			}
-			System.out.println("Personne insérée en base de donnée : " + t.toString());
 			stmt.close();
+			System.out.println("Personne insérée en base de donnée : " + t.toString());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -94,10 +94,9 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			stmt.setByte(11, (byte) 0);
 			stmt.setInt(12, t.getNoUtilisateur());
 			stmt.executeUpdate();
-			System.out.println("Update réalisée sur la personne : " + t.toString());
 			stmt.close();
+			System.out.println("Update réalisée sur la personne : " + t.toString());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			con = ConnectionProvider.closeConnection();
@@ -109,16 +108,11 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
-			PreparedStatement stmt = null;
-			if(t.getNoUtilisateur() != 0) {
-				stmt = con.prepareStatement(DELETE);
-			}else {
-				stmt = con.prepareStatement(DELETE, Statement.RETURN_GENERATED_KEYS);
-			}
-			stmt.setInt(1, t.getNoUtilisateur());				
+			PreparedStatement stmt = con.prepareStatement(DELETE);
+			stmt.setInt(1, t.getNoUtilisateur());
 			stmt.execute();
-			System.out.println("Utilisateur: " + t.getPrenom() + " supprimé en base de donnée");
 			stmt.close();
+			System.out.println("Utilisateur: " + t.getPrenom() + " supprimé en base de donnée");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -136,18 +130,18 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				_utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
-				_utilisateur.setPseudo(rs.getString("pseudo"));
-				_utilisateur.setNom(rs.getString("nom"));
-				_utilisateur.setPrenom(rs.getString("prenom"));
-				_utilisateur.setEmail(rs.getString("email"));
-				_utilisateur.setTelephone(rs.getString("telephone"));
-				_utilisateur.setRue(rs.getString("rue"));
-				_utilisateur.setCodePostal(rs.getString("code_postal"));
-				_utilisateur.setVille(rs.getString("ville"));
-				_utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
-				_utilisateur.setCredit(rs.getInt("credit"));
-				_utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+				_utilisateur.setNoUtilisateur(rs.getInt(1));
+				_utilisateur.setPseudo(rs.getString(2));
+				_utilisateur.setNom(rs.getString(3));
+				_utilisateur.setPrenom(rs.getString(4));
+				_utilisateur.setEmail(rs.getString(5));
+				_utilisateur.setTelephone(rs.getString(6));
+				_utilisateur.setRue(rs.getString(7));
+				_utilisateur.setCodePostal(rs.getString(8));
+				_utilisateur.setVille(rs.getString(9));
+				_utilisateur.setMotDePasse(rs.getString(10));
+				_utilisateur.setCredit(rs.getInt(11));
+				_utilisateur.setAdministrateur(rs.getBoolean(12));
 			}
 			System.out.println("Utilisateur récupéré : " + _utilisateur.toString());
 			rs.close();
@@ -169,23 +163,23 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				Utilisateur _utilisateur = new Utilisateur(rs.getInt("no_utilisateur"),
-															rs.getString("pseudo"),
-															rs.getString("nom"),
-															rs.getString("prenom"),
-															rs.getString("email"),
-															rs.getString("telephone"),
-															rs.getString("rue"),
-															rs.getString("code_postal"),
-															rs.getString("ville"),
-															rs.getString("mot_de_passe"),
-															rs.getInt("credit"),
-															rs.getBoolean("administrateur"));
+				Utilisateur _utilisateur = new Utilisateur(rs.getInt(1),
+															rs.getString(2),
+															rs.getString(3),
+															rs.getString(4),
+															rs.getString(5),
+															rs.getString(6),
+															rs.getString(7),
+															rs.getString(8),
+															rs.getString(9),
+															rs.getString(10),
+															rs.getInt(11),
+															rs.getBoolean(12));
 				_userList.add(_utilisateur);
 				System.out.println(_utilisateur.toString());
-				rs.close();
-				stmt.close();
 			}
+			rs.close();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
