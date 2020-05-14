@@ -2,7 +2,7 @@ package fr.eni.same.dal.interfaceDAO;
 
 
 import fr.eni.same.bo.Enchere;
-import fr.eni.same.exception.BusinessException;
+import fr.eni.same.exception.DALException;
 
 
 /**
@@ -11,6 +11,6 @@ import fr.eni.same.exception.BusinessException;
  */
 public interface EnchereDAO extends DAO<Enchere> {
 
-	Enchere select(int noUtlisateur, int noVente) throws BusinessException;
+	Enchere select(int noUtlisateur, int noVente) throws DALException;
 
 }

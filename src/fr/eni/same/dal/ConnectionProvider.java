@@ -23,10 +23,9 @@ public abstract class ConnectionProvider {
 			context = new InitialContext();
 			DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx");
 			con = dataSource.getConnection();
-			System.out.println("Connexion ouverte");
+//			System.out.println("Connexion ouverte");
 		} catch (NamingException | SQLException e) {
 			e.printStackTrace();
-			System.out.println("Erreur");
 		}
 		return con;
 	}
@@ -38,7 +37,7 @@ public abstract class ConnectionProvider {
 		if(con != null) {
 			try {
 				con.close();
-				System.out.println("Connexion fermée");
+//				System.out.println("Connexion fermée");
 			} catch(SQLException e) {
 				e.printStackTrace();
 			}
