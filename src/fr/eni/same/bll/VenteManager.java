@@ -1,11 +1,14 @@
 package fr.eni.same.bll;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bll.interfaceManager.VenteManagerInterface;
 import fr.eni.same.bo.Vente;
+import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
+import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
 public class VenteManager implements VenteManagerInterface, SelectMAnagerInterface<Vente> {
@@ -34,32 +37,84 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	
 	@Override
 	public void insert(Vente t) throws BllException {
+		controleUpdateAndInsert(t);
+		try {
+			DALFactory.getVenteDAOJdbcImpl().insert(t);
+		} catch (DALException e) {
+			throw new BllException("Impossible d'inserer en base de donnée la vente");
+		}
 	}
 
 	@Override
 	public void update(Vente t) throws BllException {
-		// TODO Auto-generated method stub
-		
+		controleUpdateAndInsert(t);
+		try {
+			DALFactory.getVenteDAOJdbcImpl().insert(t);
+		} catch (DALException e) {
+			throw new BllException("Impossible de modifier en base de donnée la vente");
+		}
 	}
 
 	@Override
 	public void delete(Vente t) throws BllException {
-		// TODO Auto-generated method stub
+		controleDelete(t);
+		try {
+			DALFactory.getVenteDAOJdbcImpl().delete(t);
+		} catch (DALException e) {
+			throw new BllException("Impossible de supprimer en base de donnée la vente");
+		}
 		
 	}
 
 	@Override
 	public Vente select(int id) throws BllException {
-		// TODO Auto-generated method stub
-		return null;
+		noVenteNull(id);
+		Vente vente = null;
+		try {
+			vente = DALFactory.getVenteDAOJdbcImpl().select(id);
+		} catch (DALException e) {
+			throw new BllException("Impossible de recuperer en base de donnée la vente");
+		}
+		return vente;
 	}
 
 	@Override
 	public List<Vente> selectAll() throws BllException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Vente> listVentes = new ArrayList<Vente>();
+		try {
+			listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
+		} catch (DALException e) {
+			throw new BllException("Impossible de recupérer en base de donnée les ventes");
+		}
+		return listVentes;
 	}
-
+	
+	private void controleUpdateAndInsert(Vente t) throws BllException {
+		venteNull(t);
+		noVenteNull(t.getNoVente());
+		NomArticleLongeurCorrect(t.getNomArticle());
+		DescriptionLongeurCorrect(t.getDescription());
+		dateFinEnchere(t.getDateFinEncheres());
+		PrixInitialPositif(t.getPrixVente());
+	}
+	
+	private void controleDelete(Vente t) throws BllException {
+		venteNull(t);
+		noVenteNull(t.getNoVente());
+	}
+	
+	private void venteNull(Vente t) throws BllException  {
+		if (t == null) {
+			throw new BllException("Erreur : null");
+		}
+	}
+	
+	
+	private void noVenteNull(int id) throws BllException  {
+		if (id <= 0) {
+			throw new BllException("Erreur référence interdite");
+		}
+	}
 
 	//***********************************************************************************************//
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
