@@ -1,4 +1,4 @@
-package fr.eni.same.servlet;
+package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
 
@@ -12,17 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ServletVentesEnregistrees
  */
-@WebServlet("/ServletVentesEnregistrer")
-public class ServletVentesEnregistrer extends HttpServlet {
+@WebServlet("/ServletVentesEnregistrees")
+public class ServletVentesEnregistrees extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page permettant d'afficher la liste des ventes enregistrées (ventesEnregistrer.jsp)
 	 * doPost : Récupération des informations de l'utilisateur, notamment la liste des ventes enegistrées et non finalisées de l'utilsiateur
+	 * 
+	 *  Cette Servlet et la jsp correspondante prennent en charge une maquette supplémentaire non présente dans les maquettes proposées.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/ventesEnregistrer.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/ventesEnregistrees.jsp");
 		rd.forward(request, response);
 	}
 
