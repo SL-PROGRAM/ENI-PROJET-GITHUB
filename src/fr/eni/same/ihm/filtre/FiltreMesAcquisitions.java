@@ -1,4 +1,4 @@
-package fr.eni.same.filtre;
+package fr.eni.same.ihm.filtre;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -10,15 +10,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 /**
- * Servlet Filter implementation class FiltreAutresEncheres
+ * Servlet Filter implementation class FiltreMesAcquisitions
  */
-@WebFilter("/FiltreAutresEncheres")
-public class FiltreAutresEncheres implements Filter {
+@WebFilter("/FiltreMesAcquisitions")
+public class FiltreMesAcquisitions implements Filter {
 
     /**
      * Default constructor. 
      */
-    public FiltreAutresEncheres() {
+    public FiltreMesAcquisitions() {
         // TODO Auto-generated constructor stub
     }
 

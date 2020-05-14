@@ -1,4 +1,4 @@
-package fr.eni.same.filtre;
+package fr.eni.same.ihm.filtre;
 
 import java.io.IOException;
 import javax.servlet.Filter;
