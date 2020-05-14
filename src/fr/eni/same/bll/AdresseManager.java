@@ -2,7 +2,7 @@ package fr.eni.same.bll;
 
 import fr.eni.same.bll.interfaceManager.AdresseInterface;
 
-public class AdresseManager implements AdresseInterface {
+public abstract class AdresseManager implements AdresseInterface {
 	private final int RUE_LONGEUR_MAX = 30;
 	private final int RUE_LONGEUR_MIN = 4;
 	private final int CP_LONGEUR_MAX = 5;
