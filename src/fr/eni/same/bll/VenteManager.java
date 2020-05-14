@@ -1,9 +1,7 @@
 package fr.eni.same.bll;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
-
 import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bll.interfaceManager.VenteManagerInterface;
 import fr.eni.same.bo.Vente;
@@ -15,7 +13,24 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int DESCRIPTION_LONGUEUR_MAX = 300;
 	private final int DESCRIPTION_LONGUEUR_MIN = 5;
+	private static VenteManager instance;
 
+	/**
+	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 */
+    private VenteManager() {
+	}
+
+    /**
+     * methode Get pour récupérer l'instance et la créer si elle n'existe pas
+     * @return
+     */
+    public static synchronized  VenteManager getVenteManager () {
+        if(instance == null){
+            instance = new VenteManager();
+        }
+        return instance;
+    }
 	
 	@Override
 	public void insert(Vente t) throws BllException {
