@@ -3,16 +3,15 @@ package fr.eni.same.bll;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bll.interfaceManager.VenteManagerInterface;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.exception.BllException;
 
-public class VenteManager implements VenteManagerInterface {
+public class VenteManager implements VenteManagerInterface, SelectMAnagerInterface<Vente> {
 
 	@Override
 	public void insert(Vente t) throws BllException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -46,28 +45,30 @@ public class VenteManager implements VenteManagerInterface {
 	
 
 	@Override
-	public boolean isdateFinEnchere(LocalDateTime dateFinEnchere) {
+	public void NomArticleLongeurCorrect(String libelle) throws BllException {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
-	public boolean isPrixInitialPositif(int prixInitial) {
+	public void DescriptionLongeurCorrect(String libelle) throws BllException {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
-	public boolean isNomArticleLongeurCorrect(String libelle) {
+	public void dateFinEnchere(LocalDateTime dateFinEnchere) throws BllException {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
-	public boolean isDescriptionLongeurCorrect(String libelle) {
+	public void PrixInitialPositif(int prixInitial) throws BllException {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
+
+
 
 	
 
