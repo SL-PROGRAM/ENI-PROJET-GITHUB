@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 /**
  * Enchere permet de faire le lien entre l'utilisateur qui fait l'enchere et le produit vendu
  * sert a enregistrer la date et heure de l'enchere a la ms
+ * Une seul enchere par couple Vente/Utilisateur gardé en mémoire
  * @author sl
  *
  */

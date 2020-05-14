@@ -1,6 +1,6 @@
 package fr.eni.same.bll.interfaceManager;
 
-public interface AdresseInterface {
+public  interface AdresseInterface {
 
 	/**
 	 * Vérifie longeur max et min correct

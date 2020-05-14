@@ -7,7 +7,7 @@ import fr.eni.same.bo.Utilisateur;
  * @author etienne
  *
  */
-public interface UtilisateurDAO extends DAO<Utilisateur>{
+public interface UtilisateurDAO extends DAO<Utilisateur>, selectDAO<Utilisateur>{
 	
 	
 	

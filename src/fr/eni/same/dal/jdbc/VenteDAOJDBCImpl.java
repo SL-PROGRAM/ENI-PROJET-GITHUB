@@ -23,6 +23,14 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	 */
 	private static VenteDAOJDBCImpl instance;
 
+    private static final String INSERT="INSERT INTO ventes (nomarticle, description, date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)"
+    											+ " VALUES (?,?,?,?,?,?,?)";
+	private static final String UPDATE="UPDATE ventes SET nomarticle=?, description=?, date_fin_encheres=?, prix_initial=?, "
+									+ "prix_vente=?, no_utilisateur=?, no_categorie=?";
+	private static final String DELETE ="DELETE FROM ventes WHERE no_vente=?";
+	private static final String SELECT_BY_ID = "SELECT * FROM ventes WHERE no_vente=?";
+	private static final String SELECT_ALL = "SELECT * FROM ventes";
+    private static final String SELECT_ACHETEUR = "";
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
 	 */
@@ -41,21 +49,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
         return instance;
     }
 
-    private static final String INSERT="INSERT INTO ventes (nomarticle, description, date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)"
-    											+ " VALUES (?,?,?,?,?,?,?)";
-	private static final String UPDATE="UPDATE ventes SET nomarticle=?, description=?, date_fin_encheres=?, prix_initial=?, "
-									+ "prix_vente=?, no_utilisateur=?, no_categorie=?";
-	private static final String DELETE ="DELETE FROM ventes WHERE no_vente=?";
-	private static final String SELECT_BY_ID = "SELECT * FROM ventes WHERE no_vente=?";
-//	private static final String SELECT_BY_ID = "SELECT ventes.no_vente, ventes.nomarticle, ventes.description, ventes.date_fin_encheres,"
-//										+ " ventes.prix_initial, ventes.prix_vente, ventes.no_utilisateur, ventes.no_categorie"
-//										+ " FROM ventes" 
-//										+ " JOIN utilisateurs" 
-//										+ " ON ventes.no_utilisateur = utilisateurs.no_utilisateur" 
-//										+ " JOIN categories"
-//										+ " ON ventes.no_categorie = categories.no_categorie";
-	private static final String SELECT_ALL = "SELECT * FROM ventes";
-    private static final String SELECT_ACHETEUR = "";
+
 	
 	@Override
 	public void insert(Vente t) throws BusinessException {
