@@ -30,10 +30,11 @@ public class ServletTestConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		testJDBCUtilisateurs();
-//		testJDBCCategories();
-//		testJDBCVentes();
-//		testJDBCEnchere();
+		// Les tests sont prevu pour ne pas laisser d'entrée en BDD
+		testJDBCUtilisateurs();
+		testJDBCCategories();
+		testJDBCVentes();
+		testJDBCEnchere();
 		testJDBCretrait();
 		
 	}
@@ -50,10 +51,10 @@ public class ServletTestConnexion extends HttpServlet {
 	
 	private void testJDBCUtilisateurs() {
 		Utilisateur standardA = new Utilisateur(1, "aArtiste","Artiste","alain","a@laposte.net","0656467616","rue","35000","Rennes","123",155,false);
-		Utilisateur standardB = new Utilisateur("bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
-		Utilisateur constructeurSansTel = new Utilisateur(21, "cCailloux","Cailloux","console","c@hotmail.fr","rue","75000","Paris","789",845,false);
-		Utilisateur constructeurSansPK = new Utilisateur("dDouble","Double","gras","d@gmail.com","0645789876","avenue des tulipes","88465","Atlantide","4496",800,false);
-		Utilisateur constructeurSansPKSansTel = new Utilisateur("eEtienne","Etoile","plop","etienne@hotmail.fr","rue","35000","Marseille","13000",12000,true);
+//		Utilisateur standardB = new Utilisateur("bBoule","Boule","bill","b@wanadoo.fr","0546876548","rue","44000","Nantes","456",200,false);
+//		Utilisateur constructeurSansTel = new Utilisateur(21, "cCailloux","Cailloux","console","c@hotmail.fr","rue","75000","Paris","789",845,false);
+//		Utilisateur constructeurSansPK = new Utilisateur("dDouble","Double","gras","d@gmail.com","0645789876","avenue des tulipes","88465","Atlantide","4496",800,false);
+//		Utilisateur constructeurSansPKSansTel = new Utilisateur("eEtienne","Etoile","plop","etienne@hotmail.fr","rue","35000","Marseille","13000",12000,true);
 		
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardA);
@@ -61,12 +62,13 @@ public class ServletTestConnexion extends HttpServlet {
 //			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansTel);
 //			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPK);
 //			DALFactory.getUtilisateurDAOJdbcImpl().insert(constructeurSansPKSansTel);
-//			standardA.setPrenom("Prenom update");
-//			standardA.setTelephone("0123456789");
-//			DALFactory.getUtilisateurDAOJdbcImpl().update(standardA);
-//			DALFactory.getUtilisateurDAOJdbcImpl().delete(standardB);
-//			Utilisateur u = DALFactory.getUtilisateurDAOJdbcImpl().select(4);
-//			List<Utilisateur> userList = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
+			standardA.setPrenom("Prenom update");
+			standardA.setTelephone("0123456789");
+			DALFactory.getUtilisateurDAOJdbcImpl().update(standardA);
+			DALFactory.getUtilisateurDAOJdbcImpl().select(standardA.getNoUtilisateur());
+			DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
+			DALFactory.getUtilisateurDAOJdbcImpl().delete(standardA);
+
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
@@ -86,11 +88,11 @@ public class ServletTestConnexion extends HttpServlet {
 			DALFactory.getVenteDAOJdbcImpl().insert(vente);
 			vente.setDescription("Description modifier");
 			DALFactory.getVenteDAOJdbcImpl().update(vente);
-			DALFactory.getVenteDAOJdbcImpl().delete(vente);
-			DALFactory.getVenteDAOJdbcImpl().select(9);
+			DALFactory.getVenteDAOJdbcImpl().select(vente.getNoVente());
 			DALFactory.getVenteDAOJdbcImpl().selectAll();
+			DALFactory.getVenteDAOJdbcImpl().delete(vente);
+
 		} catch (BusinessException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -101,20 +103,16 @@ public class ServletTestConnexion extends HttpServlet {
 	
 	private void testJDBCCategories() {
 		Categorie categorieSansPK = new Categorie("Cat-1");
-		Categorie categorieAvecPK = new Categorie(1, "Cat-2");
 		try {
 			DALFactory.getCategorieDAOJdbcImpl().insert(categorieSansPK);
-			DALFactory.getCategorieDAOJdbcImpl().insert(categorieAvecPK);
-			System.out.println(categorieAvecPK);
-			System.out.println(categorieSansPK);
-			categorieAvecPK.setLibelle("modif-test");
-			System.out.println(categorieAvecPK);
-			DALFactory.getCategorieDAOJdbcImpl().update(categorieAvecPK);
+			categorieSansPK.setLibelle("modif-test");
+			DALFactory.getCategorieDAOJdbcImpl().update(categorieSansPK);
+			DALFactory.getCategorieDAOJdbcImpl().select(categorieSansPK.getNoCategorie());
+			DALFactory.getCategorieDAOJdbcImpl().selectAll();
 			DALFactory.getCategorieDAOJdbcImpl().delete(categorieSansPK);
-			Categorie test = DALFactory.getCategorieDAOJdbcImpl().select(categorieAvecPK.getNoCategorie());
-			List<Categorie> categoriesList = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+
 		} catch (BusinessException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 	}
@@ -134,29 +132,18 @@ public class ServletTestConnexion extends HttpServlet {
 
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(standardA);
 			Categorie categorie = DALFactory.getCategorieDAOJdbcImpl().select(3);
-
-			
 			Timestamp t = Timestamp.valueOf(LocalDateTime.now());
-			
 			Vente vente = new Vente("plop","description",t,5000,6000,standardA,standardA,categorie);
 
 			DALFactory.getVenteDAOJdbcImpl().insert(vente);
 			Enchere enchere1 = new Enchere(t, standardA, vente);
-			Enchere enchere2 = new Enchere(t, standardB, vente);
-
 			DALFactory.getEnchereDAOJdbcImpl().insert(enchere1);
-			DALFactory.getEnchereDAOJdbcImpl().insert(enchere2);
-
 			t = Timestamp.valueOf(LocalDateTime.now());
 			DALFactory.getEnchereDAOJdbcImpl().update(enchere1);
-			System.out.println(enchere2.toString());
-			DALFactory.getEnchereDAOJdbcImpl().delete(enchere2);
-			System.out.println(enchere1.getUtilisateurEnchere().getNoUtilisateur());
-			System.out.println(enchere1.getVenteEnchere().getNoVente());
 			DALFactory.getEnchereDAOJdbcImpl().select(enchere1.getUtilisateurEnchere().getNoUtilisateur(), enchere1.getVenteEnchere().getNoVente());
 			DALFactory.getEnchereDAOJdbcImpl().selectAll();
+			DALFactory.getEnchereDAOJdbcImpl().delete(enchere1);
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -186,7 +173,6 @@ public class ServletTestConnexion extends HttpServlet {
 			
 			
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
