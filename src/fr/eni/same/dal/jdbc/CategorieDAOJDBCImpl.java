@@ -11,7 +11,7 @@ import java.util.List;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.CategorieDAO;
-import fr.eni.same.exception.BusinessException;
+import fr.eni.same.exception.DALException;
 
 
 
@@ -22,7 +22,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	 */
 	private static CategorieDAOJDBCImpl instance;
 	
-	private static final String INSERT="INSERT INTO categories(libelle) VALUES(?);";
+	private static final String INSERT="INSERT INTO categories(libelle) VALUES(?)";
 	private static final String UPDATE="UPDATE `categories` SET `libelle`=? WHERE `no_categorie`=?"; 
 	private static final String DELETE="DELETE FROM `categories` WHERE no_categorie=?"; 
 	private static final String SELECT_BY_ID = "SELECT * FROM `categories` WHERE `no_categorie`=?";
@@ -46,7 +46,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
         return instance;
     }
 	@Override
-	public void insert(Categorie t) throws BusinessException {
+	public void insert(Categorie t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -58,9 +58,8 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			{
 				t.setNoCategorie(rs.getInt(1));
 			}
-			System.out.println("Categorie insérée en base de donnée : " + t.toString());			
+//			System.out.println("Categorie insérée en base de donnée : " + t.toString());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -69,7 +68,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	}
 
 	@Override
-	public void update(Categorie t) throws BusinessException {
+	public void update(Categorie t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -77,10 +76,9 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 			stmt.setString(1, t.getLibelle());
 			stmt.setInt(2, t.getNoCategorie());
 			stmt.executeUpdate();
-			System.out.println("Update réalisée sur la categorie : " + t.toString());
+//			System.out.println("Update réalisée sur la categorie : " + t.toString());
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -89,20 +87,15 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	}
 
 	@Override
-	public void delete(Categorie t) throws BusinessException {
+	public void delete(Categorie t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
-			PreparedStatement stmt = null;
-			if(t.getNoCategorie() != 0) {
-				stmt = con.prepareStatement(DELETE);
-			}else {
-				stmt = con.prepareStatement(DELETE, Statement.RETURN_GENERATED_KEYS);
-			}
+			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, t.getNoCategorie());				
 			stmt.execute();
-			System.out.println("Categorie: " + t.getNoCategorie() + " supprimé en base de donnée");
 			stmt.close();
+//			System.out.println("Categorie: " + t.getNoCategorie() + " supprimé en base de donnée");
 			} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -112,21 +105,17 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	}
 
 	@Override
-	public Categorie select(int id) throws BusinessException {
+	public Categorie select(int id) throws DALException {
 		Categorie categorie = null;
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
-			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
-				System.out.println("select Categorie: " + categorie.toString());
-
-			}else {
-				BusinessException businessException = new BusinessException();
-				throw businessException;
+				categorie = new Categorie(rs.getInt(1), rs.getString(2));
+//				System.out.println("select Categorie: " + categorie.toString());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -138,18 +127,17 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 	}
 
 	@Override
-	public List<Categorie> selectAll() throws BusinessException {
+	public List<Categorie> selectAll() throws DALException {
 		List<Categorie> listCategories = new ArrayList<Categorie>();
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
-			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 	        while (rs.next()) {
-	        	Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+	        	Categorie categorie = new Categorie(rs.getInt(1), rs.getString(2));
 	        	listCategories.add(categorie);
-				System.out.println("Categorie: " + categorie.toString());
-
+//				System.out.println("Categorie: " + categorie.toString());
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();

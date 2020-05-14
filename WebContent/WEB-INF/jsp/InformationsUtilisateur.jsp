@@ -28,7 +28,7 @@
 				<div class="col-6 text-right">
 					<p>Pseudo:</p>
 					<p>Nom:</p>
-					<p>Prénom:</p>
+					<p>Prï¿½nom:</p>
 					<p>Email:</p>
 					<p>Telephone:</p>
 					<p>Rue:</p>
