@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Page Encherir</title>
+<title>Annuler Enchere</title>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="ThemesCss/encherir.css">
@@ -18,7 +18,7 @@
 
 		<div class ="row">
 			<div class="col-lg-12 titre">
-				<h3> Détail vente</h3>
+				<h3> D�tail vente</h3>
 			</div>
 		</div>
 		
@@ -43,7 +43,8 @@
 					<input type="submit" value="Enchérir">
 				</form>
 			
-					<button type="button" class="btn btn-outline-dark"><a href="#">Retour</a></button>
+					<a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Annuler ma dernière enchère</a>
+					<a href="#" class="btn btn-secondary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Retour</a>
 			
 			</div>
 		
