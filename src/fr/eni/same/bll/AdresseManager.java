@@ -10,22 +10,5 @@ public abstract class AdresseManager implements AdresseInterface {
 	private final int VILLE_LONGUEUR_MAX = 30;
 	private final int VILLE_LONGUEUR_MIN = 4;
 	
-	@Override
-	public boolean isRueLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCodePostalLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isVilleLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 }

@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bll.interfaceManager.UtilisateurManagerInterface;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.exception.BllException;
 
-public class UtilisateurManager extends AdresseManager implements UtilisateurManagerInterface {
+public class UtilisateurManager extends AdresseManager implements UtilisateurManagerInterface, SelectMAnagerInterface<Utilisateur> {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int PRENOM_LONGUEUR_MAX = 5;
@@ -59,55 +60,75 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	//***********************************************************************************************//
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
-	
 
 	@Override
-	public boolean isPseudoUnique(String pseudo) {
+	public void RueLongueurCorrect(String libelle) {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
-	public boolean isEmailValide(String email) {
+	public void CodePostalLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void VilleLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void PseudoLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void PseudoUnique(String pseudo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void NomLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void PrenomLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void EmailValide(String email) throws BllException {
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(email);
-		return matcher.matches(); //Return true si test Regex ok
+		if(!matcher.matches()) {
+			throw new BllException("Ce n'est pas un email valide");
+		}; //Return true si test Regex ok
+	}
+		
+
+	@Override
+	public void TelephoneLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public boolean isCreditPositif(int credit) {
+	public void MotDePasseValide(String email) {
 		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	@Override
-	public boolean isMotDePasseValide(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
-	public boolean isPseudoLongueurCorrect(String libelle) {
+	public void CreditPositif(int credit) {
 		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isNomLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPrenomLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isTelephoneLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 }
