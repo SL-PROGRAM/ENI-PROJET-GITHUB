@@ -69,18 +69,21 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 
 	@Override
 	public void delete(Utilisateur t) throws BllException {
+		controleDelete(t);
+		if (t.getNoUtilisateur() <= 0) {
+			throw new BllException("Erreur référence interdite");
+		}
 		try {
-			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
+			DALFactory.getUtilisateurDAOJdbcImpl().delete(t);
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer en base de donnée l'utilisateur");
 		}
 	}
 
+
 	@Override
 	public Utilisateur select(int id) throws BllException {
-		if (id <= 0) {
-			throw new BllException("Erreur référence interdite");
-		}
+		noUtilisateurNull(id);
 		Utilisateur utilisateur;
 		try {
 			utilisateur = DALFactory.getUtilisateurDAOJdbcImpl().select(id);
@@ -103,8 +106,9 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		return listUtilisateurs;
 	}
 	
-	
 	private void controleUpdateAndInsert(Utilisateur t) throws BllException {
+		utilisateurNull(t);
+		noUtilisateurNull(t.getNoUtilisateur());
 		PseudoLongueurCorrect(t.getPseudo());
 		NomLongueurCorrect(t.getNom());
 		PrenomLongueurCorrect(t.getPrenom());
@@ -117,6 +121,24 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		CodePostalLongueurCorrect(t.getCodePostal());
 	}
 
+	private void controleDelete(Utilisateur t) throws BllException {
+		utilisateurNull(t);
+		noUtilisateurNull(t.getNoUtilisateur());
+	}
+	
+	private void utilisateurNull(Utilisateur utilisateur) throws BllException  {
+		if (utilisateur == null) {
+			throw new BllException("Erreur : null");
+		}
+	}
+	
+	
+	private void noUtilisateurNull(int id) throws BllException  {
+		if (id <= 0) {
+			throw new BllException("Erreur référence interdite");
+		}
+	}
+	
 	//***********************************************************************************************//
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
