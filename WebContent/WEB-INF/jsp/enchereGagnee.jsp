@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
-	<header><%@ include file="header.jspf" %></header>
+	<header><%@ include file="jspf/header.jspf" %></header>
 	<div class="container">
 		<div class="row">
 			<div class="col-12 col-lg-8 offset-lg-4 text-center">
@@ -101,12 +101,16 @@
 			</div>
 		</div>
 		<br />
-		<div class="row">
-			<div class="col-3 col-lg-2 offset-lg-4">
-				<a class="btn btn-primary btn-block" href="" role="button">
-					Retour </a>
+		<!-- Création d'un formulaire uniquement pour pouvoir envoyer des informations de l'utilsiateur en POST grâce au bouton retour -->
+		<form action="">
+			<div class="row">
+				<div class="col-3 col-lg-2 offset-lg-4">
+					<button class="btn btn-danger btn-block" role="button" type="submit">
+						Retour 
+					</button>
+				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </body>
 </html>
