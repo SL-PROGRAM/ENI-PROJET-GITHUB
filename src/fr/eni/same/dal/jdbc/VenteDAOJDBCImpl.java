@@ -13,7 +13,6 @@ import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.ConnectionProvider;
-import fr.eni.same.dal.DALFactory;
 import fr.eni.same.dal.interfaceDAO.VenteDAO;
 import fr.eni.same.exception.DALException;
 
@@ -43,7 +42,10 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 			" ON ventes.no_utilisateur = utilisateurs.no_utilisateur" + 
 			" JOIN categories" + 
 			" ON ventes.no_categorie = categories.no_categorie";
-    private static final String SELECT_ACHETEUR = "";
+    private static final String UPDATE_ACHETEUR = "SELECT * FROM ventes" + 
+    		" JOIN encheres ON ventes.no_vente = encheres.no_vente" + 
+    		" JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur" + 
+    		" WHERE encheres.date_enchere = (SELECT MAX(encheres.date_enchere) FROM encheres where encheres.no_vente=?)";
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
 	 */
@@ -219,8 +221,38 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	}
 
 	@Override
-	public void selectAcheteur(Vente t) {
-		//Récupérer le dernier no_utilisateur de la table enchère en joignant le no_vente
-		//Sélectionner le 
+	public Vente updateAcheteur(Vente t) {
+		Connection con = ConnectionProvider.openConnection();
+		Vente vente = t;
+		try {
+			PreparedStatement stmt = con.prepareStatement(UPDATE_ACHETEUR);
+			stmt.setInt(1, t.getNoVente());
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				Utilisateur _utilisateur = new Utilisateur();
+				_utilisateur.setNoUtilisateur(rs.getInt(12));
+				_utilisateur.setPseudo(rs.getString(13));
+				_utilisateur.setNom(rs.getString(14));
+				_utilisateur.setPrenom(rs.getString(15));
+				_utilisateur.setEmail(rs.getString(16));
+				_utilisateur.setTelephone(rs.getString(17));
+				_utilisateur.setRue(rs.getString(18));
+				_utilisateur.setCodePostal(rs.getString(19));
+				_utilisateur.setVille(rs.getString(20));
+				_utilisateur.setMotDePasse(rs.getString(21));
+				_utilisateur.setCredit(rs.getInt(22));
+				_utilisateur.setAdministrateur(rs.getBoolean(23));		
+				
+				vente.setUtilisateurAcheteur(_utilisateur);
+			}
+			rs.close();
+			stmt.close();
+//			System.out.println("update acheteur : " + vente.toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			con = ConnectionProvider.closeConnection();
+		}
+		return vente;
 	}
 }

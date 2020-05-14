@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.UtilisateurDAO;
@@ -46,8 +44,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	
 	@Override
 	public void insert(Utilisateur t) throws DALException {
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
+		Connection con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, t.getPseudo());
@@ -77,8 +74,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public void update(Utilisateur t) throws DALException {
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
+		Connection con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(UPDATE);
 			stmt.setString(1, t.getPseudo());
@@ -105,8 +101,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public void delete(Utilisateur t) throws DALException {
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
+		Connection con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, t.getNoUtilisateur());
@@ -122,9 +117,8 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public Utilisateur select(int id) throws DALException {
+		Connection con = ConnectionProvider.openConnection();
 		Utilisateur _utilisateur = new Utilisateur();
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID);
 			stmt.setInt(1, id);
@@ -156,8 +150,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 
 	@Override
 	public List<Utilisateur> selectAll() throws DALException {
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
+		Connection con = ConnectionProvider.openConnection();
 		List<Utilisateur> _userList = new ArrayList<Utilisateur>();
 		try {
 			PreparedStatement stmt = con.prepareStatement(SELECT_ALL);

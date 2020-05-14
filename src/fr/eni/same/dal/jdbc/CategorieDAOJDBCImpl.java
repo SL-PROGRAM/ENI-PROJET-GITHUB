@@ -4,17 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.CategorieDAO;
 import fr.eni.same.exception.DALException;
-
-
-
 
 public class CategorieDAOJDBCImpl implements CategorieDAO {
 	/**
@@ -47,8 +42,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
     }
 	@Override
 	public void insert(Categorie t) throws DALException {
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
+		Connection con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, t.getLibelle());
@@ -69,8 +63,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 
 	@Override
 	public void update(Categorie t) throws DALException {
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
+		Connection con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(UPDATE);
 			stmt.setString(1, t.getLibelle());
@@ -88,8 +81,7 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 
 	@Override
 	public void delete(Categorie t) throws DALException {
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
+		Connection con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(DELETE);
 			stmt.setInt(1, t.getNoCategorie());				
@@ -106,9 +98,8 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 
 	@Override
 	public Categorie select(int id) throws DALException {
+		Connection con = ConnectionProvider.openConnection();
 		Categorie categorie = null;
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, id);
@@ -128,9 +119,8 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
 
 	@Override
 	public List<Categorie> selectAll() throws DALException {
+		Connection con = ConnectionProvider.openConnection();
 		List<Categorie> listCategories = new ArrayList<Categorie>();
-		Connection con = null;
-		con = ConnectionProvider.openConnection();
 		try {
 			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
