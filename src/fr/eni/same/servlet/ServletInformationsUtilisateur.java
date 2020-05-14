@@ -18,8 +18,11 @@ public class ServletInformationsUtilisateur extends HttpServlet {
        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 * doGet : redirection vers la page affichant les informations d'un utilisateur (acheteur ou vendeur) (informationsUtilisateur.jsp)
-	 * doPost : récupération des informations de l'utilisateur et affichage différencié si l'utilisateur à afficher est un acheteur ou un vendeur.
+	 * doGet : Redirection vers la page affichant les informations d'un utilisateur (acheteur ou vendeur) (informationsUtilisateur.jsp)
+	 * doPost : Récupération des informations de l'utilisateur et affichage différencié si 
+	 * 			- l'utilisateur à afficher est un acheteur OU  
+	 * 			- l'utilisateur à afficher est un vendeur OU
+	 * 			- l'utilisateur à afficher est l'utilisateur actuellement connecté (permet la suppression de la jsp monProfil.jsp).
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.html");
