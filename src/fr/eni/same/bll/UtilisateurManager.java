@@ -9,16 +9,16 @@ import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.exception.BllException;
 
 public class UtilisateurManager extends AdresseManager implements UtilisateurManagerInterface {
-	private final int NOM_LONGEUR_MAX = 30;
-	private final int NOM_LONGEUR_MIN = 4;
-	private final int PRENOM_LONGEUR_MAX = 5;
-	private final int PRENOM_LONGEUR_MIN = 5;
-	private final int EMAIL_LONGEUR_MAX = 30;
-	private final int EMAIL_LONGEUR_MIN = 4;
+	private final int NOM_LONGUEUR_MAX = 30;
+	private final int NOM_LONGUEUR_MIN = 4;
+	private final int PRENOM_LONGUEUR_MAX = 5;
+	private final int PRENOM_LONGUEUR_MIN = 5;
+	private final int EMAIL_LONGUEUR_MAX = 30;
+	private final int EMAIL_LONGUEUR_MIN = 4;
 	private final String EMAIL_REGEX = "^(.+)@(.+)$";
-	private final int TELEPHONE_LONGEUR_MAX = 15;
-	private final int TELEPHONE_LONGEUR_MIN = 10;
-	private final int MOT_DE_PASSE_LONGEUR_MAX = 30;
+	private final int TELEPHONE_LONGUEUR_MAX = 15;
+	private final int TELEPHONE_LONGUEUR_MIN = 10;
+	private final int MOT_DE_PASSE_LONGUEUR_MAX = 30;
 	private final int MOT_DE_PASSE_LONGEUR_MIN = 4;
 	
 	
@@ -71,7 +71,6 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	public boolean isEmailValide(String email) {
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(email);
-		
 		return matcher.matches(); //Return true si test Regex ok
 	}
 
@@ -80,33 +79,33 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public boolean isPseudoLongeurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isNomLongeurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isPrenomLongeurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isTelephoneLongeurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public boolean isMotDePasseValide(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isPseudoLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isNomLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isPrenomLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isTelephoneLongueurCorrect(String libelle) {
 		// TODO Auto-generated method stub
 		return false;
 	}
