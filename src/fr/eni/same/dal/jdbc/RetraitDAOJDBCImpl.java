@@ -15,7 +15,7 @@ import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.dal.interfaceDAO.RetraitDAO;
-import fr.eni.same.exception.BusinessException;
+import fr.eni.same.exception.DALException;
 
 public class RetraitDAOJDBCImpl implements RetraitDAO {
 	/**
@@ -49,7 +49,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 
 
 	@Override
-	public void insert(Retrait t) throws BusinessException {
+	public void insert(Retrait t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -71,7 +71,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	}
 
 	@Override
-	public void update(Retrait t) throws BusinessException {
+	public void update(Retrait t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -93,7 +93,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	}
 
 	@Override
-	public void delete(Retrait t) throws BusinessException {
+	public void delete(Retrait t) throws DALException {
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
 		try {
@@ -116,7 +116,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	}
 
 	@Override
-	public Retrait select(int id) throws BusinessException {
+	public Retrait select(int id) throws DALException {
 		Retrait retrait = null;
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
@@ -131,7 +131,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 				retrait = new Retrait(rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), vente);
 				System.out.println("select Enchere: " + retrait.toString());
 			}else {
-				BusinessException businessException = new BusinessException();
+				DALException businessException = new DALException();
 				throw businessException;
 			}
 			} catch (SQLException e) {
@@ -144,7 +144,7 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	}
 
 	@Override
-	public List<Retrait> selectAll() throws BusinessException {
+	public List<Retrait> selectAll() throws DALException {
 		List<Retrait> listRetrait = new ArrayList<Retrait>();
 		Connection con = null;
 		con = ConnectionProvider.openConnection();
