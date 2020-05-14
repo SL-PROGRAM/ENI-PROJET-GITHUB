@@ -163,10 +163,4 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 		return listEnchere;
 	}
 
-	@Override
-	public Enchere select(int id) throws BusinessException {
-		throw new BusinessException();
-	}
-
-
 }
