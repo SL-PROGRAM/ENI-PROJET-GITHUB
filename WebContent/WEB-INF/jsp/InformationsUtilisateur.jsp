@@ -26,16 +26,26 @@
 			<div class="row">
 				<div class="col-lg-6 col-sm-6 label">
 					<p>Pseudo:</p>
-					<p>Adresse:</p>	
+					<p>Nom:</p>
+					<p>Prénom:</p>
+					<p>Email:</p>
 					<p>Telephone:</p>
+					<p>Rue:</p>
+					<p>Code Postal:</p>
+					<p>Ville:</p>
 				</div>
 				
 			
 				<div class="col-lg-6 col-sm-6 insert">
-					<p>recup info pseudo </p>
-					<p>recup info rue, ville , code postali</p>
-					<p>recup info tel, msg si existe pas</p>
-
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+					<p>recup info</p>
+			
 				</div>
 		</div>
 		<div class="row">
@@ -49,7 +59,15 @@
 		
 		
 	</div>
-	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
