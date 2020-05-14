@@ -61,23 +61,6 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
 
-	@Override
-	public void RueLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void CodePostalLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void VilleLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void PseudoLongueurCorrect(String libelle) {

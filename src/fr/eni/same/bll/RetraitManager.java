@@ -11,8 +11,7 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 	
 	@Override
 	public void insert(Retrait t) throws BllException {
-		// TODO Auto-generated method stub
-
+		RueLongueurCorrect(t.getRue());
 	}
 
 	@Override
@@ -44,22 +43,6 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
 	
-	@Override
-	public void RueLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void CodePostalLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void VilleLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
