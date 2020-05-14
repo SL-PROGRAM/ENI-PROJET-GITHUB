@@ -8,10 +8,13 @@ import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bll.interfaceManager.UtilisateurManagerInterface;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.exception.BllException;
+import fr.eni.same.helpers.FonctionGenerique;
 
 public class UtilisateurManager extends AdresseManager implements UtilisateurManagerInterface, SelectMAnagerInterface<Utilisateur> {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
+	private final int PSEUDO_LONGUEUR_MAX = 30;
+	private final int PSEUDO_LONGUEUR_MIN = 4;
 	private final int PRENOM_LONGUEUR_MAX = 5;
 	private final int PRENOM_LONGUEUR_MIN = 5;
 	private final int EMAIL_LONGUEUR_MAX = 30;
@@ -63,27 +66,37 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 
 
 	@Override
-	public void PseudoLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
+	public void PseudoLongueurCorrect(String libelle) throws BllException {
+		if(!FonctionGenerique.isLongeurMax(libelle, PSEUDO_LONGUEUR_MAX)) {
+			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ PSEUDO_LONGUEUR_MAX);
+		}
+		if(!FonctionGenerique.isLongeurMax(libelle, PSEUDO_LONGUEUR_MIN)) {
+			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ PSEUDO_LONGUEUR_MIN);
+		}				
+	}
+	@Override
+	public void PseudoUnique(String pseudo) throws BllException {
+		//PAS DANS LA SPEC MAIS PREVU		
 	}
 
 	@Override
-	public void PseudoUnique(String pseudo) {
-		// TODO Auto-generated method stub
-		
+	public void NomLongueurCorrect(String libelle) throws BllException {
+		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
+			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX);
+		}
+		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MIN)) {
+			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN);
+		}				
 	}
 
 	@Override
-	public void NomLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void PrenomLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
+	public void PrenomLongueurCorrect(String libelle) throws BllException {
+		if(!FonctionGenerique.isLongeurMax(libelle, PRENOM_LONGUEUR_MAX)) {
+			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ PRENOM_LONGUEUR_MAX);
+		}
+		if(!FonctionGenerique.isLongeurMax(libelle, RUE_LONGUEUR_MIN)) {
+			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ RUE_LONGUEUR_MIN);
+		}				
 	}
 
 	@Override
