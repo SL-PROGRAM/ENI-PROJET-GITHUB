@@ -17,83 +17,106 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 	private static CategorieManager instance;
 
 	/**
-	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 * constructeur privé pour ne pas permettre la création d'une autre instance de
+	 * la classe
 	 */
-    private CategorieManager() {
+	private CategorieManager() {
 	}
 
-    /**
-     * methode Get pour récupérer l'instance et la créer si elle n'existe pas
-     * @return
-     */
-    public static synchronized  CategorieManager getCategorieManager () {
-        if(instance == null){
-            instance = new CategorieManager();
-        }
-        return instance;
-    }
-    
+	/**
+	 * methode Get pour récupérer l'instance et la créer si elle n'existe pas
+	 * 
+	 * @return
+	 */
+	public static synchronized CategorieManager getCategorieManager() {
+		if (instance == null) {
+			instance = new CategorieManager();
+		}
+		return instance;
+	}
+
 	@Override
 	public void insert(Categorie t) throws BllException {
-		if(!FonctionGenerique.isLongueurMax(t.getLibelle(), LIBELLE_LONGUEUR_MAX)) {
-			throw new BllException("Le libellé est trop court");
-		} else if(!FonctionGenerique.isLongueurMin(t.getLibelle(), LIBELLE_LONGUEUR_MIN)){
-			throw new BllException("Le libellé est trop long");
+		if (libelleLongueurCorrect(t.getLibelle()).equalsIgnoreCase("")) {
+			throw new BllException(libelleLongueurCorrect(t.getLibelle()));
 		} else {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().insert(t);
 			} catch (DALException e) {
-				throw new BllException("Erreur d'enregistrement dans la base de donnée");
-			}			
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public void update(Categorie t) throws BllException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Categorie t) throws BllException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public Categorie select(int id) throws BllException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Categorie> selectAll() throws BllException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	//***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
-	//***********************************************************************************************//
-	
-	
-	@Override
-	public void libelleUnique(List<Categorie> list, String libelle) throws BllException {
-		boolean isUnique = true;
-		for (Categorie categorie : list) {
-			if(categorie.getLibelle() == libelle) {
-				isUnique = false;
-				throw new BllException("Cette Catégorie existe déja");
+		if (libelleLongueurCorrect(t.getLibelle()).equalsIgnoreCase("")) {
+			throw new BllException(libelleLongueurCorrect(t.getLibelle()));
+		} else {
+			try {
+				DALFactory.getCategorieDAOJdbcImpl().update(t);
+			} catch (DALException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 
+	@Override
+	public void delete(Categorie t) throws BllException {
+		try {
+			DALFactory.getCategorieDAOJdbcImpl().delete(t);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
-	public void libelleLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
+	public Categorie select(int id) throws BllException {
+		try {
+			return DALFactory.getCategorieDAOJdbcImpl().select(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Categorie> selectAll() throws BllException {
+		try {
+			List<Categorie> listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+			return listeCategories;
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// ***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative
+	// d'enregistrement en BDD * //
+	// ***********************************************************************************************//
+
+	@Override
+	public String libelleUnique(List<Categorie> list, String libelle) {
+		String resultat = "";
+		boolean isUnique = true;
+		for (Categorie categorie : list) {
+			if (categorie.getLibelle() == libelle) {
+				isUnique = false;
+				resultat = "Cette catégorie existe déjà";
+			}
+		}
+		return resultat;
+	}
+
+	@Override
+	public String libelleLongueurCorrect(String libelle) {
+		String resultat = "";
+		if (!FonctionGenerique.isLongueurMax(libelle, LIBELLE_LONGUEUR_MAX)) {
+			resultat = "Le libellé de la catégorie est trop long";
+		} else if (!FonctionGenerique.isLongueurMin(libelle, LIBELLE_LONGUEUR_MIN)) {
+			resultat = "Le libellé de la catégorie est trop court";
+		}
+		return resultat;
 	}
 }
