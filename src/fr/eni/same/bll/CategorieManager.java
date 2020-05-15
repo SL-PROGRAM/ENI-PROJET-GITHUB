@@ -8,14 +8,31 @@ import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
-import fr.eni.same.exception.UniqueException;
 import fr.eni.same.helpers.FonctionGenerique;
 
 public class CategorieManager implements CategorieManagerInetrface, SelectMAnagerInterface<Categorie> {
 
 	private final int LIBELLE_LONGUEUR_MAX = 30;
 	private final int LIBELLE_LONGUEUR_MIN = 4;
-	
+	private static CategorieManager instance;
+
+	/**
+	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 */
+    private CategorieManager() {
+	}
+
+    /**
+     * methode Get pour récupérer l'instance et la créer si elle n'existe pas
+     * @return
+     */
+    public static synchronized  CategorieManager getCategorieManager () {
+        if(instance == null){
+            instance = new CategorieManager();
+        }
+        return instance;
+    }
+    
 	@Override
 	public void insert(Categorie t) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(t.getLibelle(), LIBELLE_LONGUEUR_MAX)) {
@@ -63,7 +80,7 @@ public class CategorieManager implements CategorieManagerInetrface, SelectMAnage
 	
 	
 	@Override
-	public void LibelleUnique(List<Categorie> list, String libelle) throws BllException {
+	public void libelleUnique(List<Categorie> list, String libelle) throws BllException {
 		boolean isUnique = true;
 		for (Categorie categorie : list) {
 			if(categorie.getLibelle() == libelle) {
@@ -75,7 +92,7 @@ public class CategorieManager implements CategorieManagerInetrface, SelectMAnage
 
 
 	@Override
-	public void LibelleLongueurCorrect(String libelle) {
+	public void libelleLongueurCorrect(String libelle) {
 		// TODO Auto-generated method stub
 		
 	}
