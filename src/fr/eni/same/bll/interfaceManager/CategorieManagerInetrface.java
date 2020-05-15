@@ -16,14 +16,14 @@ public interface CategorieManagerInetrface extends ManagerInterface<Categorie> {
 	 * @return
 	 * @throws UniqueException 
 	 */
-	public void LibelleUnique(List<Categorie> list, String libelle) throws BllException;
+	public void libelleUnique(List<Categorie> list, String libelle) throws BllException;
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public void LibelleLongueurCorrect(String libelle) throws BllException; 
+	public void libelleLongueurCorrect(String libelle) throws BllException; 
 	
 	
 }

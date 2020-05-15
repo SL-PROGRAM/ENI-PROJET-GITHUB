@@ -80,7 +80,7 @@ public class CategorieManager implements CategorieManagerInetrface, SelectMAnage
 	
 	
 	@Override
-	public void LibelleUnique(List<Categorie> list, String libelle) throws BllException {
+	public void libelleUnique(List<Categorie> list, String libelle) throws BllException {
 		boolean isUnique = true;
 		for (Categorie categorie : list) {
 			if(categorie.getLibelle() == libelle) {
@@ -92,7 +92,7 @@ public class CategorieManager implements CategorieManagerInetrface, SelectMAnage
 
 
 	@Override
-	public void LibelleLongueurCorrect(String libelle) {
+	public void libelleLongueurCorrect(String libelle) {
 		// TODO Auto-generated method stub
 		
 	}
