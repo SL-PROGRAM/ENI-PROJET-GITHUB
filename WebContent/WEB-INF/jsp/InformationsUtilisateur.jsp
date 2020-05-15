@@ -15,25 +15,25 @@
 		<%@ include file="jspf/header.jspf" %>
 		
 		<div class ="row">
-			<div class="col-12 text-center">
+			<div class="col-lg-12">
 				<h3> JOJO44</h3>
 			</div>
 		</div>
 		
 			<div class="row">
-				<div class="col-6 text-right">
+				<div class="offset-2 col-3 col-lg-6">
 					<p>Pseudo:</p>
 					<p>Nom:</p>
-					<p>Prénom:</p>
+					<p>Prï¿½nom:</p>
 					<p>Email:</p>
-					<p>Telephone:</p>
+					<p>Tï¿½lï¿½phone:</p>
 					<p>Rue:</p>
 					<p>Code Postal:</p>
 					<p>Ville:</p>
 				</div>
 				
 			
-				<div class="col-6 ">
+				<div class="col-7 col-lg-6">
 					<p>recup info</p>
 					<p>recup info</p>
 					<p>recup info</p>
@@ -46,7 +46,7 @@
 				</div>
 		</div>
 		<div class="row">
-			<div class="col-12 text-center">
+			<div class="col-lg-12">
 				<button type="button" class="btn btn-outline-dark"><a href="#">Retour</a></button>
 			
 			</div>
