@@ -110,7 +110,8 @@ public class CategorieManager{
 	
 	
 	
-	public void libelleUnique(List<Categorie> list, String libelle) throws BllException {
+	public String libelleUnique(List<Categorie> list, String libelle) throws BllException {
+		String resultat = "";
 		boolean isUnique = true;
 		for (Categorie categorie : list) {
 			if (categorie.getLibelle() == libelle) {
@@ -122,8 +123,8 @@ public class CategorieManager{
 
 
 	
-	public void libelleLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
+	public String libelleLongueurCorrect(String libelle) {
+		String resultat = "";
+		return resultat;
 	}
 }
