@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Page Profil</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="ThemesCss/profile.css">
 
 </head>
 <body>
@@ -18,25 +17,25 @@
 		</header>
 		
 		<div class ="row">
-			<div class="col-lg-12 profil">
+			<div class="col-lg-12">
 				<h3> JOJO44</h3>
 			</div>
 		</div>
 		
 			<div class="row">
-				<div class="col-lg-6 col-sm-6 label">
+				<div class="offset-2 col-3 col-lg-6">
 					<p>Pseudo:</p>
 					<p>Nom:</p>
-					<p>PrÃ©nom:</p>
+					<p>Prénom:</p>
 					<p>Email:</p>
-					<p>Telephone:</p>
+					<p>Téléphone:</p>
 					<p>Rue:</p>
 					<p>Code Postal:</p>
 					<p>Ville:</p>
 				</div>
 				
 			
-				<div class="col-lg-6 col-sm-6 insert">
+				<div class="col-7 col-lg-6">
 					<p>recup info</p>
 					<p>recup info</p>
 					<p>recup info</p>
@@ -49,7 +48,7 @@
 				</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12 bouton">
+			<div class="col-lg-12">
 				<button type="button" class="btn btn-outline-dark"><a href="#">Retour</a></button>
 			
 			</div>
