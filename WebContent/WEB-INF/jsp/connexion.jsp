@@ -9,9 +9,7 @@
 </head>
 <body>
 	<div class="col container">
-		<div class="row">
-			<h1>TrocEncheres.org</h1>
-		</div>
+		<%@ include file="jspf/header.jspf" %>
 		<div class="container">
 			<form action="<%= request.getContextPath()%>/ServletListeEncheres" method="post">
 				<div class="form-group row">

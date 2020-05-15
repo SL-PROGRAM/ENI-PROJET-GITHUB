@@ -3,18 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Page Profil</title>
+<meta name="viewport" content="width=device-width"/>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 
 </head>
 <body>
 
 	<div class="container">
 		
-		<header class="row">
-			<div class="col-lg-12">
-				<h3>TrocEncheres.org</h3>
-			</div>
-		</header>
+		<%@ include file="jspf/header.jspf" %>
 		
 		<div class ="row">
 			<div class="col-lg-12">
@@ -26,9 +24,9 @@
 				<div class="offset-2 col-3 col-lg-6">
 					<p>Pseudo:</p>
 					<p>Nom:</p>
-					<p>Prénom:</p>
+					<p>Prï¿½nom:</p>
 					<p>Email:</p>
-					<p>Téléphone:</p>
+					<p>Tï¿½lï¿½phone:</p>
 					<p>Rue:</p>
 					<p>Code Postal:</p>
 					<p>Ville:</p>

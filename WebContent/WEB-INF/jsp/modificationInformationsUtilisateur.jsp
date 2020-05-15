@@ -13,9 +13,9 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<header><%@include file="jspf/header.jspf"%></header>
+
 	<div class="container">
-	
+		<%@include file="jspf/header.jspf"%>
 	<!-- Titre à modifier en fonction de la maquette 2 ou 3 -->
 		<div class="row">
 			<div class="col-12 text-center">
