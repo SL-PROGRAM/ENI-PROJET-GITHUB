@@ -9,19 +9,19 @@ public  interface AdresseInterface {
 	 * @param libelle
 	 * @return
 	 */
-	public void rueLongueurCorrect(String libelle) throws BllException; 
+	public String rueLongueurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public void codePostalLongueurCorrect(String libelle) throws BllException; 
+	public String codePostalLongueurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public void villeLongueurCorrect(String libelle) throws BllException; 
+	public String villeLongueurCorrect(String libelle) throws BllException; 
 }

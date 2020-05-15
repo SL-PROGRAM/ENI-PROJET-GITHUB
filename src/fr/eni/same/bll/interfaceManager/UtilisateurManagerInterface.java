@@ -10,27 +10,27 @@ public interface UtilisateurManagerInterface extends ManagerInterface<Utilisateu
 	 * @param libelle
 	 * @return
 	 */
-	public void pseudoLongueurCorrect(String libelle) throws BllException; 
+	public String pseudoLongueurCorrect(String libelle) throws BllException; 
 	/**
 	 * Vérifie que le Pseudo n'existe pas déja
 	 * @param pseudo
 	 * @return
 	 */
-	public void pseudoUnique(String pseudo) throws BllException;
+	public String pseudoUnique(String pseudo) throws BllException;
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public void nomLongueurCorrect(String libelle) throws BllException; 
+	public String nomLongueurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public void prenomLongueurCorrect(String libelle) throws BllException; 
+	public String prenomLongueurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * Vérifie longeur max et min correct
@@ -39,21 +39,21 @@ public interface UtilisateurManagerInterface extends ManagerInterface<Utilisateu
 	 * @return
 	 * @throws BllException 
 	 */
-	public void emailValide(String email) throws BllException;
+	public String emailValide(String email) throws BllException;
 
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public void telephoneLongueurCorrect(String libelle) throws BllException; 
+	public String telephoneLongueurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param email
 	 * @return
 	 */
-	public void motDePasseValide(String email) throws BllException;
+	public String motDePasseValide(String email) throws BllException;
 	
 	
 	/**
@@ -61,6 +61,6 @@ public interface UtilisateurManagerInterface extends ManagerInterface<Utilisateu
 	 * @param credit
 	 * @return
 	 */
-	public void creditPositif(int credit) throws BllException;
+	public String creditPositif(int credit) throws BllException;
 	
 }
