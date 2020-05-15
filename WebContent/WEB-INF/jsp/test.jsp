@@ -18,7 +18,7 @@
 
 				<div class="col-3">
 					<!-- 			Ligne 1 -->
-					<div class="col-12 bg-primary" style="height: 100%">
+					<div class="col-12" style="height: 100%">
 						<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
 							src="">
 					</div>
