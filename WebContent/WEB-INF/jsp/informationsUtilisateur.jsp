@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+    <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -12,28 +15,32 @@
 
 	<div class="container">
 		
-		<%@ include file="jspf/header.jspf" %>
+		<header class="row">
+			<div class="col-12">
+				<h3>TrocEncheres.org</h3>
+			</div>
+		</header>
 		
 		<div class ="row">
-			<div class="col-lg-12">
+			<div class="col-12 text-center">
 				<h3> JOJO44</h3>
 			</div>
 		</div>
 		
 			<div class="row">
-				<div class="offset-2 col-3 col-lg-6">
+				<div class="col-6 text-right">
 					<p>Pseudo:</p>
 					<p>Nom:</p>
-					<p>Pr�nom:</p>
+					<p>Prénom:</p>
 					<p>Email:</p>
-					<p>T�l�phone:</p>
+					<p>Telephone:</p>
 					<p>Rue:</p>
 					<p>Code Postal:</p>
 					<p>Ville:</p>
 				</div>
 				
 			
-				<div class="col-7 col-lg-6">
+				<div class="col-6">
 					<p>recup info</p>
 					<p>recup info</p>
 					<p>recup info</p>
