@@ -1,7 +1,6 @@
 package fr.eni.same.bll;
 
 import java.util.List;
-
 import fr.eni.same.bll.interfaceManager.CategorieManagerInterface;
 import fr.eni.same.bll.interfaceManager.SelectManagerInterface;
 import fr.eni.same.bo.Categorie;
@@ -15,17 +14,21 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 	private final int LIBELLE_LONGUEUR_MAX = 30;
 	private final int LIBELLE_LONGUEUR_MIN = 4;
 	private static CategorieManager instance;
+	private List<Categorie> listeCategorie;
 
 	/**
-	 * constructeur privé pour ne pas permettre la création d'une autre instance de
-	 * la classe
+	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
 	 */
 	private CategorieManager() {
+		try {
+			listeCategorie = selectAll();
+		} catch (BllException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * methode Get pour récupérer l'instance et la créer si elle n'existe pas
-	 * 
 	 * @return
 	 */
 	public static synchronized CategorieManager getCategorieManager() {
@@ -37,34 +40,45 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 
 	@Override
 	public void insert(Categorie t) throws BllException {
-		if (libelleLongueurCorrect(t.getLibelle()).equalsIgnoreCase("")) {
-			throw new BllException(libelleLongueurCorrect(t.getLibelle()));
-		} else {
+		String errorMsg = "";
+		errorMsg += libelleLongueurCorrect(t.getLibelle());
+		errorMsg += libelleUnique(listeCategorie, t.getLibelle());
+		if(errorMsg.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().insert(t);
+				listeCategorie = DALFactory.getCategorieDAOJdbcImpl().selectAll();
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
+		}else {
+			throw new BllException(errorMsg);
 		}
 	}
 
+	
 	@Override
 	public void update(Categorie t) throws BllException {
-		if (libelleLongueurCorrect(t.getLibelle()).equalsIgnoreCase("")) {
-			throw new BllException(libelleLongueurCorrect(t.getLibelle()));
-		} else {
+		String errorMsg = "";
+		errorMsg += libelleLongueurCorrect(t.getLibelle());
+		errorMsg += libelleUnique(listeCategorie, t.getLibelle());
+		if(errorMsg.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().update(t);
+				listeCategorie = DALFactory.getCategorieDAOJdbcImpl().selectAll();
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
+		}else {
+			throw new BllException(errorMsg);
 		}
 	}
 
+	
 	@Override
 	public void delete(Categorie t) throws BllException {
 		try {
 			DALFactory.getCategorieDAOJdbcImpl().delete(t);
+			listeCategorie = DALFactory.getCategorieDAOJdbcImpl().selectAll();
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -96,26 +110,31 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 	// d'enregistrement en BDD * //
 	// ***********************************************************************************************//
 
+	/**
+	 * Méthode qui vérifie que le libellé n'existe pas dans la base de donnée
+	 */
 	@Override
 	public String libelleUnique(List<Categorie> list, String libelle) {
 		String resultat = "";
-		boolean isUnique = true;
 		for (Categorie categorie : list) {
 			if (categorie.getLibelle() == libelle) {
-				isUnique = false;
 				resultat = "Cette catégorie existe déjà";
 			}
 		}
 		return resultat;
 	}
-
+	
+	/**
+	 * Méthode qui vérifie que la taille de la chaine de caractère du libellé
+	 * est bien conforme à la norme (>4 et <30)
+	 */
 	@Override
 	public String libelleLongueurCorrect(String libelle) {
 		String resultat = "";
 		if (!FonctionGenerique.isLongueurMax(libelle, LIBELLE_LONGUEUR_MAX)) {
-			resultat = "Le libellé de la catégorie est trop long";
+			resultat = "Le libellé de la catégorie est trop long - longueur maximum : " + LIBELLE_LONGUEUR_MAX + "\n";
 		} else if (!FonctionGenerique.isLongueurMin(libelle, LIBELLE_LONGUEUR_MIN)) {
-			resultat = "Le libellé de la catégorie est trop court";
+			resultat = "Le libellé de la catégorie est trop court - longueur minimum : " + LIBELLE_LONGUEUR_MIN +  "\n";
 		}
 		return resultat;
 	}
