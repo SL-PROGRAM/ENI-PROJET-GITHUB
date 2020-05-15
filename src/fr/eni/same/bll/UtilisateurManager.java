@@ -106,37 +106,45 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		return listUtilisateurs;
 	}
 	
-	private void controleUpdateAndInsert(Utilisateur t) throws BllException {
-		utilisateurNull(t);
-		noUtilisateurNull(t.getNoUtilisateur());
-		pseudoLongueurCorrect(t.getPseudo());
-		nomLongueurCorrect(t.getNom());
-		prenomLongueurCorrect(t.getPrenom());
-		emailValide(t.getEmail());
-		telephoneLongueurCorrect(t.getTelephone());
-		motDePasseValide(t.getEmail());
-		creditPositif(t.getCredit());
-		rueLongueurCorrect(t.getRue());
-		villeLongueurCorrect(t.getVille());
-		codePostalLongueurCorrect(t.getCodePostal());
+	private String controleUpdateAndInsert(Utilisateur t) throws BllException {
+		String msgErreur = "";
+		msgErreur += utilisateurNull(t);
+		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
+		msgErreur += pseudoLongueurCorrect(t.getPseudo());
+		msgErreur += nomLongueurCorrect(t.getNom());
+		msgErreur += prenomLongueurCorrect(t.getPrenom());
+		msgErreur += emailValide(t.getEmail());
+		msgErreur += telephoneLongueurCorrect(t.getTelephone());
+		msgErreur += motDePasseValide(t.getEmail());
+		msgErreur += creditPositif(t.getCredit());
+		msgErreur += rueLongueurCorrect(t.getRue());
+		msgErreur += villeLongueurCorrect(t.getVille());
+		msgErreur += codePostalLongueurCorrect(t.getCodePostal());
+		return msgErreur; 
 	}
 
-	private void controleDelete(Utilisateur t) throws BllException {
-		utilisateurNull(t);
-		noUtilisateurNull(t.getNoUtilisateur());
+	private String controleDelete(Utilisateur t) throws BllException {
+		String msgErreur = "";
+		msgErreur += utilisateurNull(t);
+		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
+		return msgErreur;
 	}
 	
-	private void utilisateurNull(Utilisateur utilisateur) throws BllException  {
+	private String utilisateurNull(Utilisateur utilisateur) throws BllException  {
+		String msgErreur = "";
 		if (utilisateur == null) {
-			throw new BllException("Erreur : null");
+			msgErreur = ("Erreur : null");
 		}
+		return msgErreur;
 	}
 	
 	
-	private void noUtilisateurNull(int id) throws BllException  {
+	private String noUtilisateurNull(int id) throws BllException  {
+		String msgErreur = "";
 		if (id <= 0) {
-			throw new BllException("Erreur référence interdite");
+			msgErreur = ("Erreur référence interdite");
 		}
+		return msgErreur;
 	}
 	
 	//***********************************************************************************************//
@@ -145,83 +153,98 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 
 
 	@Override
-	public void pseudoLongueurCorrect(String libelle) throws BllException {
+	public String pseudoLongueurCorrect(String libelle) throws BllException {
+		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, PSEUDO_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ PSEUDO_LONGUEUR_MAX);
+			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ PSEUDO_LONGUEUR_MAX);
 		}
 		if(!FonctionGenerique.isLongeurMax(libelle, PSEUDO_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ PSEUDO_LONGUEUR_MIN);
-		}				
+			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ PSEUDO_LONGUEUR_MIN);
+		}
+		return libelle;				
 	}
 	@Override
-	public void pseudoUnique(String pseudo) throws BllException {
+	public String pseudoUnique(String pseudo) throws BllException {
+		return pseudo;
 		//PAS DANS LA SPEC MAIS PREVU		
 	}
 
 	@Override
-	public void nomLongueurCorrect(String libelle) throws BllException {
+	public String nomLongueurCorrect(String libelle) throws BllException {
+		String msgErreur = "";
 		if(libelle != null) {
 			if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
-				throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX);
+				msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX);
 			}
 			if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MIN)) {
-				throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN);
+				msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN);
 			}			
 		}
+		return libelle;
 			
 	}
 
 	@Override
-	public void prenomLongueurCorrect(String libelle) throws BllException {
+	public String prenomLongueurCorrect(String libelle) throws BllException {
+		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, PRENOM_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ PRENOM_LONGUEUR_MAX);
+			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ PRENOM_LONGUEUR_MAX);
 		}
 		if(!FonctionGenerique.isLongeurMax(libelle, PRENOM_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ PRENOM_LONGUEUR_MIN);
-		}				
+			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ PRENOM_LONGUEUR_MIN);
+		}
+		return libelle;				
 	}
 
 	@Override
-	public void emailValide(String email) throws BllException {
+	public String emailValide(String email) throws BllException {
+		String msgErreur = "";
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(email);
 		if(!FonctionGenerique.isLongeurMax(email, EMAIL_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ EMAIL_LONGUEUR_MAX);
+			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ EMAIL_LONGUEUR_MAX);
 		}
 		if(!FonctionGenerique.isLongeurMax(email, EMAIL_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ EMAIL_LONGUEUR_MIN);
+			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ EMAIL_LONGUEUR_MIN);
 		}			
 		if(!matcher.matches()) {
-			throw new BllException("Ce n'est pas un email valide");
+			msgErreur = ("Ce n'est pas un email valide");
 		};
+		return email;
 	}
 		
 
 	@Override
-	public void telephoneLongueurCorrect(String libelle) throws BllException {
+	public String telephoneLongueurCorrect(String libelle) throws BllException {
+		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, TELEPHONE_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ TELEPHONE_LONGUEUR_MAX);
+			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ TELEPHONE_LONGUEUR_MAX);
 		}
 		if(!FonctionGenerique.isLongeurMax(libelle, TELEPHONE_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ TELEPHONE_LONGUEUR_MIN);
-		}				
+			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ TELEPHONE_LONGUEUR_MIN);
+		}
+		return libelle;				
 	}
 
 	@Override
-	public void motDePasseValide(String email) throws BllException {
+	public String motDePasseValide(String email) throws BllException {
+		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(email, MOT_DE_PASSE_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ MOT_DE_PASSE_LONGUEUR_MAX);
+			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ MOT_DE_PASSE_LONGUEUR_MAX);
 		}
 		if(!FonctionGenerique.isLongeurMax(email, MOT_DE_PASSE_LONGEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ MOT_DE_PASSE_LONGEUR_MIN);
-		}			
+			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ MOT_DE_PASSE_LONGEUR_MIN);
+		}
+		return email;			
 	}
 
 	@Override
-	public void creditPositif(int credit) throws BllException {
+	public String creditPositif(int credit) throws BllException {
+		String msgErreur = "";
 		if (credit < 0) {
-			throw new BllException("credit insufissant");
+			msgErreur = ("credit insufissant");
 		}
+		return msgErreur;
 	}
 
 }

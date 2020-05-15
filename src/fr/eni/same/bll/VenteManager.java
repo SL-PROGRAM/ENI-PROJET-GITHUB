@@ -122,41 +122,45 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	
 
 	@Override
-	public void nomArticleLongeurCorrect(String libelle) throws BllException {
+	public String nomArticleLongeurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX);
 		}
 		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MIN)) {
 			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN);
 		}
+		return libelle;
 	}
 
 	@Override
-	public void descriptionLongeurCorrect(String libelle) throws BllException {
+	public String descriptionLongeurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(libelle, DESCRIPTION_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ DESCRIPTION_LONGUEUR_MAX);
 		}
 		if(!FonctionGenerique.isLongeurMax(libelle, DESCRIPTION_LONGUEUR_MIN)) {
 			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ DESCRIPTION_LONGUEUR_MIN);
-		}		
+		}
+		return libelle;		
 	}
 
 	@Override
-	public void dateFinEnchere(Timestamp dateFinEnchere) throws BllException {
+	public String dateFinEnchere(Timestamp dateFinEnchere) throws BllException {
 		Timestamp now =  new Timestamp(System.currentTimeMillis());
 		int aDay = 24 * 60 * 60 * 1000;
 		Timestamp demain = new Timestamp(now.getTime()+aDay);
 		if(dateFinEnchere.before(demain)){
 			throw new BllException();
-		}		
+		}
+		return null;		
 	}
 
 	@Override
-	public void prixInitialPositif(int prixInitial) throws BllException {
+	public String prixInitialPositif(int prixInitial) throws BllException {
 		if(prixInitial < 0) {
 			throw new BllException();
 		}
 		// TODO Auto-generated method stub
+		return null;
 		
 	}
 
