@@ -1,5 +1,7 @@
 package fr.eni.same.bll.interfaceManager;
 
+import fr.eni.same.exception.BllException;
+
 public  interface AdresseInterface {
 
 	/**
@@ -7,19 +9,19 @@ public  interface AdresseInterface {
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isRueLongeurCorrect(String libelle); 
+	public boolean isRueLongueurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isCodePostalLongeurCorrect(String libelle); 
+	public boolean isCodePostalLongueurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public boolean isVilleLongeurCorrect(String libelle); 
+	public boolean isVilleLongueurCorrect(String libelle) throws BllException; 
 }

@@ -19,7 +19,7 @@
 		</div><!-- fin div row -->
 		
 		
-	<form  action="" method="post">
+	<form  action="ServletListeEncheres" method="post">
 		<div class="row">
 			<!-- image caché quand size xs -->
 			<div class="col-12 col-lg-4 d-none d-sm-block">
@@ -108,9 +108,13 @@
   				<p> adresse vendeur <br>nantes</p> 
   			</div>
   			<div class=" col-12 col-lg-8 offset-lg-4">
-  				<a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Publier</a>
-  				<a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Enregistrer</a>
-  				<a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Annuler</a>
+  			
+  				<input type="submit" name="choix" value = "Publier"/></a>
+  				<input type="submit" name="choix" value = "Enregistrer"/></a>
+  				<input type="submit" name="choix" value = "Annuler"/></a>
+  			
+
+  				
   			</div>
   		
 		</div> <!-- fin div row PRINCIPAL -->	
