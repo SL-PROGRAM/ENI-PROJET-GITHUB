@@ -80,10 +80,12 @@
 		<br />
 		<div class="row">	
 				<div class="col-3 offset-4 text-right">
-					<a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Annuler ma dernière enchère</a>
+				
+				<button type="button" class="btn btn-outline-dark"><a href="<%=request.getContextPath()%>/ServletListeEncheres">Annuler ma dernière enchère</a></button>
 				</div>
 				<div class="col-5">
-					<a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Retour</a>
+				<button type="button" class="btn btn-outline-dark"><a href="<%=request.getContextPath()%>/ServletListeEncheres">Retour</a></button>
+				
 				</div>
 			</div>
 		</div>

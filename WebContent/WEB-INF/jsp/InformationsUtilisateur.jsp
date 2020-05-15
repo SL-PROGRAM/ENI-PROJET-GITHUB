@@ -46,8 +46,8 @@
 				</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12">
-				<button type="button" class="btn btn-outline-dark"><a href="#">Retour</a></button>
+			<div class="col-12 text-center">
+				<button type="button" class="btn btn-outline-dark"><a href="<%=request.getContextPath()%>/ServletListeEncheres">Retour</a></button>
 			
 			</div>
 		
