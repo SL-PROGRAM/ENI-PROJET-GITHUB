@@ -1,15 +1,14 @@
 package fr.eni.same.bll;
 
 import java.util.List;
-import fr.eni.same.bll.interfaceManager.CategorieManagerInterface;
-import fr.eni.same.bll.interfaceManager.SelectManagerInterface;
+
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
-public class CategorieManager implements CategorieManagerInterface, SelectManagerInterface<Categorie> {
+public class CategorieManager{
 
 	private final int LIBELLE_LONGUEUR_MAX = 30;
 	private final int LIBELLE_LONGUEUR_MIN = 4;
@@ -27,18 +26,18 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 		}
 	}
 
-	/**
-	 * methode Get pour récupérer l'instance et la créer si elle n'existe pas
-	 * @return
-	 */
-	public static synchronized CategorieManager getCategorieManager() {
-		if (instance == null) {
-			instance = new CategorieManager();
-		}
-		return instance;
-	}
-
-	@Override
+    /**
+     * methode Get pour récupérer l'instance et la créer si elle n'existe pas
+     * @return
+     */
+    public static synchronized  CategorieManager getCategorieManager () {
+        if(instance == null){
+            instance = new CategorieManager();
+        }
+        return instance;
+    }
+    
+	
 	public void insert(Categorie t) throws BllException {
 		String errorMsg = "";
 		errorMsg += libelleLongueurCorrect(t.getLibelle());
@@ -56,7 +55,6 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 	}
 
 	
-	@Override
 	public void update(Categorie t) throws BllException {
 		String errorMsg = "";
 		errorMsg += libelleLongueurCorrect(t.getLibelle());
@@ -74,7 +72,6 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 	}
 
 	
-	@Override
 	public void delete(Categorie t) throws BllException {
 		try {
 			DALFactory.getCategorieDAOJdbcImpl().delete(t);
@@ -84,7 +81,8 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 		}
 	}
 
-	@Override
+
+	
 	public Categorie select(int id) throws BllException {
 		try {
 			return DALFactory.getCategorieDAOJdbcImpl().select(id);
@@ -94,7 +92,8 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 		return null;
 	}
 
-	@Override
+
+	
 	public List<Categorie> selectAll() throws BllException {
 		try {
 			List<Categorie> listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
@@ -105,17 +104,14 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 		return null;
 	}
 
-	// ***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative
-	// d'enregistrement en BDD * //
-	// ***********************************************************************************************//
-
-	/**
-	 * Méthode qui vérifie que le libellé n'existe pas dans la base de donnée
-	 */
-	@Override
-	public String libelleUnique(List<Categorie> list, String libelle) {
-		String resultat = "";
+	//***********************************************************************************************//
+	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+	//***********************************************************************************************//
+	
+	
+	
+	public void libelleUnique(List<Categorie> list, String libelle) throws BllException {
+		boolean isUnique = true;
 		for (Categorie categorie : list) {
 			if (categorie.getLibelle() == libelle) {
 				resultat = "Cette catégorie existe déjà";
@@ -123,19 +119,11 @@ public class CategorieManager implements CategorieManagerInterface, SelectManage
 		}
 		return resultat;
 	}
+
+
 	
-	/**
-	 * Méthode qui vérifie que la taille de la chaine de caractère du libellé
-	 * est bien conforme à la norme (>4 et <30)
-	 */
-	@Override
-	public String libelleLongueurCorrect(String libelle) {
-		String resultat = "";
-		if (!FonctionGenerique.isLongueurMax(libelle, LIBELLE_LONGUEUR_MAX)) {
-			resultat = "Le libellé de la catégorie est trop long - longueur maximum : " + LIBELLE_LONGUEUR_MAX + "\n";
-		} else if (!FonctionGenerique.isLongueurMin(libelle, LIBELLE_LONGUEUR_MIN)) {
-			resultat = "Le libellé de la catégorie est trop court - longueur minimum : " + LIBELLE_LONGUEUR_MIN +  "\n";
-		}
-		return resultat;
+	public void libelleLongueurCorrect(String libelle) {
+		// TODO Auto-generated method stub
+		
 	}
 }

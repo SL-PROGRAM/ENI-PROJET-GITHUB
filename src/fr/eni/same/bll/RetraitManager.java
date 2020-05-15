@@ -2,15 +2,13 @@ package fr.eni.same.bll;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.eni.same.bll.interfaceManager.RetraitManagerInterface;
-import fr.eni.same.bll.interfaceManager.SelectManagerInterface;
 import fr.eni.same.bo.Retrait;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
+import fr.eni.same.helpers.AdresseUtils;
 
-public class RetraitManager extends AdresseManager implements RetraitManagerInterface, SelectManagerInterface<Retrait> {
+public class RetraitManager extends AdresseUtils {
 	
 	private static RetraitManager instance;
 
@@ -30,9 +28,12 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
         }
         return instance;
     }
-	@Override
+	
 	public void insert(Retrait t) throws BllException {
-		controleUpdateAndInsert(t);
+		String msgErreur = controleUpdateAndInsert(t);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
 		try {
 			DALFactory.getRetraitDAOJdbcImpl().insert(t);
 		} catch (DALException e) {
@@ -40,9 +41,12 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		}
 	}
 
-	@Override
+	
 	public void update(Retrait t) throws BllException {
-		controleUpdateAndInsert(t);
+		String msgErreur = controleUpdateAndInsert(t);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
 		try {
 			DALFactory.getRetraitDAOJdbcImpl().insert(t);
 		} catch (DALException e) {
@@ -50,9 +54,13 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		}
 	}
 
-	@Override
+	
 	public void delete(Retrait t) throws BllException {
-		retraitNull(t);
+		String msgErreur = retraitNull(t);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
+		
 		try {
 			DALFactory.getRetraitDAOJdbcImpl().delete(t);
 		} catch (DALException e) {
@@ -60,9 +68,13 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		}
 	}
 
-	@Override
+	
 	public Retrait select(int id) throws BllException {
-		noRetraitNull(id);
+		String msgErreur = noRetraitNull(id);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
+		
 		Retrait retrait = null;
 		try {
 			retrait = DALFactory.getRetraitDAOJdbcImpl().select(id);
@@ -72,7 +84,7 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		return retrait;
 	}
 
-	@Override
+	
 	public List<Retrait> selectAll() throws BllException {
 		List<Retrait> listRetraits = new ArrayList<Retrait>();
 		try {
@@ -83,24 +95,30 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		return listRetraits;
 	}
 
-	private void controleUpdateAndInsert(Retrait t) throws BllException {
-		retraitNull(t);
-		rueLongueurCorrect(t.getRue());
-		villeLongueurCorrect(t.getVille());
-		codePostalLongueurCorrect(t.getCodePostal());
+	private String controleUpdateAndInsert(Retrait t) throws BllException {
+		String msgErreur = "";
+		msgErreur += retraitNull(t);
+		msgErreur += AdresseUtils.rueLongueurCorrect(t.getRue());
+		msgErreur += AdresseUtils.villeLongueurCorrect(t.getVille());
+		msgErreur += AdresseUtils.codePostalLongueurCorrect(t.getCodePostal());
+		return msgErreur;
 	}
 	
-	private void retraitNull(Retrait t) throws BllException  {
+	private String retraitNull(Retrait t) throws BllException  {
+		String msgErreur = "";
 		if (t == null) {
-			throw new BllException("Erreur : null");
+			msgErreur += ("Erreur : null");
 		}
+		return msgErreur;
 	}
 	
 	
-	private void noRetraitNull(int id) throws BllException  {
+	private String noRetraitNull(int id) throws BllException  {
+		String msgErreur = "";
 		if (id <= 0) {
-			throw new BllException("Erreur référence interdite");
+			msgErreur += ("Erreur référence interdite");
 		}
+		return msgErreur;
 	}
 
 
