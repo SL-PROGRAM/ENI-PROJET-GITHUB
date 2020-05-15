@@ -92,10 +92,10 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	private void controleUpdateAndInsert(Vente t) throws BllException {
 		venteNull(t);
 		noVenteNull(t.getNoVente());
-		NomArticleLongeurCorrect(t.getNomArticle());
-		DescriptionLongeurCorrect(t.getDescription());
+		nomArticleLongeurCorrect(t.getNomArticle());
+		descriptionLongeurCorrect(t.getDescription());
 		dateFinEnchere(t.getDateFinEncheres());
-		PrixInitialPositif(t.getPrixVente());
+		prixInitialPositif(t.getPrixVente());
 	}
 	
 	private void controleDelete(Vente t) throws BllException {
@@ -122,7 +122,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	
 
 	@Override
-	public void NomArticleLongeurCorrect(String libelle) throws BllException {
+	public void nomArticleLongeurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX);
 		}
@@ -132,7 +132,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	}
 
 	@Override
-	public void DescriptionLongeurCorrect(String libelle) throws BllException {
+	public void descriptionLongeurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(libelle, DESCRIPTION_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ DESCRIPTION_LONGUEUR_MAX);
 		}
@@ -152,7 +152,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	}
 
 	@Override
-	public void PrixInitialPositif(int prixInitial) throws BllException {
+	public void prixInitialPositif(int prixInitial) throws BllException {
 		if(prixInitial < 0) {
 			throw new BllException();
 		}
