@@ -13,14 +13,16 @@ public class CategorieManager{
 	private final int LIBELLE_LONGUEUR_MAX = 30;
 	private final int LIBELLE_LONGUEUR_MIN = 4;
 	private static CategorieManager instance;
-	private List<Categorie> listeCategorie;
+	private List<Categorie> listeCategories;
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
 	 */
 	private CategorieManager() {
 		try {
-			listeCategorie = selectAll();
+			if(listeCategories == null) {
+				listeCategories = selectAll();				
+			}
 		} catch (BllException e) {
 			e.printStackTrace();
 		}
@@ -41,11 +43,11 @@ public class CategorieManager{
 	public void insert(Categorie t) throws BllException {
 		String errorMsg = "";
 		errorMsg += libelleLongueurCorrect(t.getLibelle());
-		errorMsg += libelleUnique(listeCategorie, t.getLibelle());
+		errorMsg += libelleUnique(listeCategories, t.getLibelle());
 		if(errorMsg.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().insert(t);
-				listeCategorie = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+				listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -58,11 +60,11 @@ public class CategorieManager{
 	public void update(Categorie t) throws BllException {
 		String errorMsg = "";
 		errorMsg += libelleLongueurCorrect(t.getLibelle());
-		errorMsg += libelleUnique(listeCategorie, t.getLibelle());
+		errorMsg += libelleUnique(listeCategories, t.getLibelle());
 		if(errorMsg.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().update(t);
-				listeCategorie = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+				listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -75,7 +77,7 @@ public class CategorieManager{
 	public void delete(Categorie t) throws BllException {
 		try {
 			DALFactory.getCategorieDAOJdbcImpl().delete(t);
-			listeCategorie = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+			listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -96,12 +98,11 @@ public class CategorieManager{
 	
 	public List<Categorie> selectAll() throws BllException {
 		try {
-			List<Categorie> listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
-			return listeCategories;
+			listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return listeCategories;
 	}
 
 	//***********************************************************************************************//
@@ -125,6 +126,13 @@ public class CategorieManager{
 	
 	public String libelleLongueurCorrect(String libelle) {
 		String resultat = "";
+		if(!FonctionGenerique.isLongueurMax(libelle, LIBELLE_LONGUEUR_MAX)) {
+			resultat += "Le libellé est trop grand. Longueur maximum : " + LIBELLE_LONGUEUR_MAX;
+		}
+		if(!FonctionGenerique.isLongueurMin(libelle, LIBELLE_LONGUEUR_MIN));
+		{
+			resultat += "Le libellé est trop petit. Longueur minimum : " + LIBELLE_LONGUEUR_MIN;
+		}
 		return resultat;
 	}
 }
