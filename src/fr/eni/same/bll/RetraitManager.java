@@ -2,15 +2,12 @@ package fr.eni.same.bll;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.eni.same.bll.interfaceManager.RetraitManagerInterface;
-import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
 import fr.eni.same.bo.Retrait;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 
-public class RetraitManager extends AdresseManager implements RetraitManagerInterface, SelectMAnagerInterface<Retrait> {
+public class RetraitManager extends AdresseUtils {
 	
 	private static RetraitManager instance;
 
@@ -30,7 +27,7 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
         }
         return instance;
     }
-	@Override
+	
 	public void insert(Retrait t) throws BllException {
 		String msgErreur = controleUpdateAndInsert(t);
 		if (!msgErreur.equals("")){
@@ -43,7 +40,7 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		}
 	}
 
-	@Override
+	
 	public void update(Retrait t) throws BllException {
 		String msgErreur = controleUpdateAndInsert(t);
 		if (!msgErreur.equals("")){
@@ -56,7 +53,7 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		}
 	}
 
-	@Override
+	
 	public void delete(Retrait t) throws BllException {
 		String msgErreur = retraitNull(t);
 		if (!msgErreur.equals("")){
@@ -70,7 +67,7 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		}
 	}
 
-	@Override
+	
 	public Retrait select(int id) throws BllException {
 		String msgErreur = noRetraitNull(id);
 		if (!msgErreur.equals("")){
@@ -86,7 +83,7 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 		return retrait;
 	}
 
-	@Override
+	
 	public List<Retrait> selectAll() throws BllException {
 		List<Retrait> listRetraits = new ArrayList<Retrait>();
 		try {

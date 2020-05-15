@@ -3,20 +3,21 @@ package fr.eni.same.bll;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
-import fr.eni.same.bll.interfaceManager.VenteManagerInterface;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
-public class VenteManager implements VenteManagerInterface, SelectMAnagerInterface<Vente> {
+public class VenteManager  {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int DESCRIPTION_LONGUEUR_MAX = 300;
 	private final int DESCRIPTION_LONGUEUR_MIN = 5;
 	private static VenteManager instance;
+	private static List<Vente> listVentes = new ArrayList<Vente>();
+
+	
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
@@ -27,15 +28,17 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
     /**
      * methode Get pour récupérer l'instance et la créer si elle n'existe pas
      * @return
+     * @throws BllException 
      */
-    public static synchronized  VenteManager getVenteManager () {
+    public static synchronized  VenteManager getVenteManager () throws BllException {
         if(instance == null){
             instance = new VenteManager();
+            listVentes = VenteManager.getVenteManager().selectAll();
         }
         return instance;
     }
 	
-	@Override
+	
 	public void insert(Vente t) throws BllException {
 		String msgErreur = controleUpdateAndInsert(t);
 		if (!msgErreur.equals("")){
@@ -48,7 +51,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		}
 	}
 
-	@Override
+	
 	public void update(Vente t) throws BllException {
 		String msgErreur = controleUpdateAndInsert(t);
 		if (!msgErreur.equals("")){
@@ -62,13 +65,13 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	}
 	
 
-	@Override
+	
 	public Vente updateAcheteur(Vente t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public void delete(Vente t) throws BllException {
 		String msgErreur = controleDelete(t);
 		if (!msgErreur.equals("")){
@@ -82,7 +85,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		
 	}
 
-	@Override
+	
 	public Vente select(int id) throws BllException {
 		String msgErreur = noVenteNull(id);
 		if(!msgErreur.equals("")) {
@@ -97,7 +100,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		return vente;
 	}
 
-	@Override
+	
 	public List<Vente> selectAll() throws BllException {
 		List<Vente> listVentes = new ArrayList<Vente>();
 		try {
@@ -107,6 +110,11 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		}
 		return listVentes;
 	}
+	
+		//***********************************************************************************************//
+		// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
+		//***********************************************************************************************//
+		
 	
 	private String controleUpdateAndInsert(Vente t) throws BllException {
 		String msgErreur = "";
@@ -146,12 +154,9 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		
 	}
 
-	//***********************************************************************************************//
-	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
-	//***********************************************************************************************//
 	
 
-	@Override
+	
 	public String nomArticleLongeurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
@@ -163,7 +168,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		return msgErreur;
 	}
 
-	@Override
+	
 	public String descriptionLongeurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, DESCRIPTION_LONGUEUR_MAX)) {
@@ -175,7 +180,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		return msgErreur;		
 	}
 
-	@Override
+	
 	public String dateFinEnchere(Timestamp dateFinEnchere) throws BllException {
 		String msgErreur = "";
 		Timestamp now =  new Timestamp(System.currentTimeMillis());
@@ -187,7 +192,7 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		return msgErreur;		
 	}
 
-	@Override
+	
 	public String prixInitialPositif(int prixInitial) throws BllException {
 		String msgErreur = "";
 		if(prixInitial < 0) {

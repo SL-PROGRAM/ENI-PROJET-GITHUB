@@ -5,15 +5,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
-import fr.eni.same.bll.interfaceManager.UtilisateurManagerInterface;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
-public class UtilisateurManager extends AdresseManager implements UtilisateurManagerInterface, SelectMAnagerInterface<Utilisateur> {
+public class UtilisateurManager extends AdresseUtils  {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int PSEUDO_LONGUEUR_MAX = 30;
@@ -46,7 +44,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
         return instance;
     }
 	
-	@Override
+	
 	public void insert(Utilisateur t) throws BllException {
 		String msgErreur =controleUpdateAndInsert(t);
 		if (!msgErreur.equals("")){
@@ -60,7 +58,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		
 	}
 
-	@Override
+	
 	public void update(Utilisateur t) throws BllException {
 		String msgErreur = controleUpdateAndInsert(t);
 		if (!msgErreur.equals("")){
@@ -73,7 +71,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		}
 	}
 
-	@Override
+	
 	public void delete(Utilisateur t) throws BllException {
 		String msgErreur = controleDelete(t);
 		if (!msgErreur.equals("")){
@@ -91,7 +89,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	}
 
 
-	@Override
+	
 	public Utilisateur select(int id) throws BllException {
 		String msgErreur = noUtilisateurNull(id);
 		if (!msgErreur.equals("")){
@@ -107,7 +105,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		return utilisateur;
 	}
 
-	@Override
+	
 	public List<Utilisateur> selectAll() throws BllException {
 		List<Utilisateur> listUtilisateurs = new ArrayList<Utilisateur>();
 		try {
@@ -166,7 +164,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	//***********************************************************************************************//
 
 
-	@Override
+	
 	public String pseudoLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, PSEUDO_LONGUEUR_MAX)) {
@@ -177,13 +175,13 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		}
 		return libelle;				
 	}
-	@Override
+	
 	public String pseudoUnique(String pseudo) throws BllException {
 		return pseudo;
 		//PAS DANS LA SPEC MAIS PREVU		
 	}
 
-	@Override
+	
 	public String nomLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(libelle != null) {
@@ -198,7 +196,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 			
 	}
 
-	@Override
+	
 	public String prenomLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, PRENOM_LONGUEUR_MAX)) {
@@ -210,7 +208,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		return libelle;				
 	}
 
-	@Override
+	
 	public String emailValide(String email) throws BllException {
 		String msgErreur = "";
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
@@ -228,7 +226,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	}
 		
 
-	@Override
+	
 	public String telephoneLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, TELEPHONE_LONGUEUR_MAX)) {
@@ -240,7 +238,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		return libelle;				
 	}
 
-	@Override
+	
 	public String motDePasseValide(String email) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(email, MOT_DE_PASSE_LONGUEUR_MAX)) {
@@ -252,7 +250,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		return email;			
 	}
 
-	@Override
+	
 	public String creditPositif(int credit) throws BllException {
 		String msgErreur = "";
 		if (credit < 0) {
