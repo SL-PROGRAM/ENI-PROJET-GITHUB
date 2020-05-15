@@ -37,7 +37,10 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 	
 	@Override
 	public void insert(Vente t) throws BllException {
-		controleUpdateAndInsert(t);
+		String msgErreur = controleUpdateAndInsert(t);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
 		try {
 			DALFactory.getVenteDAOJdbcImpl().insert(t);
 		} catch (DALException e) {
@@ -47,17 +50,30 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 
 	@Override
 	public void update(Vente t) throws BllException {
-		controleUpdateAndInsert(t);
+		String msgErreur = controleUpdateAndInsert(t);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
 		try {
 			DALFactory.getVenteDAOJdbcImpl().insert(t);
 		} catch (DALException e) {
 			throw new BllException("Impossible de modifier en base de donnée la vente");
 		}
 	}
+	
+
+	@Override
+	public Vente updateAcheteur(Vente t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public void delete(Vente t) throws BllException {
-		controleDelete(t);
+		String msgErreur = controleDelete(t);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
 		try {
 			DALFactory.getVenteDAOJdbcImpl().delete(t);
 		} catch (DALException e) {
@@ -68,7 +84,10 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 
 	@Override
 	public Vente select(int id) throws BllException {
-		noVenteNull(id);
+		String msgErreur = noVenteNull(id);
+		if(!msgErreur.equals("")) {
+			throw new BllException(msgErreur);
+		};
 		Vente vente = null;
 		try {
 			vente = DALFactory.getVenteDAOJdbcImpl().select(id);
@@ -89,31 +108,42 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 		return listVentes;
 	}
 	
-	private void controleUpdateAndInsert(Vente t) throws BllException {
-		venteNull(t);
-		noVenteNull(t.getNoVente());
-		nomArticleLongeurCorrect(t.getNomArticle());
-		descriptionLongeurCorrect(t.getDescription());
-		dateFinEnchere(t.getDateFinEncheres());
-		prixInitialPositif(t.getPrixVente());
+	private String controleUpdateAndInsert(Vente t) throws BllException {
+		String msgErreur = "";
+		msgErreur += venteNull(t);
+		msgErreur += noVenteNull(t.getNoVente());
+		msgErreur += nomArticleLongeurCorrect(t.getNomArticle());
+		msgErreur += descriptionLongeurCorrect(t.getDescription());
+		msgErreur += dateFinEnchere(t.getDateFinEncheres());
+		msgErreur += prixInitialPositif(t.getPrixVente());
+		
+		return msgErreur;
 	}
 	
-	private void controleDelete(Vente t) throws BllException {
-		venteNull(t);
-		noVenteNull(t.getNoVente());
+	private String controleDelete(Vente t) throws BllException {
+		String msgErreur = "";
+		msgErreur += venteNull(t);
+		msgErreur += noVenteNull(t.getNoVente());
+		
+		return msgErreur;
 	}
 	
-	private void venteNull(Vente t) throws BllException  {
+	private String venteNull(Vente t) throws BllException  {
+		String msgErreur = "";
 		if (t == null) {
-			throw new BllException("Erreur : null");
+			msgErreur = ("Erreur : null");
 		}
+		return msgErreur;
 	}
 	
 	
-	private void noVenteNull(int id) throws BllException  {
+	private String noVenteNull(int id) throws BllException  {
+		String msgErreur = "";
 		if (id <= 0) {
-			throw new BllException("Erreur référence interdite");
+			msgErreur = ("Erreur référence interdite");
 		}
+		return msgErreur;
+		
 	}
 
 	//***********************************************************************************************//
@@ -123,47 +153,49 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 
 	@Override
 	public String nomArticleLongeurCorrect(String libelle) throws BllException {
+		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX);
+			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX + "caractères\n");
 		}
 		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN);
+			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN + "caractères\n");
 		}
-		return libelle;
+		return msgErreur;
 	}
 
 	@Override
 	public String descriptionLongeurCorrect(String libelle) throws BllException {
+		String msgErreur = "";
 		if(!FonctionGenerique.isLongeurMax(libelle, DESCRIPTION_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ DESCRIPTION_LONGUEUR_MAX);
+			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ DESCRIPTION_LONGUEUR_MAX + "caractères\n");
 		}
 		if(!FonctionGenerique.isLongeurMax(libelle, DESCRIPTION_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ DESCRIPTION_LONGUEUR_MIN);
+			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ DESCRIPTION_LONGUEUR_MIN + "caractères\n");
 		}
-		return libelle;		
+		return msgErreur;		
 	}
 
 	@Override
 	public String dateFinEnchere(Timestamp dateFinEnchere) throws BllException {
+		String msgErreur = "";
 		Timestamp now =  new Timestamp(System.currentTimeMillis());
 		int aDay = 24 * 60 * 60 * 1000;
 		Timestamp demain = new Timestamp(now.getTime()+aDay);
 		if(dateFinEnchere.before(demain)){
-			throw new BllException();
+			msgErreur = ("Il faut une durée minimun de 24h pour une enchère");
 		}
-		return null;		
+		return msgErreur;		
 	}
 
 	@Override
 	public String prixInitialPositif(int prixInitial) throws BllException {
+		String msgErreur = "";
 		if(prixInitial < 0) {
-			throw new BllException();
+			msgErreur = ("Le prix de vente minium est de 0");
 		}
-		// TODO Auto-generated method stub
-		return null;
+		return msgErreur;
 		
 	}
-
 
 
 	
