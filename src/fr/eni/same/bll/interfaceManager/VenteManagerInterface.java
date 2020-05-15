@@ -13,14 +13,14 @@ public interface VenteManagerInterface extends ManagerInterface<Vente> {
 	 * @param libelle
 	 * @return
 	 */
-	public void NomArticleLongeurCorrect(String libelle) throws BllException; 
+	public void nomArticleLongeurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * Vérifie longeur max et min correct
 	 * @param libelle
 	 * @return
 	 */
-	public  void DescriptionLongeurCorrect(String libelle) throws BllException; 
+	public  void descriptionLongeurCorrect(String libelle) throws BllException; 
 	
 	/**
 	 * vérifier que date fin min +24h
@@ -34,5 +34,5 @@ public interface VenteManagerInterface extends ManagerInterface<Vente> {
 	 * @param prixInitial
 	 * @return
 	 */
-	public void PrixInitialPositif(int prixInitial) throws BllException;
+	public void prixInitialPositif(int prixInitial) throws BllException;
 }

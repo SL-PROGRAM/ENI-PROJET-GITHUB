@@ -85,9 +85,9 @@ public class RetraitManager extends AdresseManager implements RetraitManagerInte
 
 	private void controleUpdateAndInsert(Retrait t) throws BllException {
 		retraitNull(t);
-		RueLongueurCorrect(t.getRue());
-		VilleLongueurCorrect(t.getVille());
-		CodePostalLongueurCorrect(t.getCodePostal());
+		rueLongueurCorrect(t.getRue());
+		villeLongueurCorrect(t.getVille());
+		codePostalLongueurCorrect(t.getCodePostal());
 	}
 	
 	private void retraitNull(Retrait t) throws BllException  {

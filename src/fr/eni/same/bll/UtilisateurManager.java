@@ -109,16 +109,16 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	private void controleUpdateAndInsert(Utilisateur t) throws BllException {
 		utilisateurNull(t);
 		noUtilisateurNull(t.getNoUtilisateur());
-		PseudoLongueurCorrect(t.getPseudo());
-		NomLongueurCorrect(t.getNom());
-		PrenomLongueurCorrect(t.getPrenom());
-		EmailValide(t.getEmail());
-		TelephoneLongueurCorrect(t.getTelephone());
-		MotDePasseValide(t.getEmail());
-		CreditPositif(t.getCredit());
-		RueLongueurCorrect(t.getRue());
-		VilleLongueurCorrect(t.getVille());
-		CodePostalLongueurCorrect(t.getCodePostal());
+		pseudoLongueurCorrect(t.getPseudo());
+		nomLongueurCorrect(t.getNom());
+		prenomLongueurCorrect(t.getPrenom());
+		emailValide(t.getEmail());
+		telephoneLongueurCorrect(t.getTelephone());
+		motDePasseValide(t.getEmail());
+		creditPositif(t.getCredit());
+		rueLongueurCorrect(t.getRue());
+		villeLongueurCorrect(t.getVille());
+		codePostalLongueurCorrect(t.getCodePostal());
 	}
 
 	private void controleDelete(Utilisateur t) throws BllException {
@@ -145,7 +145,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 
 
 	@Override
-	public void PseudoLongueurCorrect(String libelle) throws BllException {
+	public void pseudoLongueurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(libelle, PSEUDO_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ PSEUDO_LONGUEUR_MAX);
 		}
@@ -154,12 +154,12 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		}				
 	}
 	@Override
-	public void PseudoUnique(String pseudo) throws BllException {
+	public void pseudoUnique(String pseudo) throws BllException {
 		//PAS DANS LA SPEC MAIS PREVU		
 	}
 
 	@Override
-	public void NomLongueurCorrect(String libelle) throws BllException {
+	public void nomLongueurCorrect(String libelle) throws BllException {
 		if(libelle != null) {
 			if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
 				throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX);
@@ -172,7 +172,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	}
 
 	@Override
-	public void PrenomLongueurCorrect(String libelle) throws BllException {
+	public void prenomLongueurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(libelle, PRENOM_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ PRENOM_LONGUEUR_MAX);
 		}
@@ -182,7 +182,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	}
 
 	@Override
-	public void EmailValide(String email) throws BllException {
+	public void emailValide(String email) throws BllException {
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(email);
 		if(!FonctionGenerique.isLongeurMax(email, EMAIL_LONGUEUR_MAX)) {
@@ -198,7 +198,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		
 
 	@Override
-	public void TelephoneLongueurCorrect(String libelle) throws BllException {
+	public void telephoneLongueurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(libelle, TELEPHONE_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ TELEPHONE_LONGUEUR_MAX);
 		}
@@ -208,7 +208,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	}
 
 	@Override
-	public void MotDePasseValide(String email) throws BllException {
+	public void motDePasseValide(String email) throws BllException {
 		if(!FonctionGenerique.isLongeurMax(email, MOT_DE_PASSE_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ MOT_DE_PASSE_LONGUEUR_MAX);
 		}
@@ -218,7 +218,7 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 	}
 
 	@Override
-	public void CreditPositif(int credit) throws BllException {
+	public void creditPositif(int credit) throws BllException {
 		if (credit < 0) {
 			throw new BllException("credit insufissant");
 		}
