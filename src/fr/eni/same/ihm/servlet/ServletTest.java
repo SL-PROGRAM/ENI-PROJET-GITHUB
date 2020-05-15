@@ -25,7 +25,7 @@ public class ServletTest extends HttpServlet {
 	 * 			Si informations correctes : redirection et envoie des informations utilisateur vers la page affichant la liste des enchères (listeEncheres.jsp)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/creerVentes2.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/test.jsp");
 		rd.forward(request, response);
 	}
 

@@ -11,7 +11,7 @@
 	<div class="col container">
 		<%@ include file="jspf/header.jspf" %>
 		<div class="container">
-			<form action="" method="post">
+			<form action="<%= request.getContextPath()%>/ServletListeEncheres" method="post">
 				<div class="form-group row">
 					<label for="identifiant" class="col-4 col-form-label offset-lg-3 col-lg-2">Identifiant
 						: </label>
@@ -47,7 +47,7 @@
 			</form>
 			<div class="row">
 				<div class="col-12 offset-lg-3 col-lg-6">
-					<a class="btn btn-success btn-block" href="" role="button">Créer un compte</a>
+					<a class="btn btn-success btn-block" href="<%= request.getContextPath()%>/ServletModificationInformationsUtilisateur" role="button">Créer un compte</a>
 				</div>
 			</div>
 		</div>
