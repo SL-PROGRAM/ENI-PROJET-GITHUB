@@ -27,7 +27,7 @@
 		<br />
 		
 		
-		<form action="" method="post">
+		<form action="<%= request.getContextPath()%>/ServletInformationsUtilisateur" method="post">
 			<div class="row">
 				<div class="col-12 col-lg-6">
 					<div class="form-group form-row">
@@ -159,7 +159,7 @@
 						type="submit">Créer</button>
 				</div>
 				<div class="col-6 col-lg-3">
-					<button name="btnAnnulerCreerUnCompte" class="btn btn-danger btn-block">Annuler</button>
+					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletConnexion">Annuler</a>
 				</div>
 			</div>
 			
@@ -167,14 +167,13 @@
 			<!-- Bontons à afficher uniquement pour la maquette 3 -->
 			<div class="row">
 				<div class="col-4 offset-lg-2 col-lg-3">
-					<button name="btnEnregistrer" class="btn btn-success btn-block">Enregistrer</button>
+					<button name="btnEnregistrer" class="btn btn-success btn-block" type="submit">Enregistrer</button>
 				</div>
 				<div class="col-4 col-lg-3">
-					<button name="btnSupprimerMonCompte" class="btn btn-danger btn-block"
-					type="submit">Supprimer mon compte</button>
+					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletConnexion" type="submit">Supprimer mon compte</a>
 				</div>
 				<div class="col-4 col-lg-3">
-					<button name="btnRetour" class="btn btn-primary btn-block">Retour</button>
+					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">Retour</a>
 				</div>
 			</div>
 		</form>
