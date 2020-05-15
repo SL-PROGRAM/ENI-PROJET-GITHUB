@@ -3,7 +3,7 @@ package fr.eni.same.bll;
 import java.util.List;
 
 import fr.eni.same.bll.interfaceManager.EnchereManagerInterface;
-import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
+import fr.eni.same.bll.interfaceManager.SelectManagerInterface;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.exception.BllException;
 

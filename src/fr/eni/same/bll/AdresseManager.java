@@ -14,32 +14,32 @@ public abstract class AdresseManager implements AdresseInterface {
 	
 	@Override
 	public void rueLongueurCorrect(String libelle) throws BllException {
-		if(!FonctionGenerique.isLongeurMax(libelle, RUE_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ RUE_LONGUEUR_MAX);
+		if(!FonctionGenerique.isLongueurMax(libelle, RUE_LONGUEUR_MAX)) {
+			throw new BllException("Longueur du nom trop importante - Longueur maximum : "+ RUE_LONGUEUR_MAX);
 		}
-		if(!FonctionGenerique.isLongeurMax(libelle, RUE_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ RUE_LONGUEUR_MIN);
+		if(!FonctionGenerique.isLongueurMin(libelle, RUE_LONGUEUR_MIN)) {
+			throw new BllException("Longueur du nom trop importante - Longueur minimum : "+ RUE_LONGUEUR_MIN);
 		}				
 	}
 	
 
 	@Override
 	public void codePostalLongueurCorrect(String libelle) throws BllException {
-		if(!FonctionGenerique.isLongeurMax(libelle, CP_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ CP_LONGUEUR_MAX);
+		if(!FonctionGenerique.isLongueurMax(libelle, CP_LONGUEUR_MAX)) {
+			throw new BllException("Longueur du nom trop importante - Longueur maximum : "+ CP_LONGUEUR_MAX);
 		}
-		if(!FonctionGenerique.isLongeurMax(libelle, CP_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ CP_LONGUEUR_MIN);
+		if(!FonctionGenerique.isLongueurMin(libelle, CP_LONGUEUR_MIN)) {
+			throw new BllException("Longueur du nom trop importante - Longueur minimum : "+ CP_LONGUEUR_MIN);
 		}				
 	}
 
 	@Override
 	public void villeLongueurCorrect(String libelle) throws BllException {
-		if(!FonctionGenerique.isLongeurMax(libelle, VILLE_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du nom trop importante - Longueur 	maximum : "+ VILLE_LONGUEUR_MAX);
+		if(!FonctionGenerique.isLongueurMax(libelle, VILLE_LONGUEUR_MAX)) {
+			throw new BllException("Longueur du nom trop importante - Longueur 	maximum : "+ VILLE_LONGUEUR_MAX);
 		}
-		if(!FonctionGenerique.isLongeurMax(libelle, VILLE_LONGUEUR_MIN)) {
-			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ VILLE_LONGUEUR_MIN);
+		if(!FonctionGenerique.isLongueurMin(libelle, VILLE_LONGUEUR_MIN)) {
+			throw new BllException("Longueur du nom trop importante - Longueur minimum : "+ VILLE_LONGUEUR_MIN);
 		}				
 	}
 	

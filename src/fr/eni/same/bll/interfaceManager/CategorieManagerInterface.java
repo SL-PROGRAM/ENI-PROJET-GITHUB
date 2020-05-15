@@ -6,7 +6,7 @@ import fr.eni.same.bo.Categorie;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.UniqueException;
 
-public interface CategorieManagerInetrface extends ManagerInterface<Categorie> {
+public interface CategorieManagerInterface extends ManagerInterface<Categorie> {
 
 	
 	/**

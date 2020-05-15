@@ -2,15 +2,15 @@ package fr.eni.same.bll;
 
 import java.util.List;
 
-import fr.eni.same.bll.interfaceManager.CategorieManagerInetrface;
-import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
+import fr.eni.same.bll.interfaceManager.CategorieManagerInterface;
+import fr.eni.same.bll.interfaceManager.SelectManagerInterface;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
-public class CategorieManager implements CategorieManagerInetrface, SelectMAnagerInterface<Categorie> {
+public class CategorieManager implements CategorieManagerInterface, SelectManagerInterface<Categorie> {
 
 	private final int LIBELLE_LONGUEUR_MAX = 30;
 	private final int LIBELLE_LONGUEUR_MIN = 4;
@@ -35,9 +35,9 @@ public class CategorieManager implements CategorieManagerInetrface, SelectMAnage
     
 	@Override
 	public void insert(Categorie t) throws BllException {
-		if(!FonctionGenerique.isLongeurMax(t.getLibelle(), LIBELLE_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(t.getLibelle(), LIBELLE_LONGUEUR_MAX)) {
 			throw new BllException("Le libellé est trop court");
-		} else if(!FonctionGenerique.isLongeurMin(t.getLibelle(), LIBELLE_LONGUEUR_MIN)){
+		} else if(!FonctionGenerique.isLongueurMin(t.getLibelle(), LIBELLE_LONGUEUR_MIN)){
 			throw new BllException("Le libellé est trop long");
 		} else {
 			try {
@@ -96,9 +96,4 @@ public class CategorieManager implements CategorieManagerInetrface, SelectMAnage
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-	
-
 }

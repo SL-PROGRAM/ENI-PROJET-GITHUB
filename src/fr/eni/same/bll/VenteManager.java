@@ -3,7 +3,7 @@ package fr.eni.same.bll;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
+import fr.eni.same.bll.interfaceManager.SelectManagerInterface;
 import fr.eni.same.bll.interfaceManager.VenteManagerInterface;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
@@ -11,7 +11,7 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
-public class VenteManager implements VenteManagerInterface, SelectMAnagerInterface<Vente> {
+public class VenteManager implements VenteManagerInterface, SelectManagerInterface<Vente> {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int DESCRIPTION_LONGUEUR_MAX = 300;
@@ -123,20 +123,20 @@ public class VenteManager implements VenteManagerInterface, SelectMAnagerInterfa
 
 	@Override
 	public void nomArticleLongeurCorrect(String libelle) throws BllException {
-		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(libelle, NOM_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX);
 		}
-		if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MIN)) {
+		if(!FonctionGenerique.isLongueurMin(libelle, NOM_LONGUEUR_MIN)) {
 			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN);
 		}
 	}
 
 	@Override
 	public void descriptionLongeurCorrect(String libelle) throws BllException {
-		if(!FonctionGenerique.isLongeurMax(libelle, DESCRIPTION_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(libelle, DESCRIPTION_LONGUEUR_MAX)) {
 			throw new BllException("Longeur du nom trop importante - Longueur maximum : "+ DESCRIPTION_LONGUEUR_MAX);
 		}
-		if(!FonctionGenerique.isLongeurMax(libelle, DESCRIPTION_LONGUEUR_MIN)) {
+		if(!FonctionGenerique.isLongueurMin(libelle, DESCRIPTION_LONGUEUR_MIN)) {
 			throw new BllException("Longeur du nom trop importante - Longueur minimum : "+ DESCRIPTION_LONGUEUR_MIN);
 		}		
 	}

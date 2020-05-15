@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.same.bll.interfaceManager.RetraitManagerInterface;
-import fr.eni.same.bll.interfaceManager.SelectMAnagerInterface;
+import fr.eni.same.bll.interfaceManager.SelectManagerInterface;
 import fr.eni.same.bo.Retrait;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 
-public class RetraitManager extends AdresseManager implements RetraitManagerInterface, SelectMAnagerInterface<Retrait> {
+public class RetraitManager extends AdresseManager implements RetraitManagerInterface, SelectManagerInterface<Retrait> {
 	
 	private static RetraitManager instance;
 
