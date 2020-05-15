@@ -1,7 +1,6 @@
-package fr.eni.same.bll;
+package fr.eni.same.helpers;
 
 import fr.eni.same.exception.BllException;
-import fr.eni.same.helpers.FonctionGenerique;
 
 public abstract class AdresseUtils  {
 	protected final static int RUE_LONGUEUR_MAX = 30;
