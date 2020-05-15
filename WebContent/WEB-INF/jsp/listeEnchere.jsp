@@ -12,14 +12,17 @@
 		<div class="row">
 			<div class="col-12">
 				<p>
-					<a href="<%= request.getContextPath()%>/ServletCreerVente">Vendre un article</a>
-				</p>	
+					<a href="<%=request.getContextPath()%>/ServletCreerVente">Vendre
+						un article</a>
+				</p>
 				<p>
-					<a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">Mon profil</a>
-				</p>	
+					<a
+						href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">Mon
+						profil</a>
+				</p>
 				<p>
-					<a href="<%= request.getContextPath()%>/ServletConnexion">Déconnexion</a>
-				</p>	
+					<a href="<%=request.getContextPath()%>/ServletConnexion">Déconnexion</a>
+				</p>
 			</div>
 			<div class="col-12">
 				<h4>Filtres :</h4>
@@ -60,10 +63,11 @@
 						</div>
 					</div>
 				</form>
-				<form action="<%= request.getContextPath()%>/ServletListeEncheres">
+				<form action="<%=request.getContextPath()%>/ServletListeEncheres">
 					<div class="form-group row">
 						<div class="col-12">
-							<input type="text" class="form-control" placeholder="Le nom de l'article contient">
+							<input type="text" class="form-control"
+								placeholder="Le nom de l'article contient">
 						</div>
 					</div>
 					<div class="form-row">
@@ -72,10 +76,130 @@
 						</div>
 					</div>
 				</form>
+				<br/>
+				<form action="" method="post">
+
+					<button class="container" type="submit">
+						<div class="row">
+
+							<div class="col-3">
+								<!-- 			Ligne 1 -->
+								<div class="col-12" style="height: 100%">
+									<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
+										src="">
+								</div>
+							</div>
+
+							<div class="col-9">
+								<div class="row">
+									<div class="col-6">
+										<p>PC Gamer pour travailler</p>
+									</div>
+									<div class="col-6">
+										<p>etape2</p>
+									</div>
+
+
+									<!-- Ligne 2 -->
+									<div class="col-6">
+										<p>Prix : 210 points</p>
+										<p>Fin de l'enchère :</p>
+									</div>
+
+									<div class="col-6">
+										<p>Classement : 2</p>
+										<p>10/08/2018</p>
+									</div>
+
+									<!-- Ligne 4 -->
+									<div class="col-6">
+										<p>Retrait :</p>
+									</div>
+									<div class="col-6">
+										<p>10 allée des Alouettes</p>
+										<p>44 800 Saint Herblain</p>
+									</div>
+
+									<!-- Ligne 5 -->
+									<div class="col-6">
+										<p>Vendeur :</p>
+									</div>
+									<div class="col-6">
+										<p>
+											<a href="#">jojo44</a>
+										</p>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</button>
+				</form>
+				
+				<br/>
+				
+				<form action="" method="post">
+
+					<button class="container" type="submit">
+						<div class="row">
+
+							<div class="col-3">
+								<!-- 			Ligne 1 -->
+								<div class="col-12" style="height: 100%">
+									<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
+										src="">
+								</div>
+							</div>
+
+							<div class="col-9">
+								<div class="row">
+									<div class="col-6">
+										<p>PC Gamer pour travailler</p>
+									</div>
+									<div class="col-6">
+										<p>etape2</p>
+									</div>
+
+
+									<!-- Ligne 2 -->
+									<div class="col-6">
+										<p>Prix : 210 points</p>
+										<p>Fin de l'enchère :</p>
+									</div>
+
+									<div class="col-6">
+										<p>Classement : 2</p>
+										<p>10/08/2018</p>
+									</div>
+
+									<!-- Ligne 4 -->
+									<div class="col-6">
+										<p>Retrait :</p>
+									</div>
+									<div class="col-6">
+										<p>10 allée des Alouettes</p>
+										<p>44 800 Saint Herblain</p>
+									</div>
+
+									<!-- Ligne 5 -->
+									<div class="col-6">
+										<p>Vendeur :</p>
+									</div>
+									<div class="col-6">
+										<p>
+											<a href="#">jojo44</a>
+										</p>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</button>
+				</form>
 			</div>
 		</div>
 
 	</div>
-	
+
 </body>
 </html>
