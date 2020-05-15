@@ -6,6 +6,7 @@ import fr.eni.same.bo.Retrait;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
+import fr.eni.same.helpers.AdresseUtils;
 
 public class RetraitManager extends AdresseUtils {
 	
@@ -97,9 +98,9 @@ public class RetraitManager extends AdresseUtils {
 	private String controleUpdateAndInsert(Retrait t) throws BllException {
 		String msgErreur = "";
 		msgErreur += retraitNull(t);
-		msgErreur += rueLongueurCorrect(t.getRue());
-		msgErreur += villeLongueurCorrect(t.getVille());
-		msgErreur += codePostalLongueurCorrect(t.getCodePostal());
+		msgErreur += AdresseUtils.rueLongueurCorrect(t.getRue());
+		msgErreur += AdresseUtils.villeLongueurCorrect(t.getVille());
+		msgErreur += AdresseUtils.codePostalLongueurCorrect(t.getCodePostal());
 		return msgErreur;
 	}
 	

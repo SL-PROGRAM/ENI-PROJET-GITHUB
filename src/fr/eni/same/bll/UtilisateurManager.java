@@ -9,6 +9,7 @@ import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
+import fr.eni.same.helpers.AdresseUtils;
 import fr.eni.same.helpers.FonctionGenerique;
 
 public class UtilisateurManager extends AdresseUtils  {
@@ -123,14 +124,14 @@ public class UtilisateurManager extends AdresseUtils  {
 		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
 		msgErreur += pseudoLongueurCorrect(t.getPseudo());
 		msgErreur += nomLongueurCorrect(t.getNom());
-		msgErreur +=  prenomLongueurCorrect(t.getPrenom());
+		msgErreur += prenomLongueurCorrect(t.getPrenom());
 		msgErreur += emailValide(t.getEmail());
 		msgErreur += telephoneLongueurCorrect(t.getTelephone());
 		msgErreur += motDePasseValide(t.getEmail());
 		msgErreur += creditPositif(t.getCredit());
-		msgErreur += rueLongueurCorrect(t.getRue());
-		msgErreur += villeLongueurCorrect(t.getVille());
-		msgErreur += codePostalLongueurCorrect(t.getCodePostal());
+		msgErreur += AdresseUtils.rueLongueurCorrect(t.getRue());
+		msgErreur += AdresseUtils.villeLongueurCorrect(t.getVille());
+		msgErreur += AdresseUtils.codePostalLongueurCorrect(t.getCodePostal());
 		
 		return msgErreur; 
 	}
