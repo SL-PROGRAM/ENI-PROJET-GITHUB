@@ -109,7 +109,8 @@
 						<p>Tel :</p>
 					</div>
 					<div class="col-lg-9 d-none d-lg-block">
-						<!-- Rï¿½cupï¿½rer nom de l'utilisateur (vendeur) ï¿½ afficher -->
+						<!-- Récupérer nom de l'utilisateur (vendeur) à afficher -->
+						<!-- Redirige vers ServletInformationsUtilisateur (maquette 4 + 12) -->
 						<a class="btn btn-success btn-block" role="button" type="submit"
 							href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">
 							jojo44 </a>
@@ -117,6 +118,7 @@
 					</div>
 					<br />
 					<div class="col-3 col-lg-3">
+						<!-- Redirige vers ServletListeEncheres (maquette 5) -->
 						<a class="btn btn-danger btn-block" role="button" type="submit"
 							href="<%=request.getContextPath()%>/ServletListeEncheres">
 							Retour </a>
