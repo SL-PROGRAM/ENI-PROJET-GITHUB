@@ -25,23 +25,32 @@
 					</div>
 				</div>
 				<div class="form-group row">
+					<!-- Clicker sur le bouton connexion renvoie à la ServletConnexion. Cette servlet vérifie les informations du user.
+					Si les informations renseignées correspondent à un user connu de la BDD -> rd vers listeEnchere (maquette 5)
+					Si informations invalides alors rd vers Connexion.jsp (maquette 1) avec apparition d'un pop up signifiant l'erreur -->
 					<div class="col-6 offset-lg-3 col-lg-3">
 						<button name="btnConnexion" class="btn btn-primary btn-block"
 							type="submit">Connexion</button>
 					</div>
 					<div class="col-6 col-lg-3">
+					
+					<!-- Création d'un cookie si "Se souvenir de moi" est sélectionné. La création est gérée par la ServletConnexion -->
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" id="gridCheck1">
 							<label class="form-check-label" for="gridCheck1"> Se
 								souvenir de moi </label>
 						</div>
 						<p>
+							<!-- Renvoie vers une page permettant de renseigner son adresse mail de contact pour 
+							l'envoie d'un mail permettant de reset le mdp (a faire si on a le temps) -->
 							<a href="">Mot de passe oublié</a>
 						</p>
 					</div>
 				</div>
 			</form>
 			<div class="row">
+			<!-- Redirection vers la ServletModificationInformationsUtilisateur. Cette Servlet envoie les informations à la jsp 
+				 ModificationInformationUtilisateur (Maquettes 2 et 3) lui permettant de gérer l'affichage  -->
 				<div class="col-12 offset-lg-3 col-lg-6">
 					<a class="btn btn-success btn-block" href="<%= request.getContextPath()%>/ServletModificationInformationsUtilisateur" role="button">Créer un compte</a>
 				</div>
