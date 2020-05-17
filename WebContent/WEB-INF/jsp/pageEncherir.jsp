@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +18,7 @@
 			<%@ include file="jspf/header.jspf" %>
 		<div class="row">
 			<div class="col-12 col-lg-8 offset-lg-4 text-center">
-				<h1>Détail vente</h1>
+				<h1>DÃ©tail vente</h1>
 			</div>
 			<div class="col-12 col-lg-6 order-lg-2">
 				<h2>PC Gamer pour travailler</h2>
@@ -24,7 +27,7 @@
 				<p>Description :</p>
 			</div>
 			<div class="col-lg-5 d-none d-lg-block order-lg-4">
-				<p>Insérer la description voulue. Exsistit autem hoc loco
+				<p>InsÃ©rer la description voulue. Exsistit autem hoc loco
 					quaedam quaestio subdifficilis, num quando amici novi, digni
 					amicitia, veteribus sint anteponendi, ut equis vetulis teneros
 					anteponere solemus. Indigna homine dubitatio! Non enim debent esse
@@ -33,13 +36,13 @@
 			</div>
 			<div class="col-12 col-lg-4 order-lg-1">
 				<p>
-					<img alt="Image à inserer" src="">
+					<img alt="Image Ã  inserer" src="">
 				</p>
 			</div>
 			<div class="col-6 col-lg-3 offset-lg-4 order-lg-5">
 				<p>Meilleure offre :</p>
-				<p>Mise à prix :</p>
-				<p>Fin de l'enchère : </p>
+				<p>Mise Ã  prix :</p>
+				<p>Fin de l'enchÃ¨re : </p>
 			</div>	
 			<div class="col-6 col-lg-3 order-lg-6">
 				<p>210 pts par jojo44</p>
@@ -52,7 +55,7 @@
 				<p>Retrait : </p>
 			</div>
 			<div class="col-6 col-lg-3 order-lg-8 ">	
-				<p class="mb-0">10 allée des Alouettes</p>
+				<p class="mb-0">10 allÃ©e des Alouettes</p>
 				<p>44 800 Saint Herblain</p>
 			</div>
 			
@@ -61,7 +64,7 @@
 				
 			</div>
 			<div class="col-6 col-lg-3 order-lg-10">
-				<p>jojo44</p>
+			<a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">jojo44</a>
 			</div>
 			
 			<div class="col-6 col-lg-3 offset-lg-4 order-lg-11">	
@@ -69,9 +72,9 @@
 				
 			</div>
 			<div class="col-6 col-lg-5 order-lg-12">
-				<form class="form-inline" action="" method="post" >
+				<form class="form-inline" action="/ServletEncherir" method="post" >
 					<input type="number" id="" name="">
-					<input type="submit" value="Enchérir" id="">
+					<input type="submit" value="EnchÃ©rir" id="encherir" name="encherir">
 				</form>
 			</div>
 			
@@ -79,12 +82,14 @@
 		</div>
 		<br />
 		<div class="row">	
-				<div class="col-3 offset-4 text-right">
+				<div class="col-6 col-lg-3 offset-lg-4">
+					<a class="btn btn-primary btn-block"  href="<%= request.getContextPath()%>/ServletListeEncheres" name="annulerEnchere"
+						type="submit">Annuler ma derniÃ¨re enchÃ¨re</a>
 				
-				<button type="button" class="btn btn-outline-dark"><a href="<%=request.getContextPath()%>/ServletListeEncheres">Annuler ma dernière enchère</a></button>
 				</div>
-				<div class="col-5">
-				<button type="button" class="btn btn-outline-dark"><a href="<%=request.getContextPath()%>/ServletListeEncheres">Retour</a></button>
+			
+				<div class="col-6 col-lg-3">
+					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Retour</a>
 				
 				</div>
 			</div>

@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +24,7 @@
 		
 	<form  action="ServletListeEncheres" method="post">
 		<div class="row">
-			<!-- image caché quand size xs -->
+			<!-- image cachÃ© quand size xs -->
 			<div class="col-12 col-lg-4 d-none d-sm-block">
 					<p>
 						 <img src="" alt="image produit upload"/>
@@ -50,7 +53,7 @@
     				 	<input name="file" type="file" />
    					 </div>
   				</div>
-  				<!-- image caché quand size sm md lg -->
+  				<!-- image cachÃ© quand size sm md lg -->
   				<div class="col-12 d-block d-sm-none">
 					<p>
 						 <img src="" alt="image produit upload"/>
@@ -68,13 +71,13 @@
   			</div>
   			<div class=" col-12 col-lg-8 offset-lg-4">
   				<div class="form-group row">
-                        <label for="dateFinEnchere" class="col-4 col-form-label">Fin de l'enchère:</label>
+                        <label for="dateFinEnchere" class="col-4 col-form-label">Fin de l'enchÃ¨re:</label>
                         <div class="col-8">
                             <input type="date" name="dateFinEnchere" id="dateFinEnchere">
                         </div>
                     </div>
   			</div>
-  			<!-- block caché quand size xs -->
+  			<!-- block cachÃ© quand size xs -->
   			<div class=" col-12 col-lg-8 offset-lg-4 d-none d-sm-block">
   				<div class="form-group row">
                             <fieldset class="border border-dark p-2  col-lg-8" >
@@ -100,24 +103,33 @@
                         </fieldset>
                     </div>
   			</div>
-  			<!-- bloc visible uniquement en size xs, adresse vendeur a recuperer et à mettre par défaut -->
+  			<!-- bloc visible uniquement en size xs, adresse vendeur a recuperer et Ã  mettre par dÃ©faut -->
   			<div class="col-6 d-block d-sm-none">
   				<p>Retrait : </p>
   			</div>
   			<div class="col-6 d-block d-sm-none">	
   				<p> adresse vendeur <br>nantes</p> 
   			</div>
-  			<div class=" col-12 col-lg-8 offset-lg-4">
+  			</div> <!-- fin div row PRINCIPAL -->	
   			
-  				<input type="submit" name="choix" value = "Publier"/></a>
-  				<input type="submit" name="choix" value = "Enregistrer"/></a>
-  				<input type="submit" name="choix" value = "Annuler"/></a>
   			
-
-  				
-  			</div>
+  	
   		
-		</div> <!-- fin div row PRINCIPAL -->	
+		<div class="row">
+				<div class="col-4 offset-lg-3 col-lg-3">
+					<a class="btn btn-primary btn-block"  href="<%= request.getContextPath()%>/ServletListeEncheres" name="publierVente"
+						type="submit">Publier</a>
+				</div>
+				<div class="col-4 col-lg-3">
+					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres" name="enregistrerVente"
+						type="submit">Enregistrer</a>
+				</div>
+				
+				<div class="col-4 col-lg-3">
+					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres"name="enregistrerVente"
+						type="submit">Annuler</a>
+				</div>
+			</div>
 					
 				
 		
