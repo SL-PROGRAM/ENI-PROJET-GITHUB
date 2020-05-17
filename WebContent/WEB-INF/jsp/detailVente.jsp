@@ -89,25 +89,31 @@
 					</div>
 					
 					<!-- Boutons à afficher dans la version Maquette 9 -->
+					<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
 					<div class="col-6 col-lg-6">
 						<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 							Annuler la vente</a>
 					</div>
+					
+					<!-- Redirige vers ServletListeEnchere -->
 					<div class="col-6 col-lg-6">
 						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 							Retour</a>
 					</div>
 
 					<!-- Boutons à afficher dans la version Maquette 10 -->
-					<!-- Faire une jsp retrait effecctué ? -->
+					<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
 					<div class="col-4 col-lg-4">
 						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
 							Retrait effectué</a>
 					</div>
+					
+					<!-- Redirige vers ServletInformationsUtilisateur -->
 					<div class="col-4 col-lg-4">
 						<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
 							Contacter jojo44</a>
 					</div>
+					<!-- Redirige vers ServletListeEnchere -->
 					<div class="col-4 col-lg-4">
 						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 							Retour</a>
