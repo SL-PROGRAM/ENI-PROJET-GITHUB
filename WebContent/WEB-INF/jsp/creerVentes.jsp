@@ -83,6 +83,7 @@
                             <fieldset class="border border-dark p-2  col-lg-8" >
                            <legend class="w-auto">Retrait</legend>
                             <div class="form-group row">
+                            <!-- placeholder adresse par defaut du vendeur -->
                                 <label for="rueRetrait" class="col-3 col-form-label">Rue :</label>
                                 <div class="col-9">
                                     <input type="text" name="rueRetrait" id="rueRetrait">
@@ -117,15 +118,18 @@
   		
 		<div class="row">
 				<div class="col-4 offset-lg-3 col-lg-3">
+				<!-- insert nouvelle vente en bdd , ajout a liste enchere -->
 					<a class="btn btn-primary btn-block"  href="<%= request.getContextPath()%>/ServletListeEncheres" name="publierVente"
 						type="submit">Publier</a>
 				</div>
 				<div class="col-4 col-lg-3">
+				<!-- info a enregistrer ds cookie jusqu a fin session -->
 					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres" name="enregistrerVente"
 						type="submit">Enregistrer</a>
 				</div>
 				
 				<div class="col-4 col-lg-3">
+				<!-- destroy cookie enregistrer -->
 					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres"name="enregistrerVente"
 						type="submit">Annuler</a>
 				</div>

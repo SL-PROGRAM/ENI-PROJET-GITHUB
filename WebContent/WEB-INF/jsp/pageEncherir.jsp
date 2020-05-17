@@ -46,7 +46,7 @@
 			</div>	
 			<div class="col-6 col-lg-3 order-lg-6">
 				<p>210 pts par jojo44</p>
-				<p>175 points</p>
+				<p>175 points</p><!-- info a recup de la vente -->
 				<p>09/10/2022</p>
 				
 			</div>
@@ -74,7 +74,7 @@
 			<div class="col-6 col-lg-5 order-lg-12">
 				<form class="form-inline" action="/ServletEncherir" method="post" >
 					<input type="number" id="" name="">
-					<input type="submit" value="Enchérir" id="encherir" name="encherir">
+					<input type="submit" value="Enchérir" id="encherir" name="encherir"><!-- verif si login, si oui alors credit à update et meilleur offre a update, si pas login redirect page login -->
 				</form>
 			</div>
 			
@@ -84,7 +84,7 @@
 		<div class="row">	
 				<div class="col-6 col-lg-3 offset-lg-4">
 					<a class="btn btn-primary btn-block"  href="<%= request.getContextPath()%>/ServletListeEncheres" name="annulerEnchere"
-						type="submit">Annuler ma dernière enchère</a>
+						type="submit">Annuler ma dernière enchère</a><!-- si login, sinon redirect pageConnexion, delete update de encherir, restitution ancien credit -->
 				
 				</div>
 			

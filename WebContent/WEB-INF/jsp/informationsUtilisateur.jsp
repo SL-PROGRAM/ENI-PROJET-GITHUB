@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Page Profil</title>
+		<title>Page Profil vendeur</title>
 		<meta name="viewport" content="width=device-width"/>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -23,7 +23,7 @@
 		
 				<div class ="row">
 					<div class="col-12 text-center">
-						<h3> JOJO44</h3>
+						<h3> JOJO44</h3><!-- recuperer info du vendeur de l article, en lien avec page encherir et listeEnchere, y acceder que si login sinon redirection login -->
 					</div>
 				</div>
 		
