@@ -10,51 +10,60 @@
 	<header><%@ include file="jspf/header.jspf"%></header>
 	<div class="container">
 		<div class="row">
-			<div class="col-12">
+			<div class="col-6">
 				<p>
+					<!-- Redirige vers ServletCreerVente (maquette 11)-->
 					<a href="<%=request.getContextPath()%>/ServletCreerVente">Vendre
 						un article</a>
 				</p>
 				<p>
-					<a
-						href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">Mon
+					<!-- Redirige vers ServletInformationsUtilisateur (maquettes 4 + 12)-->
+					<a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">Mon
 						profil</a>
 				</p>
 				<p>
+					<!-- Redirige vers ServletListeEncheres (maquette 5) avec affichage "déconnecté" -->
 					<a href="<%=request.getContextPath()%>/ServletConnexion">Déconnexion</a>
 				</p>
+				<p>
+					<!-- Affichage "déconnecté" -->
+					<!-- Redirige vers ServletConnexion (maquette 1) -->
+					<a href="<%=request.getContextPath()%>/ServletConnexion">Se connecter</a>
+				</p>
+				<p>
+					<!-- Affichage "déconnecté"-->
+					<!-- Redirige vers ServletModificationInformationsUtilisateur (maquettes 2 + 3) -->
+					<a href="<%=request.getContextPath()%>/ServletModificationInformationsUtilisateur">Créer un compte</a>
+				</p>
+			</div>
+			<div class="col-6 text-right">
+				<p>User est connecté</p>
 			</div>
 			<div class="col-12">
-				<h4>Filtres :</h4>
-				<form action="" class="offset-1">
-					<div class="form-group">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck">Mes
-								ventes</label>
+				<form action="<%=request.getContextPath()%>/ServletListeEncheres">
+					<h4>Filtres :</h4>
+					<div class="offset-1">
+						<div class="custom-control custom-checkbox">
+  							<input type="checkbox" class="custom-control-input" id="checkMesVentes">
+ 							 <label class="custom-control-label" for="checkMesVentes">Mes ventes</label>
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck">Mes
-								enchères en cours</label>
+						<div class="custom-control custom-checkbox">
+  							<input type="checkbox" class="custom-control-input" id="checkMesEncheresEnCours">
+ 							 <label class="custom-control-label" for="checkMesEncheresEnCours">Mes enchères en cours</label>
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck">Mes
-								acquisitions</label>
+						<div class="custom-control custom-checkbox">
+  							<input type="checkbox" class="custom-control-input" id="checkMesAcquisitions">
+ 							 <label class="custom-control-label" for="checkMesAcquisitions">Mes acquisitions</label>
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck">Autres
-								enchères</label>
+						<div class="custom-control custom-checkbox">
+  							<input type="checkbox" class="custom-control-input" id="checkAutresEncheres">
+ 							 <label class="custom-control-label" for="checkAutresEncheres">Autres enchères</label>
 						</div>
 					</div>
-				</form>
-				<form action="">
 					<div class="form-group row">
-						<label for="inputEmail3" class="col-2 col-form-label">Catégories</label>
+						<label for="selectCategorie" class="col-2 col-form-label">Catégories</label>
 						<div class="offset-1 col-9">
-							<select class="custom-select" id="inputGroupSelect01">
+							<select class="custom-select" id="selectCategorie">
 								<option selected>Toutes</option>
 								<option value="1">Catégorie1</option>
 								<option value="2">Catégorie2</option>
@@ -62,8 +71,6 @@
 							</select>
 						</div>
 					</div>
-				</form>
-				<form action="<%=request.getContextPath()%>/ServletListeEncheres">
 					<div class="form-group row">
 						<div class="col-12">
 							<input type="text" class="form-control"
@@ -72,18 +79,22 @@
 					</div>
 					<div class="form-row">
 						<div class="col-12">
+							<!-- Redirige vers ServletListeEncheres (maquette 5). La Servlet sera l'url d'application des filtres. 
+								 Utilisation d'un selectByMotCle de vente. Récupération de la liste envoyée à la jsp.  -->
 							<button type="submit" class="btn btn-primary btn-block">Rechercher</button>
 						</div>
 					</div>
 				</form>
 				<br/>
-				<form action="" method="post">
+				<form action="<%= request.getContextPath() %>/ServletDetailVente" method="post">
 
 					<button class="container" type="submit">
 						<div class="row">
-
+					<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives à la vente vers la servlet 
+						 Le vendeur de la vente est clickable. Redirige vers ServletInformationsUtilisateur Envoie des informations 
+						 relatives de l'utilsiateur à afficher. -->
 							<div class="col-3">
-								<!-- 			Ligne 1 -->
+								<!-- Ligne 1 -->
 								<div class="col-12" style="height: 100%">
 									<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
 										src="">
@@ -126,7 +137,7 @@
 									</div>
 									<div class="col-6">
 										<p>
-											<a href="#">jojo44</a>
+											<a href="<%=request.getContextPath() %>/ServletInformationsUtilisateur">jojo44</a>
 										</p>
 									</div>
 
@@ -138,7 +149,7 @@
 				
 				<br/>
 				
-				<form action="" method="post">
+				<form action="<%= request.getContextPath() %>/ServletDetailVente" method="post">
 
 					<button class="container" type="submit">
 						<div class="row">
@@ -186,9 +197,7 @@
 										<p>Vendeur :</p>
 									</div>
 									<div class="col-6">
-										<p>
-											<a href="#">jojo44</a>
-										</p>
+										<p>NineJea</p>
 									</div>
 
 								</div>
