@@ -109,9 +109,9 @@
   			</div>
   			<div class=" col-12 col-lg-8 offset-lg-4">
   			
-  				<input type="submit" name="choix" value = "Publier"/></a>
-  				<input type="submit" name="choix" value = "Enregistrer"/></a>
-  				<input type="submit" name="choix" value = "Annuler"/></a>
+  				<input type="submit" name="choix" value = "Publier"/>
+  				<a href="<%= request.getContextPath()%>/ServletVentesEnregistrees" class="btn btn-primary">Enregistrer</a>
+  				<input type="submit" name="choix" value = "Annuler"/>
   			
 
   				
