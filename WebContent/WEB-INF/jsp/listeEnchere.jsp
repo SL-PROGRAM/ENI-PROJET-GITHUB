@@ -61,8 +61,8 @@
 						<div class="offset-1 col-9">
 							<select class="custom-select" id="selectCategorie">
 								<option selected>Toutes</option>
-								<option value="1">Catï¿½gorie1</option>
-								<option value="2">Catï¿½gorie2</option>
+								<option value="1">Catégorie1</option>
+								<option value="2">Catégorie2</option>
 								<option value="3">Something</option>
 							</select>
 						</div>
@@ -158,7 +158,7 @@
 			</div>
 
 			<div class="col-12 col-lg-6">
-				<form action="<%=request.getContextPath()%>/ServletEncherir"
+				<form action="<%=request.getContextPath()%>/ServletDetailVente"
 					method="post">
 					<button class="container" type="submit">
 						<div class="row">
