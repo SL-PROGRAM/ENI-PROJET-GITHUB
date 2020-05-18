@@ -172,7 +172,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		msgErreur += prenomLongueurCorrect(t.getPrenom());
 		msgErreur += emailValide(t.getEmail());
 		msgErreur += telephoneLongueurCorrect(t.getTelephone());
-		msgErreur += motDePasseValide(t.getEmail());
+		msgErreur += motDePasseValide(t.getMotDePasse());
 		msgErreur += creditPositif(t.getCredit());
 		msgErreur += AdresseUtils.rueLongueurCorrect(t.getRue());
 		msgErreur += AdresseUtils.villeLongueurCorrect(t.getVille());
