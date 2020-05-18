@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
@@ -14,18 +15,27 @@ import fr.eni.same.exception.BllException;
 
 public class filtreManager {
 	
-	public List<Vente> filtreMesVentesPubliées(HttpSession session) throws BllException{
+	
+	public List<Vente> filtreMesVentesPubliées(HttpSession session, Categorie categorie) throws BllException{
 		List<Vente> mesVentesPubliées = new ArrayList<Vente>();
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("ATT_SESSION_USER");
-	
 		for (int i = 0; i < allVentes.size(); i++) {
 			if(allVentes.get(i).getUtilisateurVendeur()== utilisateurConnect){
-				mesVentesPubliées.add(allVentes.get(i));
+				if(categorie == null) {
+					mesVentesPubliées.add(allVentes.get(i));
+				}else if (allVentes.get(i).getCategorie() == categorie) {
+					mesVentesPubliées.add(allVentes.get(i));
+				}
 			}
 		}
 		Collections.sort(mesVentesPubliées, Collections.reverseOrder());
 		
+		return mesVentesPubliées;
+	}
+	
+	public List<Vente> filtreMesVentesPubliées(HttpSession session) throws BllException{
+		List<Vente> mesVentesPubliées = filtreMesVentesPubliées(session, null);
 		return mesVentesPubliées;
 	}
 	
