@@ -113,4 +113,16 @@ public class EnchereManager {
 		}
 		return enchereEnCours;
 	}
+	
+	public List<Enchere> selectEnchereFini() throws BllException {
+		List<Enchere> enchereFini = new ArrayList<Enchere>();
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		for(Enchere e : listeEncheres){
+			if(e.getVenteEnchere().getDateFinEncheres().before(now)) {
+				enchereFini.add(e);
+				System.out.println("Enchere en cours : Select ALL réalisé : " + e.toString());
+			}
+		}
+		return enchereFini;
+	}
 }
