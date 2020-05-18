@@ -29,11 +29,11 @@ import fr.eni.same.exception.BllException;
 public class ServletTestBLL extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		testUtilisateurs();
-		//testCategories();
-		//testEncheres();
-		//testRetrait();
-		//testVente();
+//		testUtilisateurs();
+//		testCategories();
+//		testEncheres();
+		testRetrait();
+//		testVente();
 	}
 
 
@@ -43,7 +43,6 @@ public class ServletTestBLL extends HttpServlet {
 
 	private void testUtilisateurs() {
 		Utilisateur standardA = new Utilisateur(1, "e","plop2","plop3","plop4","plop5","plop6","plop7","plop8","plop9",155,false);
-
 		try {
 			UtilisateurManager.getUtilisateurManager().insert(standardA);
 			standardA.setAdministrateur(true);
@@ -91,8 +90,9 @@ public class ServletTestBLL extends HttpServlet {
 	private void testRetrait() {
 			Vente vente;
 			try {
-				vente = VenteManager.getVenteManager().select(6);
-				Retrait retrait = new Retrait("rue","codePostal","Ville", vente);
+				int idVente = VenteManager.getVenteManager().selectAll().get(0).getNoVente();
+				vente = VenteManager.getVenteManager().select(idVente);
+				Retrait retrait = new Retrait("Rue de laposte","12345","Ville", vente);
 				RetraitManager.getRetraitManager().insert(retrait);
 				retrait.setRue("plop");
 				RetraitManager.getRetraitManager().update(retrait);
