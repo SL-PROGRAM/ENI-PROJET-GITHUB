@@ -64,6 +64,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(t);
 			listeUtilisateurs.add(t);
+			System.out.println("Utilisateur : Insert réalisé.");
 		} catch (DALException e) {
 			throw new BllException("Impossible d'inserer en base de donnée l'utilisateur");
 		}
@@ -92,6 +93,7 @@ public class UtilisateurManager extends AdresseUtils  {
 					listeUtilisateurs.get(i).setTelephone(t.getTelephone());
 				}
 			}
+			System.out.println("Utilisateur : Update réalisé.");
 		} catch (DALException e) {
 			throw new BllException("Impossible de modifier en base de donnée l'utilisateur");
 		}
@@ -129,6 +131,8 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().delete(t);
+			listeUtilisateurs.remove(t);
+			System.out.println("Utilisateur Delete réalisé.");
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer en base de donnée l'utilisateur");
 		}
@@ -144,7 +148,11 @@ public class UtilisateurManager extends AdresseUtils  {
 		Utilisateur utilisateur;
 		try {
 			utilisateur = DALFactory.getUtilisateurDAOJdbcImpl().select(id);
-			
+			for(int i = 0; i < listeUtilisateurs.size(); i++) {
+				if(listeUtilisateurs.get(i).getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
+					System.out.println("Utilisateur : Select réalisé : " + listeUtilisateurs.get(i).toString());					
+				}
+			}
 		} catch (DALException e) {
 			throw new BllException("l'utilisateur que vous demandez n'est pas référencé");
 		}
@@ -153,14 +161,7 @@ public class UtilisateurManager extends AdresseUtils  {
 
 	
 	public List<Utilisateur> selectAll() throws BllException {
-		List<Utilisateur> listUtilisateurs = new ArrayList<Utilisateur>();
-		try {
-			listUtilisateurs = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
-			
-		} catch (DALException e) {
-			throw new BllException("erreur de récupération des données");
-		}		
-		return listUtilisateurs;
+		return listeUtilisateurs;
 	}
 	
 	private String controleUpdateAndInsert(Utilisateur t) throws BllException {
