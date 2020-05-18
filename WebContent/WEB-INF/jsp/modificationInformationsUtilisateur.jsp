@@ -174,7 +174,7 @@
 				</div>
 				<div class="col-4 col-lg-3">
 					<!-- Redirige vers la ServletConnexion (maquette 1) qui permettra de faire la suppression de l'utilisateur en BDD -->
-					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletConnexion" type="submit">Supprimer mon compte</a>
+					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres" type="submit">Supprimer mon compte</a>
 				</div>
 				<div class="col-4 col-lg-3">
 					<!-- Redirection vers ServletInformationsUtlisateur (maquettes 4 + 12) -->
