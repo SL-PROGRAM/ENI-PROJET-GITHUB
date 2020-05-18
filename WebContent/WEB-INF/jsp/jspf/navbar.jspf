@@ -20,7 +20,7 @@
 						un article</a></li>
 			<!-- Redirige vers ServletInformationsUtilisateur (maquettes 4 + 12)-->
 				<li class="nav-item px-3"><a
-					href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">Mon
+					href="<%=request.getContextPath()%>/ServletModificationInformationsUtilisateur">Mon
 						profil</a></li>
 			<!-- Redirige vers ServletListeEncheres (maquette 5) avec affichage "déconnecté" -->
 				<li class="nav-item px-3"><a
