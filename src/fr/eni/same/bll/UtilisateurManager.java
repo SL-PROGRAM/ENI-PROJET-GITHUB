@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
@@ -114,20 +116,8 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 	}
 	
-	public boolean testConnection(String identifiant, String motDePasse) {
-		motDePasse = securisationMotDePass(motDePasse);
-		
-		
-		return true;
-	}
 	
 	
-	
-	
-	private String securisationMotDePass(String motDePasse) {
-		return motDePasse;
-	}
-
 	public void delete(Utilisateur t) throws BllException {
 		String msgErreur = controleDelete(t);
 		if (!msgErreur.equals("")){
@@ -314,11 +304,56 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 		return msgErreur;
 	}
+	
+	
+
+	//*************************************************************************************************//
+	// * Implementation des méthodes de Connexion et deconnection l'utilisateur						 * //
+	//*************************************************************************************************//
+
 
 	//Vérification du nom de compte et du mot de passe de l'utilisateur
-	public String verificationConnexion() {
-		//TODO
-		return null;
+	public boolean connexion(String identifiant, String motDePasse, HttpSession session) throws BllException {
+		boolean isAuthentified= false;
+		motDePasse = securisationMotDePass(motDePasse);
+		Pattern pattern = Pattern.compile(EMAIL_REGEX);
+		Matcher matcher = pattern.matcher(identifiant);
+		Utilisateur utilisateur = null;
+		if(matcher.matches()) {
+			for (int i = 0; i < listeUtilisateurs.size(); i++) {
+				if(listeUtilisateurs.get(i).getEmail() == identifiant 
+						&& listeUtilisateurs.get(i).getMotDePasse() == motDePasse) {
+					isAuthentified = true;
+					utilisateur = listeUtilisateurs.get(i);
+				}
+			}
+		}
+		else {
+			for (int j = 0; j < listeUtilisateurs.size(); j++) {
+				if(listeUtilisateurs.get(j).getPseudo() == identifiant && listeUtilisateurs.get(j).getMotDePasse() == motDePasse) {
+					isAuthentified = true;
+					utilisateur = listeUtilisateurs.get(j);
+				}
+			}
+			
+		}
+		if(!isAuthentified) {
+			throw new BllException("L'identifiant et le  mot de passe sont incorrect");
+		}else {	
+			session.setAttribute("ATT_SESSION_USER", utilisateur);
+			return isAuthentified;
+		}
 	}
+	
+	public boolean deconnexion(HttpSession session) {
+		session.invalidate();
+		return true;
+	}
+	
+	
+	private String securisationMotDePass(String motDePasse) {
+		return motDePasse;
+	}
+
 	
 }
