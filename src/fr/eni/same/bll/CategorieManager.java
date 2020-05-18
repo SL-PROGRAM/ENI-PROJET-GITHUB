@@ -1,8 +1,6 @@
 package fr.eni.same.bll;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
@@ -18,15 +16,16 @@ public class CategorieManager{
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 * @throws BllException
 	 */
-	private CategorieManager() {
-		try {
-			if(listeCategories == null) {
-				listeCategories = selectAll();
+	private CategorieManager() throws BllException {
+		if(listeCategories == null) {
+			try {
+				listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+			} catch (DALException e) {
+				e.printStackTrace();
 			}
-		} catch (BllException e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 
     /**
@@ -34,9 +33,13 @@ public class CategorieManager{
      * @return
      * @throws DALException 
      */
-    public static synchronized  CategorieManager getCategorieManager () throws DALException {
+    public static synchronized CategorieManager getCategorieManager () {
         if(instance == null){
-            instance = new CategorieManager();
+            try {
+				instance = new CategorieManager();
+			} catch (BllException e) {
+				e.printStackTrace();
+			}
         }
         return instance;
     }
@@ -70,7 +73,7 @@ public class CategorieManager{
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			throw new BllException(errorMsg);
 		}
 	}
@@ -78,11 +81,7 @@ public class CategorieManager{
 	public void delete(Categorie t) throws BllException {
 		try {
 			DALFactory.getCategorieDAOJdbcImpl().delete(t);
-			for(int i = 0; i < listeCategories.size(); i++) {
-				if(listeCategories.get(i).getNoCategorie() == t.getNoCategorie()) {
-					listeCategories.remove(i);
-				}
-			}
+			listeCategories.remove(t);
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer l'entrée.");
 		}
@@ -104,17 +103,7 @@ public class CategorieManager{
 
 	
 	public List<Categorie> selectAll() throws BllException {
-		if(listeCategories != null) {
-			return listeCategories;
-		} else {
-			List<Categorie> tempList = new ArrayList<Categorie>();
-			try {
-				tempList = DALFactory.getCategorieDAOJdbcImpl().selectAll();
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-			return tempList;			
-		}
+		return listeCategories;
 	}
 
 	//***********************************************************************************************//
