@@ -72,7 +72,7 @@
 				
 			</div>
 			<div class="col-6 col-lg-5 order-lg-12">
-				<form class="form-inline" action="/ServletEncherir" method="post" >
+				<form class="form-inline" action="<%=request.getContextPath() %>/ServletEncherir" method="post" >
 					<input type="number" id="" name="">
 					<input type="submit" value="Enchérir" id="encherir" name="encherir"><!-- verif si login, si oui alors credit à update et meilleur offre a update, si pas login redirect page login -->
 				</form>
