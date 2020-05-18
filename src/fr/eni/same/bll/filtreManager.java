@@ -39,7 +39,7 @@ public class filtreManager {
 		return mesVentesPubliées;
 	}
 	
-	public List<Vente> filtreMesVentesEnregistrees(Cookie cookie[]){
+	public List<Vente> filtreMesVentesEnregistrees(Cookie cookie[], Categorie categorie){
 		List<Vente> mesVentesEnregistrees = new ArrayList<Vente>();
 		
 		//Recupérer info dans Cookies
@@ -49,13 +49,23 @@ public class filtreManager {
 		return mesVentesEnregistrees;
 	}
 	
-	public List<Enchere> filtreMesEncheresEnCours(HttpSession session) throws BllException{
+	
+	public List<Vente> filtreMesVentesEnregistrees(Cookie cookie[]){
+		List<Vente> mesVentesEnregistrees = filtreMesVentesEnregistrees(cookie, null);
+		return mesVentesEnregistrees;
+	}
+	
+	public List<Enchere> filtreMesEncheresEnCours(HttpSession session, Categorie categorie) throws BllException{
 		List<Enchere> mesEncheresEnCours = new ArrayList<Enchere>();
 		List<Enchere> allEncheresEnCours = EnchereManager.getEnchereManager().selectEnchereEnCours();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("ATT_SESSION_USER");
 		for (int i = 0; i < allEncheresEnCours.size(); i++) {
 			if(allEncheresEnCours.get(i).getUtilisateurEnchere() == utilisateurConnect) {
-				mesEncheresEnCours.add(allEncheresEnCours.get(i));
+				if(categorie == null) {
+					mesEncheresEnCours.add(allEncheresEnCours.get(i));
+				}else if(categorie == allEncheresEnCours.get(i).getVenteEnchere().getCategorie()) {
+					mesEncheresEnCours.add(allEncheresEnCours.get(i));
+				}
 			}
 		}
 		Collections.sort(mesEncheresEnCours, Collections.reverseOrder()); 
@@ -63,13 +73,37 @@ public class filtreManager {
 		return mesEncheresEnCours;
 	}
 	
-	public List<Vente> filtreMesAcquisitions(HttpSession session) throws BllException{
+	public List<Enchere> filtreMesEncheresEnCours1(HttpSession session, Categorie categorie) throws BllException{
+		List<Enchere> mesEncheresEnCours = filtreMesEncheresEnCours(session, null);
+		for (Enchere enchere : mesEncheresEnCours) {
+			if(categorie == null) {
+				mesEncheresEnCours.add(enchere);
+			}
+			if(enchere.getVenteEnchere().getCategorie() == categorie) {
+				mesEncheresEnCours.add(enchere);
+			}
+		}
+		return mesEncheresEnCours;
+	}
+	
+	
+	public List<Enchere> filtreMesEncheresEnCours(HttpSession session) throws BllException{
+		List<Enchere> mesEncheresEnCours = filtreMesEncheresEnCours(session, null);
+		return mesEncheresEnCours;
+	}
+	
+	
+	public List<Vente> filtreMesAcquisitions(HttpSession session, Categorie categorie) throws BllException{
 		List<Vente> mesAcquisitions = new ArrayList<Vente>();
 		List<Enchere> allEncheresFini = EnchereManager.getEnchereManager().selectEnchereFini();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("ATT_SESSION_USER");
 		for (int i = 0; i < allEncheresFini.size(); i++) {
 			if(allEncheresFini.get(i).getUtilisateurEnchere() == utilisateurConnect) {
-				mesAcquisitions.add(allEncheresFini.get(i).getVenteEnchere());
+				if(categorie == null) {
+					mesAcquisitions.add(allEncheresFini.get(i).getVenteEnchere());
+				}else if(categorie == allEncheresFini.get(i).getVenteEnchere().getCategorie()) {
+					mesAcquisitions.add(allEncheresFini.get(i).getVenteEnchere());
+				}
 			}
 		}
 		Collections.sort(mesAcquisitions, Collections.reverseOrder()); 
@@ -77,22 +111,35 @@ public class filtreManager {
 		return mesAcquisitions;
 	}
 	
-	public List<Vente> filtreAutresEncheres(HttpSession session) throws BllException{
+	public List<Vente> filtreMesAcquisitions(HttpSession session) throws BllException{
+		List<Vente> mesAcquisitions = filtreMesAcquisitions(session, null);
+		return mesAcquisitions;
+	}
+	
+	public List<Vente> filtreAutresEncheres(HttpSession session, Categorie categorie) throws BllException{
 		List<Vente> autresEncheres = new ArrayList<Vente>();
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("ATT_SESSION_USER");
 
 		for ( Vente vente : allVentes) {
 			if (vente.getUtilisateurVendeur() != utilisateurConnect && vente.getUtilisateurAcheteur() != utilisateurConnect) {
-				autresEncheres.add(vente);
+				if(categorie == null) {
+					autresEncheres.add(vente);
+				}
+				else if (vente.getCategorie() == categorie) {
+					autresEncheres.add(vente);
+				}
 			}
 		}
-
 		Collections.sort(autresEncheres, Collections.reverseOrder()); 
 		
 		return autresEncheres;
 	}
 
-	
+	public List<Vente> filtreAutresEncheres(HttpSession session) throws BllException{
+		List<Vente> autresEncheres = filtreAutresEncheres(session, null);
+		
+		return autresEncheres;
+	}
 	
 }
