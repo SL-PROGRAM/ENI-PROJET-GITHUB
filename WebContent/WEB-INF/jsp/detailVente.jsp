@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,12 +20,14 @@
 	
 	
 		<!-- Message à afficher uniquement pour la Maquette 10 -->
-		<div class="row">
-			<div class="col-12 col-lg-8 text-center">
-				<h2>RandomDu35 a remporté l'enchère !</h2>
-				<br/>
+		<c:if test="${dateFinEncheres.compareTo(heureServer)} > 0 || ${dateFinEncheres.compareTo(heureServer)} == 0">
+			<div class="row">
+				<div class="col-12 col-lg-8 text-center">
+					<h2>${vente.userAcheteur } a remporté l'enchère !</h2>
+					<br/>
+				</div>
 			</div>
-		</div>
+		</c:if>
 		<!-- ------------------------------------------------- -->
 
 		<div class="row">
@@ -33,7 +36,7 @@
 			<div class="col-lg-3">
 			<!-- Affichage uniquement pour la version Mobile -->
 				<div class="col-12 d-block d-lg-none pl-0">
-					<p>PC Gamer pour travailler</p>
+					<p>${vente.nomArticle }</p>
 				</div>
 			<!-- ------------------------------------------------- -->	
 				<div class="col-12 col-lg-12 text-center">
@@ -48,7 +51,7 @@
 			<!-- Affichage uniquement pour la version Desktop -->
 				<div class="row">
 					<div class="col-lg-12 d-none d-lg-block">
-						<h3>PC Gamer pour travailler</h3>
+						<h3>${vente.nomArticle }</h3>
 					</div>
 					
 					
@@ -56,13 +59,7 @@
 						<p>Description :</p>
 					</div>
 					<div class="col-lg-9 d-none d-lg-block">
-						<p>Insérer la description voulue. Exsistit autem hoc loco
-							quaedam quaestio subdifficilis, num quando amici novi, digni
-							amicitia, veteribus sint anteponendi, ut equis vetulis teneros
-							anteponere solemus. Indigna homine dubitatio! Non enim debent
-							esse amicitiarum sicut aliarum rerum satietates; veterrima
-							quaeque, ut ea vina, quae vetustatem ferunt, esse debet
-							suavissima; verumque</p>
+						<p>${vente.description }</p>
 					</div>
 				<!-- ------------------------------------------------- -->	
 					<div class="col-6 col-lg-3">
@@ -71,55 +68,74 @@
 						<p>Fin de l'enchère :</p>
 					</div>
 					<div class="col-6 col-lg-9">
-						<p>210 pts par jojo44</p>
-						<p>175 points</p>
-						<p>09/10/2018</p>
+						
+							<c:choose>
+								<c:when test="${dateFinEncheres.compareTo(heureServer)} > 0 || ${dateFinEncheres.compareTo(heureServer)} == 0">
+									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.userAcheteur}</a> </p>
+								</c:when>
+								<c:when test="${dateFinEncheres.compareTo(heureServer)} < 0">
+									<p>${vente.prixVente } pts par ${vente.userAcheteur}</p>
+									
+								</c:when>
+							</c:choose>
+						
+						
+						
+						<p>${vente.miseAPrix } points</p>
+						<p>${vente.dateFinEncheres }</p>
 					</div>
 					<div class="col-6 col-lg-3">
 						<p>Retrait :</p>
 					</div>
 
 					<div class="col-6 col-lg-9">
-						<p class="mb-0">5 rue des Pinsons</p>
-						<p>44 000 Nantes</p>
+						<p class="mb-0">${vente.rue }</p>
+						<p>${vente.codePostal } ${vente.ville }</p>
 					</div>
 					<div class="col-6 col-lg-3">
 						<p>Vendeur :</p>
 					</div>
 					<div class="col-6 col-lg-9">
-						<p>NineJea</p>
+						<p>${vente.userVendeur }</p>
 					</div>
 					
-					<!-- Boutons à afficher dans la version Maquette 9 -->
-					<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
-					<div class="col-6 col-lg-6">
-						<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
-							Annuler la vente</a>
-					</div>
 					
-					<!-- Redirige vers ServletListeEnchere -->
-					<div class="col-6 col-lg-6">
-						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
-							Retour</a>
-					</div>
+					<c:choose>
+						<c:when test="${dateFinEncheres.compareTo(heureServer)} > 0 || ${dateFinEncheres.compareTo(heureServer)} == 0">
+							<!-- Boutons à afficher dans la version Maquette 10 -->
+							<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
+							<div class="col-4 col-lg-4">
+								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
+									Retrait effectué</a>
+							</div>
+							
+							<!-- Redirige vers ServletInformationsUtilisateur -->
+							<div class="col-4 col-lg-4">
+								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
+									Contacter ${vente.userAcheteur }</a>
+							</div>
+							<!-- Redirige vers ServletListeEnchere -->
+							<div class="col-4 col-lg-4">
+								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
+									Retour</a>
+							</div>
+						</c:when>
+						<c:when test="${dateFinEncheres.compareTo(heureServer)} < 0">
+							<!-- Boutons à afficher dans la version Maquette 9 -->
+							<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
+							<div class="col-6 col-lg-6">
+								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
+									Annuler la vente</a>
+							</div>
+							
+							<!-- Redirige vers ServletListeEnchere -->
+							<div class="col-6 col-lg-6">
+								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
+									Retour</a>
+							</div>
+						</c:when>
+					</c:choose>
 
-					<!-- Boutons à afficher dans la version Maquette 10 -->
-					<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
-					<div class="col-4 col-lg-4">
-						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
-							Retrait effectué</a>
-					</div>
-					
-					<!-- Redirige vers ServletInformationsUtilisateur -->
-					<div class="col-4 col-lg-4">
-						<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
-							Contacter jojo44</a>
-					</div>
-					<!-- Redirige vers ServletListeEnchere -->
-					<div class="col-4 col-lg-4">
-						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
-							Retour</a>
-					</div>
 				</div>
 			</div>
 		</div>
