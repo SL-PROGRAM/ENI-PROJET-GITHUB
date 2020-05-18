@@ -79,7 +79,7 @@ public class ServletTestBLL extends HttpServlet {
 				UtilisateurManager.getUtilisateurManager().insert(standardA);
 				Categorie categorie = CategorieManager.getCategorieManager().select(idCategorie);
 				Timestamp t = new Timestamp(System.currentTimeMillis());
-				Vente vente = new Vente("plop","description",t,5000,6000,standardA,standardA,categorie);
+				Vente vente = new Vente(1,"plop","description",t,5000,6000,standardA,standardA,categorie);
 				VenteManager.getVenteManager().insert(vente);
 				Enchere enchere1 = new Enchere(t,standardA,vente);
 				EnchereManager.getEnchereManager().insert(enchere1);
@@ -116,8 +116,9 @@ public class ServletTestBLL extends HttpServlet {
 				acheteur = UtilisateurManager.getUtilisateurManager().select(24);
 				Utilisateur vendeur = UtilisateurManager.getUtilisateurManager().select(26);
 				Categorie categorie = CategorieManager.getCategorieManager().select(4);
+				
 				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-				Vente vente = new Vente(4,"une","deux",timestamp,2,6000,null,vendeur,categorie);
+				Vente vente = new Vente(4,"uneee","deuxxx",timestamp,2,6000,null,vendeur,categorie);
 				VenteManager.getVenteManager().insert(vente);
 				vente.setDescription("Description modifiée");
 				VenteManager.getVenteManager().update(vente);
