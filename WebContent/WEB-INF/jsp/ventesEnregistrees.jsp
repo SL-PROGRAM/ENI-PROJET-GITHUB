@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Mes ventes enregistrées</title>
+    <title>Mes ventes enregistrÃ©es</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="ThemesCss/profile.css">
 
@@ -12,7 +14,7 @@
 <div class="container">
 				<div class="row">
 					<div class="col-12">
-						<h3>Voici vos ventes enregistrées</h3>
+						<h3>Voici vos ventes enregistrÃ©es</h3>
 					</div>
 				</div>
 				<br/>
@@ -20,9 +22,9 @@
 
 					<button class="container" type="submit">
 						<div class="row">
-					<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives à la vente vers la servlet 
+					<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives Ã  la vente vers la servlet 
 						 Le vendeur de la vente est clickable. Redirige vers ServletInformationsUtilisateur Envoie des informations 
-						 relatives de l'utilsiateur à afficher. -->
+						 relatives de l'utilsiateur Ã  afficher. -->
 							<div class="col-3">
 								<!-- Ligne 1 -->
 								<div class="col-12" style="height: 100%">
@@ -44,7 +46,7 @@
 									<!-- Ligne 2 -->
 									<div class="col-6">
 										<p>Prix : 210 points</p>
-										<p>Fin de l'enchère :</p>
+										<p>Fin de l'enchÃ¨re :</p>
 									</div>
 
 									<div class="col-6">
@@ -57,7 +59,7 @@
 										<p>Retrait :</p>
 									</div>
 									<div class="col-6">
-										<p>10 allée des Alouettes</p>
+										<p>10 allÃ©e des Alouettes</p>
 										<p>44 800 Saint Herblain</p>
 									</div>
 

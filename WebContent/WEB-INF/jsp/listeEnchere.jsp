@@ -1,4 +1,6 @@
- <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -14,7 +16,7 @@
 
 			
 			<div class="col-12 col-lg-3 text-right d-lg-none">
-				<p class="m-0">User est connect�</p>
+				<p class="m-0">User est connecté</p>
 			</div>
 		</div>
 
@@ -32,7 +34,7 @@
 							<input type="checkbox" class="custom-control-input"
 								id="checkMesEncheresEnCours"> <label
 								class="custom-control-label" for="checkMesEncheresEnCours">Mes
-								ench�res en cours</label>
+								enchères en cours</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
@@ -44,18 +46,18 @@
 							<input type="checkbox" class="custom-control-input"
 								id="checkAutresEncheres"> <label
 								class="custom-control-label" for="checkAutresEncheres">Autres
-								ench�res</label>
+								enchères</label>
 						</div>
 					</div>
 				</div>
 				<div class="col-12 col-lg-6">
 					<div class="form-group row">
-						<label for="selectCategorie" class="col-2 col-form-label">Cat�gories</label>
+						<label for="selectCategorie" class="col-2 col-form-label">Catégories</label>
 						<div class="offset-1 col-9">
 							<select class="custom-select" id="selectCategorie">
 								<option selected>Toutes</option>
-								<option value="1">Cat�gorie1</option>
-								<option value="2">Cat�gorie2</option>
+								<option value="1">Catï¿½gorie1</option>
+								<option value="2">Catï¿½gorie2</option>
 								<option value="3">Something</option>
 							</select>
 						</div>
@@ -69,13 +71,13 @@
 				</div>
 				<div
 					class="col-6 col-lg-3 text-right text-lg-center d-none d-lg-block">
-					<p>User est connect�</p>
+					<p>User est connecté</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-12 col-lg-5">
 					<!-- Redirige vers ServletListeEncheres (maquette 5). La Servlet sera l'url d'application des filtres. 
-								 Utilisation d'un selectByMotCle de vente. R�cup�ration de la liste envoy�e � la jsp.  -->
+								 Utilisation d'un selectByMotCle de vente. Récupération de la liste envoyée à la jsp.  -->
 					<button type="submit" class="btn btn-primary btn-block">Rechercher</button>
 				</div>
 			</div>
@@ -91,9 +93,9 @@
 					method="post">
 					<button class="container" type="submit">
 						<div class="row">
-				<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives � la vente vers la servlet 
+				<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives à la vente vers la servlet 
 					 Le vendeur de la vente est clickable. Redirige vers ServletInformationsUtilisateur Envoie des informations 
-					 relatives de l'utilsiateur � afficher. -->
+					 relatives de l'utilsiateur à afficher. -->
 							<div class="col-3">
 							<!-- Ligne 1 -->
 								<div class="col-12" style="height: 100%">
@@ -105,7 +107,7 @@
 							<div class="col-9">
 								<div class="row">
 									<div class="col-6">
-									<!-- vignette de mes ench�res en cours -->
+									<!-- vignette de mes enchères en cours -->
 										<a href="<%= request.getContextPath()%>/ServletEncherir">PC Gamer pour travailler</a>
 									</div>
 									<div class="col-6">
@@ -115,7 +117,7 @@
 							<!-- Lignes 2 et 3 -->
 									<div class="col-6">
 										<p>Prix : 210 points</p>
-										<p>Fin de l'ench�re :</p>
+										<p>Fin de l'enchère :</p>
 									</div>
 
 									<div class="col-6">
@@ -128,7 +130,7 @@
 										<p>Retrait :</p>
 									</div>
 									<div class="col-6">
-										<p>10 all�e des Alouettes</p>
+										<p>10 allée des Alouettes</p>
 										<p>44 800 Saint Herblain</p>
 									</div>
 									
@@ -176,7 +178,7 @@
 
 									<div class="col-6">
 										<p>Prix : 210 points</p>
-										<p>Fin de l'ench�re :</p>
+										<p>Fin de l'enchère :</p>
 									</div>
 
 									<div class="col-6">
@@ -188,7 +190,7 @@
 										<p>Retrait :</p>
 									</div>
 									<div class="col-6">
-										<p>10 all�e des Alouettes</p>
+										<p>10 allée des Alouettes</p>
 										<p>44 800 Saint Herblain</p>
 									</div>
 

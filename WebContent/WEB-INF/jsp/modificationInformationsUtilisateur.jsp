@@ -161,7 +161,7 @@
 				</div>
 				<div class="col-6 col-lg-3">
 					<!-- Redirection vers la page de connexion (maquette 1) -->
-					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletConnexion">Annuler</a>
+					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Annuler</a>
 				</div>
 			</div>
 			
@@ -178,7 +178,7 @@
 				</div>
 				<div class="col-4 col-lg-3">
 					<!-- Redirection vers ServletInformationsUtlisateur (maquettes 4 + 12) -->
-					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">Retour</a>
+					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Retour</a>
 				</div>
 			</div>
 		</form>
