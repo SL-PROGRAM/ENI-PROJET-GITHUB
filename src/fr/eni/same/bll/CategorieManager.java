@@ -59,12 +59,14 @@ public class CategorieManager{
 	
 	public void update(Categorie t) throws BllException {
 		String msgErreur = controleUpdateAndInsert(t);
+		System.out.println("erreur : " + msgErreur);
 		if(msgErreur.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().update(t);
 				for(int i = 0; i < listeCategories.size(); i++) {
 					if(listeCategories.get(i).getNoCategorie() == t.getNoCategorie()) {
 						listeCategories.get(i).setLibelle(t.getLibelle());
+						System.out.println("Catégorie : Update réalisée : " + t.toString());
 					}
 				}
 			} catch (DALException e) {
@@ -73,7 +75,6 @@ public class CategorieManager{
 		} else {
 			throw new BllException(msgErreur);
 		}
-			System.out.println("Catégorie : Update réalisée.");
 	}
 
 	public void delete(Categorie t) throws BllException {
@@ -149,11 +150,11 @@ public class CategorieManager{
 	public String libelleLongueurCorrect(String libelle) {
 		String resultat = "";
 		if(!FonctionGenerique.isLongueurMax(libelle, LIBELLE_LONGUEUR_MAX)) {
-			resultat += "Le libellé est trop grand. Longueur maximum : " + LIBELLE_LONGUEUR_MAX;
+			resultat += "Le libellé est trop grand. Longueur maximum : " + LIBELLE_LONGUEUR_MAX + " longueur actuelle " + libelle.length();
 		}
 		if(!FonctionGenerique.isLongueurMin(libelle, LIBELLE_LONGUEUR_MIN));
 		{
-			resultat += "Le libellé est trop petit. Longueur minimum : " + LIBELLE_LONGUEUR_MIN;
+			resultat += "Le libellé est trop petit. Longueur minimum : " + LIBELLE_LONGUEUR_MIN + " longueur actuelle " + libelle.length();
 		}
 		return resultat;
 	}

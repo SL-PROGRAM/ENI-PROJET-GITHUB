@@ -31,7 +31,7 @@ public abstract class AdresseUtils  {
 		if(!FonctionGenerique.isLongueurMin(libelle, CP_LONGUEUR_MIN)) {
 			msgErreur += "Longueur code postal trop courte - Longueur minimum : "+ CP_LONGUEUR_MIN;
 		}
-		return msgErreur;				
+		return msgErreur;
 	}
 
 	public static String villeLongueurCorrect(String libelle) throws BllException {

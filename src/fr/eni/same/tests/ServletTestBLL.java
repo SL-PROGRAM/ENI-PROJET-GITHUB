@@ -29,11 +29,16 @@ import fr.eni.same.exception.BllException;
 public class ServletTestBLL extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		testUtilisateurs();
-//		testCategories();
-//		testEncheres();
+		System.out.println("----------UTILISATEURS----------");
+		testUtilisateurs();
+		System.out.println("----------CATEGORIES----------");
+		testCategories();
+		System.out.println("----------ENCHERES----------");
+		testEncheres();
+		System.out.println("----------RETRAIT----------");
 		testRetrait();
-//		testVente();
+		System.out.println("----------VENTE----------");
+		testVente();
 	}
 
 
@@ -42,7 +47,7 @@ public class ServletTestBLL extends HttpServlet {
 	}
 
 	private void testUtilisateurs() {
-		Utilisateur standardA = new Utilisateur(1, "e","plop2","plop3","plop4","plop5","plop6","plop7","plop8","plop9",155,false);
+		Utilisateur standardA = new Utilisateur(1,"pseudo","nomnom","prenom","email@plop.fr","0606060606","rue des fougères","35000","Rennes","motdepasseSecurise",155,false);
 		try {
 			UtilisateurManager.getUtilisateurManager().insert(standardA);
 			standardA.setAdministrateur(true);
@@ -55,10 +60,10 @@ public class ServletTestBLL extends HttpServlet {
 		}
 	}
 	private void testCategories() {
-		Categorie categorieSansPK = new Categorie("Cat-1");
+		Categorie categorieSansPK = new Categorie(15,"GEGG");
 		try {
 			CategorieManager.getCategorieManager().insert(categorieSansPK);
-			categorieSansPK.setLibelle("plopplop");
+			categorieSansPK.setLibelle("ADER");
 			CategorieManager.getCategorieManager().update(categorieSansPK);
 			CategorieManager.getCategorieManager().select(categorieSansPK.getNoCategorie());
 			CategorieManager.getCategorieManager().selectAll();

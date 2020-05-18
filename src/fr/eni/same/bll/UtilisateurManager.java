@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
@@ -17,7 +19,7 @@ public class UtilisateurManager extends AdresseUtils  {
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int PSEUDO_LONGUEUR_MAX = 30;
 	private final int PSEUDO_LONGUEUR_MIN = 4;
-	private final int PRENOM_LONGUEUR_MAX = 5;
+	private final int PRENOM_LONGUEUR_MAX = 30;
 	private final int PRENOM_LONGUEUR_MIN = 5;
 	private final int EMAIL_LONGUEUR_MAX = 30;
 	private final int EMAIL_LONGUEUR_MIN = 4;
@@ -25,7 +27,7 @@ public class UtilisateurManager extends AdresseUtils  {
 	private final int TELEPHONE_LONGUEUR_MIN = 10;
 	private final int MOT_DE_PASSE_LONGUEUR_MAX = 30;
 	private final int MOT_DE_PASSE_LONGEUR_MIN = 4;
-	private final String EMAIL_REGEX = "^(.+)@(.+)$";
+	private final String EMAIL_REGEX = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)";
 	private static UtilisateurManager instance;
 	private List<Utilisateur> listeUtilisateurs;
 
@@ -62,6 +64,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(t);
 			listeUtilisateurs.add(t);
+			System.out.println("Utilisateur : Insert réalisé.");
 		} catch (DALException e) {
 			throw new BllException("Impossible d'inserer en base de donnée l'utilisateur");
 		}
@@ -90,6 +93,7 @@ public class UtilisateurManager extends AdresseUtils  {
 					listeUtilisateurs.get(i).setTelephone(t.getTelephone());
 				}
 			}
+			System.out.println("Utilisateur : Update réalisé.");
 		} catch (DALException e) {
 			throw new BllException("Impossible de modifier en base de donnée l'utilisateur");
 		}
@@ -114,20 +118,8 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 	}
 	
-	public boolean testConnection(String identifiant, String motDePasse) {
-		motDePasse = securisationMotDePass(motDePasse);
-		
-		
-		return true;
-	}
 	
 	
-	
-	
-	private String securisationMotDePass(String motDePasse) {
-		return motDePasse;
-	}
-
 	public void delete(Utilisateur t) throws BllException {
 		String msgErreur = controleDelete(t);
 		if (!msgErreur.equals("")){
@@ -139,6 +131,8 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().delete(t);
+			listeUtilisateurs.remove(t);
+			System.out.println("Utilisateur Delete réalisé.");
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer en base de donnée l'utilisateur");
 		}
@@ -154,7 +148,11 @@ public class UtilisateurManager extends AdresseUtils  {
 		Utilisateur utilisateur;
 		try {
 			utilisateur = DALFactory.getUtilisateurDAOJdbcImpl().select(id);
-			
+			for(int i = 0; i < listeUtilisateurs.size(); i++) {
+				if(listeUtilisateurs.get(i).getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
+					System.out.println("Utilisateur : Select réalisé : " + listeUtilisateurs.get(i).toString());					
+				}
+			}
 		} catch (DALException e) {
 			throw new BllException("l'utilisateur que vous demandez n'est pas référencé");
 		}
@@ -163,14 +161,7 @@ public class UtilisateurManager extends AdresseUtils  {
 
 	
 	public List<Utilisateur> selectAll() throws BllException {
-		List<Utilisateur> listUtilisateurs = new ArrayList<Utilisateur>();
-		try {
-			listUtilisateurs = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
-			
-		} catch (DALException e) {
-			throw new BllException("erreur de récupération des données");
-		}		
-		return listUtilisateurs;
+		return listeUtilisateurs;
 	}
 	
 	private String controleUpdateAndInsert(Utilisateur t) throws BllException {
@@ -182,7 +173,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		msgErreur += prenomLongueurCorrect(t.getPrenom());
 		msgErreur += emailValide(t.getEmail());
 		msgErreur += telephoneLongueurCorrect(t.getTelephone());
-		msgErreur += motDePasseValide(t.getEmail());
+		msgErreur += motDePasseValide(t.getMotDePasse());
 		msgErreur += creditPositif(t.getCredit());
 		msgErreur += AdresseUtils.rueLongueurCorrect(t.getRue());
 		msgErreur += AdresseUtils.villeLongueurCorrect(t.getVille());
@@ -314,11 +305,56 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 		return msgErreur;
 	}
+	
+	
+
+	//*************************************************************************************************//
+	// * Implementation des méthodes de Connexion et deconnection l'utilisateur						 * //
+	//*************************************************************************************************//
+
 
 	//Vérification du nom de compte et du mot de passe de l'utilisateur
-	public String verificationConnexion() {
-		//TODO
-		return null;
+	public boolean connexion(String identifiant, String motDePasse, HttpSession session) throws BllException {
+		boolean isAuthentified= false;
+		motDePasse = securisationMotDePass(motDePasse);
+		Pattern pattern = Pattern.compile(EMAIL_REGEX);
+		Matcher matcher = pattern.matcher(identifiant);
+		Utilisateur utilisateur = null;
+		if(matcher.matches()) {
+			for (int i = 0; i < listeUtilisateurs.size(); i++) {
+				if(listeUtilisateurs.get(i).getEmail() == identifiant 
+						&& listeUtilisateurs.get(i).getMotDePasse() == motDePasse) {
+					isAuthentified = true;
+					utilisateur = listeUtilisateurs.get(i);
+				}
+			}
+		}
+		else {
+			for (int j = 0; j < listeUtilisateurs.size(); j++) {
+				if(listeUtilisateurs.get(j).getPseudo() == identifiant && listeUtilisateurs.get(j).getMotDePasse() == motDePasse) {
+					isAuthentified = true;
+					utilisateur = listeUtilisateurs.get(j);
+				}
+			}
+			
+		}
+		if(!isAuthentified) {
+			throw new BllException("L'identifiant et le  mot de passe sont incorrect");
+		}else {	
+			session.setAttribute("ATT_SESSION_USER", utilisateur);
+			return isAuthentified;
+		}
 	}
+	
+	public boolean deconnexion(HttpSession session) {
+		session.invalidate();
+		return true;
+	}
+	
+	
+	private String securisationMotDePass(String motDePasse) {
+		return motDePasse;
+	}
+
 	
 }
