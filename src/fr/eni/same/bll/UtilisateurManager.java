@@ -260,4 +260,10 @@ public class UtilisateurManager extends AdresseUtils  {
 		return msgErreur;
 	}
 
+	//Vérification du nom de compte et du mot de passe de l'utilisateur
+	public String verificationConnexion() {
+		//TODO
+		return null;
+	}
+	
 }
