@@ -65,7 +65,8 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 			}
 		
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DALException("Erreur insert");
+
 		}		
 	}
 
@@ -83,7 +84,8 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 			}
 						
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DALException("Erreur update");
+
 		}			
 	}
 
@@ -96,10 +98,9 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 	//			System.out.println("Retrait " + t.getVente().getNoVente()+" supprimé en base de donnée");
 	//			System.out.println("Retrait Delete en base de donnée : " + t.toString());			
 			}
-			
 		} catch (SQLException e) {
-			System.out.println("Erreur delete");
-			e.printStackTrace();
+			throw new DALException("Erreur delete");
+
 		}	
 	}
 
@@ -147,7 +148,8 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DALException("Erreur Select");
+
 		}
 		return retrait;
 	}
@@ -194,7 +196,8 @@ public class RetraitDAOJDBCImpl implements RetraitDAO {
 				}
 			}
 		}catch (SQLException e) {
-			e.printStackTrace();
+			throw new DALException("Erreur SelectAll");
+
 		}
 		
 		return listRetrait;
