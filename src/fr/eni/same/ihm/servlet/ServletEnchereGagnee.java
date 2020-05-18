@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.same.bo.Vente;
+
 /**
  * Servlet implementation class ServletEnchereGagnee
  */
@@ -24,6 +26,9 @@ public class ServletEnchereGagnee extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 8
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Vente vente = (Vente) request.getAttribute("vente");
+		request.setAttribute("vente", vente);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/enchereGagnee.jsp");
 		rd.forward(request, response);
 	}
