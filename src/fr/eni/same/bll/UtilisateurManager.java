@@ -19,7 +19,7 @@ public class UtilisateurManager extends AdresseUtils  {
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int PSEUDO_LONGUEUR_MAX = 30;
 	private final int PSEUDO_LONGUEUR_MIN = 4;
-	private final int PRENOM_LONGUEUR_MAX = 5;
+	private final int PRENOM_LONGUEUR_MAX = 30;
 	private final int PRENOM_LONGUEUR_MIN = 5;
 	private final int EMAIL_LONGUEUR_MAX = 30;
 	private final int EMAIL_LONGUEUR_MIN = 4;
