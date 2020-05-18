@@ -24,7 +24,7 @@ public abstract class AdresseUtils  {
 
 	public static String codePostalLongueurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongueurMax(libelle, CP_LONGUEUR_MAX)) {
-			throw new BllException("Longeur du code postal trop importante - Longueur maximum : "+ CP_LONGUEUR_MAX);
+			throw new BllException("Longueur du code postal trop importante - Longueur maximum : "+ CP_LONGUEUR_MAX);
 		}
 		if(!FonctionGenerique.isLongueurMin(libelle, CP_LONGUEUR_MIN)) {
 			throw new BllException("Longueur code postal trop courte - Longueur minimum : "+ CP_LONGUEUR_MIN);
