@@ -1,10 +1,9 @@
 package fr.eni.same.bll;
 
-import fr.eni.same.bll.interfaceManager.AdresseInterface;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.helpers.FonctionGenerique;
 
-public abstract class AdresseManager implements AdresseInterface {
+public class AdresseManager {
 	protected final int RUE_LONGUEUR_MAX = 30;
 	protected final int RUE_LONGUEUR_MIN = 4;
 	protected final int CP_LONGUEUR_MAX = 5;
@@ -12,7 +11,6 @@ public abstract class AdresseManager implements AdresseInterface {
 	protected final int VILLE_LONGUEUR_MAX = 30;
 	protected final int VILLE_LONGUEUR_MIN = 4;
 	
-	@Override
 	public void rueLongueurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongueurMax(libelle, RUE_LONGUEUR_MAX)) {
 			throw new BllException("Longueur du nom trop importante - Longueur maximum : "+ RUE_LONGUEUR_MAX);
@@ -23,7 +21,6 @@ public abstract class AdresseManager implements AdresseInterface {
 	}
 	
 
-	@Override
 	public void codePostalLongueurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongueurMax(libelle, CP_LONGUEUR_MAX)) {
 			throw new BllException("Longueur du nom trop importante - Longueur maximum : "+ CP_LONGUEUR_MAX);
@@ -33,7 +30,6 @@ public abstract class AdresseManager implements AdresseInterface {
 		}				
 	}
 
-	@Override
 	public void villeLongueurCorrect(String libelle) throws BllException {
 		if(!FonctionGenerique.isLongueurMax(libelle, VILLE_LONGUEUR_MAX)) {
 			throw new BllException("Longueur du nom trop importante - Longueur 	maximum : "+ VILLE_LONGUEUR_MAX);
