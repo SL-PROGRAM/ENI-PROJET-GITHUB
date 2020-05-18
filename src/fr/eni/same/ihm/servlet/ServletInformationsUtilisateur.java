@@ -27,6 +27,12 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 4 et 12
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		if (request.getSession().getAttribute("utilisateur") == null){
+//		response.sendRedirect("connexion");
+//    	return;
+//    }else
+//	
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.jsp");
 		rd.forward(request, response);
 	}
