@@ -1,4 +1,4 @@
-package fr.eni.same.bll;
+ package fr.eni.same.bll;
 
 import java.util.List;
 import fr.eni.same.bo.Categorie;
@@ -45,41 +45,36 @@ public class CategorieManager{
     }
 	
 	public void insert(Categorie t) throws BllException {
-//		String errorMsg = "";
-//		errorMsg += libelleLongueurCorrect(t.getLibelle());
-//		errorMsg += libelleUnique(listeCategories, t.getLibelle());
-//		if(errorMsg.equalsIgnoreCase("")) {
+		String msgErreur = controleUpdateAndInsert(t);
+		if(msgErreur.equalsIgnoreCase("")) {
 			try{
 				DALFactory.getCategorieDAOJdbcImpl().insert(t);
 				listeCategories.add(t);
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-//		}
+		}
 			System.out.println("Catégorie : Insertion réalisée.");
 	}
 	
 	public void update(Categorie t) throws BllException {
-//		String errorMsg = "";
-//		errorMsg += libelleLongueurCorrect(t.getLibelle());
-//		errorMsg += libelleUnique(listeCategories, t.getLibelle());
-//		if(errorMsg.equalsIgnoreCase("")) {
+		String msgErreur = controleUpdateAndInsert(t);
+		if(msgErreur.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().update(t);
 				for(int i = 0; i < listeCategories.size(); i++) {
 					if(listeCategories.get(i).getNoCategorie() == t.getNoCategorie()) {
 						listeCategories.get(i).setLibelle(t.getLibelle());
-						
 					}
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
+		} else {
+			throw new BllException(msgErreur);
+		}
 			System.out.println("Catégorie : Update réalisée.");
 	}
-//} else {
-//	throw new BllException(errorMsg);
-//}
 
 	public void delete(Categorie t) throws BllException {
 		try {
@@ -99,7 +94,7 @@ public class CategorieManager{
 			}
 		}
 		if(cat == null) {
-			throw new BllException("Aucune catégorie n'a été trouvée avec cet identifiant. Avez-vous inséré des catégories en base de donnée?");
+			throw new BllException("Aucune catégorie n'a été trouvée avec cet identifiant.");
 		}
 		System.out.println("Catégorie : Select réalisé : " + cat.toString());
 		return cat;
@@ -119,6 +114,25 @@ public class CategorieManager{
 	//***********************************************************************************************//
 	
 	
+	private String controleUpdateAndInsert(Categorie t) {
+		String msgErreur = "";
+		try {
+			msgErreur += libelleLongueurCorrect(t.getLibelle());
+			msgErreur += libelleUnique(listeCategories, t.getLibelle());
+			msgErreur += categorieNull(t);
+		} catch (BllException e) {
+			e.printStackTrace();
+		}
+		return msgErreur;
+	}
+	
+	private String categorieNull (Categorie t){
+		String msgErreur="";
+		if(t == null) {
+			msgErreur += "Erreur : null";
+		}
+		return msgErreur;
+	}
 	
 	public String libelleUnique(List<Categorie> list, String libelle) throws BllException {
 		String resultat = "";
