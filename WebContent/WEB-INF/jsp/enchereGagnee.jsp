@@ -12,10 +12,9 @@
 <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
+<div class="col container">
+	<%@ include file="jspf/header.jspf"%>
 	<div class="container">
-		<header>
-			<%@ include file="jspf/header.jspf"%>
-		</header>
 		<div class="row">
 			<div class="col-12 col-lg-8 offset-lg-4 text-center">
 				<h2>Vous avez remporté l'enchère</h2>
@@ -129,5 +128,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>
