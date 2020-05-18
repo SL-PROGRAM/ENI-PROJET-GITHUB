@@ -169,10 +169,10 @@ public class UtilisateurManager extends AdresseUtils  {
 	public String pseudoLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongueurMax(libelle, PSEUDO_LONGUEUR_MAX)) {
-			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ PSEUDO_LONGUEUR_MAX + "caractères\n");
+			msgErreur = ("Longueur du pseudo trop importante - Longueur maximum : "+ PSEUDO_LONGUEUR_MAX + "caractères\n");
 		}
 		if(!FonctionGenerique.isLongueurMin(libelle, PSEUDO_LONGUEUR_MIN)) {
-			msgErreur = ("Longeur du nom trop courte - Longueur minimum : "+ PSEUDO_LONGUEUR_MIN + "caractères\n");
+			msgErreur = ("Longueur du pseudo trop courte - Longueur minimum : "+ PSEUDO_LONGUEUR_MIN + "caractères\n");
 		}
 		return libelle;				
 	}
