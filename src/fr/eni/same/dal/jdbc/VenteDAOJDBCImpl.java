@@ -21,6 +21,7 @@ public class VenteDAOJDBCImpl implements VenteDAO{
 	 */
 	private static VenteDAOJDBCImpl instance;
 
+	
     private static final String INSERT="INSERT INTO"
     		+ " ventes (nomarticle, description, date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)"
 			+ " VALUES (?,?,?,?,?,?,?)";
