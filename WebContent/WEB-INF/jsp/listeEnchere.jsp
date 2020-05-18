@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -93,7 +93,8 @@
 							<div class="col-9">
 								<div class="row">
 									<div class="col-6">
-										<p>PC Gamer pour travailler</p>
+									<!-- vignette de mes enchères en cours -->
+										<a href="<%= request.getContextPath()%>/ServletEncherir">PC Gamer pour travailler</a>
 									</div>
 									<div class="col-6">
 										<p>etape2</p>
@@ -126,7 +127,7 @@
 									</div>
 									<div class="col-6">
 										<p>
-											<a href="#">jojo44</a>
+											<a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">jojo44</a>
 										</p>
 									</div>
 
@@ -154,7 +155,8 @@
 							<div class="col-9">
 								<div class="row">
 									<div class="col-6">
-										<p>PC Gamer pour travailler</p>
+									<!-- vignette type de mes ventes -->
+										<a href="<%= request.getContextPath()%>/ServletDetailVente">PC Gamer pour travailler</a>
 									</div>
 									<div class="col-6">
 										<p>etape2</p>
@@ -186,9 +188,9 @@
 										<p>Vendeur :</p>
 									</div>
 									<div class="col-6">
-										<p>
-											<a href="#">jojo44</a>
-										</p>
+										
+											<p>nineja</p><!-- recup mon nom -->
+										
 									</div>
 
 								</div>

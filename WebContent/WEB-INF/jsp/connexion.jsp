@@ -31,7 +31,8 @@
 				<div class="form-group row">
 					<div class="col-6 offset-lg-3 col-lg-3">
 						<button name="btnConnexion" class="btn btn-primary btn-block"
-							type="submit">Connexion</button>
+							type="submit">Connexion</button><!-- verif si id et password ok,si ok: création session et redirect page listeEnchere
+							, sinon rester sur cette page -->
 					</div>
 					<div class="col-7 col-lg-3">
 						<div class="form-check">
@@ -40,7 +41,7 @@
 								souvenir de moi </label>
 						</div>
 						<p>
-							<a href="">Mot de passe oublié</a>
+							<a href="">Mot de passe oublié</a><!-- type submit, renvoie mot de passe aléatoire et update password bdd?? par mail -->
 						</p>
 					</div>
 				</div>
