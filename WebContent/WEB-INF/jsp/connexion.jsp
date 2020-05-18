@@ -30,7 +30,8 @@
 					Si informations invalides alors rd vers Connexion.jsp (maquette 1) avec apparition d'un pop up signifiant l'erreur -->
 					<div class="col-6 offset-lg-3 col-lg-3">
 						<button name="btnConnexion" class="btn btn-primary btn-block"
-							type="submit">Connexion</button>
+							type="submit">Connexion</button><!-- verif si id et password ok,si ok: création session et redirect page listeEnchere
+							, sinon rester sur cette page -->
 					</div>
 					<div class="col-6 col-lg-3">
 					
@@ -41,9 +42,13 @@
 								souvenir de moi </label>
 						</div>
 						<p>
+<<<<<<< HEAD
+							<a href="">Mot de passe oublié</a><!-- type submit, renvoie mot de passe aléatoire et update password bdd?? par mail -->
+=======
 							<!-- Renvoie vers une page permettant de renseigner son adresse mail de contact pour 
 							l'envoie d'un mail permettant de reset le mdp (a faire si on a le temps) -->
 							<a href="">Mot de passe oublié</a>
+>>>>>>> Mathieu
 						</p>
 					</div>
 				</div>
