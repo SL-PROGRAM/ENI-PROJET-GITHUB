@@ -27,18 +27,26 @@ public class UtilisateurManager extends AdresseUtils  {
 	private final int MOT_DE_PASSE_LONGEUR_MIN = 4;
 	private final String EMAIL_REGEX = "^(.+)@(.+)$";
 	private static UtilisateurManager instance;
+	private List<Utilisateur> listeUtilisateurs;
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 * @throws BllException 
 	 */
-    private UtilisateurManager() {
+    private UtilisateurManager() throws BllException {
+    	try {
+			listeUtilisateurs = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
+		} catch (DALException e) {
+			throw new BllException("Impossible de récupérer les données en BDD");
+		}
 	}
 
     /**
      * methode Get pour récupérer l'instance et la créer si elle n'existe pas
      * @return
+     * @throws BllException 
      */
-    public static synchronized  UtilisateurManager getUtilisateurManager() {
+    public static synchronized  UtilisateurManager getUtilisateurManager() throws BllException {
         if(instance == null){
             instance = new UtilisateurManager();
         }
@@ -53,6 +61,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().insert(t);
+			listeUtilisateurs.add(t);
 		} catch (DALException e) {
 			throw new BllException("Impossible d'inserer en base de donnée l'utilisateur");
 		}
@@ -67,12 +76,58 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
+			for (int i = 0; i < listeUtilisateurs.size(); i++) {
+				//Pas de mise a jour Admin et mot de passe
+				if(listeUtilisateurs.get(i).getNoUtilisateur() == t.getNoUtilisateur()) {
+					listeUtilisateurs.get(i).setCodePostal(t.getCodePostal());
+					listeUtilisateurs.get(i).setCredit(t.getCredit());
+					listeUtilisateurs.get(i).setEmail(t.getEmail());
+					listeUtilisateurs.get(i).setNom(t.getNom());
+					listeUtilisateurs.get(i).setPrenom(t.getPrenom());
+					listeUtilisateurs.get(i).setPseudo(t.getPseudo());
+					listeUtilisateurs.get(i).setRue(t.getRue());
+					listeUtilisateurs.get(i).setVille(t.getVille());
+					listeUtilisateurs.get(i).setTelephone(t.getTelephone());
+				}
+			}
 		} catch (DALException e) {
 			throw new BllException("Impossible de modifier en base de donnée l'utilisateur");
 		}
 	}
 
+	public void updateMotDePasse(Utilisateur t) throws BllException {
+		String msgErreur = controleUpdateAndInsert(t);
+		String MotDePasse = securisationMotDePass(t.getMotDePasse());
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
+		try {
+			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
+			for (int i = 0; i < listeUtilisateurs.size(); i++) {
+				//Pas de mise a jour Admin et mot de passe
+				if(listeUtilisateurs.get(i).getNoUtilisateur() == t.getNoUtilisateur()) {
+					listeUtilisateurs.get(i).setMotDePasse(MotDePasse);
+				}
+			}
+		} catch (DALException e) {
+			throw new BllException("Impossible de modifier le mot de passe");
+		}
+	}
 	
+	public boolean testConnection(String identifiant, String motDePasse) {
+		motDePasse = securisationMotDePass(motDePasse);
+		
+		
+		return true;
+	}
+	
+	
+	
+	
+	private String securisationMotDePass(String motDePasse) {
+		return motDePasse;
+	}
+
 	public void delete(Utilisateur t) throws BllException {
 		String msgErreur = controleDelete(t);
 		if (!msgErreur.equals("")){
@@ -174,7 +229,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		if(!FonctionGenerique.isLongueurMin(libelle, PSEUDO_LONGUEUR_MIN)) {
 			msgErreur = ("Longueur du pseudo trop courte - Longueur minimum : "+ PSEUDO_LONGUEUR_MIN + "caractères\n");
 		}
-		return libelle;				
+		return msgErreur;				
 	}
 	
 	public String pseudoUnique(String pseudo) throws BllException {
@@ -193,7 +248,7 @@ public class UtilisateurManager extends AdresseUtils  {
 				msgErreur = ("Longeur du nom trop courte - Longueur minimum : "+ NOM_LONGUEUR_MIN + "caractères\n");
 			}			
 		}
-		return libelle;
+		return msgErreur;
 			
 	}
 
@@ -206,7 +261,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		if(!FonctionGenerique.isLongueurMin(libelle, PRENOM_LONGUEUR_MIN)) {
 			msgErreur = ("Longueur du prenom trop courte - Longueur minimum : "+ PRENOM_LONGUEUR_MIN + "caractères\n");
 		}
-		return libelle;				
+		return msgErreur;				
 	}
 
 	
@@ -223,7 +278,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		if(!matcher.matches()) {
 			msgErreur = ("Ce n'est pas un email valide");
 		};
-		return email;
+		return msgErreur;
 	}
 		
 
@@ -236,7 +291,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		if(!FonctionGenerique.isLongueurMin(libelle, TELEPHONE_LONGUEUR_MIN)) {
 			msgErreur = ("Longueur du téléphone trop courte - Longueur minimum : "+ TELEPHONE_LONGUEUR_MIN + "caractères\n");
 		}
-		return libelle;				
+		return msgErreur;				
 	}
 
 	
@@ -248,7 +303,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		if(!FonctionGenerique.isLongueurMin(email, MOT_DE_PASSE_LONGEUR_MIN)) {
 			msgErreur = ("Longueur du mot de passe trop courte - Longueur minimum : "+ MOT_DE_PASSE_LONGEUR_MIN+ "caractères\n");
 		}
-		return email;			
+		return msgErreur;			
 	}
 
 	
