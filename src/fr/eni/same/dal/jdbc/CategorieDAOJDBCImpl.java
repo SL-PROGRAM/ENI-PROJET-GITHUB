@@ -41,23 +41,21 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
         return instance;
     }
 	@Override
-	public void insert(Categorie t) throws DALException {
-		Connection con = ConnectionProvider.openConnection();
-		try {
-			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, t.getLibelle());
-			pstmt.execute();
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next())
-			{
-				t.setNoCategorie(rs.getInt(1));
-			}
+	public void insert(Categorie t) throws DALException {	
+		try (Connection con = ConnectionProvider.openConnection()) {
+			try(PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)){
+				pstmt.setString(1, t.getLibelle());
+				pstmt.execute();
+				try(ResultSet rs = pstmt.getGeneratedKeys();){
+					if(rs.next())
+					{
+						t.setNoCategorie(rs.getInt(1));
+					}
+				}
+			}	
 //			System.out.println("Categorie insérée en base de donnée : " + t.toString());
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			con=ConnectionProvider.closeConnection();		
+			throw new DALException("Erreur insert");
 		}
 	}
 
