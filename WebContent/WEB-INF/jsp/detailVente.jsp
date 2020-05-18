@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Détails de la vente</title>
+<title>DÃ©tails de la vente</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -16,10 +18,10 @@
 	<div class="container">
 	
 	
-		<!-- Message à afficher uniquement pour la Maquette 10 -->
+		<!-- Message Ã  afficher uniquement pour la Maquette 10 -->
 		<div class="row">
 			<div class="col-12 col-lg-8 text-center">
-				<h2>RandomDu35 a remporté l'enchère !</h2>
+				<h2>RandomDu35 a remportÃ© l'enchÃ¨re !</h2>
 				<br/>
 			</div>
 		</div>
@@ -54,7 +56,7 @@
 						<p>Description :</p>
 					</div>
 					<div class="col-lg-9 d-none d-lg-block">
-						<p>Insérer la description voulue. Exsistit autem hoc loco
+						<p>InsÃ©rer la description voulue. Exsistit autem hoc loco
 							quaedam quaestio subdifficilis, num quando amici novi, digni
 							amicitia, veteribus sint anteponendi, ut equis vetulis teneros
 							anteponere solemus. Indigna homine dubitatio! Non enim debent
@@ -65,8 +67,8 @@
 				<!-- ------------------------------------------------- -->	
 					<div class="col-6 col-lg-3">
 						<p>Meilleure offre :</p>
-						<p>Mise à prix :</p>
-						<p>Fin de l'enchère :</p>
+						<p>Mise Ã  prix :</p>
+						<p>Fin de l'enchÃ¨re :</p>
 					</div>
 					<div class="col-6 col-lg-9">
 						<p>210 pts par jojo44</p>
@@ -88,8 +90,8 @@
 						<p>NineJea</p>
 					</div>
 					
-					<!-- Boutons à afficher dans la version Maquette 9 -->
-					<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
+					<!-- Boutons Ã  afficher dans la version Maquette 9 -->
+					<!-- Redirige vers ServletListeEnchere. cette servlet gÃ¨re la suppression de la vente en BDD puis redirige vers la maquette 5 -->
 					<div class="col-6 col-lg-6">
 						<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 							Annuler la vente</a>
@@ -101,11 +103,11 @@
 							Retour</a>
 					</div>
 
-					<!-- Boutons à afficher dans la version Maquette 10 -->
-					<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
+					<!-- Boutons Ã  afficher dans la version Maquette 10 -->
+					<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information Ã  l'utilisateur -->
 					<div class="col-4 col-lg-4">
 						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
-							Retrait effectué</a>
+							Retrait effectuÃ©</a>
 					</div>
 					
 					<!-- Redirige vers ServletInformationsUtilisateur -->
