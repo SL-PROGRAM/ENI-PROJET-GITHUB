@@ -15,7 +15,7 @@ public class VenteManager  {
 	private final int DESCRIPTION_LONGUEUR_MAX = 300;
 	private final int DESCRIPTION_LONGUEUR_MIN = 5;
 	private static VenteManager instance;
-	private List<Vente> listVentes = new ArrayList<Vente>();
+	private List<Vente> listVentes;
 
 	
 
@@ -24,7 +24,13 @@ public class VenteManager  {
 	 * @throws BllException 
 	 */
     private VenteManager() throws BllException {
-    	listVentes = VenteManager.getVenteManager().selectAll();
+    	if(listVentes == null) {
+    		try {
+				listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
+			} catch (DALException e) {
+				throw new BllException("selectAll");
+			}
+    	}			
 	}
 
     /**
@@ -65,6 +71,18 @@ public class VenteManager  {
 		else {
 			try {
 				DALFactory.getVenteDAOJdbcImpl().update(t);
+				for (int i = 0; i < listVentes.size(); i++) {
+					if(listVentes.get(i).getNoVente() == t.getNoVente()) {
+						listVentes.get(i).setCategorie(t.getCategorie());
+						listVentes.get(i).setDateFinEncheres(t.getDateFinEncheres());
+						listVentes.get(i).setDescription(t.getDescription());
+						listVentes.get(i).setMiseAPrix(t.getMiseAPrix());
+						listVentes.get(i).setNomArticle(t.getNomArticle());
+						listVentes.get(i).setPrixVente(t.getMiseAPrix());
+						listVentes.get(i).setUtilisateurAcheteur(t.getUtilisateurAcheteur());
+						listVentes.get(i).setUtilisateurVendeur(t.getUtilisateurVendeur());
+					}
+				}
 			} catch (DALException e) {
 				throw new BllException("Impossible de modifier en base de donnée la vente");
 			}
@@ -74,9 +92,24 @@ public class VenteManager  {
 	
 
 	
-	public Vente updateAcheteur(Vente t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Vente updateAcheteur(Vente t) throws BllException {
+		String msgErreur = controleUpdateAndInsert(t);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
+		else {
+			try {
+				DALFactory.getVenteDAOJdbcImpl().updateAcheteur(t);
+				for (int i = 0; i < listVentes.size(); i++) {
+					if(listVentes.get(i).getNoVente() == t.getNoVente()) {
+						listVentes.get(i).setUtilisateurAcheteur(t.getUtilisateurAcheteur());
+					}
+				}
+			} catch (DALException e) {
+				throw new BllException("Impossible de modifier l'acheteur en base de donnée la vente");
+			}
+		}		
+		return t;
 	}
 
 	
@@ -88,7 +121,13 @@ public class VenteManager  {
 		else {
 			try {
 				DALFactory.getVenteDAOJdbcImpl().delete(t);
-			} catch (DALException e) {
+				for (int i = 0; i < listVentes.size(); i++) {
+					if(listVentes.get(i).getNoVente() == t.getNoVente()) {
+						listVentes.remove(i);
+					}
+				}
+			}
+			catch (DALException e) {
 				throw new BllException("Impossible de supprimer en base de donnée la vente");
 			}
 		}
@@ -104,23 +143,19 @@ public class VenteManager  {
 			throw new BllException(msgErreur);
 		}
 		else {		
-			try {
-				vente = DALFactory.getVenteDAOJdbcImpl().select(id);
-			} catch (DALException e) {
-				throw new BllException("Impossible de recuperer en base de donnée la vente");
+			for (int i = 0; i < listVentes.size(); i++) {
+				if(listVentes.get(i).getNoVente() == id) {
+					vente = listVentes.get(i);
+				}
+			}
+			if(vente == null) {
+				throw new BllException("La vente ciblée n'existe pas");
 			}
 		}
-		
 		return vente;
 	}
 	
 	public List<Vente> selectAll() throws BllException {
-		List<Vente> listVentes = new ArrayList<Vente>();
-		try {
-			listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
-		} catch (DALException e) {
-			throw new BllException("Impossible de recupérer en base de donnée les ventes");
-		}
 		return listVentes;
 	}
 	
