@@ -1,8 +1,6 @@
 package fr.eni.same.bll;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
@@ -18,24 +16,29 @@ public class CategorieManager{
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 * @throws BllException
 	 */
-	private CategorieManager() {
-		try {
-			if(listeCategories == null) {
-				listeCategories = selectAll();
+	private CategorieManager() throws BllException {
+		if(listeCategories == null) {
+			try {
+				listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+			} catch (DALException e) {
+				e.printStackTrace();
 			}
-		} catch (BllException e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 
     /**
      * methode Get pour récupérer l'instance et la créer si elle n'existe pas
      * @return
      */
-    public static synchronized  CategorieManager getCategorieManager () {
+    public static synchronized CategorieManager getCategorieManager () {
         if(instance == null){
-            instance = new CategorieManager();
+            try {
+				instance = new CategorieManager();
+			} catch (BllException e) {
+				e.printStackTrace();
+			}
         }
         return instance;
     }
@@ -103,17 +106,7 @@ public class CategorieManager{
 
 	
 	public List<Categorie> selectAll() throws BllException {
-		if(listeCategories != null) {
-			return listeCategories;
-		} else {
-			List<Categorie> tempList = new ArrayList<Categorie>();
-			try {
-				tempList = DALFactory.getCategorieDAOJdbcImpl().selectAll();
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
-			return tempList;			
-		}
+		return listeCategories;
 	}
 
 	//***********************************************************************************************//
