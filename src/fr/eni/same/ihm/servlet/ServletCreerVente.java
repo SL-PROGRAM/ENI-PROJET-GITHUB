@@ -1,7 +1,10 @@
 package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Vente;
 
 /**
@@ -33,7 +37,7 @@ public class ServletCreerVente extends HttpServlet {
 		if (request.getSession().getAttribute("utilisateur") == null){
 		response.sendRedirect("connexion");
     	return;
-	    }else{//recup info adresse de l utilisateur pour placer par defaut l adresse a l emplacement retrait
+	    }else{//recup info adresse de l utilisateurVendeur pour placer par defaut l adresse a l emplacement retrait
 	    	HttpSession session = request.getSession();
 			
 			String rue = (String) session.getAttribute("rue");
@@ -54,23 +58,41 @@ public class ServletCreerVente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//recup info dans string d abbord car je sais pas comment coder le parse avec getParameter
+		String dateFinEnchere = request.getParameter("dateFinEnchere");
+		String miseAPrix= request.getParameter("miseAPrix");
+		
+		Retrait retrait = new Retrait();
 		Vente newVente= new Vente();
+		
 		newVente.setNomArticle(request.getParameter("article"));
 		newVente.setDescription(request.getParameter("articleDescription"));
-		//newVente.setCategorie(request.getParameterValues("")); a chercher comment faire pour le select
-		//newVente.setDateFinEncheres(LocalDate.parse(request.getParameter("dateFinEnchere")));
-		//newVente.setMiseAPrix.parseInt(request.getParameter("miseAPrix"));
-		//newVente.setUtilisateurVendeur.(request.getParameter("rue"));
+		//(request.getParameterValues("")); a chercher comment faire pour le select class Categorie??
+		
+		newVente.setMiseAPrix(Integer.parseInt("miseAPrix"));
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	        try {
+				newVente.setDateFinEncheres((Timestamp) formatter.parse(dateFinEnchere));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			} 
+		
+		
+		retrait.setRue(request.getParameter("rue"));
+		retrait.setCodePostal(request.getParameter("codePostal"));
+		retrait.setVille(request.getParameter("ville"));
+		//retrait.setVente(?);
 		
 		if(request.getParameter("publierVente") != null) {
 			//vente.ajouterVente(newVente);
+			//retrait.ajouterRetrait(retrait);
 		}else if(request.getParameter("enregistrerVente") != null) {
 			//cookie
 		}else if(request.getParameter("annuler") != null) {
 			//annuler enregistrement
 		}
 	}
-
+ 
 	
 }
 
