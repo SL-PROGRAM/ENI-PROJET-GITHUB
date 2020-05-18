@@ -32,7 +32,7 @@ public class filtreManager {
 	public List<Vente> filtreMesVentesEnregistrees(Cookie cookie[]){
 		List<Vente> mesVentesEnregistrees = new ArrayList<Vente>();
 		
-		
+		//Recupérer info dans Cookies
 		
 		Collections.sort(mesVentesEnregistrees, Collections.reverseOrder()); 
 		
