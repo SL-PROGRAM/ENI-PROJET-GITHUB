@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +16,7 @@
 
 			
 			<div class="col-12 col-lg-3 text-right d-lg-none">
-				<p class="m-0">User est connecté</p>
+				<p class="m-0">User est connectÃ©</p>
 			</div>
 		</div>
 
@@ -32,7 +34,7 @@
 							<input type="checkbox" class="custom-control-input"
 								id="checkMesEncheresEnCours"> <label
 								class="custom-control-label" for="checkMesEncheresEnCours">Mes
-								enchères en cours</label>
+								enchÃ¨res en cours</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
@@ -44,18 +46,18 @@
 							<input type="checkbox" class="custom-control-input"
 								id="checkAutresEncheres"> <label
 								class="custom-control-label" for="checkAutresEncheres">Autres
-								enchères</label>
+								enchÃ¨res</label>
 						</div>
 					</div>
 				</div>
 				<div class="col-12 col-lg-6">
 					<div class="form-group row">
-						<label for="selectCategorie" class="col-2 col-form-label">Catégories</label>
+						<label for="selectCategorie" class="col-2 col-form-label">CatÃ©gories</label>
 						<div class="offset-1 col-9">
 							<select class="custom-select" id="selectCategorie">
 								<option selected>Toutes</option>
-								<option value="1">Catégorie1</option>
-								<option value="2">Catégorie2</option>
+								<option value="1">CatÃ©gorie1</option>
+								<option value="2">CatÃ©gorie2</option>
 								<option value="3">Something</option>
 							</select>
 						</div>
@@ -69,13 +71,13 @@
 				</div>
 				<div
 					class="col-6 col-lg-3 text-right text-lg-center d-none d-lg-block">
-					<p>User est connecté</p>
+					<p>User est connectÃ©</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-12 col-lg-5">
 					<!-- Redirige vers ServletListeEncheres (maquette 5). La Servlet sera l'url d'application des filtres. 
-								 Utilisation d'un selectByMotCle de vente. Récupération de la liste envoyée à la jsp.  -->
+								 Utilisation d'un selectByMotCle de vente. RÃ©cupÃ©ration de la liste envoyÃ©e Ã  la jsp.  -->
 					<button type="submit" class="btn btn-primary btn-block">Rechercher</button>
 				</div>
 			</div>
@@ -111,7 +113,7 @@
 
 									<div class="col-6">
 										<p>Prix : 210 points</p>
-										<p>Fin de l'enchère :</p>
+										<p>Fin de l'enchÃ¨re :</p>
 									</div>
 
 									<div class="col-6">
@@ -123,7 +125,7 @@
 										<p>Retrait :</p>
 									</div>
 									<div class="col-6">
-										<p>10 allée des Alouettes</p>
+										<p>10 allÃ©e des Alouettes</p>
 										<p>44 800 Saint Herblain</p>
 									</div>
 
@@ -169,7 +171,7 @@
 
 									<div class="col-6">
 										<p>Prix : 210 points</p>
-										<p>Fin de l'enchère :</p>
+										<p>Fin de l'enchÃ¨re :</p>
 									</div>
 
 									<div class="col-6">
@@ -181,7 +183,7 @@
 										<p>Retrait :</p>
 									</div>
 									<div class="col-6">
-										<p>10 allée des Alouettes</p>
+										<p>10 allÃ©e des Alouettes</p>
 										<p>44 800 Saint Herblain</p>
 									</div>
 
