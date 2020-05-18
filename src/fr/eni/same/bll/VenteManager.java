@@ -15,14 +15,16 @@ public class VenteManager  {
 	private final int DESCRIPTION_LONGUEUR_MAX = 300;
 	private final int DESCRIPTION_LONGUEUR_MIN = 5;
 	private static VenteManager instance;
-	private static List<Vente> listVentes = new ArrayList<Vente>();
+	private List<Vente> listVentes = new ArrayList<Vente>();
 
 	
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 * @throws BllException 
 	 */
-    private VenteManager() {
+    private VenteManager() throws BllException {
+    	listVentes = VenteManager.getVenteManager().selectAll();
 	}
 
     /**
@@ -32,8 +34,7 @@ public class VenteManager  {
      */
     public static synchronized  VenteManager getVenteManager () throws BllException {
         if(instance == null){
-            instance = new VenteManager();
-            listVentes = VenteManager.getVenteManager().selectAll();
+            instance = new VenteManager();      
         }
         return instance;
     }
@@ -44,11 +45,15 @@ public class VenteManager  {
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
-		try {
-			DALFactory.getVenteDAOJdbcImpl().insert(t);
-		} catch (DALException e) {
-			throw new BllException("Impossible d'inserer en base de donnée la vente");
+		else {
+			try {
+				DALFactory.getVenteDAOJdbcImpl().insert(t);
+				listVentes.add(t);
+			} catch (DALException e) {
+				throw new BllException("Impossible d'inserer en base de donnée la vente");
+			}
 		}
+		
 	}
 
 	
@@ -57,11 +62,14 @@ public class VenteManager  {
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
-		try {
-			DALFactory.getVenteDAOJdbcImpl().insert(t);
-		} catch (DALException e) {
-			throw new BllException("Impossible de modifier en base de donnée la vente");
+		else {
+			try {
+				DALFactory.getVenteDAOJdbcImpl().update(t);
+			} catch (DALException e) {
+				throw new BllException("Impossible de modifier en base de donnée la vente");
+			}
 		}
+		
 	}
 	
 
@@ -77,29 +85,34 @@ public class VenteManager  {
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
-		try {
-			DALFactory.getVenteDAOJdbcImpl().delete(t);
-		} catch (DALException e) {
-			throw new BllException("Impossible de supprimer en base de donnée la vente");
+		else {
+			try {
+				DALFactory.getVenteDAOJdbcImpl().delete(t);
+			} catch (DALException e) {
+				throw new BllException("Impossible de supprimer en base de donnée la vente");
+			}
 		}
+		
 		
 	}
 
 	
 	public Vente select(int id) throws BllException {
 		String msgErreur = noVenteNull(id);
+		Vente vente = null;
 		if(!msgErreur.equals("")) {
 			throw new BllException(msgErreur);
-		};
-		Vente vente = null;
-		try {
-			vente = DALFactory.getVenteDAOJdbcImpl().select(id);
-		} catch (DALException e) {
-			throw new BllException("Impossible de recuperer en base de donnée la vente");
 		}
+		else {		
+			try {
+				vente = DALFactory.getVenteDAOJdbcImpl().select(id);
+			} catch (DALException e) {
+				throw new BllException("Impossible de recuperer en base de donnée la vente");
+			}
+		}
+		
 		return vente;
 	}
-
 	
 	public List<Vente> selectAll() throws BllException {
 		List<Vente> listVentes = new ArrayList<Vente>();
