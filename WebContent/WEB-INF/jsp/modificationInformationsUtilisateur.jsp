@@ -27,7 +27,7 @@
 		<br />
 		
 		
-		<form action="<%= request.getContextPath()%>/ServletInformationsUtilisateur" method="post">
+		<form action="<%= request.getContextPath()%>/ServletConnexion" method="post">
 			<div class="row">
 				<div class="col-12 col-lg-6">
 					<div class="form-group form-row">
@@ -155,10 +155,12 @@
 			<!-- Bontons à afficher uniquement pour la maquette 2 -->
 			<div class="row">
 				<div class="col-6 offset-lg-3 col-lg-3">
+					<!-- Redirection vers la ServletConnexion qui permettra de créer le compte en BDD et redirige vers la page connexion (maquette 1)-->
 					<button name="btnCreerUnCompte" class="btn btn-primary btn-block"
 						type="submit">Créer</button>
 				</div>
 				<div class="col-6 col-lg-3">
+					<!-- Redirection vers la page de connexion (maquette 1) -->
 					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletConnexion">Annuler</a>
 				</div>
 			</div>
@@ -167,12 +169,15 @@
 			<!-- Bontons à afficher uniquement pour la maquette 3 -->
 			<div class="row">
 				<div class="col-4 offset-lg-2 col-lg-3">
+					<!-- Renvoie vers ServletInformationsUtilisateur (maquettes 4 + 12). Cette servlet permettra de faire un update des informations du user en BDD -->
 					<button name="btnEnregistrer" class="btn btn-success btn-block" type="submit">Enregistrer</button>
 				</div>
 				<div class="col-4 col-lg-3">
+					<!-- Redirige vers la ServletConnexion (maquette 1) qui permettra de faire la suppression de l'utilisateur en BDD -->
 					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletConnexion" type="submit">Supprimer mon compte</a>
 				</div>
 				<div class="col-4 col-lg-3">
+					<!-- Redirection vers ServletInformationsUtlisateur (maquettes 4 + 12) -->
 					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">Retour</a>
 				</div>
 			</div>

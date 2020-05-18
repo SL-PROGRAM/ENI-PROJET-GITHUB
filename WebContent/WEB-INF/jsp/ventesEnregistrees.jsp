@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Nouvelle Vente</title>
+    <title>Mes ventes enregistrées</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="ThemesCss/profile.css">
 
@@ -10,6 +10,71 @@
 <body>
 
 <div class="container">
+				<div class="row">
+					<div class="col-12">
+						<h3>Voici vos ventes enregistrées</h3>
+					</div>
+				</div>
+				<br/>
+				<form action="<%= request.getContextPath() %>/ServletCreerVente" method="post">
+
+					<button class="container" type="submit">
+						<div class="row">
+					<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives à la vente vers la servlet 
+						 Le vendeur de la vente est clickable. Redirige vers ServletInformationsUtilisateur Envoie des informations 
+						 relatives de l'utilsiateur à afficher. -->
+							<div class="col-3">
+								<!-- Ligne 1 -->
+								<div class="col-12" style="height: 100%">
+									<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
+										src="">
+								</div>
+							</div>
+
+							<div class="col-9">
+								<div class="row">
+									<div class="col-6">
+										<p>PC Gamer pour travailler</p>
+									</div>
+									
+									<div class="w-100">
+									</div>
+
+
+									<!-- Ligne 2 -->
+									<div class="col-6">
+										<p>Prix : 210 points</p>
+										<p>Fin de l'enchère :</p>
+									</div>
+
+									<div class="col-6">
+										<p>Classement : 2</p>
+										<p>10/08/2018</p>
+									</div>
+
+									<!-- Ligne 4 -->
+									<div class="col-6">
+										<p>Retrait :</p>
+									</div>
+									<div class="col-6">
+										<p>10 allée des Alouettes</p>
+										<p>44 800 Saint Herblain</p>
+									</div>
+
+									<!-- Ligne 5 -->
+
+								</div>
+							</div>
+						</div>
+					</button>
+				</form>
+				<br/>
+				<div class="row">
+					<div class="col-12">
+						<a href="<%=request.getContextPath()%>/ServletListeEncheres" class="btn btn-danger btn-block">Retour</a>
+					</div>
+				</div>
+				
 
 
 </div>

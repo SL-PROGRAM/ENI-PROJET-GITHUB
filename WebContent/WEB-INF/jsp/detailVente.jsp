@@ -18,8 +18,9 @@
 	
 		<!-- Message à afficher uniquement pour la Maquette 10 -->
 		<div class="row">
-			<div class="col-12 col-lg-8 offset-lg-3 text-center">
+			<div class="col-12 col-lg-8 text-center">
 				<h2>RandomDu35 a remporté l'enchère !</h2>
+				<br/>
 			</div>
 		</div>
 		<!-- ------------------------------------------------- -->
@@ -33,23 +34,20 @@
 					<p>PC Gamer pour travailler</p>
 				</div>
 			<!-- ------------------------------------------------- -->	
-				<div class="col-lg-12 d-none d-lg-block">
+				<div class="col-12 col-lg-12 text-center">
 					<img alt="Image descriptve du produit en vente" src="././img/no-stopping.png" />
 				</div>
+				<br/>
 			</div>
 		<!-- ------------------------------------------------- -->	
-
+			
+			
 			<div class="col-12 col-lg-9">
 			<!-- Affichage uniquement pour la version Desktop -->
 				<div class="row">
 					<div class="col-lg-12 d-none d-lg-block">
 						<h3>PC Gamer pour travailler</h3>
 					</div>
-					<!-- Affichage uniquement pour la version Mobile -->
-					<div class="col-12 d-block d-lg-none text-center">
-						<img alt="Image descriptve du produit en vente" src="././img/no-stopping.png" />
-					</div>
-					<!-- ------------------------------------------------- -->	
 					
 					
 					<div class="col-lg-3 d-none d-lg-block">
@@ -91,25 +89,31 @@
 					</div>
 					
 					<!-- Boutons à afficher dans la version Maquette 9 -->
+					<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
 					<div class="col-6 col-lg-6">
 						<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 							Annuler la vente</a>
 					</div>
+					
+					<!-- Redirige vers ServletListeEnchere -->
 					<div class="col-6 col-lg-6">
 						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 							Retour</a>
 					</div>
 
 					<!-- Boutons à afficher dans la version Maquette 10 -->
-					<!-- Faire une jsp retrait effecctué ? -->
+					<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
 					<div class="col-4 col-lg-4">
 						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
 							Retrait effectué</a>
 					</div>
+					
+					<!-- Redirige vers ServletInformationsUtilisateur -->
 					<div class="col-4 col-lg-4">
 						<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
 							Contacter jojo44</a>
 					</div>
+					<!-- Redirige vers ServletListeEnchere -->
 					<div class="col-4 col-lg-4">
 						<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 							Retour</a>

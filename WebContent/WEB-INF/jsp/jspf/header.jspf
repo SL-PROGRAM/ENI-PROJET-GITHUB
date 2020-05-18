@@ -1,5 +1,10 @@
 <header class="row">
-	<div class="col-12">
-		<h3>TrocEncheres.org</h3>
-	</div>
+	<div class="container-fluid p-0">
+		<nav class="navbar navbar-light bg-light">
+		  <a class="navbar-brand" href="#">
+		    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+		    TrocEncheres.org
+		  </a>
+		</nav>
+	</div>	
 </header>
