@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -19,7 +19,7 @@
 		
 				<div class ="row">
 					<div class="col-12 text-center">
-						<h3> JOJO44</h3><!-- recuperer info du vendeur de l article, en lien avec page encherir et listeEnchere, y acceder que si login sinon redirection login -->
+						<h3>${utilisateur.pseudo}</h3><!-- recuperer info du vendeur de l article, en lien avec page encherir et listeEnchere, y acceder que si login sinon redirection login -->
 					</div>
 				</div>
 		
@@ -37,14 +37,14 @@
 				
 			
 					<div class="col-6">
-						<p>recup info</p>
-						<p>recup info</p>
-						<p>recup info</p>
-						<p>recup info</p>
-						<p>recup info</p>
-						<p>recup info</p>
-						<p>recup info</p>
-						<p>recup info</p>
+						<p>${utilisateur.pseudo}</p>
+						<p>${utilisateur.nom}</p>
+						<p>${utilisateur.prenom}</p>
+						<p>${utilisateur.email}</p>
+						<p>${utilisateur.telephone}</p>
+						<p>${utilisateur.rue}</p>
+						<p>${utilisateur.codePostal}</p>
+						<p>${utilisateur.ville}</p>
 			
 					</div>
 			</div>
