@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,17 +21,14 @@
 				<h1>Détail vente</h1>
 			</div>
 			<div class="col-12 col-lg-6 order-lg-2">
-				<h2>PC Gamer pour travailler</h2>
+				<h2>${vente.nomArticle}</h2>
 			</div>
 			<div class="col-lg-3 offset-lg-4 d-none d-lg-block order-lg-3">
 				<p>Description :</p>
 			</div>
 			<div class="col-lg-5 d-none d-lg-block order-lg-4">
-				<p>Insérer la description voulue. Exsistit autem hoc loco
-					quaedam quaestio subdifficilis, num quando amici novi, digni
-					amicitia, veteribus sint anteponendi, ut equis vetulis teneros
-					anteponere solemus. Indigna homine dubitatio! Non enim debent esse
-					amicitiarum sicut aliarum rerum satietates; veterrima quaeque, ut
+				<p>
+				${vente.description}
 				</p>
 			</div>
 			<div class="col-12 col-lg-4 order-lg-1">
@@ -46,8 +43,8 @@
 			</div>	
 			<div class="col-6 col-lg-3 order-lg-6">
 				<p>210 pts par jojo44</p>
-				<p>175 points</p><!-- info a recup de la vente -->
-				<p>09/10/2022</p>
+				<p>${vente.misaAPrix}</p><!-- info a recup de la vente -->
+				<p>${vente.dateFinEncheres}</p>
 				
 			</div>
 			
@@ -64,7 +61,7 @@
 				
 			</div>
 			<div class="col-6 col-lg-3 order-lg-10">
-			<a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">jojo44</a>
+			<a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo}</a>
 			</div>
 			
 			<div class="col-6 col-lg-3 offset-lg-4 order-lg-11">	
@@ -81,7 +78,7 @@
 			
 		</div>
 		<br />
-		<div class="row">	
+		<div class="row">	<!-- si enhereutilsateur == utilisateur session et date enchere en cours afficher -->
 				<div class="col-6 col-lg-3 offset-lg-4">
 					<a class="btn btn-primary btn-block"  href="<%= request.getContextPath()%>/ServletListeEncheres" name="annulerEnchere"
 						type="submit">Annuler ma dernière enchère</a><!-- si login, sinon redirect pageConnexion, delete update de encherir, restitution ancien credit -->
@@ -93,6 +90,7 @@
 				
 				</div>
 			</div>
+			
 		</div>
 	</div>
 	
