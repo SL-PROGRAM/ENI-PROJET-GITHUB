@@ -60,13 +60,7 @@
 				</p>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-12 text-center">
-					<p>
-						<a class="btn btn-primary"  href="<%= request.getContextPath()%>/ServletModificationInformationsUtilisateur">Modifier mon profil</a>
-					</p>
-				</div>
-			</div>
+			
 		</div>
 		
 		
