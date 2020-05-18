@@ -60,10 +60,10 @@ public class ServletTestBLL extends HttpServlet {
 		}
 	}
 	private void testCategories() {
-		Categorie categorieSansPK = new Categorie(15,"GEGGE");
+		Categorie categorieSansPK = new Categorie("AZDZF");
 		try {
 			CategorieManager.getCategorieManager().insert(categorieSansPK);
-			categorieSansPK.setLibelle("ADER");
+			categorieSansPK.setLibelle("GHIJKL");
 			CategorieManager.getCategorieManager().update(categorieSansPK);
 			CategorieManager.getCategorieManager().select(categorieSansPK.getNoCategorie());
 			CategorieManager.getCategorieManager().selectAll();
@@ -75,10 +75,11 @@ public class ServletTestBLL extends HttpServlet {
 	private void testEncheres() {
 		Utilisateur standardA = new Utilisateur(1,"pseudo","nomnom","prenom","email@plop.fr","0606060606","rue des fougères","35000","Rennes","motdepasseSecurise",155,false);
 			try {
+				int idCategorie = CategorieManager.getCategorieManager().selectAll().get(0).getNoCategorie();
 				UtilisateurManager.getUtilisateurManager().insert(standardA);
-				Categorie categorie = CategorieManager.getCategorieManager().select(3);
+				Categorie categorie = CategorieManager.getCategorieManager().select(idCategorie);
 				Timestamp t = new Timestamp(System.currentTimeMillis());
-				Vente vente = new Vente("plop","description",t,5000,6000,standardA,standardA,categorie);
+				Vente vente = new Vente(1,"plop","description",t,5000,6000,standardA,standardA,categorie);
 				VenteManager.getVenteManager().insert(vente);
 				Enchere enchere1 = new Enchere(t,standardA,vente);
 				EnchereManager.getEnchereManager().insert(enchere1);
@@ -115,8 +116,9 @@ public class ServletTestBLL extends HttpServlet {
 				acheteur = UtilisateurManager.getUtilisateurManager().select(24);
 				Utilisateur vendeur = UtilisateurManager.getUtilisateurManager().select(26);
 				Categorie categorie = CategorieManager.getCategorieManager().select(4);
+				
 				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-				Vente vente = new Vente(4,"une","deux",timestamp,2,6000,null,vendeur,categorie);
+				Vente vente = new Vente(4,"uneee","deuxxx",timestamp,2,6000,null,vendeur,categorie);
 				VenteManager.getVenteManager().insert(vente);
 				vente.setDescription("Description modifiée");
 				VenteManager.getVenteManager().update(vente);

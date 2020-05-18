@@ -208,10 +208,10 @@ public class VenteManager  {
 	public String nomArticleLongeurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongueurMax(libelle, NOM_LONGUEUR_MAX)) {
-			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX + "caractères\n");
+			msgErreur = ("Longueur de l'article trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX + "caractères\n");
 		}
 		if(!FonctionGenerique.isLongueurMin(libelle, NOM_LONGUEUR_MIN)) {
-			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN + "caractères\n");
+			msgErreur = ("Longueur de l'article trop courte - Longueur minimum : "+ NOM_LONGUEUR_MIN + "caractères\n");
 		}
 		return msgErreur;
 	}
@@ -220,10 +220,10 @@ public class VenteManager  {
 	public String descriptionLongeurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(!FonctionGenerique.isLongueurMax(libelle, DESCRIPTION_LONGUEUR_MAX)) {
-			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ DESCRIPTION_LONGUEUR_MAX + "caractères\n");
+			msgErreur = ("Longeur de la description trop importante - Longueur maximum : "+ DESCRIPTION_LONGUEUR_MAX + "caractères\n");
 		}
 		if(!FonctionGenerique.isLongueurMin(libelle, DESCRIPTION_LONGUEUR_MIN)) {
-			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ DESCRIPTION_LONGUEUR_MIN + "caractères\n");
+			msgErreur = ("Longeur de la description trop courte - Longueur minimum : "+ DESCRIPTION_LONGUEUR_MIN + "caractères\n");
 		}
 		return msgErreur;		
 	}
@@ -235,7 +235,7 @@ public class VenteManager  {
 		int aDay = 24 * 60 * 60 * 1000;
 		Timestamp demain = new Timestamp(now.getTime()+aDay);
 		if(dateFinEnchere.before(demain)){
-			msgErreur = ("Il faut une durée minimun de 24h pour une enchère");
+			msgErreur = ("Il faut une durée minimum de 24h pour une enchère");
 		}
 		return msgErreur;		
 	}
