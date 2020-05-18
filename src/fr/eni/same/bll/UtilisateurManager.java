@@ -177,8 +177,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		msgErreur += creditPositif(t.getCredit());
 		msgErreur += AdresseUtils.rueLongueurCorrect(t.getRue());
 		msgErreur += AdresseUtils.villeLongueurCorrect(t.getVille());
-		msgErreur += AdresseUtils.codePostalLongueurCorrect(t.getCodePostal());
-		
+		msgErreur += AdresseUtils.codePostalLongueurCorrect(t.getCodePostal());		
 		return msgErreur; 
 	}
 
@@ -286,15 +285,23 @@ public class UtilisateurManager extends AdresseUtils  {
 	}
 
 	
-	public String motDePasseValide(String email) throws BllException {
+	public String motDePasseValide(String motDePasse) throws BllException {
 		String msgErreur = "";
-		if(!FonctionGenerique.isLongueurMax(email, MOT_DE_PASSE_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(motDePasse, MOT_DE_PASSE_LONGUEUR_MAX)) {
 			msgErreur = ("Longueur du mot de passe trop importante - Longueur maximum : "+ MOT_DE_PASSE_LONGUEUR_MAX+ "caractères\n");
 		}
-		if(!FonctionGenerique.isLongueurMin(email, MOT_DE_PASSE_LONGEUR_MIN)) {
+		if(!FonctionGenerique.isLongueurMin(motDePasse, MOT_DE_PASSE_LONGEUR_MIN)) {
 			msgErreur = ("Longueur du mot de passe trop courte - Longueur minimum : "+ MOT_DE_PASSE_LONGEUR_MIN+ "caractères\n");
 		}
 		return msgErreur;			
+	}
+	
+	public String motDePasseIdentique(String motDePasse, String motDePasseVerif) {
+		String msgErreur = "";
+		if(!motDePasse.equals(motDePasseVerif)) {
+			msgErreur = "Les mots de passe ne sont pas identiques";
+		}
+		return msgErreur;
 	}
 
 	
