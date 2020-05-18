@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,17 +18,32 @@
 	<%@include file="jspf/header.jspf"%>
 	<div class="container">
 	<!-- Titre à modifier en fonction de la maquette 2 ou 3 -->
-		<div class="row">
-			<div class="col-12 text-center">
-				<h3>Créer votre compte</h3>
-			</div>
+	<div class="row">
+		<div class="col-12 text-center">
+			<c:choose>
+				<c:when test="${empty request.getSession()}">
+					<h3>Créer votre compte</h3>
+				</c:when>
+				<c:when test="${!empty request.getSession()}">
+					<h3>Modifier votre compte</h3>
+				</c:when>
+			</c:choose>
 		</div>
-		
+	</div>
 		
 		<br />
 		
 		
-		<form action="<%= request.getContextPath()%>/ServletConnexion" method="post">
+		<form action=
+			'<c:choose>
+				<c:when> test="${empty request.getSession() }">
+					<%= request.getContextPath()%>/ServletConnexion" method="post"
+				</c:when>
+				<c:when> test="${!empty request.getSession() }">
+					<%= request.getContextPath()%>/ServletModificationInformationsUtilisateur" method="post"
+				</c:when>
+			</c:choose>'
+		>
 			<div class="row">
 				<div class="col-12 col-lg-6">
 					<div class="form-group form-row">
@@ -35,7 +51,13 @@
 						</label>
 						<div class="col-6 col-lg-9">
 							<input name="txtPseudo" type="text" class="form-control"
-								id="pseudo" placeholder="Votre Pseudo...">
+								id="pseudo" placeholder="Votre Pseudo..." 
+								
+								<c:if test="${!empty request.getSession()}">
+									value="${user.pseudo}"
+								</c:if>
+							>
+											
 						</div>
 					</div>
 				</div>
@@ -44,7 +66,11 @@
 						<label for="nom" class="col-6 col-lg-3 col-form-label">Nom : </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtNom" type="text" class="form-control" id="nom"
-								placeholder="Votre Nom...">
+								placeholder="Votre Nom..."
+								<c:if test="${!empty request.getSession()}">
+									value="${user.nom}"
+								</c:if>
+							>
 						</div>
 					</div>
 				</div>
@@ -57,7 +83,10 @@
 						</label>
 						<div class="col-6 col-lg-9">
 							<input name="txtPrenom" type="text" class="form-control"
-								id="prenom" placeholder="Votre prénom...">
+								id="prenom" placeholder="Votre prénom..."
+								<c:if test="${!empty request.getSession()}">
+									value="${user.prenom}"
+								</c:if>>
 						</div>
 					</div>
 				</div>
@@ -66,7 +95,12 @@
 						<label for="email" class="col-6 col-lg-3 col-form-label">Email : </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtEmail" type="email" class="form-control"
-								id="email" placeholder="Votre email...">
+								id="email" placeholder="Votre email..."
+								value="
+								<c:if test="${!empty request.getSession()}">
+									${user.email}
+								</c:if>"
+							>
 						</div>
 					</div>
 				</div>
@@ -80,7 +114,11 @@
 							: </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtTelephone" type="tel" class="form-control"
-								id="telephone" placeholder="Votre numéro de téléphone...">
+								id="telephone" placeholder="Votre numéro de téléphone..."
+								<c:if test="${!empty request.getSession()}">
+									value="${user.telephone}"
+								</c:if>
+							>
 						</div>
 					</div>
 				</div>
@@ -89,7 +127,11 @@
 						<label for="rue" class="col-6 col-lg-3 col-form-label">Rue : </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtRue" type="text" class="form-control" id="rue"
-								placeholder="Le nom de votre rue...">
+								placeholder="Le nom de votre rue..."
+								<c:if test="${!empty request.getSession()}">
+									value="${user.rue}"
+								</c:if>
+							>
 						</div>
 					</div>
 				</div>
@@ -102,7 +144,11 @@
 							Postal : </label>
 						<div class="col-6 col-lg-9">
 							<input name="numCodePostal" type="number" class="form-control"
-								id="codePostal" placeholder="Votre code postal...">
+								id="codePostal" placeholder="Votre code postal..."
+								<c:if test="${!empty request.getSession()}">
+									value="${user.codePostal}"
+								</c:if>
+							>
 						</div>
 					</div>
 				</div>
@@ -111,7 +157,11 @@
 						<label for="ville" class="col-6 col-lg-3 col-form-label">Ville : </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtVille" type="text" class="form-control"
-								id="ville" placeholder="Le nom de votre ville...">
+								id="ville" placeholder="Le nom de votre ville..."
+								<c:if test="${!empty request.getSession()}">
+									value="${user.ville}"
+								</c:if>
+							>
 						</div>
 					</div>
 				</div>
@@ -124,7 +174,11 @@
 							passe : </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtMotDePasse" type="password" class="form-control"
-								id="password" placeholder="Votre mot de passe...">
+								id="password" placeholder="Votre mot de passe..."
+								<c:if test="${!empty request.getSession()}">
+									value="${user.password}"
+								</c:if>
+							>
 						</div>
 					</div>
 				</div>
@@ -135,52 +189,64 @@
 						<div class="col-6 col-lg-9">
 							<input name="txtConfirmation" type="password"
 								class="form-control" id="confirmPassword"
-								placeholder="Confirmez votre mot de passe...">
+								placeholder="Confirmez votre mot de passe..."
+								<c:if test="${!empty request.getSession()}">
+									value="${user.confirmPassword}"
+								</c:if>
+							>
 						</div>
 					</div>
 				</div>
 				<!-- Informations à n'afficher que dans le cadre de la maquette 3 (Modifier mon profil) -->
-				<div class="col-12 col-lg-6">
-					<div class="form-group form-row">
-						<label for="credit" class="col-6 col-lg-3 col-form-label">Crédits
-							: </label>
-						<div class="col-6 col-lg-9">
-							<p>640</p>
+				<c:if test="${!empty request.getSession() }">
+					<div class="col-12 col-lg-6">
+						<div class="form-group form-row">
+							<label for="credit" class="col-6 col-lg-3 col-form-label">Crédits
+								: </label>
+							<div class="col-6 col-lg-9">
+								<p>${user.credit}</p>
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:if>
 				
 			</div>
 			
 			<!-- Bontons à afficher uniquement pour la maquette 2 -->
-			<div class="row">
-				<div class="col-6 offset-lg-3 col-lg-3">
-					<!-- Redirection vers la ServletConnexion qui permettra de créer le compte en BDD et redirige vers la page connexion (maquette 1)-->
-					<button name="btnCreerUnCompte" class="btn btn-primary btn-block"
-						type="submit">Créer</button>
-				</div>
-				<div class="col-6 col-lg-3">
-					<!-- Redirection vers la page de connexion (maquette 1) -->
-					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Annuler</a>
-				</div>
-			</div>
+			<c:choose>
+				<c:when test="${empty request.getSession() }">
+					<div class="row">
+						<div class="col-6 offset-lg-3 col-lg-3">
+							<!-- Redirection vers la ServletConnexion qui permettra de créer le compte en BDD et redirige vers la page connexion (maquette 1)-->
+							<button name="btnCreerUnCompte" class="btn btn-primary btn-block"
+								type="submit">Créer</button>
+						</div>
+						<div class="col-6 col-lg-3">
+							<!-- Redirection vers la page de connexion (maquette 1) -->
+							<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Annuler</a>
+						</div>
+					</div>
+				</c:when>
+				<c:when test="${!empty request.getSession() }">
+					<!-- Bontons à afficher uniquement pour la maquette 3 -->
+					<div class="row">
+						<div class="col-4 offset-lg-2 col-lg-3">
+							<!-- Renvoie vers ServletInformationsUtilisateur (maquettes 4 + 12). Cette servlet permettra de faire un update des informations du user en BDD -->
+							<button name="btnEnregistrer" class="btn btn-success btn-block" type="submit">Enregistrer</button>
+						</div>
+						<div class="col-4 col-lg-3">
+							<!-- Redirige vers la ServletConnexion (maquette 1) qui permettra de faire la suppression de l'utilisateur en BDD -->
+							<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres" type="submit">Supprimer mon compte</a>
+						</div>
+						<div class="col-4 col-lg-3">
+							<!-- Redirection vers ServletInformationsUtlisateur (maquettes 4 + 12) -->
+							<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Retour</a>
+						</div>
+					</div>
+				</c:when>
+			</c:choose>
 			
 			
-			<!-- Bontons à afficher uniquement pour la maquette 3 -->
-			<div class="row">
-				<div class="col-4 offset-lg-2 col-lg-3">
-					<!-- Renvoie vers ServletInformationsUtilisateur (maquettes 4 + 12). Cette servlet permettra de faire un update des informations du user en BDD -->
-					<button name="btnEnregistrer" class="btn btn-success btn-block" type="submit">Enregistrer</button>
-				</div>
-				<div class="col-4 col-lg-3">
-					<!-- Redirige vers la ServletConnexion (maquette 1) qui permettra de faire la suppression de l'utilisateur en BDD -->
-					<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres" type="submit">Supprimer mon compte</a>
-				</div>
-				<div class="col-4 col-lg-3">
-					<!-- Redirection vers ServletInformationsUtlisateur (maquettes 4 + 12) -->
-					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Retour</a>
-				</div>
-			</div>
 		</form>
 	</div>
 </div>
