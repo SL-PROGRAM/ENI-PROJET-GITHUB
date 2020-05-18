@@ -1,5 +1,8 @@
 package fr.eni.same.bll;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.dal.DALFactory;
@@ -97,5 +100,17 @@ public class EnchereManager {
 			System.out.println("Enchere : Select ALL réalisé : " + e.toString());
 		}
 		return listeEncheres;
+	}
+	
+	public List<Enchere> selectEnchereEnCours() throws BllException {
+		List<Enchere> enchereEnCours = new ArrayList<Enchere>();
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		for(Enchere e : listeEncheres){
+			if(e.getVenteEnchere().getDateFinEncheres().after(now)) {
+				enchereEnCours.add(e);
+				System.out.println("Enchere en cours : Select ALL réalisé : " + e.toString());
+			}
+		}
+		return enchereEnCours;
 	}
 }
