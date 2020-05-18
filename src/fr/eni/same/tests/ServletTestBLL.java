@@ -60,7 +60,7 @@ public class ServletTestBLL extends HttpServlet {
 		}
 	}
 	private void testCategories() {
-		Categorie categorieSansPK = new Categorie(15,"GEGG");
+		Categorie categorieSansPK = new Categorie(15,"GEGGE");
 		try {
 			CategorieManager.getCategorieManager().insert(categorieSansPK);
 			categorieSansPK.setLibelle("ADER");
@@ -73,7 +73,7 @@ public class ServletTestBLL extends HttpServlet {
 		}
 	}
 	private void testEncheres() {
-			Utilisateur standardA = new Utilisateur(1, "aArtiste","Artiste","alain","a@laposte.net","0656467616","rue","35000","Rennes","123",155,false);
+		Utilisateur standardA = new Utilisateur(1,"pseudo","nomnom","prenom","email@plop.fr","0606060606","rue des fougères","35000","Rennes","motdepasseSecurise",155,false);
 			try {
 				UtilisateurManager.getUtilisateurManager().insert(standardA);
 				Categorie categorie = CategorieManager.getCategorieManager().select(3);

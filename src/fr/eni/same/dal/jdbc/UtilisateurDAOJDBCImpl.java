@@ -17,6 +17,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	 */
 	private static UtilisateurDAOJDBCImpl instance;
 
+	
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
 	 */
