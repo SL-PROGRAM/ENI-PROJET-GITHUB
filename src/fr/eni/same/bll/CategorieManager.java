@@ -44,38 +44,41 @@ public class CategorieManager{
     }
 	
 	public void insert(Categorie t) throws BllException {
-		String errorMsg = "";
-		errorMsg += libelleLongueurCorrect(t.getLibelle());
-		errorMsg += libelleUnique(listeCategories, t.getLibelle());
-		if(errorMsg.equalsIgnoreCase("")) {
+//		String errorMsg = "";
+//		errorMsg += libelleLongueurCorrect(t.getLibelle());
+//		errorMsg += libelleUnique(listeCategories, t.getLibelle());
+//		if(errorMsg.equalsIgnoreCase("")) {
 			try{
 				DALFactory.getCategorieDAOJdbcImpl().insert(t);
 				listeCategories.add(t);
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-		}
+//		}
+			System.out.println("Catégorie : Insertion réalisée.");
 	}
 	
 	public void update(Categorie t) throws BllException {
-		String errorMsg = "";
-		errorMsg += libelleLongueurCorrect(t.getLibelle());
-		errorMsg += libelleUnique(listeCategories, t.getLibelle());
-		if(errorMsg.equalsIgnoreCase("")) {
+//		String errorMsg = "";
+//		errorMsg += libelleLongueurCorrect(t.getLibelle());
+//		errorMsg += libelleUnique(listeCategories, t.getLibelle());
+//		if(errorMsg.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().update(t);
 				for(int i = 0; i < listeCategories.size(); i++) {
 					if(listeCategories.get(i).getNoCategorie() == t.getNoCategorie()) {
 						listeCategories.get(i).setLibelle(t.getLibelle());
+						
 					}
 				}
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-		} else {
-			throw new BllException(errorMsg);
-		}
+			System.out.println("Catégorie : Update réalisée.");
 	}
+//} else {
+//	throw new BllException(errorMsg);
+//}
 
 	public void delete(Categorie t) throws BllException {
 		try {
@@ -84,6 +87,7 @@ public class CategorieManager{
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer l'entrée.");
 		}
+		System.out.println("Catégorie : Delete réalisé.");
 	}
 
 	public Categorie select(int id) throws BllException {
@@ -96,12 +100,16 @@ public class CategorieManager{
 		if(cat == null) {
 			throw new BllException("Aucune catégorie n'a été trouvée avec cet identifiant. Avez-vous inséré des catégories en base de donnée?");
 		}
+		System.out.println("Catégorie : Select réalisé : " + cat.toString());
 		return cat;
 	}
 
 
 	
 	public List<Categorie> selectAll() throws BllException {
+		for(Categorie c : listeCategories) {
+			System.out.println("Categorie : Select All réalisé : " + c.toString());
+		}
 		return listeCategories;
 	}
 

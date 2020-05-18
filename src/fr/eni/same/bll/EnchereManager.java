@@ -44,6 +44,7 @@ public class EnchereManager {
 		try {
 			DALFactory.getEnchereDAOJdbcImpl().insert(t);
 			listeEncheres.add(t);
+			System.out.println("Enchere : Select réalisé : " + t.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -60,6 +61,7 @@ public class EnchereManager {
 					listeEncheres.get(i).setVenteEnchere(t.getVenteEnchere());
 				}
 			}
+			System.out.println("Enchere : Update réalisé : " + t.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -69,6 +71,7 @@ public class EnchereManager {
 		try {
 			DALFactory.getEnchereDAOJdbcImpl().delete(t);
 			listeEncheres.remove(t);
+			System.out.println("Enchere : Delete réalisé : " + t.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -81,6 +84,7 @@ public class EnchereManager {
 					&& listeEncheres.get(i).getVenteEnchere().getNoVente() == noVente) {
 				e = listeEncheres.get(i);
 			}
+			System.out.println("Enchere : Select réalisé : " + e.toString());
 		}
 		if(e == null) {
 			throw new BllException("Aucune enchère n'a été trouvée avec ces informations.");
@@ -89,6 +93,9 @@ public class EnchereManager {
 	}
 	
 	public List<Enchere> selectAll() throws BllException {
+		for(Enchere e : listeEncheres){
+			System.out.println("Enchere : Select ALL réalisé : " + e.toString());
+		}
 		return listeEncheres;
 	}
 }
