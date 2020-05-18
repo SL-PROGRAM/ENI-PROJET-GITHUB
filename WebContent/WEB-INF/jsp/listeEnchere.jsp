@@ -7,83 +7,95 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-	<header><%@ include file="jspf/header.jspf"%></header>
+	<%@ include file="jspf/navbar.jspf"%>
+	<br/>
 	<div class="container">
 		<div class="row">
-			<div class="col-12">
-				<p>
-					<a href="<%=request.getContextPath()%>/ServletCreerVente">Vendre
-						un article</a>
-				</p>
-				<p>
-					<a
-						href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">Mon
-						profil</a>
-				</p>
-				<p>
-					<a href="<%=request.getContextPath()%>/ServletConnexion">Déconnexion</a>
-				</p>
+
+			
+			<div class="col-12 col-lg-3 text-right d-lg-none">
+				<p class="m-0">User est connectï¿½</p>
 			</div>
-			<div class="col-12">
-				<h4>Filtres :</h4>
-				<form action="" class="offset-1">
-					<div class="form-group">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck">Mes
-								ventes</label>
+		</div>
+
+		<form action="<%=request.getContextPath()%>/ServletListeEncheres">
+			<div class="row mb-3">
+				<div class="col-12 col-lg-3">
+					<h4>Filtres :</h4>
+					<div class="offset-1">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input"
+								id="checkMesVentes"> <label class="custom-control-label"
+								for="checkMesVentes">Mes ventes</label>
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck">Mes
-								enchères en cours</label>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input"
+								id="checkMesEncheresEnCours"> <label
+								class="custom-control-label" for="checkMesEncheresEnCours">Mes
+								enchï¿½res en cours</label>
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck">Mes
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input"
+								id="checkMesAcquisitions"> <label
+								class="custom-control-label" for="checkMesAcquisitions">Mes
 								acquisitions</label>
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck">
-							<label class="form-check-label" for="gridCheck">Autres
-								enchères</label>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input"
+								id="checkAutresEncheres"> <label
+								class="custom-control-label" for="checkAutresEncheres">Autres
+								enchï¿½res</label>
 						</div>
 					</div>
-				</form>
-				<form action="">
+				</div>
+				<div class="col-12 col-lg-6">
 					<div class="form-group row">
-						<label for="inputEmail3" class="col-2 col-form-label">Catégories</label>
+						<label for="selectCategorie" class="col-2 col-form-label">Catï¿½gories</label>
 						<div class="offset-1 col-9">
-							<select class="custom-select" id="inputGroupSelect01">
+							<select class="custom-select" id="selectCategorie">
 								<option selected>Toutes</option>
-								<option value="1">Catégorie1</option>
-								<option value="2">Catégorie2</option>
+								<option value="1">Catï¿½gorie1</option>
+								<option value="2">Catï¿½gorie2</option>
 								<option value="3">Something</option>
 							</select>
 						</div>
 					</div>
-				</form>
-				<form action="<%=request.getContextPath()%>/ServletListeEncheres">
 					<div class="form-group row">
 						<div class="col-12">
 							<input type="text" class="form-control"
 								placeholder="Le nom de l'article contient">
 						</div>
 					</div>
-					<div class="form-row">
-						<div class="col-12">
-							<button type="submit" class="btn btn-primary btn-block">Rechercher</button>
-						</div>
-					</div>
-				</form>
-				<br/>
-				<form action="" method="post">
+				</div>
+				<div
+					class="col-6 col-lg-3 text-right text-lg-center d-none d-lg-block">
+					<p>User est connectï¿½</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-lg-5">
+					<!-- Redirige vers ServletListeEncheres (maquette 5). La Servlet sera l'url d'application des filtres. 
+								 Utilisation d'un selectByMotCle de vente. Rï¿½cupï¿½ration de la liste envoyï¿½e ï¿½ la jsp.  -->
+					<button type="submit" class="btn btn-primary btn-block">Rechercher</button>
+				</div>
+			</div>
+		</form>
+		<br />
 
+
+		<br />
+
+		<div class="row">
+			<div class="col-12 col-lg-6 pb-3">
+				<form action="<%=request.getContextPath()%>/ServletEncherir"
+					method="post">
 					<button class="container" type="submit">
 						<div class="row">
-
+				<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives ï¿½ la vente vers la servlet 
+					 Le vendeur de la vente est clickable. Redirige vers ServletInformationsUtilisateur Envoie des informations 
+					 relatives de l'utilsiateur ï¿½ afficher. -->
 							<div class="col-3">
-								<!-- 			Ligne 1 -->
+							<!-- Ligne 1 -->
 								<div class="col-12" style="height: 100%">
 									<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
 										src="">
@@ -93,41 +105,41 @@
 							<div class="col-9">
 								<div class="row">
 									<div class="col-6">
-									<!-- vignette de mes enchères en cours -->
+									<!-- vignette de mes enchï¿½res en cours -->
 										<a href="<%= request.getContextPath()%>/ServletEncherir">PC Gamer pour travailler</a>
 									</div>
 									<div class="col-6">
 										<p>etape2</p>
 									</div>
 
-
-									<!-- Ligne 2 -->
+							<!-- Lignes 2 et 3 -->
 									<div class="col-6">
 										<p>Prix : 210 points</p>
-										<p>Fin de l'enchère :</p>
+										<p>Fin de l'enchï¿½re :</p>
 									</div>
 
 									<div class="col-6">
 										<p>Classement : 2</p>
 										<p>10/08/2018</p>
 									</div>
-
-									<!-- Ligne 4 -->
+									
+							<!-- Ligne 4 -->
 									<div class="col-6">
 										<p>Retrait :</p>
 									</div>
 									<div class="col-6">
-										<p>10 allée des Alouettes</p>
+										<p>10 allï¿½e des Alouettes</p>
 										<p>44 800 Saint Herblain</p>
 									</div>
-
-									<!-- Ligne 5 -->
+									
+							<!-- Ligne 5 -->
 									<div class="col-6">
 										<p>Vendeur :</p>
 									</div>
 									<div class="col-6">
 										<p>
-											<a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">jojo44</a>
+											<a
+												href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">jojo44</a>
 										</p>
 									</div>
 
@@ -136,16 +148,15 @@
 						</div>
 					</button>
 				</form>
-				
-				<br/>
-				
-				<form action="" method="post">
+			</div>
 
+			<div class="col-12 col-lg-6">
+				<form action="<%=request.getContextPath()%>/ServletEncherir"
+					method="post">
 					<button class="container" type="submit">
 						<div class="row">
 
 							<div class="col-3">
-								<!-- 			Ligne 1 -->
 								<div class="col-12" style="height: 100%">
 									<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
 										src="">
@@ -163,10 +174,9 @@
 									</div>
 
 
-									<!-- Ligne 2 -->
 									<div class="col-6">
 										<p>Prix : 210 points</p>
-										<p>Fin de l'enchère :</p>
+										<p>Fin de l'enchï¿½re :</p>
 									</div>
 
 									<div class="col-6">
@@ -174,23 +184,19 @@
 										<p>10/08/2018</p>
 									</div>
 
-									<!-- Ligne 4 -->
 									<div class="col-6">
 										<p>Retrait :</p>
 									</div>
 									<div class="col-6">
-										<p>10 allée des Alouettes</p>
+										<p>10 allï¿½e des Alouettes</p>
 										<p>44 800 Saint Herblain</p>
 									</div>
 
-									<!-- Ligne 5 -->
 									<div class="col-6">
 										<p>Vendeur :</p>
 									</div>
 									<div class="col-6">
-										
-											<p>nineja</p><!-- recup mon nom -->
-										
+										<p>NineJea</p>
 									</div>
 
 								</div>
@@ -200,8 +206,10 @@
 				</form>
 			</div>
 		</div>
-
 	</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 </body>
 </html>

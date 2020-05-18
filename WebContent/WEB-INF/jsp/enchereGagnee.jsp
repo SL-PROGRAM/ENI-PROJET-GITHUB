@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Bravo, vous avez gagnï¿½ l'enchï¿½re !</title>
+<title>Bravo, vous avez gagné l'enchère !</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -10,12 +10,14 @@
 <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
-	<header><%@ include file="jspf/header.jspf"%></header>
 	<div class="container">
-		<%@ include file="jspf/header.jspf" %>
+		<header>
+			<%@ include file="jspf/header.jspf"%>
+		</header>
 		<div class="row">
 			<div class="col-12 col-lg-8 offset-lg-4 text-center">
-				<h2>Vous avez remportï¿½ l'enchï¿½re</h2>
+				<h2>Vous avez remporté l'enchère</h2>
+				<br/>
 			</div>
 		</div>
 		<div class="row">
@@ -23,9 +25,10 @@
 				<div class="col-12 d-block d-lg-none pl-0">
 					<h3>PC Gamer pour travailler</h3>
 				</div>
-				<div class="col-lg-12 d-none d-lg-block">
+				<div class="col-12 col-lg-12 text-center">
 					<img alt="Image descriptve du produit en vente" src="././img/no-stopping.png">
 				</div>
+				<br/>
 			</div>
 
 			<div class="col-12 col-lg-9">
@@ -33,9 +36,7 @@
 					<div class="col-lg-12 d-none d-lg-block">
 						<h3>PC Gamer pour travailler</h3>
 					</div>
-					<div class="col-12 d-block d-lg-none text-center">
-						<img alt="Image descriptve du produit en vente" src="././img/no-stopping.png" />
-					</div>
+
 					<div class="col-lg-3 d-none d-lg-block">
 						<p>Description :</p>
 					</div>
@@ -69,7 +70,7 @@
 					</div>
 					<div class="col-6 col-lg-3">
 						<p>Meilleure offre :</p>
-						<p>Mise ï¿½ prix :</p>
+						<p>Mise à prix :</p>
 					</div>
 					<div class="col-6 col-lg-9">
 						<p>210 pts par jojo44</p>
@@ -79,7 +80,7 @@
 					<div class="col-12">
 						<fieldset class="border border-dark p-2 d-block d-lg-none">
 							<legend class="w-auto">Retrait</legend>
-							<p class="mb-0">10 allï¿½e des Alouettes</p>
+							<p class="mb-0">10 allée des Alouettes</p>
 							<p>44 800 Saint Herblain</p>
 							<div class="row">
 								<div class="col-6">
@@ -100,7 +101,7 @@
 						<p>Retrait :</p>
 					</div>
 					<div class="col-lg-9 d-none d-lg-block">
-						<p class="mb-0">10 allï¿½e des Alouettes</p>
+						<p class="mb-0">10 allée des Alouettes</p>
 						<p>44 800 Saint Herblain</p>
 					</div>
 					<div class="col-lg-3 d-none d-lg-block">
@@ -108,7 +109,8 @@
 						<p>Tel :</p>
 					</div>
 					<div class="col-lg-9 d-none d-lg-block">
-						<!-- Rï¿½cupï¿½rer nom de l'utilisateur (vendeur) ï¿½ afficher -->
+						<!-- Récupérer nom de l'utilisateur (vendeur) à afficher -->
+						<!-- Redirige vers ServletInformationsUtilisateur (maquette 4 + 12) -->
 						<a class="btn btn-success btn-block" role="button" type="submit"
 							href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">
 							jojo44 </a>
@@ -116,6 +118,7 @@
 					</div>
 					<br />
 					<div class="col-3 col-lg-3">
+						<!-- Redirige vers ServletListeEncheres (maquette 5) -->
 						<a class="btn btn-danger btn-block" role="button" type="submit"
 							href="<%=request.getContextPath()%>/ServletListeEncheres">
 							Retour </a>
