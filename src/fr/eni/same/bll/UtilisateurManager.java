@@ -27,7 +27,7 @@ public class UtilisateurManager extends AdresseUtils  {
 	private final int TELEPHONE_LONGUEUR_MIN = 10;
 	private final int MOT_DE_PASSE_LONGUEUR_MAX = 30;
 	private final int MOT_DE_PASSE_LONGEUR_MIN = 4;
-	private final String EMAIL_REGEX = "^(.+)@(.+)$";
+	private final String EMAIL_REGEX = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)";
 	private static UtilisateurManager instance;
 	private List<Utilisateur> listeUtilisateurs;
 
