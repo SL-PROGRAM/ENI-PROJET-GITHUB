@@ -1,5 +1,6 @@
 package fr.eni.same.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.same.bo.Categorie;
@@ -21,7 +22,7 @@ public class CategorieManager{
 	private CategorieManager() {
 		try {
 			if(listeCategories == null) {
-				listeCategories = selectAll();				
+				listeCategories = selectAll();
 			}
 		} catch (BllException e) {
 			e.printStackTrace();
@@ -39,24 +40,20 @@ public class CategorieManager{
         }
         return instance;
     }
-    
 	
 	public void insert(Categorie t) throws BllException {
 		String errorMsg = "";
 		errorMsg += libelleLongueurCorrect(t.getLibelle());
 		errorMsg += libelleUnique(listeCategories, t.getLibelle());
 		if(errorMsg.equalsIgnoreCase("")) {
-			try {
+			try{
 				DALFactory.getCategorieDAOJdbcImpl().insert(t);
-				listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+				listeCategories.add(t);
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-		}else {
-			throw new BllException(errorMsg);
 		}
 	}
-
 	
 	public void update(Categorie t) throws BllException {
 		String errorMsg = "";
@@ -65,7 +62,11 @@ public class CategorieManager{
 		if(errorMsg.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().update(t);
-				listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+				for(int i = 0; i < listeCategories.size(); i++) {
+					if(listeCategories.get(i).getNoCategorie() == t.getNoCategorie()) {
+						listeCategories.get(i).setLibelle(t.getLibelle());
+					}
+				}
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -74,36 +75,46 @@ public class CategorieManager{
 		}
 	}
 
-	
 	public void delete(Categorie t) throws BllException {
 		try {
 			DALFactory.getCategorieDAOJdbcImpl().delete(t);
-			listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+			for(int i = 0; i < listeCategories.size(); i++) {
+				if(listeCategories.get(i).getNoCategorie() == t.getNoCategorie()) {
+					listeCategories.remove(i);
+				}
+			}
 		} catch (DALException e) {
-			e.printStackTrace();
+			throw new BllException("Impossible de supprimer l'entrée.");
 		}
 	}
 
-
-	
 	public Categorie select(int id) throws BllException {
-		try {
-			return DALFactory.getCategorieDAOJdbcImpl().select(id);
-		} catch (DALException e) {
-			e.printStackTrace();
+		Categorie cat = null;
+		for(int i = 0; i < listeCategories.size(); i++) {
+			if(listeCategories.get(i).getNoCategorie() == id) {
+				cat = listeCategories.get(i);
+			}
 		}
-		return null;
+		if(cat == null) {
+			throw new BllException("Aucune catégorie n'a été trouvée avec cet identifiant. Avez-vous inséré des catégories en base de donnée?");
+		}
+		return cat;
 	}
 
 
 	
 	public List<Categorie> selectAll() throws BllException {
-		try {
-			listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
-		} catch (DALException e) {
-			e.printStackTrace();
+		if(listeCategories != null) {
+			return listeCategories;
+		} else {
+			List<Categorie> tempList = new ArrayList<Categorie>();
+			try {
+				tempList = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
+			return tempList;			
 		}
-		return listeCategories;
 	}
 
 	//***********************************************************************************************//
@@ -114,7 +125,6 @@ public class CategorieManager{
 	
 	public String libelleUnique(List<Categorie> list, String libelle) throws BllException {
 		String resultat = "";
-		boolean isUnique = true;
 		for (Categorie categorie : list) {
 			if (categorie.getLibelle() == libelle) {
 				resultat = "Cette catégorie existe déjà";
