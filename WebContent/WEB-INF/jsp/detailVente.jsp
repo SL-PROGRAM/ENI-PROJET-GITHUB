@@ -13,8 +13,8 @@
 </head>
 <body>
 
-	<header><%@include file="jspf/header.jspf"%></header>
-
+<div class="col container">
+	<%@include file="jspf/header.jspf"%>
 	<div class="container">
 	
 	
@@ -124,6 +124,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>
 

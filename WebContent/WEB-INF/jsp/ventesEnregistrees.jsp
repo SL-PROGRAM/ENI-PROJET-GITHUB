@@ -10,13 +10,9 @@
 
 </head>
 <body>
-
+<div class="col container">
+<%@ include file="jspf/header.jspf" %>
 <div class="container">
-				<div class="row">
-					<div class="col-12">
-						<h3>Voici vos ventes enregistrées</h3>
-					</div>
-				</div>
 				<br/>
 				<form action="<%= request.getContextPath() %>/ServletCreerVente" method="post">
 
@@ -77,7 +73,7 @@
 					</div>
 				</div>
 				
-
+</div>
 
 </div>
 

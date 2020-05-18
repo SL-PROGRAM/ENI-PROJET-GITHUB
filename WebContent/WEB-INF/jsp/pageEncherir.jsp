@@ -13,9 +13,9 @@
 <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
-	
+	<div class="col container">
+	<%@ include file="jspf/header.jspf" %>
 	<div class="container">
-			<%@ include file="jspf/header.jspf" %>
 		<div class="row">
 			<div class="col-12 col-lg-8 offset-lg-4 text-center">
 				<h1>Détail vente</h1>
@@ -94,6 +94,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	
 </body>
 </html>
