@@ -31,6 +31,7 @@ public class CategorieManager{
     /**
      * methode Get pour récupérer l'instance et la créer si elle n'existe pas
      * @return
+     * @throws DALException 
      */
     public static synchronized CategorieManager getCategorieManager () {
         if(instance == null){

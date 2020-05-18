@@ -15,14 +15,22 @@ public class VenteManager  {
 	private final int DESCRIPTION_LONGUEUR_MAX = 300;
 	private final int DESCRIPTION_LONGUEUR_MIN = 5;
 	private static VenteManager instance;
-	private static List<Vente> listVentes = new ArrayList<Vente>();
+	private List<Vente> listVentes;
 
 	
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 * @throws BllException 
 	 */
-    private VenteManager() {
+    private VenteManager() throws BllException {
+    	if(listVentes == null) {
+    		try {
+				listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
+			} catch (DALException e) {
+				throw new BllException("selectAll");
+			}
+    	}			
 	}
 
     /**
@@ -32,8 +40,7 @@ public class VenteManager  {
      */
     public static synchronized  VenteManager getVenteManager () throws BllException {
         if(instance == null){
-            instance = new VenteManager();
-            listVentes = VenteManager.getVenteManager().selectAll();
+            instance = new VenteManager();      
         }
         return instance;
     }
@@ -44,11 +51,15 @@ public class VenteManager  {
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
-		try {
-			DALFactory.getVenteDAOJdbcImpl().insert(t);
-		} catch (DALException e) {
-			throw new BllException("Impossible d'inserer en base de donnée la vente");
+		else {
+			try {
+				DALFactory.getVenteDAOJdbcImpl().insert(t);
+				listVentes.add(t);
+			} catch (DALException e) {
+				throw new BllException("Impossible d'inserer en base de donnée la vente");
+			}
 		}
+		
 	}
 
 	
@@ -57,18 +68,48 @@ public class VenteManager  {
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
-		try {
-			DALFactory.getVenteDAOJdbcImpl().insert(t);
-		} catch (DALException e) {
-			throw new BllException("Impossible de modifier en base de donnée la vente");
+		else {
+			try {
+				DALFactory.getVenteDAOJdbcImpl().update(t);
+				for (int i = 0; i < listVentes.size(); i++) {
+					if(listVentes.get(i).getNoVente() == t.getNoVente()) {
+						listVentes.get(i).setCategorie(t.getCategorie());
+						listVentes.get(i).setDateFinEncheres(t.getDateFinEncheres());
+						listVentes.get(i).setDescription(t.getDescription());
+						listVentes.get(i).setMiseAPrix(t.getMiseAPrix());
+						listVentes.get(i).setNomArticle(t.getNomArticle());
+						listVentes.get(i).setPrixVente(t.getMiseAPrix());
+						listVentes.get(i).setUtilisateurAcheteur(t.getUtilisateurAcheteur());
+						listVentes.get(i).setUtilisateurVendeur(t.getUtilisateurVendeur());
+					}
+				}
+			} catch (DALException e) {
+				throw new BllException("Impossible de modifier en base de donnée la vente");
+			}
 		}
+		
 	}
 	
 
 	
-	public Vente updateAcheteur(Vente t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Vente updateAcheteur(Vente t) throws BllException {
+		String msgErreur = controleUpdateAndInsert(t);
+		if (!msgErreur.equals("")){
+			throw new BllException(msgErreur);
+		}
+		else {
+			try {
+				DALFactory.getVenteDAOJdbcImpl().updateAcheteur(t);
+				for (int i = 0; i < listVentes.size(); i++) {
+					if(listVentes.get(i).getNoVente() == t.getNoVente()) {
+						listVentes.get(i).setUtilisateurAcheteur(t.getUtilisateurAcheteur());
+					}
+				}
+			} catch (DALException e) {
+				throw new BllException("Impossible de modifier l'acheteur en base de donnée la vente");
+			}
+		}		
+		return t;
 	}
 
 	
@@ -77,37 +118,44 @@ public class VenteManager  {
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
-		try {
-			DALFactory.getVenteDAOJdbcImpl().delete(t);
-		} catch (DALException e) {
-			throw new BllException("Impossible de supprimer en base de donnée la vente");
+		else {
+			try {
+				DALFactory.getVenteDAOJdbcImpl().delete(t);
+				for (int i = 0; i < listVentes.size(); i++) {
+					if(listVentes.get(i).getNoVente() == t.getNoVente()) {
+						listVentes.remove(i);
+					}
+				}
+			}
+			catch (DALException e) {
+				throw new BllException("Impossible de supprimer en base de donnée la vente");
+			}
 		}
+		
 		
 	}
 
 	
 	public Vente select(int id) throws BllException {
 		String msgErreur = noVenteNull(id);
+		Vente vente = null;
 		if(!msgErreur.equals("")) {
 			throw new BllException(msgErreur);
-		};
-		Vente vente = null;
-		try {
-			vente = DALFactory.getVenteDAOJdbcImpl().select(id);
-		} catch (DALException e) {
-			throw new BllException("Impossible de recuperer en base de donnée la vente");
+		}
+		else {		
+			for (int i = 0; i < listVentes.size(); i++) {
+				if(listVentes.get(i).getNoVente() == id) {
+					vente = listVentes.get(i);
+				}
+			}
+			if(vente == null) {
+				throw new BllException("La vente ciblée n'existe pas");
+			}
 		}
 		return vente;
 	}
-
 	
 	public List<Vente> selectAll() throws BllException {
-		List<Vente> listVentes = new ArrayList<Vente>();
-		try {
-			listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
-		} catch (DALException e) {
-			throw new BllException("Impossible de recupérer en base de donnée les ventes");
-		}
 		return listVentes;
 	}
 	
