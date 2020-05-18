@@ -168,10 +168,10 @@ public class UtilisateurManager extends AdresseUtils  {
 	
 	public String pseudoLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
-		if(!FonctionGenerique.isLongeurMax(libelle, PSEUDO_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(libelle, PSEUDO_LONGUEUR_MAX)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ PSEUDO_LONGUEUR_MAX + "caractères\n");
 		}
-		if(!FonctionGenerique.isLongeurMax(libelle, PSEUDO_LONGUEUR_MIN)) {
+		if(!FonctionGenerique.isLongueurMin(libelle, PSEUDO_LONGUEUR_MIN)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ PSEUDO_LONGUEUR_MIN + "caractères\n");
 		}
 		return libelle;				
@@ -186,10 +186,10 @@ public class UtilisateurManager extends AdresseUtils  {
 	public String nomLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
 		if(libelle != null) {
-			if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MAX)) {
+			if(!FonctionGenerique.isLongueurMax(libelle, NOM_LONGUEUR_MAX)) {
 				msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ NOM_LONGUEUR_MAX + "caractères\n");
 			}
-			if(!FonctionGenerique.isLongeurMax(libelle, NOM_LONGUEUR_MIN)) {
+			if(!FonctionGenerique.isLongueurMin(libelle, NOM_LONGUEUR_MIN)) {
 				msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ NOM_LONGUEUR_MIN + "caractères\n");
 			}			
 		}
@@ -200,10 +200,10 @@ public class UtilisateurManager extends AdresseUtils  {
 	
 	public String prenomLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
-		if(!FonctionGenerique.isLongeurMax(libelle, PRENOM_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(libelle, PRENOM_LONGUEUR_MAX)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ PRENOM_LONGUEUR_MAX + "caractères\n");
 		}
-		if(!FonctionGenerique.isLongeurMax(libelle, PRENOM_LONGUEUR_MIN)) {
+		if(!FonctionGenerique.isLongueurMin(libelle, PRENOM_LONGUEUR_MIN)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ PRENOM_LONGUEUR_MIN + "caractères\n");
 		}
 		return libelle;				
@@ -214,10 +214,10 @@ public class UtilisateurManager extends AdresseUtils  {
 		String msgErreur = "";
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(email);
-		if(!FonctionGenerique.isLongeurMax(email, EMAIL_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(email, EMAIL_LONGUEUR_MAX)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ EMAIL_LONGUEUR_MAX + "caractères\n");
 		}
-		if(!FonctionGenerique.isLongeurMax(email, EMAIL_LONGUEUR_MIN)) {
+		if(!FonctionGenerique.isLongueurMin(email, EMAIL_LONGUEUR_MIN)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ EMAIL_LONGUEUR_MIN+ "caractères\n");
 		}			
 		if(!matcher.matches()) {
@@ -230,10 +230,10 @@ public class UtilisateurManager extends AdresseUtils  {
 	
 	public String telephoneLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
-		if(!FonctionGenerique.isLongeurMax(libelle, TELEPHONE_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(libelle, TELEPHONE_LONGUEUR_MAX)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ TELEPHONE_LONGUEUR_MAX+ "caractères\n");
 		}
-		if(!FonctionGenerique.isLongeurMax(libelle, TELEPHONE_LONGUEUR_MIN)) {
+		if(!FonctionGenerique.isLongueurMin(libelle, TELEPHONE_LONGUEUR_MIN)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ TELEPHONE_LONGUEUR_MIN + "caractères\n");
 		}
 		return libelle;				
@@ -242,10 +242,10 @@ public class UtilisateurManager extends AdresseUtils  {
 	
 	public String motDePasseValide(String email) throws BllException {
 		String msgErreur = "";
-		if(!FonctionGenerique.isLongeurMax(email, MOT_DE_PASSE_LONGUEUR_MAX)) {
+		if(!FonctionGenerique.isLongueurMax(email, MOT_DE_PASSE_LONGUEUR_MAX)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur maximum : "+ MOT_DE_PASSE_LONGUEUR_MAX+ "caractères\n");
 		}
-		if(!FonctionGenerique.isLongeurMax(email, MOT_DE_PASSE_LONGEUR_MIN)) {
+		if(!FonctionGenerique.isLongueurMin(email, MOT_DE_PASSE_LONGEUR_MIN)) {
 			msgErreur = ("Longeur du nom trop importante - Longueur minimum : "+ MOT_DE_PASSE_LONGEUR_MIN+ "caractères\n");
 		}
 		return email;			

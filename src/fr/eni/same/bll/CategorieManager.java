@@ -13,11 +13,19 @@ public class CategorieManager{
 	private final int LIBELLE_LONGUEUR_MAX = 30;
 	private final int LIBELLE_LONGUEUR_MIN = 4;
 	private static CategorieManager instance;
+	private List<Categorie> listeCategories;
 
 	/**
 	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
 	 */
-    private CategorieManager() {
+	private CategorieManager() {
+		try {
+			if(listeCategories == null) {
+				listeCategories = selectAll();				
+			}
+		} catch (BllException e) {
+			e.printStackTrace();
+		}
 	}
 
     /**
@@ -33,43 +41,68 @@ public class CategorieManager{
     
 	
 	public void insert(Categorie t) throws BllException {
-		if(!FonctionGenerique.isLongeurMax(t.getLibelle(), LIBELLE_LONGUEUR_MAX)) {
-			throw new BllException("Le libellé est trop court");
-		} else if(!FonctionGenerique.isLongeurMin(t.getLibelle(), LIBELLE_LONGUEUR_MIN)){
-			throw new BllException("Le libellé est trop long");
-		} else {
+		String errorMsg = "";
+		errorMsg += libelleLongueurCorrect(t.getLibelle());
+		errorMsg += libelleUnique(listeCategories, t.getLibelle());
+		if(errorMsg.equalsIgnoreCase("")) {
 			try {
 				DALFactory.getCategorieDAOJdbcImpl().insert(t);
+				listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
 			} catch (DALException e) {
-				throw new BllException("Erreur d'enregistrement dans la base de donnée");
-			}			
+				e.printStackTrace();
+			}
+		}else {
+			throw new BllException(errorMsg);
 		}
 	}
 
 	
 	public void update(Categorie t) throws BllException {
-		// TODO Auto-generated method stub
-		
+		String errorMsg = "";
+		errorMsg += libelleLongueurCorrect(t.getLibelle());
+		errorMsg += libelleUnique(listeCategories, t.getLibelle());
+		if(errorMsg.equalsIgnoreCase("")) {
+			try {
+				DALFactory.getCategorieDAOJdbcImpl().update(t);
+				listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
+		}else {
+			throw new BllException(errorMsg);
+		}
 	}
 
 	
 	public void delete(Categorie t) throws BllException {
-		// TODO Auto-generated method stub
-		
+		try {
+			DALFactory.getCategorieDAOJdbcImpl().delete(t);
+			listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 	}
 
 
 	
 	public Categorie select(int id) throws BllException {
-		// TODO Auto-generated method stub
+		try {
+			return DALFactory.getCategorieDAOJdbcImpl().select(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 
 	
 	public List<Categorie> selectAll() throws BllException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return listeCategories;
 	}
 
 	//***********************************************************************************************//
@@ -78,25 +111,28 @@ public class CategorieManager{
 	
 	
 	
-	public void libelleUnique(List<Categorie> list, String libelle) throws BllException {
+	public String libelleUnique(List<Categorie> list, String libelle) throws BllException {
+		String resultat = "";
 		boolean isUnique = true;
 		for (Categorie categorie : list) {
-			if(categorie.getLibelle() == libelle) {
-				isUnique = false;
-				throw new BllException("Cette Catégorie existe déja");
+			if (categorie.getLibelle() == libelle) {
+				resultat = "Cette catégorie existe déjà";
 			}
 		}
+		return resultat;
 	}
 
 
 	
-	public void libelleLongueurCorrect(String libelle) {
-		// TODO Auto-generated method stub
-		
+	public String libelleLongueurCorrect(String libelle) {
+		String resultat = "";
+		if(!FonctionGenerique.isLongueurMax(libelle, LIBELLE_LONGUEUR_MAX)) {
+			resultat += "Le libellé est trop grand. Longueur maximum : " + LIBELLE_LONGUEUR_MAX;
+		}
+		if(!FonctionGenerique.isLongueurMin(libelle, LIBELLE_LONGUEUR_MIN));
+		{
+			resultat += "Le libellé est trop petit. Longueur minimum : " + LIBELLE_LONGUEUR_MIN;
+		}
+		return resultat;
 	}
-
-
-
-	
-
 }
