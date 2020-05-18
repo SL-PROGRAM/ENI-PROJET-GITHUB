@@ -13,9 +13,9 @@
 	crossorigin="anonymous">
 </head>
 <body>
-
+<div class="col container">
+	<%@include file="jspf/header.jspf"%>
 	<div class="container">
-		<%@include file="jspf/header.jspf"%>
 	<!-- Titre à modifier en fonction de la maquette 2 ou 3 -->
 		<div class="row">
 			<div class="col-12 text-center">
@@ -183,5 +183,6 @@
 			</div>
 		</form>
 	</div>
+</div>
 </body>
 </html>

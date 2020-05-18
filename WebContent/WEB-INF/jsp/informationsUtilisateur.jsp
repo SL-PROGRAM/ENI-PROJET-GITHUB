@@ -12,14 +12,10 @@
 
 	</head>
 	<body>
-
+	<div class="col container">
+		<%@ include file="jspf/header.jspf" %>
 		<div class="container">
-		
-			<header class="row">
-				<div class="col-12">
-					<h3>TrocEncheres.org</h3>
-				</div>
-			</header>
+			
 		
 				<div class ="row">
 					<div class="col-12 text-center">
@@ -64,7 +60,7 @@
 		</div>
 		
 		
-	
+	</div>
 		
 		
 		
