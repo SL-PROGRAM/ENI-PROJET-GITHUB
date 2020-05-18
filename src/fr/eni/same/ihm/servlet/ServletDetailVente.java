@@ -1,6 +1,12 @@
 package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,7 +35,13 @@ public class ServletDetailVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Vente vente = (Vente) request.getAttribute("vente");
+		Timestamp dateFinEnchere = vente.getDateFinEncheres();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String heureServer = format.format(GregorianCalendar.getInstance().getTime());
+		
 		request.setAttribute("vente", vente);
+		request.setAttribute("heureServer", heureServer);
+		request.setAttribute("dateFinEnchere", dateFinEnchere);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 		rd.forward(request, response);
