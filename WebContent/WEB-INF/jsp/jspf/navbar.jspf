@@ -14,27 +14,31 @@
 		<div class="collapse navbar-collapse d-lg-flex justify-content-end"
 			id="navbarNav">
 			<ul class="navbar-nav ">
-			<!-- Redirige vers ServletCreerVente (maquette 11)-->
-				<li class="nav-item active px-3"><a
-					href="<%=request.getContextPath()%>/ServletCreerVente">Vendre
-						un article</a></li>
-			<!-- Redirige vers ServletInformationsUtilisateur (maquettes 4 + 12)-->
-				<li class="nav-item px-3"><a
-					href="<%=request.getContextPath()%>/ServletModificationInformationsUtilisateur">Mon
-						profil</a></li>
-			<!-- Redirige vers ServletListeEncheres (maquette 5) avec affichage "déconnecté" -->
-				<li class="nav-item px-3"><a
-					href="<%=request.getContextPath()%>/ServletConnexion">Déconnexion</a></li>
-			<!-- Affichage "déconnecté" -->
-			<!-- Redirige vers ServletConnexion (maquette 1) -->
-				<li class="nav-item px-3"><a
-					href="<%=request.getContextPath()%>/ServletConnexion">Se
-						connecter</a></li>
-			<!-- Affichage "déconnecté"-->
-			<!-- Redirige vers ServletModificationInformationsUtilisateur (maquettes 2 + 3) -->
-				<li class="nav-item px-3"><a
-					href="<%=request.getContextPath()%>/ServletModificationInformationsUtilisateur">Créer
-						un compte</a></li>
+				<c:if test="${!empty session }">
+				<!-- Redirige vers ServletCreerVente (maquette 11)-->
+					<li class="nav-item active px-3"><a
+						href="<%=request.getContextPath()%>/ServletCreerVente">Vendre
+							un article</a></li>
+				<!-- Redirige vers ServletInformationsUtilisateur (maquettes 4 + 12)-->
+					<li class="nav-item px-3"><a
+						href="<%=request.getContextPath()%>/ServletModificationInformationsUtilisateur">Mon
+							profil</a></li>
+				<!-- Redirige vers ServletListeEncheres (maquette 5) avec affichage "déconnecté" -->
+					<li class="nav-item px-3"><a
+						href="<%=request.getContextPath()%>/ServletConnexion">Déconnexion</a></li>
+				</c:if>	
+				<c:if test="${empty session }">
+				<!-- Affichage "déconnecté" -->
+				<!-- Redirige vers ServletConnexion (maquette 1) -->
+					<li class="nav-item px-3"><a
+						href="<%=request.getContextPath()%>/ServletConnexion">Se
+							connecter</a></li>
+				<!-- Affichage "déconnecté"-->
+				<!-- Redirige vers ServletModificationInformationsUtilisateur (maquettes 2 + 3) -->
+					<li class="nav-item px-3"><a
+						href="<%=request.getContextPath()%>/ServletModificationInformationsUtilisateur">Créer
+							un compte</a></li>
+				</c:if>		
 			</ul>
 		</div>
 	</nav>
