@@ -16,7 +16,7 @@
 					</div>
 				</div>
 				<br/>
-				<form action="<%= request.getContextPath() %>/ServletDetailVente" method="post">
+				<form action="<%= request.getContextPath() %>/ServletCreerVente" method="post">
 
 					<button class="container" type="submit">
 						<div class="row">
