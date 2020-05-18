@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 	<div class="col container">
 		<%@ include file="jspf/header.jspf" %>
 		<div class="container">
-			<form action="<%= request.getContextPath()%>/ServletListeEncheres" method="post">
+			<form action="<%= request.getContextPath()%>/ServletConnexion" method="post">
 				<div class="form-group row">
 					<label for="identifiant" class="col-4 col-form-label offset-lg-3 col-lg-2">Identifiant : </label>
 					<div class="col-8 col-lg-4">
