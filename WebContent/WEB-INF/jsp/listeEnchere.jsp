@@ -32,6 +32,11 @@
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
+								id="checkMesVentesEnregistrees"> <label
+								class="custom-control-label" for="checkMesVentesEnregistrees">Mes ventes enregistrées</label>
+						</div>
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input"
 								id="checkMesEncheresEnCours"> <label
 								class="custom-control-label" for="checkMesEncheresEnCours">Mes
 								enchères en cours</label>
