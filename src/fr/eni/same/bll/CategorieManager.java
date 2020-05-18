@@ -72,7 +72,7 @@ public class CategorieManager{
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			throw new BllException(errorMsg);
 		}
 	}
@@ -80,11 +80,7 @@ public class CategorieManager{
 	public void delete(Categorie t) throws BllException {
 		try {
 			DALFactory.getCategorieDAOJdbcImpl().delete(t);
-			for(int i = 0; i < listeCategories.size(); i++) {
-				if(listeCategories.get(i).getNoCategorie() == t.getNoCategorie()) {
-					listeCategories.remove(i);
-				}
-			}
+			listeCategories.remove(t);
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer l'entrée.");
 		}
