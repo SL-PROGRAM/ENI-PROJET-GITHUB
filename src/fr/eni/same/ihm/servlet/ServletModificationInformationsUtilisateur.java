@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.same.bo.Utilisateur;
+
 /**
  * Servlet implementation class ServletCreerCompte
  */
@@ -40,8 +42,33 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+		//recup infos champs pour création compte:
+		
+		String pseudo = request.getParameter("txtPseudo");
+		String nom = request.getParameter("txtNom");
+		String prenom = request.getParameter("txtPrenom");
+		String email = request.getParameter("txtEmail");
+		String telephone = request.getParameter("txtTelephone");
+		String rue = request.getParameter("txtRue");
+		String codPostal = request.getParameter("txtCodePostal");
+		String ville = request.getParameter("txtVille");
+		String mdp = request.getParameter("txtMotDePasse");
+		String confirmation = request.getParameter("txtConfirmation");
+		
+		
+		//creation utilisateur
+//		Utilisateur newUtilisateur = new Utilisateur();
+//		
+//		if(condition: not empty & pseudoUnique) {
+//			newUtilisateur.setPseudo(pseudo);
+//		}
+//		if(condition: not empty ) {
+//			newUtilisateur.setPrenom(prenom);
+//		}
+//		if(condition: not empty ) {
+//			newUtilisateur.setNom(nom);
+//		}
+	}//fin doPost
 
 	
 	
