@@ -19,9 +19,15 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page permettant à l'utilsiateur de modifier ses informations ou de créer son compte (modificationInformationsUtilisateur.jsp)
-	 * doPost : Récupération desi nformations de l'utilisateur :
-	 * 			1- Déterminer si l'utilisateur créé un compte 
-	 * 			2- Si l'utilsiateur est déjà connecté grâce à une session alors la jsp affichera la partie de modification des informations du compte existant
+	 *		   Récupération des informations de l'utilisateur :
+	 * 			   1- Déterminer si l'utilisateur créé un compte 
+	 * 			   2- Si l'utilsiateur est déjà connecté grâce à une session alors la jsp affichera la partie de modification des informations du compte existant
+	 * 
+	 * doPost : Récupération des informations du formulaire. 
+	 * 				- Dans le cas de la création de compte, l'utilisateur est redirigé vers la page connexion
+	 * 				- Dans le cas de modification des informations de compte, l'utilisateur est redirigé vers 
+	 * 				  cette même page (modificationsInformationsUtilisateur.jsp)
+	 * 			
 	 * 
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 2 et 3
 	 */
