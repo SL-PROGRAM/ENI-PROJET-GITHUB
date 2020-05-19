@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +25,7 @@
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="col-12 d-block d-lg-none pl-0">
-					<h3>PC Gamer pour travailler</h3>
+					<h3>${vente.nomArticle }</h3>
 				</div>
 				<div class="col-12 col-lg-12 text-center">
 					<img alt="Image descriptve du produit en vente" src="././img/no-stopping.png">
@@ -35,54 +36,29 @@
 			<div class="col-12 col-lg-9">
 				<div class="row">
 					<div class="col-lg-12 d-none d-lg-block">
-						<h3>PC Gamer pour travailler</h3>
+						<h3>${vente.nomArticle }</h3>
 					</div>
 
 					<div class="col-lg-3 d-none d-lg-block">
 						<p>Description :</p>
 					</div>
 					<div class="col-lg-9 d-none d-lg-block">
-						<p>Insï¿½rer la description voulue. Exsistit autem hoc loco
-							quaedam quaestio subdifficilis, num quando amici novi, digni
-							amicitia, veteribus sint anteponendi, ut equis vetulis teneros
-							anteponere solemus. Indigna homine dubitatio! Non enim debent
-							esse amicitiarum sicut aliarum rerum satietates; veterrima
-							quaeque, ut ea vina, quae vetustatem ferunt, esse debet
-							suavissima; verumque illud est, quod dicitur, multos modios salis
-							simul edendos esse, ut amicitiae munus expletum sit. Quid enim
-							tam absurdum quam delectari multis inanimis rebus, ut honore, ut
-							gloria, ut aedificio, ut vestitu cultuque corporis, animante
-							virtute praedito, eo qui vel amare vel, ut ita dicam, redamare
-							possit, non admodum delectari? Nihil est enim remuneratione
-							benevolentiae, nihil vicissitudine studiorum officiorumque
-							iucundius. Et hanc quidem praeter oppida multa duae civitates
-							exornant Seleucia opus Seleuci regis, et Claudiopolis quam
-							deduxit coloniam Claudius Caesar. Isaura enim antehac nimium
-							potens, olim subversa ut rebellatrix interneciva aegre vestigia
-							claritudinis pristinae monstrat admodum pauca. Sed tamen haec cum
-							ita tutius observentur, quidam vigore artuum inminuto rogati ad
-							nuptias ubi aurum dextris manibus cavatis offertur, inpigre vel
-							usque Spoletium pergunt. haec nobilium sunt instituta. Unde
-							Rufinus ea tempestate praefectus praetorio ad discrimen trusus
-							est ultimum. ire enim ipse compellebatur ad militem, quem
-							exagitabat inopia simul et feritas, et alioqui coalito more in
-							ordinarias dignitates asperum semper et saevum, ut satisfaceret
-							atque monstraret, quam ob causam annonae convectio sit impedita.</p>
+						<p>${vente.description }</p>
 					</div>
 					<div class="col-6 col-lg-3">
 						<p>Meilleure offre :</p>
 						<p>Mise à prix :</p>
 					</div>
 					<div class="col-6 col-lg-9">
-						<p>210 pts par jojo44</p>
-						<p>175 points</p>
+						<p>${vente.prixVente } par ${vente.utilisateurAcheteur.pseudo }</p>
+						<p>${vente.miseAPrix } points</p>
 					</div>
 					<!-- Infos retrait pour version mobile -->
 					<div class="col-12">
 						<fieldset class="border border-dark p-2 d-block d-lg-none">
 							<legend class="w-auto">Retrait</legend>
-							<p class="mb-0">10 allée des Alouettes</p>
-							<p>44 800 Saint Herblain</p>
+							<p class="mb-0">${vente.utilisateurVendeur.rue }</p>
+							<p>${vente.utilisateurVendeur.codePostal } ${vente.utilisateurVendeur.ville }</p>
 							<div class="row">
 								<div class="col-6">
 									<p>Vendeur :</p>
@@ -90,9 +66,9 @@
 								</div>
 								<div class="col-6">
 									<p>
-										<a href="">jojo44</a>
+										<a href="">${vente.utilisateurVendeur.pseudo }</a>
 									</p>
-									<p>0606060606</p>
+									<p>${vente.utilisateurVendeur.telephone }</p>
 								</div>
 							</div>
 						</fieldset>
@@ -102,8 +78,8 @@
 						<p>Retrait :</p>
 					</div>
 					<div class="col-lg-9 d-none d-lg-block">
-						<p class="mb-0">10 allée des Alouettes</p>
-						<p>44 800 Saint Herblain</p>
+						<p class="mb-0">${vente.utilisateurVendeur.rue }</p>
+						<p>${vente.utilisateurVendeur.codePostal } ${vente.utilisateurVendeur.ville }</p>
 					</div>
 					<div class="col-lg-3 d-none d-lg-block">
 						<p>Vendeur :</p>
@@ -114,8 +90,8 @@
 						<!-- Redirige vers ServletInformationsUtilisateur (maquette 4 + 12) -->
 						<a class="btn btn-success btn-block" role="button" type="submit"
 							href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">
-							jojo44 </a>
-						<p>06 06 06 06 06</p>
+							${vente.utilisateurVendeur.pseudo } </a>
+						<p>${vente.utilisateurVendeur.telephone }</p>
 					</div>
 					<br />
 					<div class="col-3 col-lg-3">
