@@ -1,7 +1,6 @@
 package fr.eni.same.bll;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import fr.eni.same.bo.Enchere;
@@ -9,6 +8,11 @@ import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 
+/**
+ * BLL - Classe qui contient les méthodes de gestion des enchères
+ * @author etienne
+ * @author simon
+ */
 public class EnchereManager {
 
 	private static EnchereManager instance;
@@ -43,58 +47,87 @@ public class EnchereManager {
         return instance;
     }
     
-	public void insert(Enchere t) throws BllException {
+    /**
+     * Méthode d'ajout d'une enchère en base de donnée
+     * Ajoute l'entrée dans la base de donnée, puis dans la liste locale
+     * @param enchere : l'enchère à tester
+     * @throws BllException
+     */
+	public void insert(Enchere enchere) throws BllException {
 		try {
-			DALFactory.getEnchereDAOJdbcImpl().insert(t);
-			listeEncheres.add(t);
-			System.out.println("Enchere : Select réalisé : " + t.toString());
+			DALFactory.getEnchereDAOJdbcImpl().insert(enchere);
+			listeEncheres.add(enchere);
+			System.out.println("Enchere : insert réalisé : " + enchere.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void update(Enchere t) throws BllException {
+    /**
+     * Méthode d'update d'une enchère en base de donnée
+     * Update l'entrée dans la base de donnée, puis dans la liste locale
+     * @param enchere : l'enchère à tester
+     * @throws BllException
+     */
+	public void update(Enchere enchere) throws BllException {
 		try {
-			DALFactory.getEnchereDAOJdbcImpl().update(t);
+			DALFactory.getEnchereDAOJdbcImpl().update(enchere);
 			for(int i = 0; i < listeEncheres.size(); i++) {
-				if(listeEncheres.get(i).getUtilisateurEnchere().getNoUtilisateur() == t.getUtilisateurEnchere().getNoUtilisateur()
-						&& listeEncheres.get(i).getVenteEnchere().getNoVente() == t.getVenteEnchere().getNoVente()) {
-					listeEncheres.get(i).setDateEnchere(t.getDateEnchere());
-					listeEncheres.get(i).setUtilisateurEnchere(t.getUtilisateurEnchere());
-					listeEncheres.get(i).setVenteEnchere(t.getVenteEnchere());
+				if(listeEncheres.get(i).getUtilisateurEnchere().getNoUtilisateur() == enchere.getUtilisateurEnchere().getNoUtilisateur()
+						&& listeEncheres.get(i).getVenteEnchere().getNoVente() == enchere.getVenteEnchere().getNoVente()) {
+					listeEncheres.get(i).setDateEnchere(enchere.getDateEnchere());
+					listeEncheres.get(i).setUtilisateurEnchere(enchere.getUtilisateurEnchere());
+					listeEncheres.get(i).setVenteEnchere(enchere.getVenteEnchere());
 				}
 			}
-			System.out.println("Enchere : Update réalisé : " + t.toString());
+			System.out.println("Enchere : Update réalisé : " + enchere.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void delete(Enchere t) throws BllException {
+	/**
+	 * Méthode de suppression d'une Enchère dans la base de donnée
+	 * @param enchere : L'enchère à supprimer
+	 * @throws BllException
+	 */
+	public void delete(Enchere enchere) throws BllException {
 		try {
-			DALFactory.getEnchereDAOJdbcImpl().delete(t);
-			listeEncheres.remove(t);
-			System.out.println("Enchere : Delete réalisé : " + t.toString());
+			DALFactory.getEnchereDAOJdbcImpl().delete(enchere);
+			listeEncheres.remove(enchere);
+			System.out.println("Enchere : Delete réalisé : " + enchere.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Methode de sélection d'une enchère
+	 * @param noVente : le numéro de vente de l'enchère à sélectionner
+	 * @param noUtlisateur : le numéro d'utilisateur de l'enchère à sélectionner
+	 * @return enchere : l'enchère sélectionnée
+	 * @throws BllException
+	 */
 	public Enchere select(int noVente, int noUtlisateur) throws BllException {
-		Enchere e = null;
+		Enchere enchere = null;
 		for (int i = 0; i < listeEncheres.size(); i++) {
 			if(listeEncheres.get(i).getUtilisateurEnchere().getNoUtilisateur() == noUtlisateur 
 					&& listeEncheres.get(i).getVenteEnchere().getNoVente() == noVente) {
-				e = listeEncheres.get(i);
+				enchere = listeEncheres.get(i);
+				System.out.println("Enchere : Select réalisé : " + enchere.toString());
 			}
-			System.out.println("Enchere : Select réalisé : " + e.toString());
 		}
-		if(e == null) {
+		if(enchere == null) {
 			throw new BllException("Aucune enchère n'a été trouvée avec ces informations.");
 		}
-		return e;
+		return enchere;
 	}
 	
+	/**
+	 * Méthode de sélectionner de la liste des enchères
+	 * @return listeEncheres : la liste locale des enchères
+	 * @throws BllException
+	 */
 	public List<Enchere> selectAll() throws BllException {
 		for(Enchere e : listeEncheres){
 			System.out.println("Enchere : Select ALL réalisé : " + e.toString());
@@ -102,6 +135,11 @@ public class EnchereManager {
 		return listeEncheres;
 	}
 	
+	/**
+	 * Méthode de sélection des enchères en cours
+	 * @return enchereEnCours : La liste des enchères en cours qui se terminent plus tard que maintenant
+	 * @throws BllException
+	 */
 	public List<Enchere> selectEnchereEnCours() throws BllException {
 		List<Enchere> enchereEnCours = new ArrayList<Enchere>();
 		Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -114,6 +152,11 @@ public class EnchereManager {
 		return enchereEnCours;
 	}
 	
+	/**
+	 * Méthode de sélection des enchères finies
+	 * @return enchereFini : La liste des enchères finies
+	 * @throws BllException
+	 */
 	public List<Enchere> selectEnchereFini() throws BllException {
 		List<Enchere> enchereFini = new ArrayList<Enchere>();
 		Timestamp now = new Timestamp(System.currentTimeMillis());
