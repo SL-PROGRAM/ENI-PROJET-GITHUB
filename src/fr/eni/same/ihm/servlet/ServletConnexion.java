@@ -48,12 +48,24 @@ public class ServletConnexion extends HttpServlet {
 		String password = request.getParameter("txtPassword");
 		HttpSession session = request.getSession();
 		
-		try {
-			UtilisateurManager.getUtilisateurManager().connexion(identifiant, password, session);
-		} catch (BllException e) {
-			// TODO Gestion de l'erreur et affichage
-			e.printStackTrace();
-		}
+	
+			try {
+				String msgErreur = UtilisateurManager.getUtilisateurManager().connexion(identifiant, password, session);
+				if(msgErreur.equals("")) {
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+					rd.forward(request, response);
+				}else {
+					request.setAttribute("erreur", msgErreur );
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+					rd.forward(request, response);
+				}
+			} catch (BllException e) {
+				request.setAttribute("erreur", e );
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+				rd.forward(request, response);
+			}
+			
+	
 //		
 //		if (condition) {
 //			Utilisateur utilisateur = new Utilisateur();
