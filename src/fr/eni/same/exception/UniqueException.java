@@ -1,5 +1,10 @@
 package fr.eni.same.exception;
 
+/**
+ * 
+ * @author sl
+ *
+ */
 public class UniqueException extends Exception{
 
 	/**
