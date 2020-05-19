@@ -1,69 +1,98 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Page Encherir</title>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="ThemesCss/encherir.css">
+<title>PageAnnulerEnchere</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
+	<div class="col container">
+	<%@ include file="jspf/header.jspf" %>
 	<div class="container">
-
-		<header class="row">
-			<div class="col-lg-12">
-				<h3>TrocEncheres.org</h3>
-			</div>
-		</header>
-
-		<div class ="row">
-			<div class="col-lg-12 titre">
-				<h3> Détail vente</h3>
-			</div>
-		</div>
-		
 		<div class="row">
-			<div class="col-lg-3 col-xs-12" >
-				<img src=""alt="image à inserer" height="20px" width="20px">
+			<div class="col-12 col-lg-8 offset-lg-4 text-center">
+				<h1>Détail vente</h1>
 			</div>
-			
-			<div class="col-lg-9 col-xs-12">
-				<p>Pc Gamer pour travailler</p>
-			
-				<p class="hidden-sm">Description :  <span>Blablabla</span></p>
+			<div class="col-12 col-lg-6 order-lg-2">
+				<h2>${vente.nomArticle}</h2>
+			</div>
+			<div class="col-lg-3 offset-lg-4 d-none d-lg-block order-lg-3">
+				<p>Description :</p>
+			</div>
+			<div class="col-lg-5 d-none d-lg-block order-lg-4">
+				<p>
+				${vente.description}
+				</p>
+			</div>
+			<div class="col-12 col-lg-4 order-lg-1">
+				<p>
+					<img alt="Image à inserer" src="">
+				</p>
+			</div>
+			<div class="col-6 col-lg-3 offset-lg-4 order-lg-5">
 				<p>Meilleure offre :</p>
 				<p>Mise à prix :</p>
-				<p>Fin de l'enchère :</p>
-				<p>Retrait :</p>
-				<p>Vendeur : </p>
-			
-				<form action="" >
-					<label for="proposition">Ma proposition</label>
-					<input type="number">
-					<input type="submit" value="Enchérir">
-				</form>
-			
-					<button type="button" class="btn btn-outline-dark"><a href="#">Retour</a></button>
-			
+				<p>Fin de l'enchère : </p>
+			</div>	
+			<div class="col-6 col-lg-3 order-lg-6">
+				<p>${vente.prixVente}pts par ${enchere.utilisateurEnchere}</p>
+				<p>${vente.misaAPrix}</p>
+				<p>${vente.dateFinEncheres}</p>
+				
 			</div>
-		
-		
+			
+			<div class="col-6 col-lg-3 offset-lg-4 order-lg-7">
+				<p>Retrait : </p>
+			</div>
+			<div class="col-6 col-lg-3 order-lg-8 ">	
+				<p class="mb-0">${retrait.rue}</p>
+				<p>${retrait.codePostal} ${retrait.ville}</p>
+			</div>
+			
+			<div class="col-6 col-lg-3 offset-lg-4 order-lg-9">	
+				<p>Vendeur : </p>
+				
+			</div>
+			<div class="col-6 col-lg-3 order-lg-10">
+			<a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo}</a>
+			</div>
+			
+			<div class="col-6 col-lg-3 offset-lg-4 order-lg-11">	
+				<p>Ma proposition : </p>
+				
+			</div>
+			<div class="col-6 col-lg-5 order-lg-12">
+				<form class="form-inline" action="<%=request.getContextPath() %>/ServletEncherir" method="post" >
+					<input type="number" id="" name="propositionPrix" min="${vente.prixVente}">
+					<input type="submit" value="Enchérir" id="encherir" name="encherir"><!-- verif si login, si oui alors credit à update et meilleur offre a update, si pas login redirect page login -->
+				</form>
+			</div>
+			
+			
 		</div>
-		
+		<br />
+		<div class="row">	<!-- si enhereutilsateur == utilisateur session et date enchere en cours afficher -->
+				<div class="col-6 col-lg-3 offset-lg-4">
+					<a class="btn btn-primary btn-block"  href="<%= request.getContextPath()%>/ServletListeEncheres" name="annulerEnchere"
+						type="submit">Annuler ma dernière enchère</a><!-- si login, sinon redirect pageConnexion, delete update de encherir, restitution ancien credit -->
+				
+				</div>
+			
+				<div class="col-6 col-lg-3">
+					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Retour</a>
+				
+				</div>
+			</div>
+			
 		</div>
-
-
-
-
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>		
-		
 	</div>
-
-
-
-
-
+	
 </body>
 </html>
