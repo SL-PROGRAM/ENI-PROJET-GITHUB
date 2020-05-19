@@ -41,100 +41,89 @@ public class CategorieDAOJDBCImpl implements CategorieDAO {
         return instance;
     }
 	@Override
-	public void insert(Categorie t) throws DALException {
-		Connection con = ConnectionProvider.openConnection();
-		try {
-			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, t.getLibelle());
-			pstmt.execute();
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next())
-			{
-				t.setNoCategorie(rs.getInt(1));
-			}
+	public void insert(Categorie t) throws DALException {	
+		try (Connection con = ConnectionProvider.openConnection()) {
+			try(PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)){
+				pstmt.setString(1, t.getLibelle());
+				pstmt.execute();
+				try(ResultSet rs = pstmt.getGeneratedKeys()){
+					if(rs.next())
+					{
+						t.setNoCategorie(rs.getInt(1));
+					}
+				}
+			}	
 //			System.out.println("Categorie insérée en base de donnée : " + t.toString());
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			con=ConnectionProvider.closeConnection();		
+			throw new DALException("Erreur insert");
 		}
 	}
 
 	@Override
 	public void update(Categorie t) throws DALException {
-		Connection con = ConnectionProvider.openConnection();
-		try {
-			PreparedStatement stmt = con.prepareStatement(UPDATE);
-			stmt.setString(1, t.getLibelle());
-			stmt.setInt(2, t.getNoCategorie());
-			stmt.executeUpdate();
-//			System.out.println("Update réalisée sur la categorie : " + t.toString());
-			stmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		try(Connection con = ConnectionProvider.openConnection()){
+			try(PreparedStatement stmt = con.prepareStatement(UPDATE)) {
+				stmt.setString(1, t.getLibelle());
+				stmt.setInt(2, t.getNoCategorie());
+				stmt.executeUpdate();
+	//			System.out.println("Update réalisée sur la categorie : " + t.toString());
+				stmt.close();
+			}
 		}
-		finally {
-			con=ConnectionProvider.closeConnection();		
+		catch (SQLException e) {
+			throw new DALException("Erreur insert");
 		}
+		
 	}
 
 	@Override
 	public void delete(Categorie t) throws DALException {
-		Connection con = ConnectionProvider.openConnection();
-		try {
-			PreparedStatement stmt = con.prepareStatement(DELETE);
+		try(Connection con = ConnectionProvider.openConnection()){
+			try(PreparedStatement stmt = con.prepareStatement(DELETE)) {
+			;
 			stmt.setInt(1, t.getNoCategorie());				
 			stmt.execute();
 			stmt.close();
 //			System.out.println("Categorie: " + t.getNoCategorie() + " supprimé en base de donnée");
-			} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally {
-			con=ConnectionProvider.closeConnection();		
+			} 
+		} catch (SQLException e) {
+			throw new DALException("Erreur delete");
 		}
 	}
 
 	@Override
 	public Categorie select(int id) throws DALException {
-		Connection con = ConnectionProvider.openConnection();
 		Categorie categorie = null;
-		try {
-			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, id);
-			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
-				categorie = new Categorie(rs.getInt(1), rs.getString(2));
-//				System.out.println("select Categorie: " + categorie.toString());
+		try(Connection con = ConnectionProvider.openConnection()){
+			try(PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID)) {
+				pstmt.setInt(1, id);
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					categorie = new Categorie(rs.getInt(1), rs.getString(2));
+	//				System.out.println("select Categorie: " + categorie.toString());
+				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DALException("Erreur select");
 		}
-		finally {
-			con=ConnectionProvider.closeConnection();		
-		}		
 		return categorie;
 	}
 
 	@Override
 	public List<Categorie> selectAll() throws DALException {
-		Connection con = ConnectionProvider.openConnection();
 		List<Categorie> listCategories = new ArrayList<Categorie>();
-		try {
-			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);
-			ResultSet rs = pstmt.executeQuery();
-	        while (rs.next()) {
-	        	Categorie categorie = new Categorie(rs.getInt(1), rs.getString(2));
-	        	listCategories.add(categorie);
-//				System.out.println("Categorie: " + categorie.toString());
+		try(Connection con = ConnectionProvider.openConnection()){
+			try(PreparedStatement pstmt = con.prepareStatement(SELECT_ALL)) {
+				ResultSet rs = pstmt.executeQuery();
+		        while (rs.next()) {
+		        	Categorie categorie = new Categorie(rs.getInt(1), rs.getString(2));
+		        	listCategories.add(categorie);
+	//				System.out.println("Categorie: " + categorie.toString());
+				}
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		finally {
-			con=ConnectionProvider.closeConnection();		
-		}		
 		return listCategories;
 	}
 

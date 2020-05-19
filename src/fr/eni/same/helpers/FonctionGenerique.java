@@ -2,22 +2,19 @@ package fr.eni.same.helpers;
 
 public class FonctionGenerique {
 
-
-	public static boolean isLongeurMax(String stingAtest, int longeurMax) {
-		boolean isUnique = true;
-		if(stingAtest.length() < longeurMax) {
-			isUnique = false;
-		}
-		return isUnique;
-	}
-	
-
-	public static boolean isLongeurMin(String stingAtest, int longeurMin) {
-		boolean isUnique = true;
-		if(stingAtest.length() > longeurMin) {
-			isUnique = false;
+	public static boolean isLongueurMax(String stringAtest, int longueurMax) {
+		boolean isUnique = false;
+		if(stringAtest.length() <= longueurMax) {
+			isUnique = true;
 		}
 		return isUnique;
 	}
 
+	public static boolean isLongueurMin(String stringAtest, int longueurMin) {
+		boolean isUnique = false;
+		if(stringAtest.length() >= longueurMin) {
+			isUnique = true;
+		}
+		return isUnique;
+	}
 }

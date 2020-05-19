@@ -146,7 +146,7 @@ public class ServletTestConnexion extends HttpServlet {
 
 	private void testJDBCretrait() {
 		try {
-			Vente vente = DALFactory.getVenteDAOJdbcImpl().select(6);
+			Vente vente = DALFactory.getVenteDAOJdbcImpl().select(34);
 			Retrait retrait = new Retrait("rue","codePostal","Ville", vente);
 			
 			DALFactory.getRetraitDAOJdbcImpl().insert(retrait);
