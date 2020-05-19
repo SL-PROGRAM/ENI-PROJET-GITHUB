@@ -101,7 +101,7 @@
 						<label for="codePostal" class="col-6 col-lg-3 col-form-label">Code
 							Postal : </label>
 						<div class="col-6 col-lg-9">
-							<input name="numCodePostal" type="number" class="form-control"
+							<input name="txtCodePostal" type="text" class="form-control"
 								id="codePostal" placeholder="Votre code postal...">
 						</div>
 					</div>

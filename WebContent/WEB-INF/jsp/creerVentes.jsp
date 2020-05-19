@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,9 +33,9 @@
 			</div>
 			<div class=" col-12 col-lg-8 offset-lg-4">
  				 <div class="form-group row">
-   					 <label for="" class="col-3 col-form-label">Article:</label>
+   					 <label for="article" class="col-3 col-form-label">Article:</label>
    					 <div class="col-9">
-     					 <input type="text"  id="" value="">
+     					 <input type="text"  id="article" name="article">
    					 </div>
  				 </div>
  			</div> 
@@ -47,6 +47,23 @@
    					 </div>
   				</div>
   			</div> 	
+  			<div class=" col-12 col-lg-8 offset-lg-4"> 
+  			<div class="form-group row">
+					<label for="selectCategorie" class="col-2 col-form-label">Catégories</label>
+						<div class="offset-1 col-9">
+							<select class="custom-select" id="selectCategorie" name="selectCategorie">
+								<option selected>Toutes</option>
+							
+								<c:forEach items="${categories}" var="categorie">
+										<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+									</c:forEach>
+								
+							</select>
+						</div>
+					</div>
+  			</div>
+  			
+  			
   			<div class=" col-12 col-lg-8 offset-lg-4"> 
   				<div class="form-group row">
   				 	  <label for="photoArticle"class="col-4 col-form-label" >Photo de l'article:</label>
@@ -84,22 +101,22 @@
                             <fieldset class="border border-dark p-2  col-lg-8" >
                            <legend class="w-auto">Retrait</legend>
                             <div class="form-group row">
-                            <!-- placeholder adresse par defaut du vendeur -->
+                            <!-- value adresse par defaut du vendeur -->
                                 <label for="rueRetrait" class="col-3 col-form-label">Rue :</label>
                                 <div class="col-9">
-                                    <input type="text" name="rueRetrait" id="rueRetrait">
+                                    <input type="text" name="rue" id="rueRetrait" value="${retrait.rue}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="codePostalRetrait" class="col-3 col-form-label">Code Postal :</label>
                                 <div class="col-9">
-                                    <input type="text" name="codePostalRetrait" id="codePostalRetrait">
+                                    <input type="text" name="codePostal" id="codePostalRetrait" value="${retrait.codePostal}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="villeRetrait" class="col-3 col-form-label">Ville :</label>
                                 <div class="col-9">
-                                    <input type="text" name="villeRetrait" id="villeRetrait">
+                                    <input type="text" name="ville" id="villeRetrait" value="${retrait.ville}">
                                 </div>
                             </div>
                         </fieldset>
@@ -110,7 +127,7 @@
   				<p>Retrait : </p>
   			</div>
   			<div class="col-6 d-block d-sm-none">	
-  				<p> adresse vendeur <br>nantes</p> 
+  				<p> ${rue}  <br>${codePostal} ${ville}</p> 
   			</div>
   			</div> <!-- fin div row PRINCIPAL -->	
   			
@@ -120,19 +137,19 @@
 		<div class="row">
 				<div class="col-4 offset-lg-3 col-lg-3">
 				<!-- insert nouvelle vente en bdd , ajout a liste enchere -->
-					<a class="btn btn-primary btn-block"  href="<%= request.getContextPath()%>/ServletListeEncheres" name="publierVente"
-						type="submit">Publier</a>
+					<input class="btn btn-primary btn-block" name="publierVente"
+						type="submit" value="Publier"/>
 				</div>
 				<div class="col-4 col-lg-3">
 				<!-- info a enregistrer ds cookie jusqu a fin session -->
-					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres" name="enregistrerVente"
-						type="submit">Enregistrer</a>
+					<input class="btn btn-primary btn-block" name="enregistrerVente"
+						type="submit" value="Enregistrer"/>
 				</div>
 				
 				<div class="col-4 col-lg-3">
 				<!-- destroy cookie enregistrer -->
-					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres"name="enregistrerVente"
-						type="submit">Annuler</a>
+					<input class="btn btn-primary btn-block" name="annuler"
+						type="submit" value="Annuler"/>
 				</div>
 			</div>
 					
