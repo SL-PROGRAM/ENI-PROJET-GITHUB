@@ -8,7 +8,7 @@ import fr.eni.same.bll.interfaceManager.UtilisateurManagerInterface;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.exception.BllException;
 
-public class UtilisateurManager extends AdresseManager implements UtilisateurManagerInterface {
+public class UtilisateurManager  implements UtilisateurManagerInterface {
 	private final int NOM_LONGEUR_MAX = 30;
 	private final int NOM_LONGEUR_MIN = 4;
 	private final int PRENOM_LONGEUR_MAX = 5;
@@ -110,5 +110,6 @@ public class UtilisateurManager extends AdresseManager implements UtilisateurMan
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 }

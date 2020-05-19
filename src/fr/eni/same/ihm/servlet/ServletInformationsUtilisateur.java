@@ -19,10 +19,9 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : Redirection vers la page affichant les informations d'un utilisateur (acheteur ou vendeur) (informationsUtilisateur.jsp)
-	 * doPost : Récupération des informations de l'utilisateur et affichage différencié si 
+	 * 		   Récupération des informations de l'utilisateur et affichage différencié si 
 	 * 			- l'utilisateur à afficher est un acheteur OU  
 	 * 			- l'utilisateur à afficher est un vendeur OU
-	 * 			- l'utilisateur à afficher est l'utilisateur actuellement connecté (permet la suppression de la jsp monProfil.jsp).
 	 * 
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 4 et 12
 	 */

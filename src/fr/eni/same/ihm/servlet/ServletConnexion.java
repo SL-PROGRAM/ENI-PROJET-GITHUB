@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import fr.eni.same.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletConnexion
@@ -21,9 +24,12 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page de connexion (connexion.jsp)
 	 * doPost : Auto-appel de la page connexion pour vérification des informations de connexion de l'utilisateur.
-	 * 			Si informations incorrectes : affichage d'un message d'erreur et reset des champs de saisie
-	 * 			Si informations correctes : redirection et envoie des informations utilisateur vers la page affichant la liste des enchères (listeEncheres.jsp)
-	 * 
+	 * 			Si informations incorrectes : affichage d'un message d'erreur
+	 * 			Si informations correctes : 
+	 * 							- Création d'une session
+	 * 							- setAtttribut de l'utilisateur en session
+	 * 							- redirection et envoie des informations utilisateur via session vers la page affichant la liste des enchères (listeEncheres.jsp)
+	 * 			Si se souvenir de moi coché : création d'un cookie
 	 * Cette Servlet et la jsp correspondante prennent en charge la Maquette 1
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,7 +41,17 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		String identifiant = request.getParameter("txtIdentifiant");
+		String password = request.getParameter("txtPassword");
+//		
+//		if (condition) {
+//			Utilisateur utilisateur = new Utilisateur();
+//			
+//			HttpSession session = request.getSession();
+//			session.setAttribute("utilisateur", utilisateur);
+//		} 
+		
 	}
 
 	
