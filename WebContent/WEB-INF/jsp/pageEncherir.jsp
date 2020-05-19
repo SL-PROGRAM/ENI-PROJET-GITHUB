@@ -42,8 +42,8 @@
 				<p>Fin de l'enchère : </p>
 			</div>	
 			<div class="col-6 col-lg-3 order-lg-6">
-				<p>210 pts par jojo44</p>
-				<p>${vente.misaAPrix}</p><!-- info a recup de la vente -->
+				<p>${vente.prixVente}pts par ${enchere.utilisateurEnchere}</p>
+				<p>${vente.misaAPrix}</p>
 				<p>${vente.dateFinEncheres}</p>
 				
 			</div>
@@ -70,7 +70,7 @@
 			</div>
 			<div class="col-6 col-lg-5 order-lg-12">
 				<form class="form-inline" action="<%=request.getContextPath() %>/ServletEncherir" method="post" >
-					<input type="number" id="" name="">
+					<input type="number" id="" name="propositionPrix" min="${vente.prixVente}">
 					<input type="submit" value="Enchérir" id="encherir" name="encherir"><!-- verif si login, si oui alors credit à update et meilleur offre a update, si pas login redirect page login -->
 				</form>
 			</div>

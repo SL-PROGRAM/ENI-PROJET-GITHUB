@@ -53,7 +53,7 @@
 						<div class="offset-1 col-9">
 							<select class="custom-select" id="selectCategorie" name="selectCategorie">
 								<option selected>Toutes</option>
-								<option value="1">Catégorie1</option>
+								<option value="1">Catégorie1</option><!-- boucle a faire  pour avoir libellé -->
 								<option value="2">Catégorie2</option>
 								<option value="3">Something</option>
 							</select>

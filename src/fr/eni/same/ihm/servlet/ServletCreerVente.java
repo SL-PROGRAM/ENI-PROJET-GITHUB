@@ -58,6 +58,11 @@ public class ServletCreerVente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//todo: verif si tous les champs remplis
+		//verif date fin enchere si superieur au jour actuel
+		
+		
+		
 		//recup info dans string d abbord car je sais pas comment coder le parse avec getParameter
 		String dateFinEnchere = request.getParameter("dateFinEnchere");
 		String miseAPrix= request.getParameter("miseAPrix");

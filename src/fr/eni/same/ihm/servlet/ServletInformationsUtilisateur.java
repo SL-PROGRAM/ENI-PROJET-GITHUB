@@ -30,7 +30,7 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 //		if (request.getSession().getAttribute("utilisateur") == null){
 //		response.sendRedirect("connexion");
 //    	return;
-//    }else
+//    }else recuperer les infos du vendeur par rapport  à la vente
 //	
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.jsp");

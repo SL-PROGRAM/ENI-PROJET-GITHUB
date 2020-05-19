@@ -24,15 +24,26 @@ public class ServletEncherir extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 6 et 7
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//afficher infos de la vente ->recup id pr avoir les infos? liste?
+		//iterartion 2:verif si l utilisateur arrivant sur cette page est le dernier a avoir encheri, si oui possibilité d annuler l enchere
+		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
 		rd.forward(request, response);
+		
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		//check si mon credit ne devient pas négatif, si ok alors encherir
+		//debiter les points de mon credit de points
+		
+		
+		
+		String propositionPrix= request.getParameter("propositionPrix");
 	}
 	
 
