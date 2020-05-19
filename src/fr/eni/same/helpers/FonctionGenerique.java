@@ -1,5 +1,10 @@
 package fr.eni.same.helpers;
 
+/**
+ * 
+ * @author sl
+ *
+ */
 public class FonctionGenerique {
 
 	public static boolean isLongueurMax(String stringAtest, int longueurMax) {

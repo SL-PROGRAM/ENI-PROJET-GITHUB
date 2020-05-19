@@ -8,6 +8,12 @@ import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 
+/**
+ * 
+ * @author sl
+ * @author etienne
+ *
+ */
 public class EnchereManager {
 
 	private static EnchereManager instance;

@@ -7,7 +7,12 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.AdresseUtils;
 
-public class RetraitManager extends AdresseUtils {
+/**
+ * 
+ * @author sl
+ * @author etienne
+ */
+public class RetraitManager{
 	
 	private static RetraitManager instance;
 	private List<Retrait> listeRetraits;

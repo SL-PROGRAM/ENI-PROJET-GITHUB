@@ -1,7 +1,6 @@
 package fr.eni.same.bll;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
