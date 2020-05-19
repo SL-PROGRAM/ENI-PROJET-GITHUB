@@ -50,15 +50,15 @@
 						<p>Mise à prix :</p>
 					</div>
 					<div class="col-6 col-lg-9">
-						<p>${vente.prixVente } par ${vente.userAcheteur.pseudo }</p>
+						<p>${vente.prixVente } par ${vente.utilisateurAcheteur.pseudo }</p>
 						<p>${vente.miseAPrix } points</p>
 					</div>
 					<!-- Infos retrait pour version mobile -->
 					<div class="col-12">
 						<fieldset class="border border-dark p-2 d-block d-lg-none">
 							<legend class="w-auto">Retrait</legend>
-							<p class="mb-0">${vente.userVendeur.rue }</p>
-							<p>${vente.userVendeur.codePostal } ${vente.userVendeur.ville }</p>
+							<p class="mb-0">${vente.utilisateurVendeur.rue }</p>
+							<p>${vente.utilisateurVendeur.codePostal } ${vente.utilisateurVendeur.ville }</p>
 							<div class="row">
 								<div class="col-6">
 									<p>Vendeur :</p>
@@ -66,9 +66,9 @@
 								</div>
 								<div class="col-6">
 									<p>
-										<a href="">${vente.userVendeur.pseudo }</a>
+										<a href="">${vente.utilisateurVendeur.pseudo }</a>
 									</p>
-									<p>${vente.userVendeur.telephone }</p>
+									<p>${vente.utilisateurVendeur.telephone }</p>
 								</div>
 							</div>
 						</fieldset>
@@ -78,8 +78,8 @@
 						<p>Retrait :</p>
 					</div>
 					<div class="col-lg-9 d-none d-lg-block">
-						<p class="mb-0">${vente.userVendeur.rue }</p>
-						<p>${vente.userVendeur.codePostal } ${vente.userVendeur.ville }</p>
+						<p class="mb-0">${vente.utilisateurVendeur.rue }</p>
+						<p>${vente.utilisateurVendeur.codePostal } ${vente.utilisateurVendeur.ville }</p>
 					</div>
 					<div class="col-lg-3 d-none d-lg-block">
 						<p>Vendeur :</p>
@@ -90,8 +90,8 @@
 						<!-- Redirige vers ServletInformationsUtilisateur (maquette 4 + 12) -->
 						<a class="btn btn-success btn-block" role="button" type="submit"
 							href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">
-							${vente.userVendeur.pseudo } </a>
-						<p>${vente.userVendeur.telephone }</p>
+							${vente.utilisateurVendeur.pseudo } </a>
+						<p>${vente.utilisateurVendeur.telephone }</p>
 					</div>
 					<br />
 					<div class="col-3 col-lg-3">
