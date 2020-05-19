@@ -47,7 +47,7 @@ public class FiltreManager {
 	public List<Vente> filtreMesVentesPubliées(HttpSession session, Categorie categorie) throws BllException{
 		List<Vente> mesVentesPubliées = new ArrayList<Vente>();
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
-		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("ATT_SESSION_USER");
+		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 		for (int i = 0; i < allVentes.size(); i++) {
 			if(allVentes.get(i).getUtilisateurVendeur()== utilisateurConnect){
 				if(categorie == null) {
@@ -83,10 +83,29 @@ public class FiltreManager {
 		return mesVentesEnregistrees;
 	}
 	
+	public List<Vente> filtreMesVentesEnCours(HttpSession session, Categorie categorie) throws BllException{
+		List<Vente> mesEncheresEnCours = new ArrayList<Vente>();
+		List<Enchere> allEncheresEnCours = EnchereManager.getEnchereManager().selectEnchereEnCours();
+		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
+		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
+		for (int i = 0; i < allEncheresEnCours.size(); i++) {
+			if((allEncheresEnCours.get(i).getUtilisateurEnchere() == utilisateurConnect)) {
+					if(utilisateurConnect == allEncheresEnCours.get(i).getUtilisateurEnchere()) {
+						for (int j = 0; j < allVentes.size(); j++) {
+							if(allVentes.get(j).getUtilisateurAcheteur().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()) {
+								mesEncheresEnCours.add(allVentes.get(j));
+							}
+						}
+					}
+				}
+			}
+		return mesEncheresEnCours;
+	}
+	
 	public List<Enchere> filtreMesEncheresEnCours(HttpSession session, Categorie categorie) throws BllException{
 		List<Enchere> mesEncheresEnCours = new ArrayList<Enchere>();
 		List<Enchere> allEncheresEnCours = EnchereManager.getEnchereManager().selectEnchereEnCours();
-		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("ATT_SESSION_USER");
+		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 		for (int i = 0; i < allEncheresEnCours.size(); i++) {
 			if(allEncheresEnCours.get(i).getUtilisateurEnchere() == utilisateurConnect) {
 				if(categorie == null) {
@@ -111,7 +130,7 @@ public class FiltreManager {
 	public List<Vente> filtreMesAcquisitions(HttpSession session, Categorie categorie) throws BllException{
 		List<Vente> mesAcquisitions = new ArrayList<Vente>();
 		List<Enchere> allEncheresFini = EnchereManager.getEnchereManager().selectEnchereFini();
-		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("ATT_SESSION_USER");
+		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 		for (int i = 0; i < allEncheresFini.size(); i++) {
 			if(allEncheresFini.get(i).getUtilisateurEnchere() == utilisateurConnect) {
 				if(categorie == null) {
@@ -134,7 +153,7 @@ public class FiltreManager {
 	public List<Vente> filtreAutresEncheres(HttpSession session, Categorie categorie) throws BllException{
 		List<Vente> autresEncheres = new ArrayList<Vente>();
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
-		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("ATT_SESSION_USER");
+		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 
 		for ( Vente vente : allVentes) {
 			if (vente.getUtilisateurVendeur() != utilisateurConnect && vente.getUtilisateurAcheteur() != utilisateurConnect) {
