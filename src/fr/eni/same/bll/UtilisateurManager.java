@@ -10,7 +10,7 @@ import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
-
+import fr.eni.same.helpers.AdresseUtils;
 import fr.eni.same.helpers.FonctionGenerique;
 
 /**
