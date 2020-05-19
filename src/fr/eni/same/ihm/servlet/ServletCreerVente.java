@@ -87,9 +87,9 @@ public class ServletCreerVente extends HttpServlet {
 			rd.forward(request, response);
 			
 			
-		}else if(request.getParameter("enregistrerVente") != null) {
+		}else if(request.getParameter("enregistrerVente").equals("Enregistrer")) {
 			//cookie
-		}else if(request.getParameter("annuler") != null) {
+		}else if(request.getParameter("annuler").equals("Annuler")) {
 			//annuler enregistrement
 		}
 		
