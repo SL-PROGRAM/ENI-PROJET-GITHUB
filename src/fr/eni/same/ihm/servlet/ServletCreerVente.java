@@ -120,6 +120,9 @@ public class ServletCreerVente extends HttpServlet {
 		newVente.setDateFinEncheres(date);//(request.getParameterValues("")); a chercher comment faire pour le select class Categorie??
 		newVente.setCategorie(categorie);
 		newVente.setUtilisateurVendeur((Utilisateur) session.getAttribute("utilisateur"));
+		newVente.setPrixVente(Integer.parseInt(request.getParameter("miseAPrix")));
+		newVente.setUtilisateurAcheteur(null);
+		
 		try {
 			VenteManager.getVenteManager().insert(newVente);
 		} catch (BllException e) {
