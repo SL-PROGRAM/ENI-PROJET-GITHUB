@@ -90,7 +90,6 @@ public class FiltreManager {
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 		for (int i = 0; i < allEncheresEnCours.size(); i++) {
 			if((allEncheresEnCours.get(i).getUtilisateurEnchere() == utilisateurConnect)) {
-					if(utilisateurConnect == allEncheresEnCours.get(i).getUtilisateurEnchere()) {
 						for (int j = 0; j < allVentes.size(); j++) {
 							if(allVentes.get(j).getUtilisateurAcheteur().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()) {
 								mesEncheresEnCours.add(allVentes.get(j));
@@ -98,9 +97,8 @@ public class FiltreManager {
 						}
 					}
 				}
-			}
-		return mesEncheresEnCours;
-	}
+			return mesEncheresEnCours;
+		}
 	
 	public List<Enchere> filtreMesEncheresEnCours(HttpSession session, Categorie categorie) throws BllException{
 		List<Enchere> mesEncheresEnCours = new ArrayList<Enchere>();
