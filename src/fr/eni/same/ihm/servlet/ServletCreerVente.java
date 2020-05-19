@@ -79,7 +79,7 @@ public class ServletCreerVente extends HttpServlet {
 			Timestamp date = FonctionGenerique.dateToTimestamp(dateFinEnchere);
 			
 			String noCategorie = request.getParameter("selectCategorie");
-			Categorie categorie = selectCategorie(noCategorie);		
+			Categorie categorie = selectCategorie(noCategorie);	
 			Vente newVente = creerVente(request, session, date, categorie);
 			creerRetrait(request, newVente);
 			
@@ -96,13 +96,29 @@ public class ServletCreerVente extends HttpServlet {
 	}
 
 	private void creerRetrait(HttpServletRequest request, Vente newVente) {
-		Retrait retrait = new Retrait();
-		retrait.setRue(request.getParameter("rue"));
-		retrait.setCodePostal(request.getParameter("codePostal"));
-		retrait.setVille(request.getParameter("ville"));
-		retrait.setVente(newVente);
+		Retrait retrait = null;
+		
 		try {
-			RetraitManager.getRetraitManager().insert(retrait);
+			List<Retrait> listCategories = RetraitManager.getRetraitManager().selectAll();
+			for (Retrait r : listCategories) {
+				if (r.getVente() == newVente) {
+					r.setRue(request.getParameter("rue"));
+					r.setCodePostal(request.getParameter("codePostal"));
+					r.setVille(request.getParameter("ville"));
+					r.setVente(newVente);
+					RetraitManager.getRetraitManager().update(r);
+					retrait = r;
+				}
+			}
+			if(retrait == null) {
+				retrait = new Retrait();
+				retrait.setRue(request.getParameter("rue"));
+				retrait.setCodePostal(request.getParameter("codePostal"));
+				retrait.setVille(request.getParameter("ville"));
+				retrait.setVente(newVente);
+				RetraitManager.getRetraitManager().insert(retrait);
+			}
+			
 		} catch (BllException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,14 +142,6 @@ public class ServletCreerVente extends HttpServlet {
 				categorie);
 		
 		System.out.println(vente.toString());
-
-//		newVente.setNomArticle();
-//		newVente.setDescription();
-//		newVente.setDateFinEncheres(date);//(request.getParameterValues("")); a chercher comment faire pour le select class Categorie??
-//		newVente.setMiseAPrix();	
-//		newVente.setCategorie(categorie);
-//		newVente.setUtilisateurVendeur();
-//		newVente.setPrixVente(Integer.parseInt(request.getParameter("miseAPrix")));
 		try {
 			VenteManager.getVenteManager().insert(vente);
 		} catch (BllException e) {
