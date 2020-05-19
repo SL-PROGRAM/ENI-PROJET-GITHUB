@@ -1,7 +1,5 @@
 package fr.eni.same.dal.interfaceDAO;
 
-import java.util.List;
-
 import fr.eni.same.bo.Categorie;
 
 /**
