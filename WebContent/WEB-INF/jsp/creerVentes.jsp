@@ -23,7 +23,7 @@
 		</div><!-- fin div row -->
 		
 		
-	<form  action="ServletListeEncheres" method="post">
+	<form  action="ServletCreerVente" method="post">
 		<div class="row">
 			<!-- image caché quand size xs -->
 			<div class="col-12 col-lg-4 d-none d-sm-block">
@@ -104,19 +104,19 @@
                             <!-- value adresse par defaut du vendeur -->
                                 <label for="rueRetrait" class="col-3 col-form-label">Rue :</label>
                                 <div class="col-9">
-                                    <input type="text" name="rue" id="rueRetrait" value="${retrait.rue}">
+                                    <input type="text" name="rue" id="rueRetrait" value="${utilisateur.rue}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="codePostalRetrait" class="col-3 col-form-label">Code Postal :</label>
                                 <div class="col-9">
-                                    <input type="text" name="codePostal" id="codePostalRetrait" value="${retrait.codePostal}">
+                                    <input type="text" name="codePostal" id="codePostalRetrait" value="${utilisateur.codePostal}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="villeRetrait" class="col-3 col-form-label">Ville :</label>
                                 <div class="col-9">
-                                    <input type="text" name="ville" id="villeRetrait" value="${retrait.ville}">
+                                    <input type="text" name="ville" id="villeRetrait" value="${utilisateur.ville}">
                                 </div>
                             </div>
                         </fieldset>
@@ -127,7 +127,7 @@
   				<p>Retrait : </p>
   			</div>
   			<div class="col-6 d-block d-sm-none">	
-  				<p> ${rue}  <br>${codePostal} ${ville}</p> 
+  				<p> ${utilisateur.rue}  <br>${utilisateur.codePostal} ${utilisateur.ville}</p> 
   			</div>
   			</div> <!-- fin div row PRINCIPAL -->	
   			
