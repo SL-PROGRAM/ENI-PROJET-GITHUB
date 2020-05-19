@@ -353,7 +353,7 @@ public class UtilisateurManager extends AdresseUtils  {
 		if(!isAuthentified) {
 			throw new BllException("L'identifiant et le  mot de passe sont incorrect");
 		}else {	
-			session.setAttribute("ATT_SESSION_USER", utilisateur);
+			session.setAttribute("utilisateur", utilisateur);
 			return isAuthentified;
 		}
 	}
