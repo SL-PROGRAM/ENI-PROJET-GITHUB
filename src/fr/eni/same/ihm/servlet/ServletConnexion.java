@@ -29,7 +29,7 @@ public class ServletConnexion extends HttpServlet {
 	 * 							- Création d'une session
 	 * 							- setAtttribut de l'utilisateur en session
 	 * 							- redirection et envoie des informations utilisateur via session vers la page affichant la liste des enchères (listeEncheres.jsp)
-	 * 
+	 * 			Si se souvenir de moi coché : création d'un cookie
 	 * Cette Servlet et la jsp correspondante prennent en charge la Maquette 1
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
