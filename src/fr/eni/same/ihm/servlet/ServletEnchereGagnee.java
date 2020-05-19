@@ -19,7 +19,7 @@ public class ServletEnchereGagnee extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page affichant les informations de l'enchère gagnée (enchereGagnee.jsp)
-	 * doPost : Récupération des informations liées à la vente que l'utilisateur a remporté
+	 *  	   Récupération des informations liées à la vente que l'utilisateur a remporté
 	 * 
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 8
 	 */
