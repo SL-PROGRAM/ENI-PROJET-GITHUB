@@ -16,6 +16,9 @@
 		<div class="container">
 			<form action="<%= request.getContextPath()%>/ServletConnexion" method="post">
 				<div class="form-group row">
+					<label for="identifiant" class="col-12 col-form-label offset-lg-3 col-lg-6">${erreur} </label>
+				</div>
+				<div class="form-group row">
 					<label for="identifiant" class="col-4 col-form-label offset-lg-3 col-lg-2">Identifiant : </label>
 					<div class="col-8 col-lg-4">
 						<input name="txtIdentifiant" type="text" class="form-control" id="identifiant">
