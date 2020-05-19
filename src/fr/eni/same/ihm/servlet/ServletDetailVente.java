@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.same.bo.Vente;
 
 /**
+ * @author Andrea
+ * @author sl
  * Servlet implementation class ServletDetailVente
  */
 @WebServlet("/ServletDetailVente")
