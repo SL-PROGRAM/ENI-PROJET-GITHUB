@@ -11,11 +11,34 @@ import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
+import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
+import fr.eni.same.exception.DALException;
 
-public class filtreManager {
+public class FiltreManager {
+	
+	private static FiltreManager instance;
+
+	/**
+	 * constructeur privé pour ne pas permettre la création d'une autre instance de la classe
+	 * @throws BllException 
+	 */
+	private FiltreManager() {
+	}
+
+    /**
+     * methode Get pour récupérer l'instance et la créer si elle n'existe pas
+     * @return
+     */
+    public static synchronized FiltreManager getFiltreManager () {
+        if(instance == null) {
+			instance = new FiltreManager();
+        }
+        return instance;
+    }
 	
 	
+
 	public List<Vente> filtreMesVentesPubliées(HttpSession session, Categorie categorie) throws BllException{
 		List<Vente> mesVentesPubliées = new ArrayList<Vente>();
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
