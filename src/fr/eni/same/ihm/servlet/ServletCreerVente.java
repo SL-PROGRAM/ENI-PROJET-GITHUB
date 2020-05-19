@@ -19,7 +19,7 @@ public class ServletCreerVente extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page permettant de créer une nouvelle vente (vendreArticle.jsp)
-	 * doPost : Récupération des informations de l'utilisateur, notemment l'adresse afin de l'afficher automatiquement comme point de retrait
+	 *  	   Récupération des informations de l'utilisateur, notamment l'adresse afin de l'afficher automatiquement comme point de retrait
 	 * 	
 	 * Cette Servlet et la jsp correspondante prennent en charge la Maquette 11
 	 */
