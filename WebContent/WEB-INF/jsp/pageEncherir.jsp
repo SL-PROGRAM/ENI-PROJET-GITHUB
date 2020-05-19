@@ -52,8 +52,8 @@
 				<p>Retrait : </p>
 			</div>
 			<div class="col-6 col-lg-3 order-lg-8 ">	
-				<p class="mb-0">10 allée des Alouettes</p>
-				<p>44 800 Saint Herblain</p>
+				<p class="mb-0">${retrait.rue}</p>
+				<p>${retrait.codePostal} ${retrait.ville}</p>
 			</div>
 			
 			<div class="col-6 col-lg-3 offset-lg-4 order-lg-9">	
