@@ -104,19 +104,19 @@
                             <!-- value adresse par defaut du vendeur -->
                                 <label for="rueRetrait" class="col-3 col-form-label">Rue :</label>
                                 <div class="col-9">
-                                    <input type="text" name="rue" id="rueRetrait" value="${rue}">
+                                    <input type="text" name="rue" id="rueRetrait" value="${retrait.rue}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="codePostalRetrait" class="col-3 col-form-label">Code Postal :</label>
                                 <div class="col-9">
-                                    <input type="text" name="codePostal" id="codePostalRetrait" value="${codePostal}">
+                                    <input type="text" name="codePostal" id="codePostalRetrait" value="${retrait.codePostal}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="villeRetrait" class="col-3 col-form-label">Ville :</label>
                                 <div class="col-9">
-                                    <input type="text" name="ville" id="villeRetrait" value="${ville}">
+                                    <input type="text" name="ville" id="villeRetrait" value="${retrait.ville}">
                                 </div>
                             </div>
                         </fieldset>
