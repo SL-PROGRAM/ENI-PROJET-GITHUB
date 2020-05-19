@@ -70,7 +70,7 @@ public class ServletTestConnexion extends HttpServlet {
 			Utilisateur vendeur = DALFactory.getUtilisateurDAOJdbcImpl().select(26);
 			Categorie categorie = DALFactory.getCategorieDAOJdbcImpl().select(4);
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-			Vente vente = new Vente(4,"une","deux",timestamp,2,6000,null,vendeur,categorie);
+			Vente vente = new Vente("une","deux",timestamp,2,6000,null,vendeur,categorie);
 			DALFactory.getVenteDAOJdbcImpl().insert(vente);
 			vente.setDescription("Description modifier");
 			DALFactory.getVenteDAOJdbcImpl().update(vente);
