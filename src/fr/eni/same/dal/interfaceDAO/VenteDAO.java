@@ -1,6 +1,7 @@
 package fr.eni.same.dal.interfaceDAO;
 
 import fr.eni.same.bo.Vente;
+import fr.eni.same.exception.DALException;
 
 /**
  * Interface contenant les informations spécifiques à implémenter pour les ventes
@@ -9,9 +10,9 @@ import fr.eni.same.bo.Vente;
 public interface VenteDAO extends DAO<Vente>, selectDAO<Vente> {
 	
 	/**
-	 * Sélectionne le gagnant de l'enchère depuis une vente
+	 * Update l'acheteur de la vente
 	 * @param t
+	 * @throws DALException 
 	 */
-	public void selectAcheteur(Vente t);
-
+	Vente updateAcheteur(Vente t) throws DALException;
 }
