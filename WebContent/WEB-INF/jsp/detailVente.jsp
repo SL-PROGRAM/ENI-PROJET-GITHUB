@@ -23,7 +23,7 @@
 		<c:if test="${dateFinEncheres.compareTo(heureServer)} > 0 || ${dateFinEncheres.compareTo(heureServer)} == 0">
 			<div class="row">
 				<div class="col-12 col-lg-8 text-center">
-					<h2>${vente.userAcheteur } a remporté l'enchère !</h2>
+					<h2>${vente.utilisateurAcheteur } a remporté l'enchère !</h2>
 					<br/>
 				</div>
 			</div>
@@ -71,10 +71,10 @@
 						
 							<c:choose>
 								<c:when test="${dateFinEncheres.compareTo(heureServer)} > 0 || ${dateFinEncheres.compareTo(heureServer)} == 0">
-									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.userAcheteur}</a> </p>
+									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur}</a> </p>
 								</c:when>
 								<c:when test="${dateFinEncheres.compareTo(heureServer)} < 0">
-									<p>${vente.prixVente } pts par ${vente.userAcheteur}</p>
+									<p>${vente.prixVente } pts par ${vente.utilisateurAcheteur}</p>
 									
 								</c:when>
 							</c:choose>
@@ -89,14 +89,14 @@
 					</div>
 
 					<div class="col-6 col-lg-9">
-						<p class="mb-0">${vente.rue }</p>
-						<p>${vente.codePostal } ${vente.ville }</p>
+						<p class="mb-0">${vente.utilisateurVendeur.rue }</p>
+						<p>${vente.utilisateurVendeur.codePostal } ${vente.utilisateurVendeur.ville }</p>
 					</div>
 					<div class="col-6 col-lg-3">
 						<p>Vendeur :</p>
 					</div>
 					<div class="col-6 col-lg-9">
-						<p>${vente.userVendeur }</p>
+						<p>${vente.utilisateurVendeur.nomArticle }</p>
 					</div>
 					
 					
@@ -105,14 +105,23 @@
 							<!-- Boutons à afficher dans la version Maquette 10 -->
 							<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
 							<div class="col-4 col-lg-4">
-								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
-									Retrait effectué</a>
+								<p><a class="btn btn-block 
+										<c:choose>
+											<c:when test="${cookie.nomCookie ???}">
+												btn-danger 
+											</c:when>
+											<c:when test="${cookie.nomCookie ???}">
+												btn-succes
+											</c:when>
+										</c:choose>
+								" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
+											Retrait effectué</a></p>
 							</div>
 							
 							<!-- Redirige vers ServletInformationsUtilisateur -->
 							<div class="col-4 col-lg-4">
 								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
-									Contacter ${vente.userAcheteur }</a>
+									Contacter ${vente.utilisateurAcheteur }</a>
 							</div>
 							<!-- Redirige vers ServletListeEnchere -->
 							<div class="col-4 col-lg-4">
