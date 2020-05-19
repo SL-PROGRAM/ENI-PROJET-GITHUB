@@ -13,6 +13,7 @@ import fr.eni.same.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletCreerCompte
+ * @author Mathieu/Etienne
  */
 @WebServlet("/ServletModificationInformationsUtilisateur")
 public class ServletModificationInformationsUtilisateur extends HttpServlet {
