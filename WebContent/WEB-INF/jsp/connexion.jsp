@@ -1,52 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Connexion</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="./etiennestyle.css">
-    </head>
-    <body>
-        <div class="col container">
-            <div class="row">
-                <h1>TrocEncheres.org</h1>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col text-right">
-                                <label>Identifiant</label>
-                            </div>
-                            <div class="col">
-                                <input name="txtIdentifiant" type="text">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col text-right">
-                                <label>Mot de passe</label>
-                            </div>
-                            <div class="col">
-                                <input name ="txtPassword" type="password">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5 col-lg-6 col text-right">
-                                <button name="btnInscription" class="btn btn-primary setBtnHeighSize" type="submit">Connexion</button>
-                            </div>
-                            <div class="col-md-7 col-lg-6 col">
-                                <input type="checkbox" name="chkSeSouvenirDeMoi">
-                                <label>Se souvenir de moi</label>
-                                <p><a name="mdpOublié" href="">Mot de passe oublié</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>                
-            </div>
-            <div class="container text-center">
-                <button name="btnCreerUnCompte" class="btn btn-success setBtnHeighSize">Créer un compte</button>
-            </div>
-        </div>
-    </body>
+<head>
+<title>Connexion</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="col container">
+		<%@ include file="jspf/header.jspf" %>
+		<div class="container">
+			<form action="<%= request.getContextPath()%>/ServletConnexion" method="post">
+				<div class="form-group row">
+					<label for="identifiant" class="col-4 col-form-label offset-lg-3 col-lg-2">Identifiant : </label>
+					<div class="col-8 col-lg-4">
+						<input name="txtIdentifiant" type="text" class="form-control" id="identifiant">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="password" class="col-4 col-form-label offset-lg-3 col-lg-2">Mot de passe : </label>
+					<div class="col-8 col-lg-4">
+						<input name="txtPassword" type="password" class="form-control" id="password">
+					</div>
+				</div>
+				<div class="form-group row">
+					<!-- Clicker sur le bouton connexion renvoie à la ServletConnexion. Cette servlet vérifie les informations du user.
+					Si les informations renseignées correspondent à un user connu de la BDD -> rd vers listeEnchere (maquette 5)
+					Si informations invalides alors rd vers Connexion.jsp (maquette 1) avec apparition d'un pop up signifiant l'erreur -->
+					<div class="col-6 offset-lg-3 col-lg-3">
+						<button name="btnConnexion" class="btn btn-primary btn-block"
+							type="submit">Connexion</button><!-- verif si id et password ok,si ok: création session et redirect page listeEnchere
+							, sinon rester sur cette page -->
+					</div>
+					<div class="col-6 col-lg-3">
+					
+					<!-- Création d'un cookie si "Se souvenir de moi" est sélectionné. La création est gérée par la ServletConnexion -->
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="gridCheck1">
+							<label class="form-check-label" for="gridCheck1"> Se
+								souvenir de moi </label>
+						</div>
+						<p>
+
+							<!-- Renvoie vers une page permettant de renseigner son adresse mail de contact pour 
+							l'envoie d'un mail permettant de reset le mdp (a faire si on a le temps) -->
+							<a href="">Mot de passe oublié</a>
+						</p>
+					</div>
+				</div>
+			</form>
+			<div class="row">
+			<!-- Redirection vers la ServletModificationInformationsUtilisateur. Cette Servlet envoie les informations à la jsp 
+				 ModificationInformationUtilisateur (Maquettes 2 et 3) lui permettant de gérer l'affichage  -->
+				<div class="col-12 offset-lg-3 col-lg-6">
+					<a class="btn btn-success btn-block" href="<%= request.getContextPath()%>/ServletModificationInformationsUtilisateur" role="button">Créer un compte</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

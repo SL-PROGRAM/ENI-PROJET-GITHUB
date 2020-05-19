@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Liste des enchères du moment !</title>
+<title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
@@ -15,11 +14,10 @@
 	<div class="container">
 		<div class="row">
 
-			<c:if test="${!empty session }">
-				<div class="col-12 col-lg-3 text-right d-lg-none">
-					<p class="m-0">${session.utilisateur.pseudo} est connecté</p>
-				</div>
-			</c:if>
+			
+			<div class="col-12 col-lg-3 text-right d-lg-none">
+				<p class="m-0">User est connecté</p>
+			</div>
 		</div>
 
 		<form action="<%=request.getContextPath()%>/ServletListeEncheres">
@@ -31,11 +29,6 @@
 							<input type="checkbox" class="custom-control-input"
 								id="checkMesVentes"> <label class="custom-control-label"
 								for="checkMesVentes">Mes ventes</label>
-						</div>
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input"
-								id="checkMesVentesEnregistrees"> <label
-								class="custom-control-label" for="checkMesVentesEnregistrees">Mes ventes enregistrées</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
@@ -63,9 +56,9 @@
 						<div class="offset-1 col-9">
 							<select class="custom-select" id="selectCategorie">
 								<option selected>Toutes</option>
-								<c:forEach var="c" items="${listeCategories }">
-									<option value="${c.noCategorie }">${c.nom }</option>
-								</c:forEach>
+								<option value="1">Catégorie1</option>
+								<option value="2">Catégorie2</option>
+								<option value="3">Something</option>
 							</select>
 						</div>
 					</div>
@@ -78,7 +71,7 @@
 				</div>
 				<div
 					class="col-6 col-lg-3 text-right text-lg-center d-none d-lg-block">
-					<p>${session.utilisateur.nom } est connecté</p>
+					<p>User est connecté</p>
 				</div>
 			</div>
 			<div class="row">
@@ -95,75 +88,118 @@
 		<br />
 
 		<div class="row">
-			<c:forEach items="${listeEncheres }" var="vente">
-				<div class="col-12 col-lg-6 pb-3">
-					<form action="<%=request.getContextPath()%>/ServletEncherir"
-						method="post">
-						<button class="container" type="submit">
-							<div class="row">
-					<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives à la vente vers la servlet 
-						 Le vendeur de la vente est clickable. Redirige vers ServletInformationsUtilisateur Envoie des informations 
-						 relatives de l'utilsiateur à afficher. -->
-								<div class="col-3">
-								<!-- Ligne 1 -->
-									<div class="col-12" style="height: 100%">
-										<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
-											src="">
-									</div>
-								</div>
-	
-								<div class="col-9">
-									<div class="row">
-										<div class="col-6">
-										<!-- vignette de mes enchères en cours -->
-											<h3>${vente.nomArticle }</h3>
-										</div>
-										<div class="col-6">
-											<p>etape2</p>
-										</div>
-	
-								<!-- Lignes 2 et 3 -->
-										<div class="col-6">
-											<p>Prix : ${vente.prixVente } points</p>
-											<p>Fin de l'enchère :</p>
-										</div>
-	
-										<div class="col-6">
-											<p>Classement : ${vente.??? }</p>
-											<p>${vente.dateFinEncheres }</p>
-										</div>
-										
-								<!-- Ligne 4 -->
-										<div class="col-6">
-											<p>Retrait :</p>
-										</div>
-										<div class="col-6">
-											<p>${vente.noVente.retrait.rue }</p>
-											<p>${vente.noVenteretrait.codePostal } ${vente.retrait.ville }</p>
-										</div>
-										
-								<!-- Ligne 5 -->
-										<div class="col-6">
-											<p>Vendeur :</p>
-										</div>
-										<div class="col-6">
-											<c:choose>
-												<c:when test="${empty vente.utilisateurAcheteur }">
-													<p><a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur } </a></p>
-												</c:when>
-												<c:when test="${empty vente.utilisateurVendeur } < 0">
-													<p>${vente.utilisateurAcheteur } </p>
-												</c:when>
-											</c:choose>
-										</div>
-	
-									</div>
+			<div class="col-12 col-lg-6 pb-3">
+				<form action="<%=request.getContextPath()%>/ServletDetailVente"
+					method="post">
+					<button class="container" type="submit">
+						<div class="row">
+
+							<div class="col-3">
+								<div class="col-12" style="height: 100%">
+									<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
+										src="">
 								</div>
 							</div>
-						</button>
-					</form>
-				</div>
-			</c:forEach>
+
+							<div class="col-9">
+								<div class="row">
+									<div class="col-6">
+										<p>PC Gamer pour travailler</p>
+									</div>
+									<div class="col-6">
+										<p>etape2</p>
+									</div>
+
+
+									<div class="col-6">
+										<p>Prix : 210 points</p>
+										<p>Fin de l'enchère :</p>
+									</div>
+
+									<div class="col-6">
+										<p>Classement : 2</p>
+										<p>10/08/2018</p>
+									</div>
+
+									<div class="col-6">
+										<p>Retrait :</p>
+									</div>
+									<div class="col-6">
+										<p>10 allée des Alouettes</p>
+										<p>44 800 Saint Herblain</p>
+									</div>
+
+									<div class="col-6">
+										<p>Vendeur :</p>
+									</div>
+									<div class="col-6">
+										<p>
+											<a
+												href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">jojo44</a>
+										</p>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</button>
+				</form>
+			</div>
+
+			<div class="col-12 col-lg-6">
+				<form action="<%=request.getContextPath()%>/ServletDetailVente"
+					method="post">
+					<button class="container" type="submit">
+						<div class="row">
+
+							<div class="col-3">
+								<div class="col-12" style="height: 100%">
+									<img alt="Image du produit iuhzbfeg yobvg zeyigbza euijgb zoi"
+										src="">
+								</div>
+							</div>
+
+							<div class="col-9">
+								<div class="row">
+									<div class="col-6">
+										<p>PC Gamer pour travailler</p>
+									</div>
+									<div class="col-6">
+										<p>etape2</p>
+									</div>
+
+
+									<div class="col-6">
+										<p>Prix : 210 points</p>
+										<p>Fin de l'enchère :</p>
+									</div>
+
+									<div class="col-6">
+										<p>Classement : 2</p>
+										<p>10/08/2018</p>
+									</div>
+
+									<div class="col-6">
+										<p>Retrait :</p>
+									</div>
+									<div class="col-6">
+										<p>10 allée des Alouettes</p>
+										<p>44 800 Saint Herblain</p>
+									</div>
+
+									<div class="col-6">
+										<p>Vendeur :</p>
+									</div>
+									<div class="col-6">
+										<p>NineJea</p>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</button>
+				</form>
+			</div>
 		</div>
 	</div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
