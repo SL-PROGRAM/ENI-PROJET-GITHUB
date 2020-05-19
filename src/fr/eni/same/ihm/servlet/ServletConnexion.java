@@ -24,8 +24,11 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page de connexion (connexion.jsp)
 	 * doPost : Auto-appel de la page connexion pour vérification des informations de connexion de l'utilisateur.
-	 * 			Si informations incorrectes : affichage d'un message d'erreur et reset des champs de saisie
-	 * 			Si informations correctes : redirection et envoie des informations utilisateur vers la page affichant la liste des enchères (listeEncheres.jsp)
+	 * 			Si informations incorrectes : affichage d'un message d'erreur
+	 * 			Si informations correctes : 
+	 * 							- Création d'une session
+	 * 							- setAtttribut de l'utilisateur en session
+	 * 							- redirection et envoie des informations utilisateur via session vers la page affichant la liste des enchères (listeEncheres.jsp)
 	 * 
 	 * Cette Servlet et la jsp correspondante prennent en charge la Maquette 1
 	 */
