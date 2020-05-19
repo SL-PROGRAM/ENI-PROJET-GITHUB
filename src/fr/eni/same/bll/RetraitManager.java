@@ -6,7 +6,11 @@ import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.AdresseUtils;
-
+/**
+ * 
+ * @author etienne
+ * @author sl
+ */
 public class RetraitManager extends AdresseUtils {
 	
 	private static RetraitManager instance;

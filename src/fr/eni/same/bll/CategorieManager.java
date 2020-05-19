@@ -9,6 +9,7 @@ import fr.eni.same.helpers.FonctionGenerique;
 /**
  * BLL - Classe contenant les méthodes de gestion des catégories
  * @author etienne
+ * @author sl
  */
 public class CategorieManager{
 

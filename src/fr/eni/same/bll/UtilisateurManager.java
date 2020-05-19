@@ -12,7 +12,11 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.AdresseUtils;
 import fr.eni.same.helpers.FonctionGenerique;
-
+/**
+ * @author sl
+ * @author etienne
+ *
+ */
 public class UtilisateurManager extends AdresseUtils  {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
@@ -346,8 +350,8 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 		if(!isAuthentified) {
 			throw new BllException("L'identifiant et le  mot de passe sont incorrect");
-		}else {	
-			session.setAttribute("ATT_SESSION_USER", utilisateur);
+		}else {
+			session.setAttribute("utilisateur", utilisateur);
 			return isAuthentified;
 		}
 	}

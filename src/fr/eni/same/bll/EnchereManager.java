@@ -11,7 +11,7 @@ import fr.eni.same.exception.DALException;
 /**
  * BLL - Classe qui contient les méthodes de gestion des enchères
  * @author etienne
- * @author simon
+ * @author sl
  */
 public class EnchereManager {
 
