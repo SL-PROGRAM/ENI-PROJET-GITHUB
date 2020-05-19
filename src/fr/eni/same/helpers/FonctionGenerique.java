@@ -1,5 +1,11 @@
 package fr.eni.same.helpers;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  * 
  * @author sl
@@ -21,5 +27,19 @@ public class FonctionGenerique {
 			isUnique = true;
 		}
 		return isUnique;
+	}
+	
+	public static Timestamp dateToTimestamp(String dateFinEnchere) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+			 Date date =  formatter.parse(dateFinEnchere);
+			 Timestamp timestamp = new Timestamp(date.getTime());
+			 //TODO Gérer l'heure
+		     return timestamp;
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null; 
 	}
 }
