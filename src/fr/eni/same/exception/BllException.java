@@ -1,7 +1,11 @@
 package fr.eni.same.exception;
 
+/**
+ * 
+ * @author sl
+ *
+ */
 public class BllException extends Exception {
-
 
 	private static final long serialVersionUID = 1L;
 

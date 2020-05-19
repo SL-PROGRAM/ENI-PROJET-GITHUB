@@ -7,6 +7,12 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
+/**
+ * 
+ * @author sl
+ * @author etienne
+ *
+ */
 public class CategorieManager{
 
 	private final int LIBELLE_LONGUEUR_MAX = 30;

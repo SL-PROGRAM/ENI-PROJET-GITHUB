@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bll.UtilisateurManager;
-import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.exception.BllException;
 
 /**
+ * @author andrea
+ * @author sl
+ * 
  * Servlet implementation class ServletConnexion
  */
 @WebServlet("/ServletConnexion")
