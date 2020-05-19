@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Liste des enchères du moment !</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
@@ -78,7 +78,7 @@
 				</div>
 				<div
 					class="col-6 col-lg-3 text-right text-lg-center d-none d-lg-block">
-					<p>${session.nom } est connecté</p>
+					<p>${session.utilisateur.nom } est connecté</p>
 				</div>
 			</div>
 			<div class="row">
@@ -138,8 +138,8 @@
 											<p>Retrait :</p>
 										</div>
 										<div class="col-6">
-											<p>${vente.rue }</p>
-											<p>${vente.codePostal } ${vente.ville }</p>
+											<p>${vente.noVente.retrait.rue }</p>
+											<p>${vente.noVenteretrait.codePostal } ${vente.retrait.ville }</p>
 										</div>
 										
 								<!-- Ligne 5 -->
