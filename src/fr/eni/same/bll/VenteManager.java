@@ -9,6 +9,11 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
 
+/**
+ * BLL - Classe qui contient les méthodes de gestion des Ventes
+ * @author sl
+ * @author etienne
+ */
 public class VenteManager  {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;

@@ -13,6 +13,12 @@ import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.AdresseUtils;
 import fr.eni.same.helpers.FonctionGenerique;
 
+/**
+ * BLL - Classe qui contient les méthodes de gestion des utilisateurs
+ * @author sl
+ * @author etienne
+ *
+ */
 public class UtilisateurManager extends AdresseUtils  {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;

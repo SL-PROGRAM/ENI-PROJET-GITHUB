@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.EnchereManager;
+import fr.eni.same.bll.FiltreManager;
 import fr.eni.same.bll.RetraitManager;
 import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bll.VenteManager;
@@ -31,7 +32,10 @@ public class ServletTestBLL extends HttpServlet {
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
+		
+		
 		System.out.println("----------UTILISATEURS----------");
 		testUtilisateurs();
 		System.out.println("----------CATEGORIES----------");
@@ -152,8 +156,19 @@ public class ServletTestBLL extends HttpServlet {
 	
 	public void testFiltre(HttpSession session) throws BllException {
 		session.setAttribute("ATT_SESSION_USER", UtilisateurManager.getUtilisateurManager().select(24));
+		Categorie categorie = null;
 		
+		FiltreManager.getFiltreManager().filtreAutresEncheres(session, categorie);
+		FiltreManager.getFiltreManager().filtreMesAcquisitions(session, categorie);
+		FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session, categorie);
+		FiltreManager.getFiltreManager().filtreMesVentesPubliées(session, categorie);
 		
+		categorie = CategorieManager.getCategorieManager().select(22);
+		
+		FiltreManager.getFiltreManager().filtreAutresEncheres(session, categorie);
+		FiltreManager.getFiltreManager().filtreMesAcquisitions(session, categorie);
+		FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session, categorie);
+		FiltreManager.getFiltreManager().filtreMesVentesPubliées(session, categorie);
 		
 	}
 }
