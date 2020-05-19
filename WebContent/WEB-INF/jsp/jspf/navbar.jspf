@@ -14,7 +14,7 @@
 		<div class="collapse navbar-collapse d-lg-flex justify-content-end"
 			id="navbarNav">
 			<ul class="navbar-nav ">
-				<c:if test="${!empty session }">
+				<c:if test="${!empty utilisateur.pseudo }">
 				<!-- Redirige vers ServletCreerVente (maquette 11)-->
 					<li class="nav-item active px-3"><a
 						href="<%=request.getContextPath()%>/ServletCreerVente">Vendre
@@ -27,7 +27,7 @@
 					<li class="nav-item px-3"><a
 						href="<%=request.getContextPath()%>/ServletConnexion">Déconnexion</a></li>
 				</c:if>	
-				<c:if test="${empty session }">
+				<c:if test="${empty utilisateur.pseudo }">
 				<!-- Affichage "déconnecté" -->
 				<!-- Redirige vers ServletConnexion (maquette 1) -->
 					<li class="nav-item px-3"><a

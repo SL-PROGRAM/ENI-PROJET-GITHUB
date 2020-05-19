@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class ServletInformationsAcheteur
+ * @author Mathieu/Etienne
  */
 @WebServlet("/ServletInformationsUtilisateur")
 public class ServletInformationsUtilisateur extends HttpServlet {

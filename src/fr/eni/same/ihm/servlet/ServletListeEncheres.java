@@ -1,6 +1,7 @@
 package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bll.CategorieManager;
+import fr.eni.same.bll.FiltreManager;
 import fr.eni.same.bll.RetraitManager;
 import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bll.VenteManager;
@@ -23,6 +25,7 @@ import fr.eni.same.exception.BllException;
 
 /**
  * Servlet implementation class ServletListeEnchere
+ * @author Mathieu / Etienne
  */
 @WebServlet("/ServletListeEncheres")
 public class ServletListeEncheres extends HttpServlet {
@@ -41,26 +44,84 @@ public class ServletListeEncheres extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		System.out.println(utilisateur.toString());
+		List<List<Vente>> listes = new ArrayList<List<Vente>>();
 		
-		try {
-			Utilisateur utilisateur = UtilisateurManager.getUtilisateurManager().select(100);
-			request.setAttribute("utilisateur", utilisateur);
-			List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
-			request.setAttribute("listeVentes", listeVentes);
-			List<Categorie> listeCategories = CategorieManager.getCategorieManager().selectAll();
-			request.setAttribute("listeCategories", listeCategories);
-			List<Retrait> listeRetraits = RetraitManager.getRetraitManager().selectAll();
-			request.setAttribute("listeRetraits", listeRetraits);
-			Retrait retrait = RetraitManager.getRetraitManager().select(55);
-			request.setAttribute("retrait", retrait);
-			Utilisateur utilisateurVendeur = UtilisateurManager.getUtilisateurManager().select(75);
-			request.setAttribute("utilisateurVendeur", utilisateurVendeur);
+		
+		if (request.getParameterValues("filtres")!=null) {
+			String[] valeurs = request.getParameterValues("filtres");
+			for (int i = 0; i < valeurs.length; i++) {
+				if (valeurs[i].equals("mesVentes")) {
+					try {
+						listes.add(i, FiltreManager.getFiltreManager().filtreMesVentesPubliées(session));
+					} catch (BllException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+//				if (valeurs[i].equals("mesVentesEnregistrees")) {
+//					try {
+//						listes.add(i, FiltreManager.getFiltreManager().filtreMesVentesEnregistrees(cookie));
+//					} catch (BllException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+
+//				if (valeurs[i].equals("mesEncheresEnCours")) {
+//					try {
+//						listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
+//					} catch (BllException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+
+				if (valeurs[i].equals("mesAcquisitions")) {
+					try {
+						
+						listes.add(i, FiltreManager.getFiltreManager().filtreMesAcquisitions(session));
+					} catch (BllException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				
+				if (valeurs[i].equals("autresEncheres")) {
+					try {
+						listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
+					} catch (BllException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				
+			}
 			
+			List<Vente> listeFinale = new ArrayList<Vente>(listes.get(0));
+			listeFinale.addAll(listes.get(1));
+			
+		}
+		
+		List<Categorie> listeCategories;
+		try {
+			listeCategories = CategorieManager.getCategorieManager().selectAll();
+			request.setAttribute("listeCategories", listeCategories);
+			//	request.setAttribute("listeVentes", listeFinal);
+			request.setAttribute("utilisateur", utilisateur);
 		} catch (BllException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		
+//		checkMesVentesEnregistrees
+//		checkMesEncheresEnCours
+//		checkMesAcquisitions
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 		rd.forward(request, response);

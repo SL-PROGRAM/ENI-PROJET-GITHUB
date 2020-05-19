@@ -15,9 +15,9 @@
 	<br/>
 	<div class="container">
 		<div class="row">
-			<c:if test="${!empty session }">
+			<c:if test="${!empty utilisateur.pseudo }">
 				<div class="col-12 col-lg-3 text-right d-lg-none">
-					<p class="m-0">${session.utilisateur.pseudo} est connecté</p>
+					<p class="m-0">${utilisateur.pseudo} est connecté</p>
 				</div>
 			</c:if>
 		</div>
@@ -29,30 +29,30 @@
 					<div class="offset-1">
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkMesVentes"> <label class="custom-control-label"
-								for="checkMesVentes">Mes ventes</label>
+								id="mesVentes" value="mesVentes" name="filtres"> <label class="custom-control-label"
+								for="mesVentes">Mes ventes</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkMesVentesEnregistrees"> <label
-								class="custom-control-label" for="checkMesVentesEnregistrees">Mes ventes enregistrées</label>
+								id="mesVentesEnregistrees" value="mesVentesEnregistrees" name="filtres"> <label
+								class="custom-control-label" for="mesVentesEnregistrees">Mes ventes enregistrées</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkMesEncheresEnCours"> <label
-								class="custom-control-label" for="checkMesEncheresEnCours">Mes
+								id="mesEncheresEnCours" value="mesEncheresEnCours" name="filtres"> <label
+								class="custom-control-label" for="mesEncheresEnCours">Mes
 								enchères en cours</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkMesAcquisitions"> <label
-								class="custom-control-label" for="checkMesAcquisitions">Mes
+								id="mesAcquisitions" value="mesAcquisitions" name="filtres"> <label
+								class="custom-control-label" for="mesAcquisitions">Mes
 								acquisitions</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkAutresEncheres"> <label
-								class="custom-control-label" for="checkAutresEncheres">Autres
+								id="autresEncheres" value="autresEncheres" checked name="filtres"> <label
+								class="custom-control-label" for="autresEncheres">Autres
 								enchères</label>
 						</div>
 					</div>
@@ -76,10 +76,10 @@
 						</div>
 					</div>
 				</div>
-				<c:if test="${!empty session }">
+				<c:if test="${!empty utilisateur.pseudo }">
 					<div
 						class="col-6 col-lg-3 text-right text-lg-center d-none d-lg-block">
-						<p>${session.utilisateur.nom } est connecté</p>
+						<p>${utilisateur.pseudo } est connecté</p>
 					</div>
 				</c:if>
 			</div>
@@ -116,7 +116,7 @@
 	
 								<div class="col-9">
 									<div class="row">
-										<c:if test="${utilisateur.noUtilisateur != vente.utilisateurAcheteur }">
+										<c:if test="${utilisateur.noUtilisateur != vente.utilisateurAcheteur.noUtilisateur }">
 											<div class="col-12">
 												<p>La meilleure offre est de ${vente.prixVente} points</p>												
 											</div>
@@ -152,11 +152,11 @@
 										</div>
 										<div class="col-6">
 											<c:choose>
-												<c:when test="${vente.utilisateurVendeur.nom.equals(utilisateur.nom) }">
-													<p>${vente.utilisateurVendeur.nom } </p>
+												<c:when test="${vente.utilisateurVendeur.noUtilisateur.equals(utilisateur.noUtilisateur) }">
+													<p>${vente.utilisateurVendeur.pseudo } </p>
 												</c:when>
-												<c:when test="${!vente.utilisateurVendeur.nom.equals(utilisateur.nom) }">
-													<p><a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.nom } </a></p>
+												<c:when test="${!vente.utilisateurVendeur.noUtilisateur.equals(utilisateur.noUtilisateur) }">
+													<p><a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo } </a></p>
 												</c:when>
 											</c:choose>
 										</div>
