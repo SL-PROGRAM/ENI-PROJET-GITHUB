@@ -19,9 +19,8 @@ public class ServletDetailVente extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page affichant les informations de la vente côté vendeur (detailVente.jsp)
-	 * doPost : 
 	 * 			1- récupération des informations de la vente
-	 * 			2- Gestion de la fin d'une vente afin d'afficher l'acheteur ayant remporté la vente
+	 * 			2- Gestion de la fin d'une vente afin d'afficher l'acheteur ayant remporté la vente et les boutons associés
 	 * 
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 9 et 10
 	 */
