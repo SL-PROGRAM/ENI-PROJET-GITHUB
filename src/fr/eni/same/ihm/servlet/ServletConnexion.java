@@ -54,10 +54,10 @@ public class ServletConnexion extends HttpServlet {
 			try {
 				String msgErreur = UtilisateurManager.getUtilisateurManager().connexion(identifiant, password, session);
 				if(msgErreur.equals("")) {
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/ServletListeEncheres");
 					rd.forward(request, response);
 				}else {
-					request.setAttribute("erreur", msgErreur );
+					request.setAttribute("erreur", msgErreur);
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
 					rd.forward(request, response);
 				}

@@ -2,8 +2,6 @@ package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -25,6 +23,9 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.helpers.FonctionGenerique;
 
 /**
+ * @author Andrea
+ * @author sl
+ * 
  * Servlet implementation class ServletCreerVente
  */
 @WebServlet("/ServletCreerVente")
@@ -75,16 +76,12 @@ public class ServletCreerVente extends HttpServlet {
 		if(request.getParameter("publierVente").equals("Publier")) {
 			HttpSession session = request.getSession();
 			String dateFinEnchere = request.getParameter("dateFinEnchere");
-			String categorieLibelle = request.getParameter("selectCategorie");
-			
 			Timestamp date = FonctionGenerique.dateToTimestamp(dateFinEnchere);
 			
-			Categorie categorie = creerCategorie(categorieLibelle);		
+			String noCategorie = request.getParameter("selectCategorie");
+			Categorie categorie = selectCategorie(noCategorie);		
 			Vente newVente = creerVente(request, session, date, categorie);
 			creerRetrait(request, newVente);
-			
-			
-			
 			
 		}else if(request.getParameter("enregistrerVente").equals("Enregistrer")) {
 			
@@ -113,33 +110,49 @@ public class ServletCreerVente extends HttpServlet {
 	}
 
 	private Vente creerVente(HttpServletRequest request, HttpSession session, Timestamp date, Categorie categorie) {
-		Vente newVente= new Vente();
-		newVente.setNomArticle(request.getParameter("article"));
-		newVente.setDescription(request.getParameter("articleDescription"));
-		newVente.setDateFinEncheres(date);//(request.getParameterValues("")); a chercher comment faire pour le select class Categorie??
-		newVente.setMiseAPrix(Integer.parseInt(request.getParameter("miseAPrix")));	
-		newVente.setCategorie(categorie);
-		newVente.setUtilisateurVendeur((Utilisateur) session.getAttribute("utilisateur"));
-		newVente.setPrixVente(Integer.parseInt(request.getParameter("miseAPrix")));
-		newVente.toString();
+		String nomArticle = request.getParameter("article");
+		String Description = request.getParameter("articleDescription");
+		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
+		Utilisateur vendeur = (Utilisateur) session.getAttribute("utilisateur");
+		
+		Vente vente = new Vente(
+				nomArticle,
+				Description, 
+				date,
+				miseAPrix,
+				miseAPrix+1,
+				null,
+				vendeur,
+				categorie);
+		
+		System.out.println(vente.toString());
+
+//		newVente.setNomArticle();
+//		newVente.setDescription();
+//		newVente.setDateFinEncheres(date);//(request.getParameterValues("")); a chercher comment faire pour le select class Categorie??
+//		newVente.setMiseAPrix();	
+//		newVente.setCategorie(categorie);
+//		newVente.setUtilisateurVendeur();
+//		newVente.setPrixVente(Integer.parseInt(request.getParameter("miseAPrix")));
 		try {
-			VenteManager.getVenteManager().insert(newVente);
+			VenteManager.getVenteManager().insert(vente);
 		} catch (BllException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return newVente;
+		return vente;
 	}
 
-	private Categorie creerCategorie(String categorieLibelle) {
-		Categorie categorie = new Categorie();
-		categorie.setLibelle(categorieLibelle);
+	private Categorie selectCategorie(String noCategorie) {
+		
+		Categorie categorie = null;
 		try {
-			CategorieManager.getCategorieManager().insert(categorie);
-		} catch (BllException e) {
+			categorie = CategorieManager.getCategorieManager().select(Integer.parseInt(noCategorie));
+		} catch (NumberFormatException | BllException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+				
 		return categorie;
 	}
  

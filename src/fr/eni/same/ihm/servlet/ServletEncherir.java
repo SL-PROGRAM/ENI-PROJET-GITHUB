@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class ServletEnchere
+ * @author Mathieu/Etienne
  */
 @WebServlet("/ServletEncherir")
 public class ServletEncherir extends HttpServlet {
