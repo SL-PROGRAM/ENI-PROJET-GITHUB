@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.exception.BllException;
 
 /**
  * Servlet implementation class ServletConnexion
@@ -44,6 +46,14 @@ public class ServletConnexion extends HttpServlet {
 		
 		String identifiant = request.getParameter("txtIdentifiant");
 		String password = request.getParameter("txtPassword");
+		HttpSession session = request.getSession();
+		
+		try {
+			UtilisateurManager.getUtilisateurManager().connexion(identifiant, password, session);
+		} catch (BllException e) {
+			// TODO Gestion de l'erreur et affichage
+			e.printStackTrace();
+		}
 //		
 //		if (condition) {
 //			Utilisateur utilisateur = new Utilisateur();
