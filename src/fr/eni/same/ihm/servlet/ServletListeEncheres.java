@@ -19,8 +19,10 @@ public class ServletListeEncheres extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page affichant la liste des enchères disponibles (listeEnchere.jsp)
-	 * doPost : Récupération des identifiants de l'utilisateur, affichage des informations de l'utilisateur.
-	 * /!\ TODO : Penser à créer les filtres : "Mes ventes", "Mes enchères en cours", "Mes acquisitions", "Autres enchères". 
+	 * 		   Récupération des identifiants de l'utilisateur, affichage des informations de l'utilisateur.
+	 * 		   Récupération de la liste des ventes.
+	 * 		   Gestion des filtres
+	 * 		   
 	 * 
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 5
 	 */
