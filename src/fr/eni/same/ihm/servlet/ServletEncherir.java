@@ -19,7 +19,10 @@ public class ServletEncherir extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 * doGet : redirection vers la page permettant d'enchérir sur une vente (pageEncherir.jsp)
-	 * doPost : Récupération des informations liées à la vente sur laquelle je veux enchérir.
+	 * 		   Récupération des informations liées à la vente sur laquelle je veux enchérir.	
+	 * 		   Vérification que l'utilisateur qui accède à la vente n'est pas l'utilisateur vendant l'article
+	 * 		   Récupération de la dernière enchère de l'utilisateur voulant encherir sur la vente. Si pas de dernière enchère, 
+	 * 		   annuler ma dernière enchère n'apparait pas.
 	 * 
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 6 et 7
 	 */
