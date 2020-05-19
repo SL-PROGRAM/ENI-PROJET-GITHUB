@@ -30,7 +30,12 @@ hs_err_pid*
 
 WebContent/META-INF/context.xml
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 *.sql
 =======
 >>>>>>> front
+=======
+
+*.sql
+>>>>>>> Simon

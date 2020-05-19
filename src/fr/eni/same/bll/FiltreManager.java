@@ -15,6 +15,11 @@ import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 
+/**
+ * BLL - Class qui contient les filtres de recherche
+ * @author sl
+ *
+ */
 public class FiltreManager {
 	
 	private static FiltreManager instance;
@@ -52,7 +57,7 @@ public class FiltreManager {
 				}
 			}
 		}
-		Collections.sort(mesVentesPubliées, Collections.reverseOrder());
+//		Collections.sort(mesVentesPubliées, Collections.reverseOrder());
 		
 		return mesVentesPubliées;
 	}
@@ -67,7 +72,7 @@ public class FiltreManager {
 		
 		//Recupérer info dans Cookies
 		
-		Collections.sort(mesVentesEnregistrees, Collections.reverseOrder()); 
+//		Collections.sort(mesVentesEnregistrees, Collections.reverseOrder()); 
 		
 		return mesVentesEnregistrees;
 	}
@@ -91,21 +96,8 @@ public class FiltreManager {
 				}
 			}
 		}
-		Collections.sort(mesEncheresEnCours, Collections.reverseOrder()); 
+//		Collections.sort(mesEncheresEnCours, Collections.reverseOrder()); 
 		
-		return mesEncheresEnCours;
-	}
-	
-	public List<Enchere> filtreMesEncheresEnCours1(HttpSession session, Categorie categorie) throws BllException{
-		List<Enchere> mesEncheresEnCours = filtreMesEncheresEnCours(session, null);
-		for (Enchere enchere : mesEncheresEnCours) {
-			if(categorie == null) {
-				mesEncheresEnCours.add(enchere);
-			}
-			if(enchere.getVenteEnchere().getCategorie() == categorie) {
-				mesEncheresEnCours.add(enchere);
-			}
-		}
 		return mesEncheresEnCours;
 	}
 	
@@ -129,7 +121,7 @@ public class FiltreManager {
 				}
 			}
 		}
-		Collections.sort(mesAcquisitions, Collections.reverseOrder()); 
+//		Collections.sort(mesAcquisitions, Collections.reverseOrder()); 
 		
 		return mesAcquisitions;
 	}
@@ -154,7 +146,7 @@ public class FiltreManager {
 				}
 			}
 		}
-		Collections.sort(autresEncheres, Collections.reverseOrder()); 
+//		Collections.sort(autresEncheres, Collections.reverseOrder()); 
 		
 		return autresEncheres;
 	}
