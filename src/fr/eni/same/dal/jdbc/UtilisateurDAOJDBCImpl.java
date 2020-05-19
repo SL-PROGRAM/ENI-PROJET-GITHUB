@@ -36,10 +36,10 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
     }
 	
     private static final String INSERT="INSERT INTO utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
-									+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            + " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE="UPDATE utilisateurs"
-									+ " SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?,ville=?,mot_de_passe=?, credit=?,administrateur=?"
-									+ " WHERE no_utilisateur = ?";
+	            + " SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?,ville=?,mot_de_passe=?, credit=?,administrateur=?"
+	            + " WHERE no_utilisateur = ?";
 	private static final String DELETE ="DELETE FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_BY_ID = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_ALL = "SELECT * FROM utilisateurs";
@@ -70,6 +70,7 @@ public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 			}
 //			System.out.println("Personne insérée en base de donnée : " + t.toString());
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DALException("Erreur lors de l'insertion d'un utilisateur");
 		}
 	}

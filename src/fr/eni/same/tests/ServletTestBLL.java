@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.EnchereManager;
@@ -28,7 +29,9 @@ import fr.eni.same.exception.BllException;
 @WebServlet("/ServletTestBLL")
 public class ServletTestBLL extends HttpServlet {
 	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		System.out.println("----------UTILISATEURS----------");
 		testUtilisateurs();
 		System.out.println("----------CATEGORIES----------");
@@ -39,6 +42,13 @@ public class ServletTestBLL extends HttpServlet {
 		testRetrait();
 		System.out.println("----------VENTE----------");
 		testVente();
+		System.out.println("----------FILTRE----------");
+		try {
+			testFiltre(session);
+		} catch (BllException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
@@ -78,14 +88,17 @@ public class ServletTestBLL extends HttpServlet {
 				int idCategorie = CategorieManager.getCategorieManager().selectAll().get(0).getNoCategorie();
 				UtilisateurManager.getUtilisateurManager().insert(standardA);
 				Categorie categorie = CategorieManager.getCategorieManager().select(idCategorie);
-				Timestamp t = new Timestamp(System.currentTimeMillis());
+				
+				Timestamp now =  new Timestamp(System.currentTimeMillis());
+				int aDay = 24 * 60 * 60 * 1000;
+				Timestamp t = new Timestamp(now.getTime()+aDay*2);
+				
 				Vente vente = new Vente(1,"plop","description",t,5000,6000,standardA,standardA,categorie);
 				VenteManager.getVenteManager().insert(vente);
 				Enchere enchere1 = new Enchere(t,standardA,vente);
 				EnchereManager.getEnchereManager().insert(enchere1);
-				t = new Timestamp(System.currentTimeMillis());
-				EnchereManager.getEnchereManager().update(enchere1);
-				EnchereManager.getEnchereManager().select(enchere1.getUtilisateurEnchere().getNoUtilisateur(), enchere1.getVenteEnchere().getNoVente());
+				EnchereManager.getEnchereManager().update(enchere1);				
+				EnchereManager.getEnchereManager().select(enchere1.getVenteEnchere().getNoVente(), enchere1.getUtilisateurEnchere().getNoUtilisateur());
 				EnchereManager.getEnchereManager().selectAll();
 				EnchereManager.getEnchereManager().delete(enchere1);
 			} catch (BllException e) {
@@ -117,7 +130,10 @@ public class ServletTestBLL extends HttpServlet {
 				Utilisateur vendeur = UtilisateurManager.getUtilisateurManager().select(26);
 				Categorie categorie = CategorieManager.getCategorieManager().select(4);
 				
-				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+				Timestamp now =  new Timestamp(System.currentTimeMillis());
+				int aDay = 24 * 60 * 60 * 1000;
+				Timestamp timestamp = new Timestamp(now.getTime()+aDay*2);
+				
 				Vente vente = new Vente(4,"uneee","deuxxx",timestamp,2,6000,null,vendeur,categorie);
 				VenteManager.getVenteManager().insert(vente);
 				vente.setDescription("Description modifiée");
@@ -126,11 +142,18 @@ public class ServletTestBLL extends HttpServlet {
 				VenteManager.getVenteManager().selectAll();
 				Enchere enchere = new Enchere(timestamp,acheteur,vente);
 				EnchereManager.getEnchereManager().insert(enchere);
-//				EnchereManager.getEnchereManager().updateAcheteur(vente);
+				VenteManager.getVenteManager().updateAcheteur(vente);
 				EnchereManager.getEnchereManager().delete(enchere);
-//				EnchereManager.getEnchereManager().delete(vente);
+				VenteManager.getVenteManager().delete(vente);
 			} catch (BllException e) {
 				e.printStackTrace();
 		}
+	}
+	
+	public void testFiltre(HttpSession session) throws BllException {
+		session.setAttribute("ATT_SESSION_USER", UtilisateurManager.getUtilisateurManager().select(24));
+		
+		
+		
 	}
 }
