@@ -19,7 +19,7 @@ import fr.eni.same.helpers.FonctionGenerique;
  * @author etienne
  *
  */
-public class UtilisateurManager extends AdresseUtils  {
+public class UtilisateurManager  {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int PSEUDO_LONGUEUR_MAX = 30;
@@ -326,6 +326,7 @@ public class UtilisateurManager extends AdresseUtils  {
 
 
 	//Vérification du nom de compte et du mot de passe de l'utilisateur
+	
 	public boolean connexion(String identifiant, String motDePasse, HttpSession session) throws BllException {
 		boolean isAuthentified= false;
 		motDePasse = securisationMotDePass(motDePasse);
