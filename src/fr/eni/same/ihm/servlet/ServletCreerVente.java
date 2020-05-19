@@ -83,16 +83,18 @@ public class ServletCreerVente extends HttpServlet {
 			Vente newVente = creerVente(request, session, date, categorie);
 			creerRetrait(request, newVente);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
-			rd.forward(request, response);
+			
 			
 			
 		}else if(request.getParameter("enregistrerVente").equals("Enregistrer")) {
-			//cookie
+			
+			
 		}else if(request.getParameter("annuler").equals("Annuler")) {
-			//annuler enregistrement
+			
 		}
 		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+		rd.forward(request, response);
 		
 	}
 
