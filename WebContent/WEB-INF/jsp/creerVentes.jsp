@@ -53,9 +53,11 @@
 						<div class="offset-1 col-9">
 							<select class="custom-select" id="selectCategorie" name="selectCategorie">
 								<option selected>Toutes</option>
-								<c:forEach var="c" items="${listeCategories }">
-									<option value="${c.noCategorie }">${c.libelle }</option>
-								</c:forEach>
+							
+								<c:forEach items="${categories}" var="categorie">
+										<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+									</c:forEach>
+								
 							</select>
 						</div>
 					</div>
