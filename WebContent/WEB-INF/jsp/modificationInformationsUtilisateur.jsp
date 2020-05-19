@@ -36,10 +36,10 @@
 		
 		<form action=
 			'<c:choose>
-				<c:when> test="${empty request.getSession() }">
+				<c:when test="${empty request.getSession() }">
 					<%= request.getContextPath()%>/ServletConnexion" method="post"
 				</c:when>
-				<c:when> test="${!empty request.getSession() }">
+				<c:when test="${!empty request.getSession() }">
 					<%= request.getContextPath()%>/ServletModificationInformationsUtilisateur" method="post"
 				</c:when>
 			</c:choose>'
@@ -54,7 +54,7 @@
 								id="pseudo" placeholder="Votre Pseudo..." 
 								
 								<c:if test="${!empty request.getSession()}">
-									value="${user.pseudo}"
+									value="${utilisateur.pseudo}"
 								</c:if>
 							>
 											
@@ -68,7 +68,7 @@
 							<input name="txtNom" type="text" class="form-control" id="nom"
 								placeholder="Votre Nom..."
 								<c:if test="${!empty request.getSession()}">
-									value="${user.nom}"
+									value="${utilisateur.nom}"
 								</c:if>
 							>
 						</div>
@@ -85,7 +85,7 @@
 							<input name="txtPrenom" type="text" class="form-control"
 								id="prenom" placeholder="Votre prénom..."
 								<c:if test="${!empty request.getSession()}">
-									value="${user.prenom}"
+									value="${utilisateur.prenom}"
 								</c:if>>
 						</div>
 					</div>
@@ -98,7 +98,7 @@
 								id="email" placeholder="Votre email..."
 								value="
 								<c:if test="${!empty request.getSession()}">
-									${user.email}
+									${utilisateur.email}
 								</c:if>"
 							>
 						</div>
@@ -116,7 +116,7 @@
 							<input name="txtTelephone" type="tel" class="form-control"
 								id="telephone" placeholder="Votre numéro de téléphone..."
 								<c:if test="${!empty request.getSession()}">
-									value="${user.telephone}"
+									value="${utilisateur.telephone}"
 								</c:if>
 							>
 						</div>
@@ -129,7 +129,7 @@
 							<input name="txtRue" type="text" class="form-control" id="rue"
 								placeholder="Le nom de votre rue..."
 								<c:if test="${!empty request.getSession()}">
-									value="${user.rue}"
+									value="${utilisateur.rue}"
 								</c:if>
 							>
 						</div>
@@ -146,7 +146,7 @@
 							<input name="numCodePostal" type="number" class="form-control"
 								id="codePostal" placeholder="Votre code postal..."
 								<c:if test="${!empty request.getSession()}">
-									value="${user.codePostal}"
+									value="${utilisateur.codePostal}"
 								</c:if>
 							>
 						</div>
@@ -159,7 +159,7 @@
 							<input name="txtVille" type="text" class="form-control"
 								id="ville" placeholder="Le nom de votre ville..."
 								<c:if test="${!empty request.getSession()}">
-									value="${user.ville}"
+									value="${utilisateur.ville}"
 								</c:if>
 							>
 						</div>
@@ -170,13 +170,13 @@
 			<div class="row">
 				<div class="col-12 col-lg-6">
 					<div class="form-group form-row">
-						<label for="password" class="col-6 col-lg-3 col-form-label">Mot de
+						<label for="motDePasse" class="col-6 col-lg-3 col-form-label">Mot de
 							passe : </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtMotDePasse" type="password" class="form-control"
-								id="password" placeholder="Votre mot de passe..."
+								id="motDePasse" placeholder="Votre mot de passe..."
 								<c:if test="${!empty request.getSession()}">
-									value="${user.password}"
+									value="${utilisateur.motDePasse}"
 								</c:if>
 							>
 						</div>
@@ -184,14 +184,14 @@
 				</div>
 				<div class="col-12 col-lg-6">
 					<div class="form-group form-row">
-						<label for="confirmPassword" class="col-6 col-lg-3 col-form-label">Confirmation
+						<label for="confirmMotDePasse" class="col-6 col-lg-3 col-form-label">Confirmation
 							: </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtConfirmation" type="password"
-								class="form-control" id="confirmPassword"
+								class="form-control" id="confirmMotDePasse"
 								placeholder="Confirmez votre mot de passe..."
 								<c:if test="${!empty request.getSession()}">
-									value="${user.confirmPassword}"
+									value="${utilisateur.confirmMotDePasse}"
 								</c:if>
 							>
 						</div>
@@ -204,7 +204,7 @@
 							<label for="credit" class="col-6 col-lg-3 col-form-label">Crédits
 								: </label>
 							<div class="col-6 col-lg-9">
-								<p>${user.credit}</p>
+								<p>${utilisateur.credit}</p>
 							</div>
 						</div>
 					</div>
@@ -231,7 +231,7 @@
 					<!-- Bontons à afficher uniquement pour la maquette 3 -->
 					<div class="row">
 						<div class="col-4 offset-lg-2 col-lg-3">
-							<!-- Renvoie vers ServletInformationsUtilisateur (maquettes 4 + 12). Cette servlet permettra de faire un update des informations du user en BDD -->
+							<!-- Renvoie vers ServletInformationsUtilisateur (maquettes 4 + 12). Cette servlet permettra de faire un update des informations du utilisateur en BDD -->
 							<button name="btnEnregistrer" class="btn btn-success btn-block" type="submit">Enregistrer</button>
 						</div>
 						<div class="col-4 col-lg-3">
