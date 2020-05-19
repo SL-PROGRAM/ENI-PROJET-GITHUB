@@ -10,7 +10,7 @@ import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
-import fr.eni.same.helpers.AdresseUtils;
+
 import fr.eni.same.helpers.FonctionGenerique;
 
 /**
@@ -19,7 +19,7 @@ import fr.eni.same.helpers.FonctionGenerique;
  * @author etienne
  *
  */
-public class UtilisateurManager  {
+public class UtilisateurManager {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int PSEUDO_LONGUEUR_MAX = 30;

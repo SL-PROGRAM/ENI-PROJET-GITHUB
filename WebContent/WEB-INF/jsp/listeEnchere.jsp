@@ -129,7 +129,7 @@
 										</div>
 	
 										<div class="col-6">
-											<p>Classement : ${classement }</p>
+											<p>Classement : </p>
 											<p>${vente.dateFinEncheres }</p>
 										</div>
 										
