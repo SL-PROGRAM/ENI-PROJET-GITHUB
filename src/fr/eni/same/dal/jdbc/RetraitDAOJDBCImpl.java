@@ -14,6 +14,12 @@ import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.RetraitDAO;
 import fr.eni.same.exception.DALException;
 
+/**
+ * 
+ * @author sl
+ * @author etienne
+ *
+ */
 public class RetraitDAOJDBCImpl implements RetraitDAO {
 	/**
 	 * mise en place d'un singleton pour garantir la cohérence des données

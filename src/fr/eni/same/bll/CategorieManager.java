@@ -6,12 +6,10 @@ import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.FonctionGenerique;
-
 /**
- * 
- * @author sl
+ * BLL - Classe contenant les méthodes de gestion des catégories
  * @author etienne
- *
+ * @author sl
  */
 public class CategorieManager{
 
@@ -31,13 +29,12 @@ public class CategorieManager{
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
-		} 
+		}
 	}
 
     /**
      * methode Get pour récupérer l'instance et la créer si elle n'existe pas
      * @return
-     * @throws DALException 
      */
     public static synchronized CategorieManager getCategorieManager () {
         if(instance == null){
@@ -50,12 +47,18 @@ public class CategorieManager{
         return instance;
     }
 	
-	public void insert(Categorie t) throws BllException {
-		String msgErreur = controleUpdateAndInsert(t);
+    /**
+     * Méthode de vérification avant insertion d'une catégorie en base de donnée
+     * Vérifie si la catégorie n'est pas nulle, si la taille du libellé est correcte, et si il est unique.
+     * @param categorie : la catégorie à tester
+     * @throws BllException
+     */
+	public void insert(Categorie categorie) throws BllException {
+		String msgErreur = controleUpdateAndInsert(categorie);
 		if(msgErreur.equalsIgnoreCase("")) {
 			try{
-				DALFactory.getCategorieDAOJdbcImpl().insert(t);
-				listeCategories.add(t);
+				DALFactory.getCategorieDAOJdbcImpl().insert(categorie);
+				listeCategories.add(categorie);
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -63,15 +66,21 @@ public class CategorieManager{
 			System.out.println("Catégorie : Insertion réalisée.");
 	}
 	
-	public void update(Categorie t) throws BllException {
-		String msgErreur = controleUpdateAndInsert(t);
+    /**
+     * Méthode de vérification avant update d'une catégorie en base de donnée
+     * Vérifie si la catégorie n'est pas nulle, si la taille du libellé est correcte, et si il est unique.
+     * @param categorie : la catégorie à tester
+     * @throws BllException
+     */
+	public void update(Categorie categorie) throws BllException {
+		String msgErreur = controleUpdateAndInsert(categorie);
 		if(msgErreur.equalsIgnoreCase("")) {
 			try {
-				DALFactory.getCategorieDAOJdbcImpl().update(t);
+				DALFactory.getCategorieDAOJdbcImpl().update(categorie);
 				for(int i = 0; i < listeCategories.size(); i++) {
-					if(listeCategories.get(i).getNoCategorie() == t.getNoCategorie()) {
-						listeCategories.get(i).setLibelle(t.getLibelle());
-						System.out.println("Catégorie : Update réalisée : " + t.toString());
+					if(listeCategories.get(i).getNoCategorie() == categorie.getNoCategorie()) {
+						listeCategories.get(i).setLibelle(categorie.getLibelle());
+						System.out.println("Catégorie : Update réalisée : " + categorie.toString());
 					}
 				}
 			} catch (DALException e) {
@@ -82,16 +91,31 @@ public class CategorieManager{
 		}
 	}
 
-	public void delete(Categorie t) throws BllException {
+	/**
+	 * Méthode de suppression d'une entrée dans la base de donnée
+	 * @param categorie : la catégorie à tester
+	 * @throws BllException
+	 */
+	public void delete(Categorie categorie) throws BllException {
+		String msgErreur = "";
+		msgErreur = categorieNull(categorie);
 		try {
-			DALFactory.getCategorieDAOJdbcImpl().delete(t);
-			listeCategories.remove(t);
+			if(msgErreur.equalsIgnoreCase("")) {
+				DALFactory.getCategorieDAOJdbcImpl().delete(categorie);
+				listeCategories.remove(categorie);				
+			}
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer l'entrée.");
 		}
 		System.out.println("Catégorie : Delete réalisé.");
 	}
 
+	/**
+	 * Méthode de sélection d'une entrée dans la liste des catégories
+	 * @param id : NoCategorie de la catégorie
+	 * @return cat : Catégorie sélectionnée par id
+	 * @throws BllException
+	 */
 	public Categorie select(int id) throws BllException {
 		Categorie cat = null;
 		for(int i = 0; i < listeCategories.size(); i++) {
@@ -106,8 +130,11 @@ public class CategorieManager{
 		return cat;
 	}
 
-
-	
+	/**
+	 * Méthode de sélection de la liste des catégories 
+	 * @return listeCategories : la liste locale des catégories
+	 * @throws BllException
+	 */
 	public List<Categorie> selectAll() throws BllException {
 		for(Categorie c : listeCategories) {
 			System.out.println("Categorie : Select All réalisé : " + c.toString());
@@ -120,26 +147,43 @@ public class CategorieManager{
 	//***********************************************************************************************//
 	
 	
-	private String controleUpdateAndInsert(Categorie t) {
+	/**
+	 * Méthode de vérification standard d'une catégorie
+	 * Vérifie que la catégorie n'est pas nulle, que son nombre de lettre soit correct, et que son libellé soit unique
+	 * @param categorie : La catégorie à tester
+	 * @return msgErreur : String contenant un éventuel message d'erreur, sinon renvoie ""
+	 */
+	private String controleUpdateAndInsert(Categorie categorie) {
 		String msgErreur = "";
 		try {
-			msgErreur += categorieNull(t);
-			msgErreur += libelleLongueurCorrect(t.getLibelle());
-			msgErreur += libelleUnique(t.getLibelle());
+			msgErreur += categorieNull(categorie);
+			msgErreur += libelleLongueurCorrect(categorie.getLibelle());
+			msgErreur += libelleUnique(categorie.getLibelle());
 		} catch (BllException e) {
 			e.printStackTrace();
 		}
 		return msgErreur;
 	}
 	
-	private String categorieNull (Categorie t){
+	/**
+	 * Permet de savoir si la Catégorie est nulle 
+	 * @param categorie
+	 * @return
+	 */
+	private String categorieNull (Categorie categorie){
 		String msgErreur="";
-		if(t == null) {
+		if(categorie == null) {
 			msgErreur += "Erreur : null";
 		}
 		return msgErreur;
 	}
 	
+	/**
+	 * Permet de vérifier si le libellé renseigné est unique ou non pour éviter les doublons en base de donnée
+	 * @param libelle : le libellé de la catégorie à tester
+	 * @return msgErreur : String contenant un éventuel message d'erreur, sinon renvoie ""
+	 * @throws BllException
+	 */
 	public String libelleUnique(String libelle) throws BllException {
 		String resultat = "";
 		for (int i = 0; i < listeCategories.size(); i++) {
@@ -151,7 +195,11 @@ public class CategorieManager{
 	}
 
 
-	
+	/**
+	 * Permet de vérifier que la taille du libellé correspond aux specs (taille max : 30, taille min = 5)
+	 * @param libelle : Le libellé de la catégorie à tester
+	 * @return msgErreur : String contenant un éventuel message d'erreur, sinon renvoie ""
+	 */
 	public String libelleLongueurCorrect(String libelle) {
 		String resultat = "";
 		if(!FonctionGenerique.isLongueurMax(libelle, LIBELLE_LONGUEUR_MAX)) {

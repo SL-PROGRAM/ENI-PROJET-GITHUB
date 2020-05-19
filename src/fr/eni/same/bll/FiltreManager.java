@@ -150,7 +150,6 @@ public class FiltreManager {
 
 	public List<Vente> filtreAutresEncheres(HttpSession session) throws BllException{
 		List<Vente> autresEncheres = filtreAutresEncheres(session, null);
-		
 		return autresEncheres;
 	}
 	

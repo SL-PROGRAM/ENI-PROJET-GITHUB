@@ -12,9 +12,7 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.AdresseUtils;
 import fr.eni.same.helpers.FonctionGenerique;
-
 /**
- * BLL - Classe qui contient les méthodes de gestion des utilisateurs
  * @author sl
  * @author etienne
  *
