@@ -10,7 +10,11 @@ import fr.eni.same.bo.Categorie;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.CategorieDAO;
 import fr.eni.same.exception.DALException;
-
+/**
+ * @author sl
+ * @author etienne
+ *
+ */
 public class CategorieDAOJDBCImpl implements CategorieDAO {
 	/**
 	 * mise en place d'un singleton pour garantir la cohérence des données
