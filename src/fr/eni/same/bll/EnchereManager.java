@@ -1,7 +1,6 @@
 package fr.eni.same.bll;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import fr.eni.same.bo.Enchere;
@@ -47,7 +46,7 @@ public class EnchereManager {
 		try {
 			DALFactory.getEnchereDAOJdbcImpl().insert(t);
 			listeEncheres.add(t);
-			System.out.println("Enchere : Select réalisé : " + t.toString());
+			System.out.println("Enchere : insert réalisé : " + t.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
@@ -86,8 +85,8 @@ public class EnchereManager {
 			if(listeEncheres.get(i).getUtilisateurEnchere().getNoUtilisateur() == noUtlisateur 
 					&& listeEncheres.get(i).getVenteEnchere().getNoVente() == noVente) {
 				e = listeEncheres.get(i);
+				System.out.println("Enchere : Select réalisé : " + e.toString());
 			}
-			System.out.println("Enchere : Select réalisé : " + e.toString());
 		}
 		if(e == null) {
 			throw new BllException("Aucune enchère n'a été trouvée avec ces informations.");
