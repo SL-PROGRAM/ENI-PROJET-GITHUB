@@ -95,7 +95,19 @@ public class ServletDetailVente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+//		if(request.getParameter("retraitEffectue").equals("Retrait effectué")) {
+//			//iteration 2: possibilité d'  annuler la vente tant que retrait pas effectué
+//	
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+//			rd.forward(request, response);	
+//			}
+		
+		 if(request.getParameter("annulerVente").equals("Annuler la vente")) {
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 	
