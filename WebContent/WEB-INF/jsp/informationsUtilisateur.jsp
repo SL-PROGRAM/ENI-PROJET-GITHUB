@@ -20,50 +20,75 @@
 		
 				<div class ="row">
 					<div class="col-12 text-center">
-						<h3>
-							Profil de 
+						
 							<c:choose>
-							 	<c:when test="${vente.UtilisateurVendeur}">
-									${vente.utilisateurVendeur.pseudo}
-							 	</c:when">
-							 	<c:when test="${vente.UtilisateurAcheteur}">
-									${vente.utilisateurAcheteur.pseudo}
-							 	</c:when>
-						 	</c:choose>
-						</h3><!-- recuperer info du vendeur de l article, en lien avec page encherir et listeEnchere, y acceder que si login sinon redirection login -->
+								<c:when test="${!empty utilisateurVendeur }">
+									<h3>Profil de ${utilisateurVendeur.pseudo }</h3>
+								</c:when>
+								<c:when test="${!empty utilisateurAcheteur }">	
+									<h3>Profil de ${utilisateurAcheteur.pseudo }</h3>
+								</c:when>			
+							</c:choose>
+						
+			<!-- recuperer info du vendeur de l article, en lien avec page encherir et listeEnchere, y acceder que si login sinon redirection login -->
 					</div>
 				</div>
 		
 				<div class="row">
 					<div class="col-6 text-right">
-						<p>Pseudo:</p>
-						<c:if test="${vente.UtilisateurVendeur}">
+					
+					<c:choose>
+						<c:when test="${!empty utilisateurVendeur }">
+							<p>Pseudo:</p>
 							<p>Nom:</p>
 							<p>Prénom:</p>
 							<p>Email:</p>
-						</c:if>
-						<c:if test="${vente.utilisateur }">
-							<p>Telephone:</p>
-						</c:if>
-						<p>Rue:</p>
-						<p>Code Postal:</p>
-						<p>Ville:</p>
+								<c:if test="${!empty utilisateurVendeur.telephone }">
+									<p>Telephone:</p>
+								</c:if>
+							<p>Rue:</p>
+							<p>Code Postal:</p>
+							<p>Ville:</p>
+						</c:when>
+						
+						
+						<c:when test="${!empty utilisateurAcheteur }">
+							<p>Pseudo:</p>
+								<c:if test="${!empty utilisateurAcheteur.telephone }">
+									<p>Telephone:</p>
+								</c:if>
+							<p>Adresse:</p>
+						</c:when>
+					</c:choose>
 					</div>
 				
 			
 					<div class="col-6">
-						<p>${utilisateur.pseudo}</p>
-						<c:if test="${vente.UtilisateurVendeur}">
-							<p>${utilisateur.nom}</p>
-							<p>${utilisateur.prenom}</p>
-							<p>${utilisateur.email}</p>
-						</c:if>
-						<c:if test="${vente.utilisateur }">
-							<p>${utilisateur.telephone}</p>
-						</c:if>
-						<p>${retrait.rue}</p>
-						<p>${retrait.codePostal}</p>
-						<p>${retrait.ville}</p>
+					<c:choose>
+					
+						<c:when test="${!empty utilisateurVendeur }">
+							<p>${utilisateurVendeur.pseudo}</p>
+							<p>${utilisateurVendeur.nom}</p>
+							<p>${utilisateurVendeur.prenom}</p>
+							<p>${utilisateurVendeur.email}</p>
+								<c:if test="${!empty utilisateurVendeur.telephone }">
+									<p>${utilisateurVendeur.telephone}</p>
+								</c:if>
+							<p>${utilisateurVendeur.rue}</p>
+							<p>${utilisateurVendeur.codePostal}</p>
+							<p>${utilisateurVendeur.ville}</p>
+						</c:when>
+						
+						
+						<c:when test="${!empty utilisateurAcheteur }">
+							<p>${utilisateurAcheteur.pseudo}</p>
+								<c:if test="${!empty utilisateurAcheteur.telephone }">
+									<p>${utilisateurAcheteur.telephone}</p>
+								</c:if>
+							<p>${utilisateurAcheteur.rue}</p>
+							<p>${utilisateurAcheteur.codePostal} ${utilisateurAcheteur.ville}</p>
+						</c:when>
+					</c:choose>
 					</div>
 			</div>
 			<div class="row">
@@ -74,9 +99,10 @@
 				</div>
 				<div class="col-12 text-center">
 					<c:if test="${utilisateur.administrateur == true}">
-						<p>
-							<a class="btn btn-primary"  href="<%= request.getContextPath()%>/ServletListeEncheres">Supprimer le compte utilisateur</a>
-						</p>
+						<form action="<%= request.getContextPath()%>/ServletListeEncheres">
+							<input value="${utilisateurVendeur.noUtilisateur }" name="noUtilisateurVendeur" hidden="true">
+							<input class="btn btn-primary" type="submit" value="Supprimer le compte utilisateur" name="supprimmerCompteUtilisateur"/>
+						</form>
 					</c:if>					
 				</div>
 			</div>
