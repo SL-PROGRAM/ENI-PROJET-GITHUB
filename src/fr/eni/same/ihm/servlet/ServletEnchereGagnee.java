@@ -33,7 +33,7 @@ public class ServletEnchereGagnee extends HttpServlet {
 	    	return;
 		}
 		
-		
+		//si dateEnchere terminé et utlisateurEnchere == 
 		
 		Vente vente = (Vente) request.getAttribute("vente");
 		request.setAttribute("vente", vente);
