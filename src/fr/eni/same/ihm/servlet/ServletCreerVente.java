@@ -83,14 +83,18 @@ public class ServletCreerVente extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			String msgErreur = PublierVente.enregistrerVente(session, request );
 			if (!msgErreur.equals("")) {
 				request.setAttribute("erreur", msgErreur);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/creerVentes.jsp");
 				rd.forward(request, response);
+			}else {
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+				rd.forward(request, response);
 			}
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
-			rd.forward(request, response);
+			
+			
 			
 		}else if(request.getParameter("enregistrerVente").equals("Enregistrer")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
