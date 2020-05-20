@@ -22,10 +22,10 @@
 	<div class="row">
 		<div class="col-12 text-center">
 			<c:choose>
-				<c:when test="${empty request.getSession()}">
+				<c:when test="${empty utilisateur}">
 					<h3>Créer votre compte</h3>
 				</c:when>
-				<c:when test="${!empty request.getSession()}">
+				<c:when test="${!empty utilisateur}">
 					<h3>Modifier votre compte</h3>
 				</c:when>
 			</c:choose>
@@ -37,10 +37,10 @@
 		
 		<form action=
 			'<c:choose>
-				<c:when test="${empty request.getSession() }">
+				<c:when test="${empty utilisateur }">
 					<%= request.getContextPath()%>/ServletConnexion" method="post"
 				</c:when>
-				<c:when test="${!empty request.getSession() }">
+				<c:when test="${!empty utilisateur }">
 					<%= request.getContextPath()%>/ServletModificationInformationsUtilisateur" method="post"
 				</c:when>
 			</c:choose>'
@@ -54,7 +54,7 @@
 							<input name="txtPseudo" type="text" class="form-control"
 								id="pseudo" placeholder="Votre Pseudo..." 
 								
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									value="${utilisateur.pseudo}"
 								</c:if>
 							>
@@ -68,7 +68,7 @@
 						<div class="col-6 col-lg-9">
 							<input name="txtNom" type="text" class="form-control" id="nom"
 								placeholder="Votre Nom..."
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									value="${utilisateur.nom}"
 								</c:if>
 							>
@@ -85,7 +85,7 @@
 						<div class="col-6 col-lg-9">
 							<input name="txtPrenom" type="text" class="form-control"
 								id="prenom" placeholder="Votre prénom..."
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									value="${utilisateur.prenom}"
 								</c:if>>
 						</div>
@@ -98,7 +98,7 @@
 							<input name="txtEmail" type="email" class="form-control"
 								id="email" placeholder="Votre email..."
 								value="
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									${utilisateur.email}
 								</c:if>"
 							>
@@ -116,7 +116,7 @@
 						<div class="col-6 col-lg-9">
 							<input name="txtTelephone" type="tel" class="form-control"
 								id="telephone" placeholder="Votre numéro de téléphone..."
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									value="${utilisateur.telephone}"
 								</c:if>
 							>
@@ -129,7 +129,7 @@
 						<div class="col-6 col-lg-9">
 							<input name="txtRue" type="text" class="form-control" id="rue"
 								placeholder="Le nom de votre rue..."
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									value="${utilisateur.rue}"
 								</c:if>
 							>
@@ -146,7 +146,7 @@
 						<div class="col-6 col-lg-9">
 							<input name="numCodePostal" type="number" class="form-control"
 								id="codePostal" placeholder="Votre code postal..."
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									value="${utilisateur.codePostal}"
 								</c:if>
 							>
@@ -159,7 +159,7 @@
 						<div class="col-6 col-lg-9">
 							<input name="txtVille" type="text" class="form-control"
 								id="ville" placeholder="Le nom de votre ville..."
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									value="${utilisateur.ville}"
 								</c:if>
 							>
@@ -176,7 +176,7 @@
 						<div class="col-6 col-lg-9">
 							<input name="txtMotDePasse" type="password" class="form-control"
 								id="motDePasse" placeholder="Votre mot de passe..."
-								<c:if test="${!empty request.getSession()}">
+								<c:if test="${!empty utilisateur}">
 									value="${utilisateur.motDePasse}"
 								</c:if>
 							>
@@ -191,15 +191,15 @@
 							<input name="txtConfirmation" type="password"
 								class="form-control" id="confirmMotDePasse"
 								placeholder="Confirmez votre mot de passe..."
-								<c:if test="${!empty request.getSession()}">
-									value="${utilisateur.confirmMotDePasse}"
+								<c:if test="${!empty utilisateur}">
+									value="${utilisateur.motDePasse}"
 								</c:if>
 							>
 						</div>
 					</div>
 				</div>
 				<!-- Informations à n'afficher que dans le cadre de la maquette 3 (Modifier mon profil) -->
-				<c:if test="${!empty request.getSession() }">
+				<c:if test="${!empty utilisateur }">
 					<div class="col-12 col-lg-6">
 						<div class="form-group form-row">
 							<label for="credit" class="col-6 col-lg-3 col-form-label">Crédits
@@ -215,7 +215,7 @@
 			
 			<!-- Bontons à afficher uniquement pour la maquette 2 -->
 			<c:choose>
-				<c:when test="${empty request.getSession() }">
+				<c:when test="${empty utilisateur }">
 					<div class="row">
 						<div class="col-6 offset-lg-3 col-lg-3">
 							<!-- Redirection vers la ServletConnexion qui permettra de créer le compte en BDD et redirige vers la page connexion (maquette 1)-->
@@ -228,7 +228,7 @@
 						</div>
 					</div>
 				</c:when>
-				<c:when test="${!empty request.getSession() }">
+				<c:when test="${!empty utilisateur }">
 					<!-- Bontons à afficher uniquement pour la maquette 3 -->
 					<div class="row">
 						<div class="col-4 offset-lg-2 col-lg-3">
