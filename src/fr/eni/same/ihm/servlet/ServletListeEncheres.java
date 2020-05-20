@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.FiltreManager;
+import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
@@ -38,7 +39,7 @@ public class ServletListeEncheres extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 5
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession session = request.getSession();
 		//Utilisateur utilisateur = null;
 		if (request.getSession().getAttribute("utilisateur") != null) {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
