@@ -107,7 +107,8 @@ public class UtilisateurManager {
 		}
 	}
 
-	public void updateMotDePasse(Utilisateur t) throws BllException {
+	public void updateMotDePasse(Utilisateur t, String motDePasse, String motDePasseVerif) throws BllException {
+		motDePasseIdentique(motDePasse, motDePasseVerif);
 		String msgErreur = controleUpdateAndInsert(t);
 		String MotDePasse = securisationMotDePass(t.getMotDePasse());
 		if (!msgErreur.equals("")){
