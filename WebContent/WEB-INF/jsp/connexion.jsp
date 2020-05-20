@@ -25,7 +25,7 @@
 					<div class="col-8 col-lg-4">
 						<input name="txtIdentifiant"
 						 type="text" class="form-control"
-						 <c:if test="${!empty id }">
+						 <c:if test="${ id } != null">
 						 	value="${id }"
 						 </c:if>
 						  id="identifiant">
@@ -36,7 +36,7 @@
 					<label for="password" class="col-4 col-form-label offset-lg-3 col-lg-2">Mot de passe : </label>
 					<div class="col-8 col-lg-4">
 						<input name="txtPassword" type="password" class="form-control"
-						<c:if test="${!empty mdp }">
+						<c:if test="${mdp } != null">
 						 	value="${mdp }"
 						 </c:if>
 						 id="password">

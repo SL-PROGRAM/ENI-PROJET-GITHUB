@@ -71,6 +71,7 @@ public class ServletConnexion extends HttpServlet {
 		String password = request.getParameter("txtPassword");
 		String rememberMe = request.getParameter("rememberMe");
 		HttpSession session = request.getSession();
+		
 		if(rememberMe.equals("on")) {
 			Cookie cookieID= new Cookie("connexionID", identifiant);
 			Cookie cookieMDP = new Cookie("connexionMDP", password);
