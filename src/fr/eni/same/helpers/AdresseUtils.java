@@ -2,6 +2,12 @@ package fr.eni.same.helpers;
 
 import fr.eni.same.exception.BllException;
 
+/**
+ * 
+ * @author sl
+ * @author etienne
+ *
+ */
 public abstract class AdresseUtils  {
 	protected final static int RUE_LONGUEUR_MAX = 30;
 	protected final static int RUE_LONGUEUR_MIN = 4;

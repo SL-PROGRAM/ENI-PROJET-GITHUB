@@ -2,9 +2,7 @@ package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,10 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.same.bll.CategorieManager;
+import fr.eni.same.bll.PublierVente;
+import fr.eni.same.bll.RetraitManager;
+import fr.eni.same.bll.UtilisateurManager;
+import fr.eni.same.bll.VenteManager;
+import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Retrait;
+import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
+import fr.eni.same.exception.BllException;
+import fr.eni.same.helpers.FonctionGenerique;
 
 /**
+ * @author Andrea
+ * @author sl
+ * 
  * Servlet implementation class ServletCreerVente
  */
 @WebServlet("/ServletCreerVente")
@@ -35,19 +45,17 @@ public class ServletCreerVente extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getSession().getAttribute("utilisateur") == null){
-		response.sendRedirect("connexion");
+		response.sendRedirect("ServletConnexion");
     	return;
 	    }else{//recup info adresse de l utilisateurVendeur pour placer par defaut l adresse a l emplacement retrait
 	    	HttpSession session = request.getSession();
-			
-			String rue = (String) session.getAttribute("rue");
-			String codePostal = (String)session.getAttribute("codePostal");
-			String ville = (String)session.getAttribute("ville");
-			
-			
-			request.setAttribute("rue", rue);
-			request.setAttribute("codePostal", codePostal);
-			request.setAttribute("ville", ville);
+	    	try {
+				List<Categorie> listCategorie = CategorieManager.getCategorieManager().selectAll();
+				session.setAttribute("categories", listCategorie);
+			} catch (BllException e) {
+				e.printStackTrace();
+			}
+	    	
 	    }
 			
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/creerVentes.jsp");
@@ -64,39 +72,44 @@ public class ServletCreerVente extends HttpServlet {
 		
 		
 		//recup info dans string d abbord car je sais pas comment coder le parse avec getParameter
-		String dateFinEnchere = request.getParameter("dateFinEnchere");
-		String miseAPrix= request.getParameter("miseAPrix");
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
+		System.out.println(request.getParameter("publierVente"));
 		
-		Retrait retrait = new Retrait();
-		Vente newVente= new Vente();
-		
-		newVente.setNomArticle(request.getParameter("article"));
-		newVente.setDescription(request.getParameter("articleDescription"));
-		//(request.getParameterValues("")); a chercher comment faire pour le select class Categorie??
-		
-		newVente.setMiseAPrix(Integer.parseInt("miseAPrix"));
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	        try {
-				newVente.setDateFinEncheres((Timestamp) formatter.parse(dateFinEnchere));
-			} catch (ParseException e) {
+		if(request.getParameter("publierVente").equals("Publier")) {
+			HttpSession session = request.getSession();
+			try {
+				UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
+			} catch (BllException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
-		
-		
-		retrait.setRue(request.getParameter("rue"));
-		retrait.setCodePostal(request.getParameter("codePostal"));
-		retrait.setVille(request.getParameter("ville"));
-		//retrait.setVente(?);
-		
-		if(request.getParameter("publierVente") != null) {
-			//vente.ajouterVente(newVente);
-			//retrait.ajouterRetrait(retrait);
-		}else if(request.getParameter("enregistrerVente") != null) {
-			//cookie
-		}else if(request.getParameter("annuler") != null) {
-			//annuler enregistrement
+			}
+			
+			String msgErreur = PublierVente.enregistrerVente(session, request );
+			if (!msgErreur.equals("")) {
+				request.setAttribute("erreur", msgErreur);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/creerVentes.jsp");
+				rd.forward(request, response);
+			}else {
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+				rd.forward(request, response);
+			}
+			
+			
+			
+		}else if(request.getParameter("enregistrerVente").equals("Enregistrer")) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+			rd.forward(request, response);
+			
+		}else if(request.getParameter("annuler").equals("Annuler")) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+			rd.forward(request, response);
 		}
+		
 	}
+
+	
+
+
  
 	
 }

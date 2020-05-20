@@ -1,7 +1,6 @@
 package fr.eni.same.bll;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -11,9 +10,7 @@ import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
-import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
-import fr.eni.same.exception.DALException;
 
 /**
  * BLL - Class qui contient les filtres de recherche

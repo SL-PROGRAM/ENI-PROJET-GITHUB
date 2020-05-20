@@ -14,10 +14,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import fr.eni.same.bll.RetraitManager;
+import fr.eni.same.bll.UtilisateurManager;
+import fr.eni.same.bll.VenteManager;
+import fr.eni.same.bo.Retrait;
+import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
+import fr.eni.same.exception.BllException;
 
 /**
+ * @author Andrea
+ * @author sl
  * Servlet implementation class ServletDetailVente
  */
 @WebServlet("/ServletDetailVente")
@@ -33,17 +42,39 @@ public class ServletDetailVente extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 9 et 10
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Vente vente = (Vente) request.getAttribute("vente");
-		Timestamp dateFinEnchere = vente.getDateFinEncheres();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String heureServer = format.format(GregorianCalendar.getInstance().getTime());
-		
-		request.setAttribute("vente", vente);
-		request.setAttribute("heureServer", heureServer);
-		request.setAttribute("dateFinEnchere", dateFinEnchere);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
-		rd.forward(request, response);
+		//vérification si session active
+		if (request.getSession().getAttribute("utilisateur") == null){
+			response.sendRedirect("ServletConnexion");
+	    	return;
+		}else{
+			HttpSession session = request.getSession();
+			int noVente = (int) request.getAttribute("noVente");			
+			try {
+				Vente vente = VenteManager.getVenteManager().select(noVente);	
+				Retrait retrait = RetraitManager.getRetraitManager().select(vente.getNoVente());
+				Timestamp heureServer = new Timestamp(System.currentTimeMillis());
+				
+				
+				request.setAttribute("vente", vente);
+				request.setAttribute("retrait", retrait);
+				request.setAttribute("heureServer", heureServer);
+
+				
+				if(vente.getUtilisateurVendeur() == (Utilisateur) session.getAttribute("utilisateur")) {
+					UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/detailVente.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
+					rd.forward(request, response);
+				}else {			
+					UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/detailVente.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
+					rd.forward(request, response);
+				}
+				
+			} catch (BllException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
 	}
 
 	/**

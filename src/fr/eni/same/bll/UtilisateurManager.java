@@ -1,9 +1,14 @@
 package fr.eni.same.bll;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bo.Utilisateur;
@@ -17,7 +22,7 @@ import fr.eni.same.helpers.FonctionGenerique;
  * @author etienne
  *
  */
-public class UtilisateurManager extends AdresseUtils  {
+public class UtilisateurManager {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int PSEUDO_LONGUEUR_MAX = 30;
@@ -324,16 +329,18 @@ public class UtilisateurManager extends AdresseUtils  {
 
 
 	//Vérification du nom de compte et du mot de passe de l'utilisateur
-	public boolean connexion(String identifiant, String motDePasse, HttpSession session) throws BllException {
+	
+	public String connexion(String identifiant, String motDePasse, HttpSession session) throws BllException {
 		boolean isAuthentified= false;
+		String msgErreur = "";
 		motDePasse = securisationMotDePass(motDePasse);
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(identifiant);
 		Utilisateur utilisateur = null;
 		if(matcher.matches()) {
 			for (int i = 0; i < listeUtilisateurs.size(); i++) {
-				if(listeUtilisateurs.get(i).getEmail() == identifiant 
-						&& listeUtilisateurs.get(i).getMotDePasse() == motDePasse) {
+				if(listeUtilisateurs.get(i).getEmail().equals(identifiant) 
+						&& listeUtilisateurs.get(i).getMotDePasse().equals(motDePasse)) {
 					isAuthentified = true;
 					utilisateur = listeUtilisateurs.get(i);
 				}
@@ -341,7 +348,8 @@ public class UtilisateurManager extends AdresseUtils  {
 		}
 		else {
 			for (int j = 0; j < listeUtilisateurs.size(); j++) {
-				if(listeUtilisateurs.get(j).getPseudo() == identifiant && listeUtilisateurs.get(j).getMotDePasse() == motDePasse) {
+				if(listeUtilisateurs.get(j).getPseudo().equals(identifiant) 
+						&& listeUtilisateurs.get(j).getMotDePasse().equals(motDePasse)) {
 					isAuthentified = true;
 					utilisateur = listeUtilisateurs.get(j);
 				}
@@ -349,11 +357,22 @@ public class UtilisateurManager extends AdresseUtils  {
 			
 		}
 		if(!isAuthentified) {
-			throw new BllException("L'identifiant et le  mot de passe sont incorrect");
-		}else {
+			msgErreur = ("L'identifiant et le  mot de passe sont incorrect");
+			return msgErreur;
+		}else {	
 			session.setAttribute("utilisateur", utilisateur);
-			return isAuthentified;
+			return msgErreur;
 		}
+	}
+	
+	public String verificationSessionActive(HttpServletRequest request, HttpServletResponse response, HttpSession session, String path) throws ServletException, IOException {
+		String msgErreur = "";
+		if(request.getParameter("utilisateur") == null) {
+			session.setAttribute("path", path);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+			rd.forward(request, response);
+		}
+		return msgErreur;
 	}
 	
 	public boolean deconnexion(HttpSession session) {

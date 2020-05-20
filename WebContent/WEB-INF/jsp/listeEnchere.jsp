@@ -1,3 +1,4 @@
+<!-- Mathieu -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -14,10 +15,9 @@
 	<br/>
 	<div class="container">
 		<div class="row">
-
-			<c:if test="${!empty session }">
+			<c:if test="${!empty utilisateur.pseudo }">
 				<div class="col-12 col-lg-3 text-right d-lg-none">
-					<p class="m-0">${session.utilisateur.pseudo} est connecté</p>
+					<p class="m-0">${utilisateur.pseudo} est connecté</p>
 				</div>
 			</c:if>
 		</div>
@@ -29,30 +29,30 @@
 					<div class="offset-1">
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkMesVentes"> <label class="custom-control-label"
-								for="checkMesVentes">Mes ventes</label>
+								id="mesVentes" value="mesVentes" name="filtres"> <label class="custom-control-label"
+								for="mesVentes">Mes ventes</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkMesVentesEnregistrees"> <label
-								class="custom-control-label" for="checkMesVentesEnregistrees">Mes ventes enregistrées</label>
+								id="mesVentesEnregistrees" value="mesVentesEnregistrees" name="filtres"> <label
+								class="custom-control-label" for="mesVentesEnregistrees">Mes ventes enregistrées</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkMesEncheresEnCours"> <label
-								class="custom-control-label" for="checkMesEncheresEnCours">Mes
+								id="mesEncheresEnCours" value="mesEncheresEnCours" name="filtres"> <label
+								class="custom-control-label" for="mesEncheresEnCours">Mes
 								enchères en cours</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkMesAcquisitions"> <label
-								class="custom-control-label" for="checkMesAcquisitions">Mes
+								id="mesAcquisitions" value="mesAcquisitions" name="filtres"> <label
+								class="custom-control-label" for="mesAcquisitions">Mes
 								acquisitions</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="checkAutresEncheres"> <label
-								class="custom-control-label" for="checkAutresEncheres">Autres
+								id="autresEncheres" value="autresEncheres" checked name="filtres"> <label
+								class="custom-control-label" for="autresEncheres">Autres
 								enchères</label>
 						</div>
 					</div>
@@ -64,7 +64,7 @@
 							<select class="custom-select" id="selectCategorie">
 								<option selected>Toutes</option>
 								<c:forEach var="c" items="${listeCategories }">
-									<option value="${c.noCategorie }">${c.nom }</option>
+									<option value="${c.noCategorie }">${c.libelle }</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -76,10 +76,12 @@
 						</div>
 					</div>
 				</div>
-				<div
-					class="col-6 col-lg-3 text-right text-lg-center d-none d-lg-block">
-					<p>${session.utilisateur.nom } est connecté</p>
-				</div>
+				<c:if test="${!empty utilisateur.pseudo }">
+					<div
+						class="col-6 col-lg-3 text-right text-lg-center d-none d-lg-block">
+						<p>${utilisateur.pseudo } est connecté</p>
+					</div>
+				</c:if>
 			</div>
 			<div class="row">
 				<div class="col-12 col-lg-5">
@@ -95,11 +97,12 @@
 		<br />
 
 		<div class="row">
-			<c:forEach items="${listeEncheres }" var="vente">
+			<c:forEach items="${listeVentes}" var="vente">
 				<div class="col-12 col-lg-6 pb-3">
-					<form action="<%=request.getContextPath()%>/ServletEncherir"
-						method="post">
+					<form action="<%=request.getContextPath()%>/ServletDetailVente?noVente="${vente.noVente }
+						method="get">
 						<button class="container" type="submit">
+							
 							<div class="row">
 					<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives à la vente vers la servlet 
 						 Le vendeur de la vente est clickable. Redirige vers ServletInformationsUtilisateur Envoie des informations 
@@ -114,12 +117,14 @@
 	
 								<div class="col-9">
 									<div class="row">
-										<div class="col-6">
+										<c:if test="${utilisateur.noUtilisateur != vente.utilisateurAcheteur.noUtilisateur }">
+											<div class="col-12">
+												<p>La meilleure offre est de ${vente.prixVente} points</p>												
+											</div>
+										</c:if>
+											<div class="col-12">
 										<!-- vignette de mes enchères en cours -->
 											<h3>${vente.nomArticle }</h3>
-										</div>
-										<div class="col-6">
-											<p>etape2</p>
 										</div>
 	
 								<!-- Lignes 2 et 3 -->
@@ -129,7 +134,7 @@
 										</div>
 	
 										<div class="col-6">
-											<p>Classement : ${vente.??? }</p>
+											<p>Classement : </p>
 											<p>${vente.dateFinEncheres }</p>
 										</div>
 										
@@ -138,8 +143,8 @@
 											<p>Retrait :</p>
 										</div>
 										<div class="col-6">
-											<p>${vente.noVente.retrait.rue }</p>
-											<p>${vente.noVenteretrait.codePostal } ${vente.retrait.ville }</p>
+											<p>${retrait.rue}</p>
+											<p>${retrait.codePostal } ${retrait.ville }</p>
 										</div>
 										
 								<!-- Ligne 5 -->
@@ -148,11 +153,11 @@
 										</div>
 										<div class="col-6">
 											<c:choose>
-												<c:when test="${empty vente.utilisateurAcheteur }">
-													<p><a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur } </a></p>
+												<c:when test="${vente.utilisateurVendeur.noUtilisateur.equals(utilisateur.noUtilisateur) }">
+													<p>${vente.utilisateurVendeur.pseudo } </p>
 												</c:when>
-												<c:when test="${empty vente.utilisateurVendeur } < 0">
-													<p>${vente.utilisateurAcheteur } </p>
+												<c:when test="${!vente.utilisateurVendeur.noUtilisateur.equals(utilisateur.noUtilisateur) }">
+													<p><a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo } </a></p>
 												</c:when>
 											</c:choose>
 										</div>

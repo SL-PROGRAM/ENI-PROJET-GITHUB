@@ -1,7 +1,6 @@
 package fr.eni.same.bll;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
@@ -70,6 +69,7 @@ public class VenteManager  {
 	
 	public void update(Vente t) throws BllException {
 		String msgErreur = controleUpdateAndInsert(t);
+		msgErreur += noVenteNull(t.getNoVente());
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
@@ -172,7 +172,6 @@ public class VenteManager  {
 	private String controleUpdateAndInsert(Vente t) throws BllException {
 		String msgErreur = "";
 		msgErreur += venteNull(t);
-		msgErreur += noVenteNull(t.getNoVente());
 		msgErreur += nomArticleLongeurCorrect(t.getNomArticle());
 		msgErreur += descriptionLongeurCorrect(t.getDescription());
 		msgErreur += dateFinEnchere(t.getDateFinEncheres());

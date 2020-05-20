@@ -2,6 +2,12 @@ package fr.eni.same.dal.interfaceDAO;
 
 import fr.eni.same.exception.DALException;
 
+/**
+ * 
+ * @author sl
+ *
+ * @param <T>
+ */
 public interface selectDAO<T>  {
 	
 	/**

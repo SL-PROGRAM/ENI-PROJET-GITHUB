@@ -10,9 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.bll.UtilisateurManager;
+import fr.eni.same.exception.BllException;
 
 /**
+ * @author andrea
+ * @author sl
+ * 
  * Servlet implementation class ServletConnexion
  */
 @WebServlet("/ServletConnexion")
@@ -44,7 +48,34 @@ public class ServletConnexion extends HttpServlet {
 		
 		String identifiant = request.getParameter("txtIdentifiant");
 		String password = request.getParameter("txtPassword");
+		HttpSession session = request.getSession();
+		
+	
+			try {
+				String msgErreur = UtilisateurManager.getUtilisateurManager().connexion(identifiant, password, session);
+				if(msgErreur.equals("")) {
+					if(session.getAttribute("path")!= null) {
+						RequestDispatcher rd = request.getRequestDispatcher((String) session.getAttribute("path"));
+						rd.forward(request, response);
+					}else {
+						RequestDispatcher rd = request.getRequestDispatcher("/ServletListeEncheres");
+						rd.forward(request, response);
+					}
+					
+				}else {
+					request.setAttribute("erreur", msgErreur);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+					rd.forward(request, response);
+				}
+			} catch (BllException e) {
+				request.setAttribute("erreur", e );
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+				rd.forward(request, response);
+			}
+			
+	
 //		
+	
 //		if (condition) {
 //			Utilisateur utilisateur = new Utilisateur();
 //			
