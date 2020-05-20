@@ -59,22 +59,25 @@ public class ServletDetailVente extends HttpServlet {
 						 request.setAttribute("retrait", retrait);
 					}
 				}
-				
-					
-				
-				
+
 				Timestamp heureServer = new Timestamp(System.currentTimeMillis());
-				
-				
 				request.setAttribute("vente", vente);
 				request.setAttribute("heureServer", heureServer);
-//				if(vente.getDateFinEncheres().before(heureServer)) {
-//					
-//				}
+
 				Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				
-
-				if(vente.getUtilisateurVendeur().getNoUtilisateur()==(utilisateur).getNoUtilisateur()) {
+				if(vente.getDateFinEncheres().before(heureServer) ) {
+					if(vente.getUtilisateurAcheteur() != null 
+							&& vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/enchereGagnee.jsp");
+					rd.forward(request, response);
+					}
+					String msgErreur = "Cette vente est terminée, vous n'êtes pas le grand gagnant désolé";
+					request.setAttribute("erreur", msgErreur);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+					rd.forward(request, response);
+				}
+				else if(vente.getUtilisateurVendeur().getNoUtilisateur()==(utilisateur).getNoUtilisateur()) {
 					//UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 					rd.forward(request, response);
