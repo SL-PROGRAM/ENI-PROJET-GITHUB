@@ -67,9 +67,9 @@ public class ServletDetailVente extends HttpServlet {
 				
 				
 				request.setAttribute("vente", vente);
-				request.setAttribute("retrait", retrait);
+				
 				request.setAttribute("heureServer", heureServer);
-
+				Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				
 
 				if(vente.getUtilisateurVendeur().getNoUtilisateur()==(utilisateur).getNoUtilisateur()) {
