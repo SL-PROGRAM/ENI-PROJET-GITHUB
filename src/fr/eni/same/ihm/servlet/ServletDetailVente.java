@@ -2,11 +2,6 @@ package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,7 +43,7 @@ public class ServletDetailVente extends HttpServlet {
 	    	return;
 		}else{
 			HttpSession session = request.getSession();
-			int noVente = (int) request.getAttribute("noVente");			
+			int noVente = Integer.parseInt(request.getParameter("noVente"));			
 			try {
 				Vente vente = VenteManager.getVenteManager().select(noVente);	
 				Retrait retrait = RetraitManager.getRetraitManager().select(vente.getNoVente());
@@ -61,11 +56,11 @@ public class ServletDetailVente extends HttpServlet {
 
 				
 				if(vente.getUtilisateurVendeur() == (Utilisateur) session.getAttribute("utilisateur")) {
-					UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/detailVente.jsp");
+					UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 					rd.forward(request, response);
 				}else {			
-					UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/detailVente.jsp");
+					UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
 					rd.forward(request, response);
 				}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,8 @@ import fr.eni.same.exception.BllException;
 @WebServlet("/ServletConnexion")
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final int     COOKIE_MAX_AGE            = 60 * 60 * 24 * 30;  // 1 mois
+
        
 
 	/**
@@ -37,9 +40,27 @@ public class ServletConnexion extends HttpServlet {
 	 * Cette Servlet et la jsp correspondante prennent en charge la Maquette 1
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String identifiant = getCookieValue(request, "connexionID");
+		String mdp = getCookieValue(request, "connexionMDP");
+		
+		request.setAttribute("id", identifiant);
+		request.setAttribute("mdp", mdp);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
 		rd.forward(request, response);
 	}
+	
+	  private static String getCookieValue( HttpServletRequest request, String nom ) {
+	        Cookie[] cookies = request.getCookies();
+	        if ( cookies != null ) {
+	            for ( Cookie cookie : cookies ) {
+	                if ( cookie != null && nom.equals( cookie.getName() ) ) {
+	                    return cookie.getValue();
+	                }
+	            }
+	        }
+	        return null;
+	    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -48,7 +69,17 @@ public class ServletConnexion extends HttpServlet {
 		
 		String identifiant = request.getParameter("txtIdentifiant");
 		String password = request.getParameter("txtPassword");
+		String rememberMe = request.getParameter("rememberMe");
 		HttpSession session = request.getSession();
+		
+		if(rememberMe.equals("on")) {
+			Cookie cookieID= new Cookie("connexionID", identifiant);
+			Cookie cookieMDP = new Cookie("connexionMDP", password);
+			cookieID.setMaxAge(COOKIE_MAX_AGE);
+			cookieMDP.setMaxAge(COOKIE_MAX_AGE);
+			response.addCookie(cookieID);
+			response.addCookie(cookieMDP);
+		}
 		
 	
 			try {

@@ -25,8 +25,6 @@ public class Vente {
 	private Utilisateur utilisateurAcheteur;
 	private Utilisateur utilisateurVendeur;
 	private Categorie categorie;
-
-	
 	
 	public int getNoVente() {
 		return noVente;

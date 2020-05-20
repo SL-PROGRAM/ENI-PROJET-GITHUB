@@ -3,9 +3,8 @@ package fr.eni.same.ihm.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,14 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.FiltreManager;
-import fr.eni.same.bll.RetraitManager;
-import fr.eni.same.bll.UtilisateurManager;
-import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Categorie;
-import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.exception.BllException;
@@ -76,14 +70,19 @@ public class ServletListeEncheres extends HttpServlet {
 //					}
 //				}
 
-//				if (valeurs[i].equals("mesEncheresEnCours")) {
-//					try {
-//						listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
-//					} catch (BllException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
+				if (valeurs[i].equals("mesEncheresEnCours")) {
+					try {
+						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
+						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(session, null);
+						for (Vente v : listeVentes) {
+							System.out.println(v.toString());
+						}
+						set.addAll(listeVentes);
+					} catch (BllException e) {
+						e.printStackTrace();
+					}
+				}
 
 				if (valeurs[i].equals("mesAcquisitions")) {
 					try {
@@ -96,7 +95,6 @@ public class ServletListeEncheres extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
-
 				
 				if (valeurs[i].equals("autresEncheres")) {
 					try {
@@ -142,7 +140,7 @@ public class ServletListeEncheres extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		doGet(request, response);
 	}
 	

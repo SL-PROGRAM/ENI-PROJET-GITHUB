@@ -33,6 +33,7 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 //    }else recuperer les infos du vendeur par rapport  à la vente
 //	
 		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.jsp");
 		rd.forward(request, response);
 	}
