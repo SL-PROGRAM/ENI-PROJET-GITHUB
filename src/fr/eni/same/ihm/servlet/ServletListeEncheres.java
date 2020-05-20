@@ -45,9 +45,12 @@ public class ServletListeEncheres extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-		System.out.println(utilisateur.toString());
+		//Utilisateur utilisateur = null;
+		if (request.getSession().getAttribute("utilisateur") != null) {
+			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
+			System.out.println(utilisateur.toString());
+		}
+		
 		List<List<Vente>> listes = new ArrayList<List<Vente>>();
 		Set set = new HashSet();
 		
@@ -72,7 +75,7 @@ public class ServletListeEncheres extends HttpServlet {
 					try {
 						System.out.println("JE SUIS DANS MES VENTES");
 						//listes.add(i, FiltreManager.getFiltreManager().filtreMesVentesPubliées(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliées(session);
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliées(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
 						// TODO Auto-generated catch block
@@ -107,7 +110,7 @@ public class ServletListeEncheres extends HttpServlet {
 					try {
 						System.out.println("JE SUIS DANS MES ACQUISITIONS");
 						//listes.add(i, FiltreManager.getFiltreManager().filtreMesAcquisitions(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesAcquisitions(session);
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesAcquisitions(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
 						// TODO Auto-generated catch block
@@ -120,7 +123,7 @@ public class ServletListeEncheres extends HttpServlet {
 					try {
 						System.out.println("JE SUIS DANS AUTRES ENCHERES");
 						//listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreAutresEncheres(session);
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
 						// TODO Auto-generated catch block
@@ -146,7 +149,7 @@ public class ServletListeEncheres extends HttpServlet {
 			
 			request.setAttribute("listeCategories", listeCategories);
 			//	request.setAttribute("listeVentes", listeFinal);
-			request.setAttribute("utilisateur", utilisateur);
+			//request.setAttribute("utilisateur", utilisateur);
 		} catch (BllException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
