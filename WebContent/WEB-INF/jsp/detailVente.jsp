@@ -119,11 +119,14 @@
 											Retrait effectué</a></p>
 							</div>
 							
-							<!-- Redirige vers ServletInformationsUtilisateur -->
-							<div class="col-4 col-lg-4">
-								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
-									Contacter ${vente.utilisateurAcheteur }</a>
-							</div>
+							
+							<form action="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
+								<!-- Redirige vers ServletInformationsUtilisateur -->
+								<div class="col-4 col-lg-4">
+									<input value="${vente.utilisateurAcheteur.noUtilisateur }" name="noUtilisateurAcheteur">
+									<input class="btn btn-primary btn-block" type="submit" role="button" value="Contacter ${vente.utilisateurAcheteur }" >
+								</div>
+							</form>
 							<!-- Redirige vers ServletListeEnchere -->
 							<div class="col-4 col-lg-4">
 								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
