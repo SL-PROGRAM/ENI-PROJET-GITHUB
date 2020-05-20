@@ -1,6 +1,7 @@
 package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,16 +41,10 @@ public class ServletAnnulerVente extends HttpServlet {
 			if(request.getParameter("noVente") != null) {
 				noVente = Integer.valueOf(request.getParameter("noVente"));
 			}
-			
-			
-			
 			try {
+				Vente vente = VenteManager.getVenteManager().select(noVente);				
 				//1 - supprimer le Retrait
-				Vente vente = VenteManager.getVenteManager().select(noVente);
-				System.out.println(vente.toString());
-				
-				supprimerRetraitLier(vente);
-					
+				supprimerRetraitLier(vente);				
 				//2 - annuler les encheres
 				supprimerEnchereLier(vente);
 			
@@ -64,38 +59,38 @@ public class ServletAnnulerVente extends HttpServlet {
 			}
 			
 			
-			}
+		}
 	}
 
 	private void supprimerEnchereLier(Vente vente) throws BllException {
 		List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
-		Iterator<Enchere> iteratorEncheres = listEncheres.iterator();
-		while ( iteratorEncheres.hasNext() ) {
-			Enchere enchere = iteratorEncheres.next();
-		    if(enchere.getVenteEnchere().getNoVente() == vente.getNoVente()) {
-		    	// 1 - recrediter personne
-				Utilisateur encherisseur = enchere.getUtilisateurEnchere();
-				int prixDeVente = vente.getPrixVente();
-				int crditActuelEncherisseur = encherisseur.getCredit();
-				encherisseur.setCredit(prixDeVente + crditActuelEncherisseur);
-				
-				//2 - supprimer enchere
-		    	
-		    	EnchereManager.getEnchereManager().delete(enchere);
+		List<Enchere> listEncheresToDelete = new ArrayList<Enchere>();
+		
+		for (Enchere enchere : listEncheres) {
+			if(enchere.getVenteEnchere().getNoVente() == vente.getNoVente()) {
+				listEncheresToDelete.add(enchere);
 			}
+		}
+		for (Enchere enchere : listEncheresToDelete) {
+			Utilisateur encherisseur = enchere.getUtilisateurEnchere();
+            int prixDeVente = vente.getPrixVente();
+            int crditActuelEncherisseur = encherisseur.getCredit();
+            encherisseur.setCredit(prixDeVente + crditActuelEncherisseur);
+			EnchereManager.getEnchereManager().delete(enchere);
 		}
 	}
 
 	private void supprimerRetraitLier(Vente vente) throws BllException {
 		List<Retrait> listRetrait = RetraitManager.getRetraitManager().selectAll();
+		Retrait retraitToDelete = null;
 		
-		Iterator<Retrait> iteratorRetrait = listRetrait.iterator();
-		while ( iteratorRetrait.hasNext() ) {
-			Retrait retrait = iteratorRetrait.next();
-		    if(retrait.getVente().getNoVente() == vente.getNoVente()) {
-				RetraitManager.getRetraitManager().delete(retrait);
-			}
+		for (Retrait retrait : listRetrait) {
+			if (retrait.getVente().getNoVente() == vente.getNoVente()) {
+		    	retraitToDelete = retrait;
+		    }
 		}
+		
+		RetraitManager.getRetraitManager().delete(retraitToDelete);
 	}
 
 	/**

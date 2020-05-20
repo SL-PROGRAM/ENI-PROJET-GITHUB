@@ -154,7 +154,7 @@
 							
 							<!-- Redirige vers ServletListeEnchere -->
 							<div class="col-6 col-lg-6">
-								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
+								<a class="btn btn-danger btn-block" role="button" href="<%= response.encodeURL(request.getContextPath()+"/ServletListeEncheres")%>">
 									Retour</a>
 							</div>
 						</c:when>
