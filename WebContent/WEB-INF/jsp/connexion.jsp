@@ -23,13 +23,23 @@
 				<div class="form-group row">
 					<label for="identifiant" class="col-4 col-form-label offset-lg-3 col-lg-2">Identifiant : </label>
 					<div class="col-8 col-lg-4">
-						<input name="txtIdentifiant" type="text" class="form-control" id="identifiant">
+						<input name="txtIdentifiant"
+						 type="text" class="form-control"
+						 <c:if test="${!empty id }">
+						 	value="${id }"
+						 </c:if>
+						  id="identifiant">
+						 
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="password" class="col-4 col-form-label offset-lg-3 col-lg-2">Mot de passe : </label>
 					<div class="col-8 col-lg-4">
-						<input name="txtPassword" type="password" class="form-control" id="password">
+						<input name="txtPassword" type="password" class="form-control"
+						<c:if test="${!empty mdp }">
+						 	value="${mdp }"
+						 </c:if>
+						 id="password">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -45,7 +55,7 @@
 					
 					<!-- Création d'un cookie si "Se souvenir de moi" est sélectionné. La création est gérée par la ServletConnexion -->
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" id="gridCheck1">
+							<input name="rememberMe" class="form-check-input" type="checkbox" id="gridCheck1">
 							<label class="form-check-label" for="gridCheck1"> Se
 								souvenir de moi </label>
 						</div>
