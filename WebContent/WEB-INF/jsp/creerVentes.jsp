@@ -64,13 +64,9 @@
 								<c:if test="${ empty selectCategorie }">
 									<option selected>Toutes</option>
 								</c:if>
-						
-								
-							
 								<c:forEach items="${categories}" var="categorie">
-										<option value="${categorie.noCategorie}">${categorie.libelle}</option>
-									</c:forEach>
-								
+									<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+								</c:forEach>
 							</select>
 						</div>
 					</div>
