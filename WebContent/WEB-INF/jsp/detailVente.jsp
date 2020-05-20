@@ -127,9 +127,10 @@
 							<!-- Redirige vers ServletInformationsUtilisateur -->
 							
 							<div class="col-4 col-lg-4">
-							<form action="<%= request.getContextPath()%>/ServletDetailVente" method="post">
-								<input type="submit" class="btn btn-primary btn-block" role="button" name="retraitEffectue" value="Retrait effectué"/>
-							</form>
+						<a href="<%=response.encodeURL(request.getContextPath()+"/ServletRetraitEffectue")%>?noVente=${vente.noVente}" 
+								class="btn btn-primary btn-block" role="button">
+								Retrait effectué
+								</a>
 							</div>
 							
 							<div class="col-4 col-lg-4">
