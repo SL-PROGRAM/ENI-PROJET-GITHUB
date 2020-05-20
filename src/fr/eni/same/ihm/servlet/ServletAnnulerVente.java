@@ -32,7 +32,12 @@ public class ServletAnnulerVente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		if (request.getSession().getAttribute("utilisateur") == null){
+			response.sendRedirect("ServletConnexion");
+	    	return;
+		}
+		
 		int noVente = 0;
 		if(request.getParameter("noVente") != null) {
 			noVente = Integer.valueOf(request.getParameter("noVente"));
