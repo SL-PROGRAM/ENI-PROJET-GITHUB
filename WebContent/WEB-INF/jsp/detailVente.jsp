@@ -146,7 +146,7 @@
 							<!-- Boutons à afficher dans la version Maquette 9 -->
 							<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
 							<div class="col-6 col-lg-6">
-							<a href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerVente")%>?noVente=${vente.noVente}"
+							<a href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerVente")%>?noVente=${vente.noVente}" 
 								class="btn btn-primary btn-block" role="button">
 									Annuler la vente
 								</a>

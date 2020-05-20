@@ -81,7 +81,9 @@ public class UtilisateurManager {
 
 	
 	public void update(Utilisateur t) throws BllException {
-		String msgErreur = controleUpdateAndInsert(t);
+		String msgErreur = "";
+		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
+		msgErreur += controleUpdateAndInsert(t);
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
@@ -173,10 +175,9 @@ public class UtilisateurManager {
 		return listeUtilisateurs;
 	}
 	
-	private String controleUpdateAndInsert(Utilisateur t) throws BllException {
+	public String controleUpdateAndInsert(Utilisateur t) throws BllException {
 		String msgErreur = "";
 		msgErreur += utilisateurNull(t);
-		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
 		msgErreur += pseudoUnique(t.getPseudo());
 		msgErreur += emailUnique(t.getEmail());
 		msgErreur += telephoneUnique(t.getTelephone());
@@ -314,7 +315,7 @@ public class UtilisateurManager {
 		}			
 		if(!matcher.matches()) {
 			msgErreur = ("Ce n'est pas un email valide");
-		};
+		}
 		return msgErreur;
 	}
 		
