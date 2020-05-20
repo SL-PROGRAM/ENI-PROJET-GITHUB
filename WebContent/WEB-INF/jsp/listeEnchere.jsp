@@ -99,7 +99,7 @@
 		<div class="row">
 			<c:forEach items="${listeVentes}" var="vente">
 				<div class="col-12 col-lg-6 pb-3">
-					<form action="<%=request.getContextPath()%>/ServletDetailVente?noVente="${vente.noVente }
+					<form action="<%=request.getContextPath()%>/ServletDetailVente?noVente=${vente.noVente }"
 						method="get">
 						<button class="container" type="submit">
 							
@@ -134,7 +134,7 @@
 										</div>
 	
 										<div class="col-6">
-											<p>Classement : ${vente.commande }</p>
+											<p>Classement : ${classement }</p>
 											<p>${vente.dateFinEncheres }</p>
 										</div>
 										
