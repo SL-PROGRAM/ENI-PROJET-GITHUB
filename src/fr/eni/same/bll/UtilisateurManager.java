@@ -1,9 +1,14 @@
 package fr.eni.same.bll;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bo.Utilisateur;
@@ -12,14 +17,12 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.AdresseUtils;
 import fr.eni.same.helpers.FonctionGenerique;
-
 /**
- * BLL - Classe qui contient les méthodes de gestion des utilisateurs
  * @author sl
  * @author etienne
  *
  */
-public class UtilisateurManager  {
+public class UtilisateurManager {
 	private final int NOM_LONGUEUR_MAX = 30;
 	private final int NOM_LONGUEUR_MIN = 4;
 	private final int PSEUDO_LONGUEUR_MAX = 30;
@@ -360,6 +363,16 @@ public class UtilisateurManager  {
 			session.setAttribute("utilisateur", utilisateur);
 			return msgErreur;
 		}
+	}
+	
+	public String verificationSessionActive(HttpServletRequest request, HttpServletResponse response, HttpSession session, String path) throws ServletException, IOException {
+		String msgErreur = "";
+		if(request.getParameter("utilisateur") == null) {
+			session.setAttribute("path", path);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+			rd.forward(request, response);
+		}
+		return msgErreur;
 	}
 	
 	public boolean deconnexion(HttpSession session) {

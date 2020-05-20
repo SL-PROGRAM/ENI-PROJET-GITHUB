@@ -13,7 +13,11 @@ import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.EnchereDAO;
 import fr.eni.same.exception.DALException;
-
+/**
+ * 
+ * @author sl
+ * @author etienne
+ */
 public class EnchereDAOJDBCImpl implements EnchereDAO {
 	/**
 	 * mise en place d'un singleton pour garantir la cohérence des données

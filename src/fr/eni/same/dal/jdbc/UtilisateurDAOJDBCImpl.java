@@ -11,6 +11,11 @@ import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.UtilisateurDAO;
 import fr.eni.same.exception.DALException;
 
+/**
+ * 
+ * @author etienne
+ * @author sl
+ */
 public class UtilisateurDAOJDBCImpl implements UtilisateurDAO{
 	/**
 	 * mise en place d'un singleton pour garantir la cohérence des données

@@ -1,3 +1,4 @@
+<!-- autor: Andrea Mathieu -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -20,7 +21,7 @@
 	
 	
 		<!-- Message à afficher uniquement pour la Maquette 10 -->
-		<c:if test="${dateFinEncheres.compareTo(heureServer)} > 0 || ${dateFinEncheres.compareTo(heureServer)} == 0">
+		<c:if test="${vente.dateFinEncheres.compareTo(heureServer)} > 0 || ${vente.dateFinEncheres.compareTo(heureServer)} == 0">
 			<div class="row">
 				<div class="col-12 col-lg-8 text-center">
 					<h2>${vente.utilisateurAcheteur } a remporté l'enchère !</h2>
@@ -70,10 +71,10 @@
 					<div class="col-6 col-lg-9">
 						
 							<c:choose>
-								<c:when test="${dateFinEncheres.compareTo(heureServer)} > 0 || ${dateFinEncheres.compareTo(heureServer)} == 0">
+								<c:when test="${vente.dateFinEncheres.compareTo(heureServer)} > 0 || ${vente.dateFinEncheres.compareTo(heureServer)} == 0">
 									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur}</a> </p>
 								</c:when>
-								<c:when test="${dateFinEncheres.compareTo(heureServer)} < 0">
+								<c:when test="${vente.dateFinEncheres.compareTo(heureServer)} < 0">
 									<p>${vente.prixVente } pts par ${vente.utilisateurAcheteur}</p>
 									
 								</c:when>
@@ -101,7 +102,7 @@
 					
 					
 					<c:choose>
-						<c:when test="${dateFinEncheres.compareTo(heureServer)} > 0 || ${dateFinEncheres.compareTo(heureServer)} == 0">
+						<c:when test="${vente.dateFinEncheres.compareTo(heureServer)} > 0 || ${vente.dateFinEncheres.compareTo(heureServer)} == 0">
 							<!-- Boutons à afficher dans la version Maquette 10 -->
 							<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
 							<div class="col-4 col-lg-4">
@@ -129,7 +130,7 @@
 									Retour</a>
 							</div>
 						</c:when>
-						<c:when test="${dateFinEncheres.compareTo(heureServer)} < 0">
+						<c:when test="${vente.dateFinEncheres.compareTo(heureServer)} < 0">
 							<!-- Boutons à afficher dans la version Maquette 9 -->
 							<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
 							<div class="col-6 col-lg-6">

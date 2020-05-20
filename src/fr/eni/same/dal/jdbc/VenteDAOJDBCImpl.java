@@ -14,7 +14,11 @@ import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.ConnectionProvider;
 import fr.eni.same.dal.interfaceDAO.VenteDAO;
 import fr.eni.same.exception.DALException;
-
+/**
+ * 
+ * @author etienne
+ * @author sl
+ */
 public class VenteDAOJDBCImpl implements VenteDAO{
 	/**
 	 * mise en place d'un singleton pour garantir la cohérence des données
