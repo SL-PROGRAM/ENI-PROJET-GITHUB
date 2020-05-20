@@ -1,5 +1,6 @@
 package fr.eni.same.ihm.servlet;
 
+import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -142,7 +143,7 @@ public class ServletListeEncheres extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		doGet(request, response);
 	}
 	

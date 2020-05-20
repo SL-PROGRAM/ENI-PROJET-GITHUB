@@ -134,7 +134,7 @@
 										</div>
 	
 										<div class="col-6">
-											<p>Classement : </p>
+											<p>Classement : ${vente.commande }</p>
 											<p>${vente.dateFinEncheres }</p>
 										</div>
 										
