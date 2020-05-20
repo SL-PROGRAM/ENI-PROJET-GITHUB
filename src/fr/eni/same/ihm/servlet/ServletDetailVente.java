@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.same.bll.RetraitManager;
 import fr.eni.same.bll.VenteManager;
+import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.exception.BllException;
@@ -45,61 +47,31 @@ public class ServletDetailVente extends HttpServlet {
 	    	return;
 		}else{
 			HttpSession session = request.getSession();
-			int noVente = (int) request.getAttribute("noVente");
-			Vente vente;
-			
-			
-			
+			int noVente = (int) request.getAttribute("noVente");			
 			try {
-				vente = VenteManager.getVenteManager().select(noVente);
+				Vente vente = VenteManager.getVenteManager().select(noVente);	
+				Retrait retrait = RetraitManager.getRetraitManager().select(vente.getNoVente());
+				Timestamp heureServer = new Timestamp(System.currentTimeMillis());
 				
-				Timestamp dateFinEnchere = vente.getDateFinEncheres();
-				SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				String heureServer = format.format(GregorianCalendar.getInstance().getTime());
 				
 				request.setAttribute("vente", vente);
+				request.setAttribute("retrait", retrait);
 				request.setAttribute("heureServer", heureServer);
-				request.setAttribute("dateFinEnchere", dateFinEnchere);
-				
+
 				
 				if(vente.getUtilisateurVendeur() == (Utilisateur) session.getAttribute("utilisateur")) {
-			
-					
-			
-			
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 					rd.forward(request, response);
-				}else {
-					
-					
-					
-					
+				}else {			
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
 					rd.forward(request, response);
 				}
 				
-				
 			} catch (BllException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
-			
+			}	
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
-		rd.forward(request, response);
 	}
 
 	/**
