@@ -125,12 +125,20 @@
 							</div>-->
 							
 							<!-- Redirige vers ServletInformationsUtilisateur -->
-							<div class="col-6 col-lg-6">
+							
+							<div class="col-4 col-lg-4">
+							<form action="<%= request.getContextPath()%>/ServletDetailVente" method="post">
+								<input type="submit" class="btn btn-primary btn-block" role="button" name="retraitEffectue" value="Retrait effectué"/>
+									
+							</form>
+							</div>
+							
+							<div class="col-4 col-lg-4">
 								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
 									Contacter ${vente.utilisateurAcheteur }</a>
 							</div>
 							<!-- Redirige vers ServletListeEnchere -->
-							<div class="col-6 col-lg-6">
+							<div class="col-4 col-lg-4">
 								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 									Retour</a>
 							</div>
@@ -139,8 +147,10 @@
 							<!-- Boutons à afficher dans la version Maquette 9 -->
 							<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
 							<div class="col-6 col-lg-6">
-								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
-									Annuler la vente</a>
+							<form action="<%= request.getContextPath()%>/ServletDetailVente" method="post">
+								<input type="submit" class="btn btn-primary btn-block" role="button" name="annulerVente" value="Annuler la vente"/>
+									
+								</form>
 							</div>
 							
 							<!-- Redirige vers ServletListeEnchere -->
