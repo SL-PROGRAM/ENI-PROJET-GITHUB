@@ -1,6 +1,7 @@
 package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -42,27 +43,35 @@ public class ServletAnnulerVente extends HttpServlet {
 		try {
 			//1 - supprimer le Retrait
 			Vente vente = VenteManager.getVenteManager().select(noVente);
+			System.out.println(vente.toString());
 			List<Retrait> listRetrait = RetraitManager.getRetraitManager().selectAll();
-			for (Retrait retrait : listRetrait) {
-				if(retrait.getVente() == vente) {
+			
+			Iterator<Retrait> iteratorRetrait = listRetrait.iterator();
+			while ( iteratorRetrait.hasNext() ) {
+				Retrait retrait = iteratorRetrait.next();
+			    if(retrait.getVente().getNoVente() == vente.getNoVente()) {
 					RetraitManager.getRetraitManager().delete(retrait);
 				}
 			}
-			
+				
 			//2 - annuler les encheres
 			List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
-			for (Enchere enchere : listEncheres) {
-				if(enchere.getVenteEnchere() == vente) {
-					// 1 - recrediter personne
+			Iterator<Enchere> iteratorEncheres = listEncheres.iterator();
+			while ( iteratorEncheres.hasNext() ) {
+				Enchere enchere = iteratorEncheres.next();
+			    if(enchere.getVenteEnchere().getNoVente() == vente.getNoVente()) {
+			    	// 1 - recrediter personne
 					Utilisateur encherisseur = enchere.getUtilisateurEnchere();
 					int prixDeVente = vente.getPrixVente();
 					int crditActuelEncherisseur = encherisseur.getCredit();
 					encherisseur.setCredit(prixDeVente + crditActuelEncherisseur);
 					
 					//2 - supprimer enchere
-					EnchereManager.getEnchereManager().delete(enchere);
+			    	
+			    	EnchereManager.getEnchereManager().delete(enchere);
 				}
-			}		
+			}
+		
 			//3 - supprimer la vente
 			VenteManager.getVenteManager().delete(vente);
 			
@@ -73,19 +82,6 @@ public class ServletAnnulerVente extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 		rd.forward(request, response);
-		
-		
-		
-		
-		
-		
-		
-		
-
-		
-		
-		
-
 	}
 
 	/**
