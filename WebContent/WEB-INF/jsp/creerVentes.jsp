@@ -21,6 +21,11 @@
 			<div class="col-12 col-lg-9 offset-lg-3 text-center">
 				<h3>Nouvelle Vente</h3>
 			</div>
+			<c:if test=" ${!empty erreur }">
+				<div class="col-12 col-lg-9 offset-lg-3 text-center">
+					<p>${erreur }</p>
+				</div>
+			</c:if>
 		</div><!-- fin div row -->
 		
 		
@@ -53,12 +58,15 @@
 					<label for="selectCategorie" class="col-2 col-form-label">Catégories</label>
 						<div class="offset-1 col-9">
 							<select class="custom-select" id="selectCategorie" name="selectCategorie">
-								<option selected>Toutes</option>
-							
+								<c:if test="${ !empty selectCategorie }">
+									<option selected>${ selectCategorie}</option>
+								</c:if>
+								<c:if test="${ empty selectCategorie }">
+									<option selected>Toutes</option>
+								</c:if>
 								<c:forEach items="${categories}" var="categorie">
-										<option value="${categorie.noCategorie}">${categorie.libelle}</option>
-									</c:forEach>
-								
+									<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+								</c:forEach>
 							</select>
 						</div>
 					</div>
@@ -84,7 +92,12 @@
   				   <div class="form-group row">
                         <label for="miseAPrix" class="col-3 col-form-label">Mise a prix:</label>
                         <div class="col-9">
-                           <input type="number" id="" name="miseAPrix"><br />
+                        	<c:if test="${ !empty miseAPrix }">
+								<input type="number" id="" name="miseAPrix" value="${miseAPrix }"><br />
+							</c:if>
+							<c:if test="${ empty miseAPrix }">
+	                           <input type="number" id="" name="miseAPrix"><br />
+							</c:if>
                        </div>
                    </div>
   			</div>
@@ -92,7 +105,12 @@
   				<div class="form-group row">
                         <label for="dateFinEnchere" class="col-4 col-form-label">Fin de l'enchère:</label>
                         <div class="col-8">
-                            <input type="date" name="dateFinEnchere" id="dateFinEnchere">
+                        	<c:if test="${ !empty dateFinEnchere }">
+                            	<input type="date" value="${dateFinEnchere }" name="dateFinEnchere" id="dateFinEnchere">
+							</c:if>
+							<c:if test="${ empty dateFinEnchere }">
+                            	<input type="date" name="dateFinEnchere" id="dateFinEnchere">
+							</c:if>
                         </div>
                     </div>
   			</div>
@@ -105,19 +123,34 @@
                             <!-- value adresse par defaut du vendeur -->
                                 <label for="rueRetrait" class="col-3 col-form-label">Rue :</label>
                                 <div class="col-9">
-                                    <input type="text" name="rue" id="rueRetrait" value="${utilisateur.rue}">
+                                	<c:if test="${ !empty rue }">
+                                 	   <input type="text" name="rue" id="rueRetrait" value="${rue}">
+									</c:if>
+									<c:if test="${ empty rue }">
+		                        		<input type="text" name="rue" id="rueRetrait" value="${utilisateur.rue}">
+									</c:if>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="codePostalRetrait" class="col-3 col-form-label">Code Postal :</label>
                                 <div class="col-9">
-                                    <input type="text" name="codePostal" id="codePostalRetrait" value="${utilisateur.codePostal}">
+                                	<c:if test="${ !empty codePostal }">
+                                    	<input type="text" name="codePostal" id="codePostalRetrait" value="${codePostal}">
+									</c:if>
+									<c:if test="${ empty codePostal }">
+                                    	<input type="text" name="codePostal" id="codePostalRetrait" value="${utilisateur.codePostal}">
+									</c:if>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="villeRetrait" class="col-3 col-form-label">Ville :</label>
                                 <div class="col-9">
-                                    <input type="text" name="ville" id="villeRetrait" value="${utilisateur.ville}">
+                                	<c:if test="${ !empty ville }">
+                                    	<input type="text" name="ville" id="villeRetrait" value="${ville}">
+									</c:if>
+									<c:if test="${ empty ville }">
+                                    	<input type="text" name="ville" id="villeRetrait" value="${utilisateur.ville}">
+									</c:if>
                                 </div>
                             </div>
                         </fieldset>
@@ -127,8 +160,29 @@
   			<div class="col-6 d-block d-sm-none">
   				<p>Retrait : </p>
   			</div>
-  			<div class="col-6 d-block d-sm-none">	
-  				<p> ${utilisateur.rue}  <br>${utilisateur.codePostal} ${utilisateur.ville}</p> 
+  			<div class="col-6 d-block d-sm-none">
+  				
+  				<p> 
+  					<c:if test="${ !empty rue }">
+  						${rue}
+					</c:if>
+					<c:if test="${ empty rue }">
+						${utilisateur.rue}
+					</c:if>
+					<br>
+					<c:if test="${ !empty codePostal }">
+						${codePostal}
+					</c:if>
+					<c:if test="${ empty codePostal }">
+						${utilisateur.codePostal}
+					</c:if>
+  					<c:if test="${ !empty ville }">
+  						${ville}
+					</c:if>
+					<c:if test="${ empty ville }">
+						${utilisateur.ville}
+					</c:if>
+  				   </p> 
   			</div>
   			</div> <!-- fin div row PRINCIPAL -->	
   			

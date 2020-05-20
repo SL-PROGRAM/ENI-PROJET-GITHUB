@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bll.CategorieManager;
+import fr.eni.same.bll.PublierVente;
 import fr.eni.same.bll.RetraitManager;
+import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Retrait;
@@ -75,86 +77,39 @@ public class ServletCreerVente extends HttpServlet {
 		
 		if(request.getParameter("publierVente").equals("Publier")) {
 			HttpSession session = request.getSession();
-			String dateFinEnchere = request.getParameter("dateFinEnchere");
-			Timestamp date = FonctionGenerique.dateToTimestamp(dateFinEnchere);
+			try {
+				UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
+			} catch (BllException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			String noCategorie = request.getParameter("selectCategorie");
-			Categorie categorie = selectCategorie(noCategorie);		
-			Vente newVente = creerVente(request, session, date, categorie);
-			creerRetrait(request, newVente);
+			String msgErreur = PublierVente.enregistrerVente(session, request );
+			if (!msgErreur.equals("")) {
+				request.setAttribute("erreur", msgErreur);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/creerVentes.jsp");
+				rd.forward(request, response);
+			}else {
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+				rd.forward(request, response);
+			}
+			
+			
 			
 		}else if(request.getParameter("enregistrerVente").equals("Enregistrer")) {
-			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+			rd.forward(request, response);
 			
 		}else if(request.getParameter("annuler").equals("Annuler")) {
-			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+			rd.forward(request, response);
 		}
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
-		rd.forward(request, response);
 		
 	}
 
-	private void creerRetrait(HttpServletRequest request, Vente newVente) {
-		Retrait retrait = new Retrait();
-		retrait.setRue(request.getParameter("rue"));
-		retrait.setCodePostal(request.getParameter("codePostal"));
-		retrait.setVille(request.getParameter("ville"));
-		retrait.setVente(newVente);
-		try {
-			RetraitManager.getRetraitManager().insert(retrait);
-		} catch (BllException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
-	private Vente creerVente(HttpServletRequest request, HttpSession session, Timestamp date, Categorie categorie) {
-		String nomArticle = request.getParameter("article");
-		String Description = request.getParameter("articleDescription");
-		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
-		Utilisateur vendeur = (Utilisateur) session.getAttribute("utilisateur");
-		
-		Vente vente = new Vente(
-				nomArticle,
-				Description, 
-				date,
-				miseAPrix,
-				miseAPrix+1,
-				null,
-				vendeur,
-				categorie);
-		
-		System.out.println(vente.toString());
 
-//		newVente.setNomArticle();
-//		newVente.setDescription();
-//		newVente.setDateFinEncheres(date);//(request.getParameterValues("")); a chercher comment faire pour le select class Categorie??
-//		newVente.setMiseAPrix();	
-//		newVente.setCategorie(categorie);
-//		newVente.setUtilisateurVendeur();
-//		newVente.setPrixVente(Integer.parseInt(request.getParameter("miseAPrix")));
-		try {
-			VenteManager.getVenteManager().insert(vente);
-		} catch (BllException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return vente;
-	}
-
-	private Categorie selectCategorie(String noCategorie) {
-		
-		Categorie categorie = null;
-		try {
-			categorie = CategorieManager.getCategorieManager().select(Integer.parseInt(noCategorie));
-		} catch (NumberFormatException | BllException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-		return categorie;
-	}
  
 	
 }

@@ -99,9 +99,10 @@
 		<div class="row">
 			<c:forEach items="${listeVentes}" var="vente">
 				<div class="col-12 col-lg-6 pb-3">
-					<form action="<%=request.getContextPath()%>/ServletEncherir"
-						method="post">
+					<form action="<%=request.getContextPath()%>/ServletDetailVente?noVente="${vente.noVente }
+						method="get">
 						<button class="container" type="submit">
+							
 							<div class="row">
 					<!-- Pour chaque vente redirige vers ServletDetailVente. Envoie des informations relatives à la vente vers la servlet 
 						 Le vendeur de la vente est clickable. Redirige vers ServletInformationsUtilisateur Envoie des informations 
