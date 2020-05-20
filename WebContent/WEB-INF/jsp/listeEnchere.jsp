@@ -15,9 +15,6 @@
 	<br/>
 	<div class="container">
 		<div class="row">
-				<div class="col-12 col-lg-12 text-center">
-					<p class="text-danger">${erreur }</p>
-				</div>
 			<div class="col-12 col-lg-12 text-center">
 				<p class="text-danger">${erreur }</p>
 			</div>

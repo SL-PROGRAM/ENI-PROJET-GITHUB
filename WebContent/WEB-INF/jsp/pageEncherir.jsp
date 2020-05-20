@@ -83,11 +83,15 @@
 		</div>
 		<br />
 		<div class="row">	<!-- si enhereutilsateur == utilisateur session et date enchere en cours afficher -->
-				<div class="col-6 col-lg-3 offset-lg-4">
-					<a class="btn btn-primary btn-block"  href="<%= request.getContextPath()%>/ServletListeEncheres" name="annulerEnchere"
-						type="submit">Annuler ma dernière enchère</a><!-- si login, sinon redirect pageConnexion, delete update de encherir, restitution ancien credit -->
+			
+			<div class="col-6 col-lg-3 offset-lg-4">
+					<a class="btn btn-primary btn-block"  
+					href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerEnchere")%>?noVente=${vente.noVente}&noAcheteur=${utilisateur.noUtilisateur}"
+					>Annuler ma dernière enchère</a><!-- si login, sinon redirect pageConnexion, delete update de encherir, restitution ancien credit -->
+			</div>
+			
 				
-				</div>
+				
 			
 				<div class="col-6 col-lg-3">
 					<a class="btn btn-primary btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres">Retour</a>
