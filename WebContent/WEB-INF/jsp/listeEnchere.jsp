@@ -159,7 +159,6 @@
 												</c:when>
 												<c:when test="${!vente.utilisateurVendeur.noUtilisateur.equals(utilisateur.noUtilisateur) }">
 													<p><a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur?noUtilisateurVendeur=${vente.utilisateurVendeur.noUtilisateur}">${vente.utilisateurVendeur.pseudo } </a></p>
-<%-- 													<input hidden="true" value="${vente.utilisateurVendeur.noUtilisateur }" name="noUtilisateurVendeur"> --%>
 												</c:when>
 											</c:choose>
 										</div>

@@ -87,19 +87,19 @@ public class ServletListeEncheres extends HttpServlet {
 //					}
 //				}
 
-				if (valeurs[i].equals("mesEncheresEnCours")) {
-					try {
-						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
-						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(session, null);
-						for (Vente v : listeVentes) {
-							System.out.println(v.toString());
-						}
-						set.addAll(listeVentes);
-					} catch (BllException e) {
-						e.printStackTrace();
-					}
-				}
+//				if (valeurs[i].equals("mesEncheresEnCours")) {
+//					try {
+//						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
+//						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
+//						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
+//						for (Vente v : listeVentes) {
+//							System.out.println(v.toString());
+//						}
+//						set.addAll(listeVentes);
+//					} catch (BllException e) {
+//						e.printStackTrace();
+//					}
+//				}
 
 				if (valeurs[i].equals("mesAcquisitions")) {
 					try {
