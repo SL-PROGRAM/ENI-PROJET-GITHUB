@@ -365,10 +365,11 @@ public class UtilisateurManager {
 		}
 	}
 	
-	public String verificationSessionActive(HttpServletRequest request, HttpServletResponse response, String path) throws ServletException, IOException {
+	public String verificationSessionActive(HttpServletRequest request, HttpServletResponse response, HttpSession session, String path) throws ServletException, IOException {
 		String msgErreur = "";
 		if(request.getParameter("utilisateur") == null) {
-			RequestDispatcher rd = request.getRequestDispatcher(path);
+			session.setAttribute("path", path);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
 			rd.forward(request, response);
 		}
 		return msgErreur;
