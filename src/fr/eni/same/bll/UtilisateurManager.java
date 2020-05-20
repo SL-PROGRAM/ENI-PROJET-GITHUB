@@ -108,8 +108,9 @@ public class UtilisateurManager {
 	}
 
 	public void updateMotDePasse(Utilisateur t, String motDePasse, String motDePasseVerif) throws BllException {
-		motDePasseIdentique(motDePasse, motDePasseVerif);
-		String msgErreur = controleUpdateAndInsert(t);
+		String msgErreur = "";
+		msgErreur += motDePasseIdentique(motDePasse, motDePasseVerif);
+		msgErreur += controleUpdateAndInsert(t);
 		String MotDePasse = securisationMotDePass(t.getMotDePasse());
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
@@ -117,7 +118,6 @@ public class UtilisateurManager {
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
 			for (int i = 0; i < listeUtilisateurs.size(); i++) {
-				//Pas de mise a jour Admin et mot de passe
 				if(listeUtilisateurs.get(i).getNoUtilisateur() == t.getNoUtilisateur()) {
 					listeUtilisateurs.get(i).setMotDePasse(MotDePasse);
 				}
