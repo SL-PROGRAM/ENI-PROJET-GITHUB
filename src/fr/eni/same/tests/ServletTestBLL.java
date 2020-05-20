@@ -2,6 +2,7 @@ package fr.eni.same.tests;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +36,6 @@ public class ServletTestBLL extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		
 		System.out.println("----------UTILISATEURS----------");
 		testUtilisateurs();
 		System.out.println("----------CATEGORIES----------");
@@ -49,6 +49,10 @@ public class ServletTestBLL extends HttpServlet {
 		System.out.println("----------FILTRE----------");
 		try {
 			testFiltre(session);
+			System.out.println("----------TEST SELECT BY MOTCLE----------");
+			testSelectByMotCle();
+			System.out.println("----------TEST SELECT BY CATEGORIE----------");
+			testSelectByCategorie();
 		} catch (BllException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -171,4 +175,67 @@ public class ServletTestBLL extends HttpServlet {
 		FiltreManager.getFiltreManager().filtreMesVentesPubliées(session, categorie);
 		
 	}
+	
+	public void testSelectByMotCle() throws BllException {
+		String motCleDescription1 = "modifier";
+		String motCleNomArticle1 = "une";
+		String motCleDescription2 = "crip";
+		String motCleNomArticle2 = "lo";
+		String motCleDescriptionNomArticle = "pc";
+		String motCleTestCaseSensitive = "Une";
+		
+		System.out.println("----------DESCRIPTION MOTCLE COMPLET----------");
+		List<Vente> listeByMotCleDescription1 = VenteManager.getVenteManager().selectByMotCle(motCleDescription1);
+		System.out.println("Voici la liste de votre recherche par mot clé");
+		for (Vente vente : listeByMotCleDescription1) {
+			System.out.println(vente.toString());
+		}
+		
+		System.out.println("----------ARTICLE MOTCCLE COMPLET----------");
+		List<Vente> listeByMotCleNomArticle1 = VenteManager.getVenteManager().selectByMotCle(motCleNomArticle1);
+		System.out.println("Voici la liste de votre recherche par mot clé");
+		for (Vente vente : listeByMotCleNomArticle1) {
+			System.out.println(vente.toString());
+		}
+		
+		System.out.println("----------DESCRIPTION MOTCLE INCOMPLET----------");
+		List<Vente> listeByMotCleDescription2 = VenteManager.getVenteManager().selectByMotCle(motCleDescription2);
+		System.out.println("Voici la liste de votre recherche par mot clé");
+		for (Vente vente : listeByMotCleDescription2) {
+			System.out.println(vente.toString());
+		}
+		
+		System.out.println("----------ARTICLE MOTCCLE INCOMPLET----------");
+		List<Vente> listeByMotCleNomArticle2 = VenteManager.getVenteManager().selectByMotCle(motCleNomArticle2);
+		System.out.println("Voici la liste de votre recherche par mot clé");
+		for (Vente vente : listeByMotCleNomArticle2) {
+			System.out.println(vente.toString());
+		}
+		
+		System.out.println("----------MOTCLE DANS DESCRIPTION + ARTICLE----------");
+		List<Vente> listeByMotCleDescriptionNomArticle = VenteManager.getVenteManager().selectByMotCle(motCleDescriptionNomArticle);
+		System.out.println("Voici la liste de votre recherche par mot clé");
+		for (Vente vente : listeByMotCleDescriptionNomArticle) {
+			System.out.println(vente.toString());
+		}
+		
+		System.out.println("----------TEST CASE SENSITIVE NOMARTICLE = Une A LA PLACE DE une----------");
+		List<Vente> listeByMotCleTestCaseSensitive = VenteManager.getVenteManager().selectByMotCle(motCleTestCaseSensitive);
+		System.out.println("Voici la liste de votre recherche par mot clé");
+		for (Vente vente : listeByMotCleTestCaseSensitive) {
+			System.out.println(vente.toString());
+		}
+	}
+	
+	public void testSelectByCategorie() throws BllException {
+		
+		Categorie categorie = CategorieManager.getCategorieManager().select(4);
+		
+		List<Vente> listeByCategorie = VenteManager.getVenteManager().selectByCategorie(categorie);
+		System.out.println("Voici la liste de votre recherhce par catégorie");
+		for (Vente vente : listeByCategorie) {
+			System.out.println(vente.toString());
+		}
+	}
+	
 }
