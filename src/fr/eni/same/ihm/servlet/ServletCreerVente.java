@@ -77,12 +77,12 @@ public class ServletCreerVente extends HttpServlet {
 		
 		if(request.getParameter("publierVente").equals("Publier")) {
 			HttpSession session = request.getSession();
-			try {
-				UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/creerVentes.jsp");
-			} catch (BllException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/creerVentes.jsp");
+//			} catch (BllException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 			String msgErreur = PublierVente.enregistrerVente(session, request );
 			if (!msgErreur.equals("")) {

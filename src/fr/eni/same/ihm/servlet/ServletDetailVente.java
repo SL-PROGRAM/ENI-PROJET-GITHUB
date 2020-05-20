@@ -39,30 +39,38 @@ public class ServletDetailVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//vérification si session active
-		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(60*60*60*30);
-
+		
+		HttpSession session =request.getSession();
+		session.setMaxInactiveInterval(60*60*60);
+		
 		if (request.getSession().getAttribute("utilisateur") == null){
 			response.sendRedirect("ServletConnexion");
-		}
-		else{
+	    	return;
+		}else{
+			
 			int noVente = Integer.parseInt(request.getParameter("noVente"));			
 			try {
-				Retrait retrait = null;
+				Retrait retrait =null;
 				Vente vente = VenteManager.getVenteManager().select(noVente);
-				List<Retrait> listRetrait = RetraitManager.getRetraitManager().selectAll();
-				for (Retrait retrait2 : listRetrait) {
-					if(retrait2.getVente() == vente) {
-						retrait = RetraitManager.getRetraitManager().select(vente.getNoVente());
-						request.setAttribute("retrait", retrait);
+				List<Retrait> listeRetrait  = RetraitManager.getRetraitManager().selectAll();
+				for(Retrait retrait2 : listeRetrait) {
+					if(retrait2.getVente()== vente) {
+						 retrait = RetraitManager.getRetraitManager().select(vente.getNoVente());
+						 request.setAttribute("retrait", retrait);
 					}
 				}
+				
 					
+				
+				
 				Timestamp heureServer = new Timestamp(System.currentTimeMillis());
 				
 				
 				request.setAttribute("vente", vente);
 				request.setAttribute("heureServer", heureServer);
+//				if(vente.getDateFinEncheres().before(heureServer)) {
+//					
+//				}
 				Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				
 
@@ -87,7 +95,19 @@ public class ServletDetailVente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+//		if(request.getParameter("retraitEffectue").equals("Retrait effectué")) {
+//			//iteration 2: possibilité d'  annuler la vente tant que retrait pas effectué
+//	
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+//			rd.forward(request, response);	
+//			}
+		
+		 if(request.getParameter("annulerVente").equals("Annuler la vente")) {
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 	
