@@ -48,7 +48,7 @@ public class ServletDetailVente extends HttpServlet {
 	    	return;
 		}else{
 			HttpSession session = request.getSession();
-			int noVente = (int) request.getAttribute("noVente");			
+			int noVente = (Integer.parseInt(request.getParameter("noVente"))) ;			
 			try {
 				Vente vente = VenteManager.getVenteManager().select(noVente);	
 				Retrait retrait = RetraitManager.getRetraitManager().select(vente.getNoVente());
