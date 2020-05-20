@@ -69,10 +69,8 @@ public class ServletConnexion extends HttpServlet {
 		
 		String identifiant = request.getParameter("txtIdentifiant");
 		String password = request.getParameter("txtPassword");
-		String rememberMe = request.getParameter("rememberMe");
-		HttpSession session = request.getSession();
-		
-		if(rememberMe.equals("on")) {
+		System.out.println(request.getParameter("rememberMe"));
+		if(request.getParameter("rememberMe") != null) {
 			Cookie cookieID= new Cookie("connexionID", identifiant);
 			Cookie cookieMDP = new Cookie("connexionMDP", password);
 			cookieID.setMaxAge(COOKIE_MAX_AGE);
@@ -80,6 +78,9 @@ public class ServletConnexion extends HttpServlet {
 			response.addCookie(cookieID);
 			response.addCookie(cookieMDP);
 		}
+		HttpSession session = request.getSession();
+		
+	
 		
 	
 			try {
