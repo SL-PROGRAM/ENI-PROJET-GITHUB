@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bll.RetraitManager;
+import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Utilisateur;
@@ -41,7 +42,7 @@ public class ServletDetailVente extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 9 et 10
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		//vérification si session active
 		if (request.getSession().getAttribute("utilisateur") == null){
 			response.sendRedirect("ServletConnexion");
 	    	return;
@@ -60,9 +61,11 @@ public class ServletDetailVente extends HttpServlet {
 
 				
 				if(vente.getUtilisateurVendeur() == (Utilisateur) session.getAttribute("utilisateur")) {
+					UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/detailVente.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 					rd.forward(request, response);
 				}else {			
+					UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/detailVente.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
 					rd.forward(request, response);
 				}
