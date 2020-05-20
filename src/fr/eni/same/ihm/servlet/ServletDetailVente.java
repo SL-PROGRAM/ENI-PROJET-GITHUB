@@ -67,8 +67,10 @@ public class ServletDetailVente extends HttpServlet {
 				
 				
 				request.setAttribute("vente", vente);
-				
 				request.setAttribute("heureServer", heureServer);
+//				if(vente.getDateFinEncheres().before(heureServer)) {
+//					
+//				}
 				Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				
 
