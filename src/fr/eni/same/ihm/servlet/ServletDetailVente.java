@@ -39,33 +39,39 @@ public class ServletDetailVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//vérification si session active
-		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(60*60*60*30);
-
+		
+		HttpSession session =request.getSession();
+		session.setMaxInactiveInterval(60*60*60);
+		
 		if (request.getSession().getAttribute("utilisateur") == null){
 			response.sendRedirect("ServletConnexion");
-		}
-		else{
+	    	return;
+		}else{
+			
 			int noVente = Integer.parseInt(request.getParameter("noVente"));			
 			try {
-				Retrait retrait = null;
+				Retrait retrait =null;
 				Vente vente = VenteManager.getVenteManager().select(noVente);
-				List<Retrait> listRetrait = RetraitManager.getRetraitManager().selectAll();
-				for (Retrait retrait2 : listRetrait) {
-					if(retrait2.getVente() == vente) {
-						retrait = RetraitManager.getRetraitManager().select(vente.getNoVente());
-						request.setAttribute("retrait", retrait);
+				List<Retrait> listeRetrait  = RetraitManager.getRetraitManager().selectAll();
+				for(Retrait retrait2 : listeRetrait) {
+					if(retrait2.getVente()== vente) {
+						 retrait = RetraitManager.getRetraitManager().select(vente.getNoVente());
+						 request.setAttribute("retrait", retrait);
 					}
 				}
+				
 					
+				
+				
 				Timestamp heureServer = new Timestamp(System.currentTimeMillis());
 				
 				
 				request.setAttribute("vente", vente);
+				request.setAttribute("retrait", retrait);
 				request.setAttribute("heureServer", heureServer);
-				Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+
 				
-				if(vente.getUtilisateurVendeur() == utilisateur) {
+				if(vente.getUtilisateurVendeur() == (Utilisateur) session.getAttribute("utilisateur")) {
 					//UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 					rd.forward(request, response);
