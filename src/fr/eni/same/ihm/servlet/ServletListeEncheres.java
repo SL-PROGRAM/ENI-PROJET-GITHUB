@@ -39,6 +39,7 @@ public class ServletListeEncheres extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 5
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		HttpSession session = request.getSession();
 		//Utilisateur utilisateur = null;
 		if (request.getSession().getAttribute("utilisateur") != null) {

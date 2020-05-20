@@ -41,8 +41,8 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	 *      Cette Servlet et la jsp correspondante prennent en charge les Maquettes
 	 *      2 et 3
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/modificationInformationsUtilisateur.jsp");
 		rd.forward(request, response);
 	}
@@ -51,9 +51,8 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		String pseudo = request.getParameter("txtPseudo");
 		String nom = request.getParameter("txtNom");
 		String prenom = request.getParameter("txtPrenom");

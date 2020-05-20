@@ -28,6 +28,7 @@ public class ServletEnchereGagnee extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 8
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		if (request.getSession().getAttribute("utilisateur") == null){
 			response.sendRedirect("ServletConnexion");
 	    	return;

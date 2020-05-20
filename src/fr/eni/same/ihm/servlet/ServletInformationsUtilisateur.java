@@ -31,7 +31,7 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 4 et 12
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setAttribute("erreur", "");
 		if (request.getParameter("noUtilisateurAcheteur") != null) {
 			int noUtilisateurAcheteur = Integer.parseInt(request.getParameter("noUtilisateurAcheteur"));
 			try {
