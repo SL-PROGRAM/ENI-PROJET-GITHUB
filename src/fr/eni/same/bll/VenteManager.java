@@ -1,7 +1,10 @@
 package fr.eni.same.bll;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+
+import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
@@ -95,6 +98,7 @@ public class VenteManager  {
 		
 	}
 	
+	
 
 	
 	public Vente updateAcheteur(Vente t) throws BllException {
@@ -163,6 +167,33 @@ public class VenteManager  {
 	public List<Vente> selectAll() throws BllException {
 		return listVentes;
 	}
+	
+	public List<Vente> selectByMotCle(String motCle) throws BllException{
+		List<Vente> aRetourner = new ArrayList<Vente>();
+		
+		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
+		for (Vente vente : listeVentes) {
+			if (vente.getDescription().toLowerCase().contains(motCle.toLowerCase())
+					|| vente.getNomArticle().toLowerCase().contains(motCle.toLowerCase())) {
+				aRetourner.add(vente);
+			}
+		}
+		return aRetourner;
+	}
+	
+	public List<Vente> selectByCategorie(Categorie categorie) throws BllException{
+		List<Vente> aRetourner = new ArrayList<Vente>();
+		
+		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
+		for (Vente vente : listeVentes) {
+			if (vente.getCategorie().getNoCategorie() == categorie.getNoCategorie()) {
+				System.out.println(vente.toString());
+				aRetourner.add(vente);
+			}
+		}
+		return aRetourner;
+	}
+	
 	
 		//***********************************************************************************************//
 		// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
@@ -254,7 +285,7 @@ public class VenteManager  {
 		
 	}
 
-
+	
 	
 
 }
