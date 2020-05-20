@@ -87,13 +87,13 @@ public class FiltreManager {
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 		for (int i = 0; i < allEncheresEnCours.size(); i++) {
 			if((allEncheresEnCours.get(i).getUtilisateurEnchere() == utilisateurConnect)) {
-						for (int j = 0; j < allVentes.size(); j++) {
-							if(allVentes.get(j).getUtilisateurAcheteur() == allEncheresEnCours.get(i).getUtilisateurEnchere()) {
-								mesEncheresEnCours.add(allVentes.get(j));
-							}
+					for (int j = 0; j < allVentes.size(); j++) {
+						if(allVentes.get(j).getUtilisateurAcheteur() == allEncheresEnCours.get(i).getUtilisateurEnchere()) {
+							mesEncheresEnCours.add(allVentes.get(j));
 						}
 					}
 				}
+			}
 			return mesEncheresEnCours;
 		}
 	
