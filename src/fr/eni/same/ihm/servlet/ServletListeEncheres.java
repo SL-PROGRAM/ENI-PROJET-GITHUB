@@ -76,14 +76,19 @@ public class ServletListeEncheres extends HttpServlet {
 //					}
 //				}
 
-//				if (valeurs[i].equals("mesEncheresEnCours")) {
-//					try {
-//						listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
-//					} catch (BllException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
+				if (valeurs[i].equals("mesEncheresEnCours")) {
+					try {
+						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
+						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(session, null);
+						for (Vente v : listeVentes) {
+							System.out.println(v.toString());
+						}
+						set.addAll(listeVentes);
+					} catch (BllException e) {
+						e.printStackTrace();
+					}
+				}
 
 				if (valeurs[i].equals("mesAcquisitions")) {
 					try {
@@ -142,7 +147,7 @@ public class ServletListeEncheres extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		doGet(request, response);
 	}
 	
