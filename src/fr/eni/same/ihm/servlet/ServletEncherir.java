@@ -34,6 +34,9 @@ public class ServletEncherir extends HttpServlet {
 		//iterartion 2:verif si l utilisateur arrivant sur cette page est le dernier a avoir encheri, si oui possibilité d annuler l enchere
 		
 		
+		//Je pas oublier de recréditer au précédant acheteur sa mise.
+		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
 		rd.forward(request, response);
 		
