@@ -51,6 +51,19 @@ public class ServletListeEncheres extends HttpServlet {
 		List<List<Vente>> listes = new ArrayList<List<Vente>>();
 		Set set = new HashSet();
 		
+		if (request.getParameter("supprimmerCompteUtilisateur") != null) {
+			if (request.getParameter("noUtilisateurVendeur") != null) {
+				int noUtilisateurSuppression = Integer.parseInt(request.getParameter("noUtilisateurVendeur"));
+				try {
+					Utilisateur utilisateurSuppression = UtilisateurManager.getUtilisateurManager().select(noUtilisateurSuppression);
+					UtilisateurManager.getUtilisateurManager().delete(utilisateurSuppression);
+				} catch (BllException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		
 		if (request.getParameterValues("filtres")!=null) {
 			String[] valeurs = request.getParameterValues("filtres");
@@ -142,6 +155,7 @@ public class ServletListeEncheres extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 		rd.forward(request, response);
+		
 	}
 
 	/**
