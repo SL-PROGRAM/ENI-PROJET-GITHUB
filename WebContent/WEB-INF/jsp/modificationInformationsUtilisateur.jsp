@@ -35,17 +35,12 @@
 		<br />
 		
 		
-		<form action=
-			'<c:choose>
-				<c:when test="${empty utilisateur }">
-					<%= request.getContextPath()%>/ServletConnexion" method="post"
-				</c:when>
-				<c:when test="${!empty utilisateur }">
-					<%= request.getContextPath()%>/ServletModificationInformationsUtilisateur" method="post"
-				</c:when>
-			</c:choose>'
-		>
+		<form action=" <%= request.getContextPath()%>/ServletModificationInformationsUtilisateur" method="post">
+		
 			<div class="row">
+				<div class="col-12">
+					<p style="color: red">${erreurSaisie }</p>
+				</div>
 				<div class="col-12 col-lg-6">
 					<div class="form-group form-row">
 						<label for="pseudo" class="col-6 col-lg-3 col-form-label">Pseudo :
@@ -167,34 +162,69 @@
 					</div>
 				</div>
 			</div>
-
+				<c:if test="${!empty utilisateur}">
+					<div class="row">
+						<div class="col-12">
+							<p>Pour confirmer la modifications de vos informations merci de rentrer votre mot de passe dans le champ Ancien mot de passe.</p>
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="form-group form-row">
+								<label for="ancienMotDePasse" class="col-6 col-lg-3 col-form-label">Ancien mot de
+									passe : </label>
+								<div class="col-6 col-lg-9">
+									<input name="txtAncienMotDePasse" type="password" class="form-control"
+										id="ancienMotDePasse" placeholder="Votre ancien mot de passe...">
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="form-group form-row">
+								<label for="confirmAncienMotDePasse" class="col-6 col-lg-3 col-form-label">Confirmation ancien
+									mot de passe : </label>
+								<div class="col-6 col-lg-9">
+									<input name="txtConfirmAncienMotDePasse" type="password"
+										class="form-control" id="confirmAncienMotDePasse"
+										placeholder="Confirmez votre mot de passe actuel...">
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:if>	
 			<div class="row">
 				<div class="col-12 col-lg-6">
 					<div class="form-group form-row">
-						<label for="motDePasse" class="col-6 col-lg-3 col-form-label">Mot de
-							passe : </label>
+						<label for="motDePasse" class="col-6 col-lg-3 col-form-label">
+							<c:choose>
+								<c:when test="${!empty utilisateur}">
+									Nouveau mot de passe :
+								</c:when>
+								<c:when test="${empty utilisateur}">
+									Mot de passe :
+								</c:when>
+							</c:choose>
+						 </label>
 						<div class="col-6 col-lg-9">
 							<input name="txtMotDePasse" type="password" class="form-control"
-								id="motDePasse" placeholder="Votre mot de passe..."
-								<c:if test="${!empty utilisateur}">
-									value="${utilisateur.motDePasse}"
-								</c:if>
-							>
+								id="motDePasse" placeholder="Votre mot de passe...">
 						</div>
 					</div>
 				</div>
 				<div class="col-12 col-lg-6">
 					<div class="form-group form-row">
-						<label for="confirmMotDePasse" class="col-6 col-lg-3 col-form-label">Confirmation
-							: </label>
+						<label for="confirmMotDePasse" class="col-6 col-lg-3 col-form-label">
+							<c:choose>
+								<c:when test="${!empty utilisateur}">
+									Confirmation nouveau mot de passe: 
+								</c:when>
+								<c:when test="${empty utilisateur}">
+									Confirmation mot de passe: 
+								</c:when>
+							</c:choose>
+						</label>
 						<div class="col-6 col-lg-9">
 							<input name="txtConfirmation" type="password"
 								class="form-control" id="confirmMotDePasse"
-								placeholder="Confirmez votre mot de passe..."
-								<c:if test="${!empty utilisateur}">
-									value="${utilisateur.motDePasse}"
-								</c:if>
-							>
+								placeholder="Confirmez votre mot de passe...">
 						</div>
 					</div>
 				</div>
@@ -237,7 +267,7 @@
 						</div>
 						<div class="col-4 col-lg-3">
 							<!-- Redirige vers la ServletConnexion (maquette 1) qui permettra de faire la suppression de l'utilisateur en BDD -->
-							<a class="btn btn-danger btn-block" href="<%= request.getContextPath()%>/ServletListeEncheres" type="submit">Supprimer mon compte</a>
+							<input class="btn btn-danger btn-block" name="suppressionCompte" type="submit" value="Supprimer mon compte">
 						</div>
 						<div class="col-4 col-lg-3">
 							<!-- Redirection vers ServletInformationsUtlisateur (maquettes 4 + 12) -->
