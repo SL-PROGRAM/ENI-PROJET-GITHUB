@@ -172,10 +172,10 @@ public class UtilisateurManager {
 		return listeUtilisateurs;
 	}
 	
-	private String controleUpdateAndInsert(Utilisateur t) throws BllException {
+	public String controleUpdateAndInsert(Utilisateur t) throws BllException {
 		String msgErreur = "";
 		msgErreur += utilisateurNull(t);
-		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
+		//msgErreur += noUtilisateurNull(t.getNoUtilisateur());
 		msgErreur += pseudoLongueurCorrect(t.getPseudo());
 		msgErreur += nomLongueurCorrect(t.getNom());
 		msgErreur += prenomLongueurCorrect(t.getPrenom());
@@ -275,7 +275,7 @@ public class UtilisateurManager {
 		}			
 		if(!matcher.matches()) {
 			msgErreur = ("Ce n'est pas un email valide");
-		};
+		}
 		return msgErreur;
 	}
 		
