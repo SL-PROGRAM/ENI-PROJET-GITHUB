@@ -97,7 +97,7 @@
 						<p>Vendeur :</p>
 					</div>
 					<div class="col-6 col-lg-9">
-						<p>${vente.utilisateurVendeur.nomArticle }</p>
+						<p>${vente.utilisateurVendeur.pseudo }</p>
 					</div>
 					
 					
@@ -108,15 +108,17 @@
 							<div class="col-4 col-lg-4">
 								<p><a class="btn btn-block 
 										<c:choose>
-											<c:when test="${cookie.nomCookie ???}">
+											<c:when test="${cookie.nomCookie}">
 												btn-danger 
 											</c:when>
-											<c:when test="${cookie.nomCookie ???}">
+											<c:when test="${cookie.nomCookie}">
 												btn-succes
 											</c:when>
 										</c:choose>
+								
 								" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
 											Retrait effectué</a></p>
+												
 							</div>
 							
 							<!-- Redirige vers ServletInformationsUtilisateur -->
