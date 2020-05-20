@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.exception.BllException;
 
 /**
  * Servlet implementation class ServletCreerCompte
@@ -43,7 +45,6 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//recup infos champs pour création compte:
 		
 		String pseudo = request.getParameter("txtPseudo");
 		String nom = request.getParameter("txtNom");
@@ -51,25 +52,61 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 		String email = request.getParameter("txtEmail");
 		String telephone = request.getParameter("txtTelephone");
 		String rue = request.getParameter("txtRue");
-		String codPostal = request.getParameter("txtCodePostal");
+		String codePostal = request.getParameter("numCodePostal");
 		String ville = request.getParameter("txtVille");
-		String mdp = request.getParameter("txtMotDePasse");
-		String confirmation = request.getParameter("txtConfirmation");
+		String motDePasse = request.getParameter("txtMotDePasse");
+		String confirmationMotDePasse = request.getParameter("txtConfirmation");
+		String erreurSaisie = "";
+		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
 		
 		
-		//creation utilisateur
-//		Utilisateur newUtilisateur = new Utilisateur();
+		
+			if (motDePasse.equals(confirmationMotDePasse)) {
+				Utilisateur utilisateur = new Utilisateur();  
+				utilisateur.setPseudo(pseudo);
+				utilisateur.setNom(nom);
+				utilisateur.setPrenom(prenom);
+				utilisateur.setEmail(email);
+				utilisateur.setTelephone(telephone);
+				utilisateur.setRue(rue);
+				utilisateur.setCodePostal(codePostal);
+				utilisateur.setVille(ville);
+				utilisateur.setMotDePasse(motDePasse);
+				
+				try {
+					erreurSaisie = UtilisateurManager.getUtilisateurManager().controleUpdateAndInsert(utilisateur);
+					System.out.println("Je suis après le controlle");
+					System.out.println(erreurSaisie);
+					if (erreurSaisie.equals("")) {
+						if (request.getSession().getAttribute("utilisateur") != null) {
+							UtilisateurManager.getUtilisateurManager().update(utilisateur);
+						} else {
+							UtilisateurManager.getUtilisateurManager().insert(utilisateur);
+						}
+						System.out.println("Je suis dans l'insert utilisateur");
+//					RequestDispatcher rd = request.getRequestDispatcher("/ServletConnexion");
+//					rd.forward(request, response);
+					}
+				} catch (BllException e) {
+					e.printStackTrace();
+				}
+				
+			} else {
+				erreurSaisie += "Les mots de passe ne correspondent pas !";
+				request.setAttribute("erreurSaisie", erreurSaisie);
+				
+			
+			
+		}
+		
+		
+		System.out.println(erreurSaisie);
+//		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+//		rd.forward(request, response);
 //		
-//		if(condition: not empty & pseudoUnique) {
-//			newUtilisateur.setPseudo(pseudo);
-//		}
-//		if(condition: not empty ) {
-//			newUtilisateur.setPrenom(prenom);
-//		}
-//		if(condition: not empty ) {
-//			newUtilisateur.setNom(nom);
-//		}
-	}//fin doPost
+		
+
+	}
 
 	
 	
