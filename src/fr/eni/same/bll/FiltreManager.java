@@ -88,7 +88,7 @@ public class FiltreManager {
 		for (int i = 0; i < allEncheresEnCours.size(); i++) {
 			if((allEncheresEnCours.get(i).getUtilisateurEnchere() == utilisateurConnect)) {
 						for (int j = 0; j < allVentes.size(); j++) {
-							if(allVentes.get(j).getUtilisateurAcheteur().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()) {
+							if(allVentes.get(j).getUtilisateurAcheteur() == allEncheresEnCours.get(i).getUtilisateurEnchere()) {
 								mesEncheresEnCours.add(allVentes.get(j));
 							}
 						}
@@ -105,7 +105,7 @@ public class FiltreManager {
 			if(allEncheresEnCours.get(i).getUtilisateurEnchere() == utilisateurConnect) {
 				if(categorie == null) {
 					mesEncheresEnCours.add(allEncheresEnCours.get(i));
-				}else if(categorie == allEncheresEnCours.get(i).getVenteEnchere().getCategorie()) {
+				} else if(categorie == allEncheresEnCours.get(i).getVenteEnchere().getCategorie()) {
 					mesEncheresEnCours.add(allEncheresEnCours.get(i));
 				}
 			}
