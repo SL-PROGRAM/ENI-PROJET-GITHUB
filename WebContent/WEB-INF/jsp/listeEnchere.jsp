@@ -21,7 +21,7 @@
 				</div>
 			</c:if>
 		</div>
-		
+
 		<form action="<%=request.getContextPath()%>/ServletListeEncheres">
 			<div class="row mb-3">
 				<div class="col-12 col-lg-3">
