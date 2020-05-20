@@ -3,9 +3,8 @@ package fr.eni.same.ihm.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.FiltreManager;
 import fr.eni.same.bo.Categorie;
@@ -97,7 +95,6 @@ public class ServletListeEncheres extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
-
 				
 				if (valeurs[i].equals("autresEncheres")) {
 					try {
