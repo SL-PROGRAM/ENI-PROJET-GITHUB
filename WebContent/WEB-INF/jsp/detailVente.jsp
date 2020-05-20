@@ -21,7 +21,7 @@
 	
 	
 		<!-- Message à afficher uniquement pour la Maquette 10 -->
-		<c:if test="${vente.dateFinEncheres.compareTo(heureServer)} > 0 || ${vente.dateFinEncheres.compareTo(heureServer)} == 0">
+		<c:if test="${vente.dateFinEncheres.before(heureServer)}">//vente
 			<div class="row">
 				<div class="col-12 col-lg-8 text-center">
 					<h2>${vente.utilisateurAcheteur } a remporté l'enchère !</h2>
