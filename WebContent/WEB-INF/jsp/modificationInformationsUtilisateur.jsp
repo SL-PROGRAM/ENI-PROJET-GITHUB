@@ -18,8 +18,12 @@
 <div class="col container">
 	<%@include file="jspf/header.jspf"%>
 	<div class="container">
+	
 	<!-- Titre à modifier en fonction de la maquette 2 ou 3 -->
 	<div class="row">
+		<div class="col-12 col-lg-12 text-center">
+			<p class="text-danger">${erreur }</p>
+		</div>
 		<div class="col-12 text-center">
 			<c:choose>
 				<c:when test="${empty utilisateur}">

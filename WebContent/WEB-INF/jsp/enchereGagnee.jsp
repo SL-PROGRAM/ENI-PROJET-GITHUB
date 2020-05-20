@@ -18,6 +18,9 @@
 	<%@ include file="jspf/header.jspf"%>
 	<div class="container">
 		<div class="row">
+		<div class="col-12 col-lg-12 text-center">
+			<p class="text-danger">${erreur }</p>
+		</div>
 			<div class="col-12 col-lg-8 offset-lg-4 text-center">
 				<h2>Vous avez remporté l'enchère</h2>
 				<br/>

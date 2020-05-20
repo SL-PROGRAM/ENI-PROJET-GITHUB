@@ -145,12 +145,16 @@
 						<c:when test="${vente.dateFinEncheres.after(heureServer)}">
 							<!-- Boutons à afficher dans la version Maquette 9 -->
 							<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
+							<c:if test="utilisateur.noUtilisateur == vente.utilisateurVendeur.noUtilisateur">
 							<div class="col-6 col-lg-6">
 							<a href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerVente")%>?noVente=${vente.noVente}" 
 								class="btn btn-primary btn-block" role="button">
 									Annuler la vente
 								</a>
 							</div>
+							</c:if>
+							
+							
 							
 							<!-- Redirige vers ServletListeEnchere -->
 							<div class="col-6 col-lg-6">
