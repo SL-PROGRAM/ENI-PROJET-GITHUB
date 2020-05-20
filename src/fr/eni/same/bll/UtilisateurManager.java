@@ -176,6 +176,9 @@ public class UtilisateurManager {
 		String msgErreur = "";
 		msgErreur += utilisateurNull(t);
 		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
+		msgErreur += pseudoUnique(t.getPseudo());
+		msgErreur += emailUnique(t.getEmail());
+		msgErreur += telephoneUnique(t.getTelephone());
 		msgErreur += pseudoLongueurCorrect(t.getPseudo());
 		msgErreur += nomLongueurCorrect(t.getNom());
 		msgErreur += prenomLongueurCorrect(t.getPrenom());
@@ -213,6 +216,14 @@ public class UtilisateurManager {
 		return msgErreur;
 	}
 	
+	//*********************************************************************************************//
+	// * Implementation des méthodes de gestion de compte										 * //
+	//*********************************************************************************************//
+
+	
+	
+	
+	
 	//***********************************************************************************************//
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
@@ -231,8 +242,35 @@ public class UtilisateurManager {
 	}
 	
 	public String pseudoUnique(String pseudo) throws BllException {
-		return pseudo;
-		//PAS DANS LA SPEC MAIS PREVU		
+		String msgErreur = "";
+		for (Utilisateur utilisateur : listeUtilisateurs) {
+			if(utilisateur.getPseudo() == pseudo) {
+				msgErreur = "Ce pseudo est déja utilisé";
+			}
+		}
+		return msgErreur;	
+	}
+	
+	public String emailUnique(String email) throws BllException {
+		String msgErreur = "";
+		for (Utilisateur utilisateur : listeUtilisateurs) {
+			if(utilisateur.getEmail() == email) {
+				msgErreur = "Cette email est déja utilisé";
+			}
+		}
+		return msgErreur;	
+	}
+	
+	public String telephoneUnique(String telephone) throws BllException {
+		String msgErreur = "";
+		if(telephone != null) {
+			for (Utilisateur utilisateur : listeUtilisateurs) {
+				if(utilisateur.getTelephone() == telephone) {
+					msgErreur = "Ce numéro de téléphone est déja utilisé";
+				}
+			}
+		}
+		return msgErreur;		
 	}
 
 	
