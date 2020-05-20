@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.FiltreManager;
+import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
@@ -38,6 +39,9 @@ public class ServletListeEncheres extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 5
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
 		
 		//Utilisateur utilisateur = null;
 		if (request.getSession().getAttribute("utilisateur") != null) {
@@ -86,19 +90,19 @@ public class ServletListeEncheres extends HttpServlet {
 //					}
 //				}
 
-				if (valeurs[i].equals("mesEncheresEnCours")) {
-					try {
-						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
-						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(session, null);
-						for (Vente v : listeVentes) {
-							System.out.println(v.toString());
-						}
-						set.addAll(listeVentes);
-					} catch (BllException e) {
-						e.printStackTrace();
-					}
-				}
+//				if (valeurs[i].equals("mesEncheresEnCours")) {
+//					try {
+//						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
+//						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
+//						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
+//						for (Vente v : listeVentes) {
+//							System.out.println(v.toString());
+//						}
+//						set.addAll(listeVentes);
+//					} catch (BllException e) {
+//						e.printStackTrace();
+//					}
+//				}
 
 				if (valeurs[i].equals("mesAcquisitions")) {
 					try {
