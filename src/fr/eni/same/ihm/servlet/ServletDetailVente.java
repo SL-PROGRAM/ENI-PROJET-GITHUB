@@ -65,11 +65,12 @@ public class ServletDetailVente extends HttpServlet {
 				request.setAttribute("heureServer", heureServer);
 				Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				
-				if(vente.getUtilisateurVendeur() == utilisateur) {
+
+				if(vente.getUtilisateurVendeur().getNoUtilisateur()==(utilisateur).getNoUtilisateur()) {
 					//UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 					rd.forward(request, response);
-				}else {			
+				}else {		
 					//UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
 					rd.forward(request, response);
