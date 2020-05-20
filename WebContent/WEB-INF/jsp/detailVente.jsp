@@ -24,7 +24,7 @@
 		<c:if test="${vente.dateFinEncheres.before(heureServer)}">
 			<div class="row">
 				<div class="col-12 col-lg-8 text-center">
-					<h2>${vente.utilisateurAcheteur } a remporté l'enchère !</h2>
+					<h2>${vente.utilisateurAcheteur} a remporté l'enchère !</h2>
 					<br/>
 				</div>
 			</div>
@@ -32,7 +32,9 @@
 		<!-- ------------------------------------------------- -->
 
 		<div class="row">
-		
+			<div class="col-12 col-lg-8 offset-lg-4 text-center">
+				<h1>Détail vente</h1>
+			</div>
 		<!-- Affichage uniquement pour la version Desktop -->
 			<div class="col-lg-3">
 			<!-- Affichage uniquement pour la version Mobile -->
@@ -71,10 +73,10 @@
 					<div class="col-6 col-lg-9">
 						
 							<c:choose>
-								<c:when test="${vente.dateFinEncheres.compareTo(heureServer)} > 0 || ${vente.dateFinEncheres.compareTo(heureServer)} == 0">
+								<c:when test="${vente.dateFinEncheres.before(heureServer)}">
 									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur}</a> </p>
 								</c:when>
-								<c:when test="${vente.dateFinEncheres.compareTo(heureServer)} < 0">
+								<c:when test="${vente.dateFinEncheres.after(heureServer)}">
 									<p>${vente.prixVente } pts par ${vente.utilisateurAcheteur}</p>
 									
 								</c:when>
@@ -102,10 +104,10 @@
 					
 					
 					<c:choose>
-						<c:when test="${vente.dateFinEncheres.compareTo(heureServer)} > 0 || ${vente.dateFinEncheres.compareTo(heureServer)} == 0">
+						<c:when test="${vente.dateFinEncheres.before(heureServer)}">
 							<!-- Boutons à afficher dans la version Maquette 10 -->
 							<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
-							<div class="col-4 col-lg-4">
+						<!--  	<div class="col-4 col-lg-4">
 							<!--  
 								<p><a class="btn btn-block 
 										<c:choose>
@@ -120,20 +122,20 @@
 								" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
 											Retrait effectué</a></p>
 												
-							</div>
+							</div>-->
 							
 							<!-- Redirige vers ServletInformationsUtilisateur -->
-							<div class="col-4 col-lg-4">
+							<div class="col-6 col-lg-6">
 								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
 									Contacter ${vente.utilisateurAcheteur }</a>
 							</div>
 							<!-- Redirige vers ServletListeEnchere -->
-							<div class="col-4 col-lg-4">
+							<div class="col-6 col-lg-6">
 								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
 									Retour</a>
 							</div>
 						</c:when>
-						<c:when test="${vente.dateFinEncheres.compareTo(heureServer)} < 0">
+						<c:when test="${vente.dateFinEncheres.after(heureServer)}">
 							<!-- Boutons à afficher dans la version Maquette 9 -->
 							<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
 							<div class="col-6 col-lg-6">
