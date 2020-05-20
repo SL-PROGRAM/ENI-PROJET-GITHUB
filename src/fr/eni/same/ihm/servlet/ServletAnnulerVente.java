@@ -1,11 +1,23 @@
 package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.same.bll.EnchereManager;
+import fr.eni.same.bll.RetraitManager;
+import fr.eni.same.bll.VenteManager;
+import fr.eni.same.bo.Enchere;
+import fr.eni.same.bo.Retrait;
+import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.bo.Vente;
+import fr.eni.same.exception.BllException;
 
 /**
  * Servlet implementation class ServletAnnulerVente
@@ -14,20 +26,66 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletAnnulerVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletAnnulerVente() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
+  
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		int noVente = 0;
+		if(request.getParameter("noVente") != null) {
+			noVente = Integer.valueOf(request.getParameter("noVente"));
+		}
+		
+		
+		
+		try {
+			//1 - supprimer le Retrait
+			Vente vente = VenteManager.getVenteManager().select(noVente);
+			List<Retrait> listRetrait = RetraitManager.getRetraitManager().selectAll();
+			for (Retrait retrait : listRetrait) {
+				if(retrait.getVente() == vente) {
+					RetraitManager.getRetraitManager().delete(retrait);
+				}
+			}
+			
+			//2 - annuler les encheres
+			List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
+			for (Enchere enchere : listEncheres) {
+				if(enchere.getVenteEnchere() == vente) {
+					// 1 - recrediter personne
+					Utilisateur encherisseur = enchere.getUtilisateurEnchere();
+					int prixDeVente = vente.getPrixVente();
+					int crditActuelEncherisseur = encherisseur.getCredit();
+					encherisseur.setCredit(prixDeVente + crditActuelEncherisseur);
+					
+					//2 - supprimer enchere
+					EnchereManager.getEnchereManager().delete(enchere);
+				}
+			}		
+			//3 - supprimer la vente
+			VenteManager.getVenteManager().delete(vente);
+			
+		} catch (BllException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+		rd.forward(request, response);
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+
 	}
 
 	/**

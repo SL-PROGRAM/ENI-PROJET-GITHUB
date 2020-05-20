@@ -102,16 +102,14 @@ public class ServletDetailVente extends HttpServlet {
 //			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 //			rd.forward(request, response);	
 //			}
-			Vente
-		 if(request.getParameter("annulerVente").equals("Annuler la vente")) {
-			 
+			 	
 			//iteration 2: possibilité d'  annuler la vente tant que retrait pas effectué
 			//recup novente et delete la vente, remettre credit a l utilisateur
 			// if (retrait pas effectué) delete Vente, utilsateur.credit = credit+vente.prixVente
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 			rd.forward(request, response);
 		}
-	}
-
 	
+
+
 }
