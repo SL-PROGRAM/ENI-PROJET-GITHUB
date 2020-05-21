@@ -71,6 +71,7 @@ public class ServletEncherir extends HttpServlet {
 			return;
 		}
 		
+		
 		Vente venteConcernee = null;
 		//Récupère le numéro de la vente concernée
 		int noVente = Integer.parseInt(request.getParameter("venteConcernee"));
@@ -88,7 +89,7 @@ public class ServletEncherir extends HttpServlet {
 		int propositionPrixInt = Integer.parseInt(propositionPrix);
 		
 		
-		if(request.getParameter("noUtilisateurMeilleurOffre") == null) {System.out.println("NULL");}
+		
 		//Récupère l'utilisateur qui vend l'article
 		Utilisateur utilisateurVendeur = null;
 		int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateurMeilleurOffre"));
@@ -99,38 +100,44 @@ public class ServletEncherir extends HttpServlet {
 		}
 
 		
-		
-		//Si l'utilisateur a assez de points
-		//Son nombre de points devient nombre de points - propositionPrix
-		//Vérifier que la date n'est pas passée, sinon renvoyer sur la page avec une erreur
-		//TODO
-		if(utilisateur.getNoUtilisateur() == utilisateurVendeur.getNoUtilisateur()) {
+			if(utilisateur.getNoUtilisateur() == utilisateurVendeur.getNoUtilisateur()) {
 			System.out.println("Vous ne pouvez pas enchérir sur votre propre enchère");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 			rd.forward(request, response);
 			return;
 		}
+		
+		//SI J'AI ASSEZ DE CREDIT
 		if(utilisateur.getCredit() > propositionPrixInt) {
+			//Retirer les crédits de l'utilisateur qui propose l'enchere
 			utilisateur.setCredit(utilisateur.getCredit()-propositionPrixInt);
 			try {
-				UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateur);
-				//Il devient ensuite l'enchérisseur (l'utilisateurAcheteur) sur cette vente
-				venteConcernee.setUtilisateurAcheteur(utilisateur);
-				venteConcernee.setPrixVente(propositionPrixInt);
-//				System.out.println("UTILISATEUR ACHETEUR " + venteConcernee.getUtilisateurAcheteur());
-//				System.out.println("Vente concernée  : vente n°" + venteConcernee.getNoVente() + ", vendeur initial : " + utilisateurVendeur.getNoUtilisateur());
+				if(EnchereManager.getEnchereManager().chkIfUserExist(utilisateur.getNoUtilisateur())) {
+					//Si c'est le cas, UPDATER la date de l'enchere qui contient son idutilisateur
+					Enchere enchereActuelle = EnchereManager.getEnchereManager().select(noVente, utilisateurVendeur.getNoUtilisateur());
+					EnchereManager.getEnchereManager().update(enchereActuelle);
+					
+				} else {
+					Timestamp ts = new Timestamp(System.currentTimeMillis());
+					Enchere nouvelleEnchere = new Enchere(ts, utilisateur, venteConcernee);
+					EnchereManager.getEnchereManager().insert(nouvelleEnchere);
+				}
 				
-				Enchere enchereAModifier = EnchereManager.getEnchereManager().select(venteConcernee.getNoVente(), utilisateurVendeur.getNoUtilisateur());
-				enchereAModifier.setUtilisateurEnchere(utilisateur);
-//				EnchereManager.getEnchereManager().update(enchereAModifier);
-				EnchereManager.getEnchereManager().updateEnchereur(enchereAModifier, utilisateurVendeur.getNoUtilisateur(), utilisateur.getNoUtilisateur());
-//				
-//				System.out.println("UTILISATEUR ACHETEUR 1: " + venteConcernee.getUtilisateurAcheteur());
-////				VenteManager.getVenteManager().updateAcheteur(venteConcernee);
-////				System.out.println("UTILISATEUR ACHETEUR 2: " + venteConcernee.getUtilisateurAcheteur());
-//
-//				VenteManager.getVenteManager().update(venteConcernee);
-				System.out.println("Sur la vente n°" + venteConcernee.getNoVente() + " l'utilisateur acheteur est maintenant : " + venteConcernee.getUtilisateurAcheteur().getPseudo());
+				
+				//Sinon insérer en base de donnée une nouvelle enchere avec la date now
+				
+				
+				
+				//Modifie les crédits de l'utilisateur qui enchérit
+				UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateur);
+				
+				
+				//Il devient ensuite l'enchérisseur (l'utilisateurAcheteur) sur cette vente
+//				venteConcernee.setUtilisateurAcheteur(utilisateur);
+//				venteConcernee.setPrixVente(propositionPrixInt);
+//				enchereAModifier.setUtilisateurEnchere(utilisateur);
+//				EnchereManager.getEnchereManager().updateEnchereur(enchereAModifier, utilisateurVendeur.getNoUtilisateur(), utilisateur.getNoUtilisateur());
+//				System.out.println("Sur la vente n°" + venteConcernee.getNoVente() + " l'utilisateur acheteur est maintenant : " + venteConcernee.getUtilisateurAcheteur().getPseudo());
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 				rd.forward(request, response);
 			} catch (BllException e) {
