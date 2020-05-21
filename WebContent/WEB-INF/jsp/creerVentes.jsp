@@ -32,7 +32,7 @@
 			<!-- image caché quand size xs -->
 			<div class="col-12 col-lg-4 d-none d-sm-block">
 					<p>
-						 <img src="" alt="image produit upload"/>
+						
 					</p>
 			</div>
 			<div class=" col-12 col-lg-8 offset-lg-4">
@@ -79,11 +79,11 @@
    					 </div>
   				</div>
   				<!-- image caché quand size sm md lg -->
-  				<div class="col-12 d-block d-sm-none">
+  			<!-- <div class="col-12 d-block d-sm-none">
 					<p>
 						 <img src="" alt="image produit upload"/>
 					</p>
-			</div>
+			</div> -->	
   				
   			</div> 		
   			<div class=" col-12 col-lg-8 offset-lg-4">
