@@ -195,14 +195,14 @@
 				</div>
 				<div class="col-4 col-lg-3">
 				<!-- info a enregistrer ds cookie jusqu a fin session -->
-					<input class="btn btn-primary btn-block" name="enregistrerVente"
+					<input class="btn btn-primary btn-block" onclick="return false;" name="enregistrerVente"
 						type="submit" value="Enregistrer"/>
 				</div>
 				
 				<div class="col-4 col-lg-3">
-				<!-- destroy cookie enregistrer -->
-					<input class="btn btn-primary btn-block" name="annuler"
-						type="submit" value="Annuler"/>
+					<a class="btn btn-danger btn-block" role="button" href="<%= response.encodeURL(request.getContextPath()+"/ServletListeEncheres")%>">
+									Annuler</a>
+				
 				</div>
 			</div>
 					
