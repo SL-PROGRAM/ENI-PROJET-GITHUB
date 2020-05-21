@@ -84,9 +84,23 @@
 						<label for="selectCategorie" class="col-2 col-form-label">Catégories</label>
 						<div class="offset-1 col-9">
 							<select class="custom-select" id="selectCategorie" name="selectCategorie">
-								<option selected>Toutes</option>
+								<c:choose>
+									<c:when test="${empty categorieSelectionnee}">
+										<option selected>Toutes</option>
+									</c:when>
+									<c:when test="${!empty categorieSelectionnee}">
+										<option>Toutes</option>
+									</c:when>
+								</c:choose>
 								<c:forEach var="c" items="${listeCategories }">
-									<option value="${c.libelle }">${c.libelle }</option>
+									<c:choose>
+										<c:when test="${!categorieSelectionnee.equals(c.libelle)}">
+											<option value="${c.libelle }">${c.libelle }</option>
+										</c:when>
+										<c:when test="${categorieSelectionnee.equals(c.libelle)}">
+											<option value="${c.libelle }" selected>${c.libelle }</option>
+										</c:when>
+									</c:choose>
 								</c:forEach>
 							</select>
 						</div>

@@ -176,7 +176,22 @@ public class ServletListeEncheres extends HttpServlet {
 				}
 			}
 			listeFinale = nouvelleListe;
-				
+			
+			String libelle = request.getParameter("selectCategorie");
+			
+			List<Categorie> listeCategoriesLibelle = new ArrayList<Categorie>();
+			try {
+				listeCategoriesLibelle = CategorieManager.getCategorieManager().selectAll();
+				for (Categorie categorie : listeCategoriesLibelle) {
+					if (categorie.getLibelle().equals(libelle)) {
+						request.setAttribute("categorieSelectionnee", categorie.getLibelle());
+					}
+					
+				}
+			} catch (BllException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		if (request.getParameter("txtMotCle") == null) {
