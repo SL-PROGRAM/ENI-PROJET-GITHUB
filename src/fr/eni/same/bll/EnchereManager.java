@@ -136,7 +136,14 @@ public class EnchereManager {
 		return enchere;
 	}
 
-	
+	public boolean chkIfUserExist(int noUtilisateur) {
+		for (int i = 0; i < listeEncheres.size(); i++) {
+			if(listeEncheres.get(i).getUtilisateurEnchere().getNoUtilisateur() == noUtilisateur) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * Méthode de sélectionner de la liste des enchères
