@@ -21,6 +21,7 @@ import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.AdresseUtils;
 import fr.eni.same.helpers.FonctionGenerique;
+
 /**
  * @author sl
  * @author etienne
@@ -33,7 +34,7 @@ public class UtilisateurManager {
 	private final int PSEUDO_LONGUEUR_MIN = 4;
 	private final int PRENOM_LONGUEUR_MAX = 30;
 	private final int PRENOM_LONGUEUR_MIN = 5;
-	private final int EMAIL_LONGUEUR_MAX = 30;
+	private final int EMAIL_LONGUEUR_MAX = 20;
 	private final int EMAIL_LONGUEUR_MIN = 4;
 	private final int TELEPHONE_LONGUEUR_MAX = 15;
 	private final int TELEPHONE_LONGUEUR_MIN = 10;
@@ -384,6 +385,7 @@ public class UtilisateurManager {
 		String msgErreur = "";
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(email);
+		
 		if(!FonctionGenerique.isLongueurMax(email, EMAIL_LONGUEUR_MAX)) {
 			msgErreur = ("Longueur de l'email trop importante - Longueur maximum : "+ EMAIL_LONGUEUR_MAX + "caractères\n");
 		}

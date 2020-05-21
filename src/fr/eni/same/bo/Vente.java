@@ -129,6 +129,7 @@ public class Vente {
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 		this.utilisateurAcheteur = utilisateurAcheteur;
+		this.utilisateurVendeur = utilisateurVendeur;
 		this.categorie = categorie;
 	}
 	

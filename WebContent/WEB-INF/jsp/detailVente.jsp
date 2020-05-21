@@ -109,24 +109,7 @@
 					
 					<c:choose>
 						<c:when test="${vente.dateFinEncheres.before(heureServer)}">
-							<!-- Boutons à afficher dans la version Maquette 10 -->
-							<!-- Redirige vers ServletDetailVente. Le bouton devient vert et un pop up apparait afin de donner l'information à l'utilisateur -->
-						<!--  	<div class="col-4 col-lg-4">
-							<!--  
-								<p><a class="btn btn-block 
-										<c:choose>
-											<c:when test="${cookie.nomCookie}">
-												btn-danger 
-											</c:when>
-											<c:when test="${cookie.nomCookie}">
-												btn-succes
-											</c:when>
-										</c:choose>
-								
-								" role="button" href="<%= request.getContextPath()%>/ServletDetailVente">
-											Retrait effectué</a></p>
-												
-							</div>-->
+							
 							
 							<!-- Redirige vers ServletInformationsUtilisateur -->
 							
@@ -139,7 +122,7 @@
 							
 							<div class="col-4 col-lg-4">
 								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
-									Contacter ${vente.utilisateurAcheteur }</a>
+									Contacter ${vente.utilisateurAcheteur.pseudo }</a>
 							</div>
 							<!-- Redirige vers ServletListeEnchere -->
 							<div class="col-4 col-lg-4">
@@ -150,7 +133,7 @@
 						<c:when test="${vente.dateFinEncheres.after(heureServer)}">
 							<!-- Boutons à afficher dans la version Maquette 9 -->
 							<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
-							<c:if test="utilisateur.noUtilisateur == vente.utilisateurVendeur.noUtilisateur">
+							<c:if test="${ utilisateur.noUtilisateur == vente.utilisateurVendeur.noUtilisateur}">
 							<div class="col-6 col-lg-6">
 							<a href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerVente")%>?noVente=${vente.noVente}" 
 								class="btn btn-primary btn-block" role="button">

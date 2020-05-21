@@ -101,6 +101,8 @@ public class ServletEncherir extends HttpServlet {
 		
 			if(utilisateur.getNoUtilisateur() == utilisateurVendeur.getNoUtilisateur()) {
 			System.out.println("Vous ne pouvez pas enchérir sur votre propre enchère");
+			request.setAttribute("erreur", "Vous ne pouvez pas enchérir sur votre propre enchère");
+
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 			rd.forward(request, response);
 			return;
@@ -148,6 +150,7 @@ public class ServletEncherir extends HttpServlet {
 				e.printStackTrace();
 			}
 		}else {
+			request.setAttribute("erreur", "PAS ASSEZ DE CREDIT");
 			System.out.println("PAS ASSEZ DE CREDIT");
 			//Vérifier que l'utilisateur a assez points pour enchérir, sinon renvoyer sur la page avec une erreur
 			//TODO

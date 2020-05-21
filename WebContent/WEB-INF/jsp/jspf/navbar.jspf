@@ -27,7 +27,7 @@
 							profil</a></li>
 				<!-- Redirige vers ServletListeEncheres (maquette 5) avec affichage "déconnecté" -->
 					<li class="nav-item px-3"><a
-						href="<%=request.getContextPath()%>/ServletConnexion">Déconnexion</a></li>
+						href="<%=request.getContextPath()%>/ServletDeconnexion">Déconnexion</a></li>
 				</c:if>	
 				<c:if test="${empty utilisateur }">
 				<!-- Affichage "déconnecté" -->

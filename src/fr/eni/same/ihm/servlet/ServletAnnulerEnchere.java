@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.same.bll.EnchereManager;
 import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Enchere;
+import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.exception.BllException;
 
@@ -32,8 +33,9 @@ public class ServletAnnulerEnchere extends HttpServlet {
 		request.setAttribute("erreur", "");
 		int noVente = Integer.valueOf(request.getParameter("noVente"));
 		int noUtilisateur = Integer.valueOf(request.getParameter("noAcheteur"));
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		String msgErreur = "";
-		
 		
 		try {
 			List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
@@ -41,19 +43,16 @@ public class ServletAnnulerEnchere extends HttpServlet {
 			Vente vente = VenteManager.getVenteManager().select(noVente);
 			
 			for (Enchere enchere : listEncheres) {
-				if(enchere.getUtilisateurEnchere().getNoUtilisateur() == noUtilisateur
+				if(enchere.getUtilisateurEnchere().getNoUtilisateur() == utilisateur.getNoUtilisateur()
 						&& enchere.getVenteEnchere().getNoVente() == noVente) {
 					enchereToDelete = enchere;
 				}
+			}if(vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
+				msgErreur += "Vous etes actuellement l'acheteur principal, vous ne pouvez pas annuler votre offre";
 			}
-			if(enchereToDelete == null) {
+			else if(enchereToDelete == null) {
 				msgErreur += "Vous n'avez pas fait d'enchère sur ce produit";
 			}else {
-				if(vente.getUtilisateurAcheteur().getNoUtilisateur() == enchereToDelete.getUtilisateurEnchere().getNoUtilisateur()) {
-					int prixDeVente = vente.getPrixVente();
-					int creditActuel = enchereToDelete.getUtilisateurEnchere().getCredit();
-					enchereToDelete.getUtilisateurEnchere().setCredit(prixDeVente + creditActuel);
-				}
 				EnchereManager.getEnchereManager().delete(enchereToDelete);
 				msgErreur += "Votre enchère a bien été supprimée";
 			}	
