@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
+import com.sun.tools.classfile.Annotation.element_value;
+
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
@@ -88,11 +90,16 @@ public class FiltreManager {
 		List<Enchere> listeEncheres = EnchereManager.getEnchereManager().selectEnchereEnCours();
 		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
-		for (int i = 0; i < listeVentes.size(); i++) {
-			if (listeVentes.get(i).getUtilisateurAcheteur() != null && utilisateurConnect != null) {
-				if (listeVentes.get(i).getUtilisateurAcheteur().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()) {
-					listeMesVentesEnCours.add(listeVentes.get(i));
+		
+		if (utilisateurConnect != null) {
+			for (Enchere enchere : listeEncheres) {
+				for (Vente vente : listeVentes) {
+					if (enchere.getUtilisateurEnchere().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()
+							&& enchere.getVenteEnchere().getNoVente() == vente.getNoVente()) {
+						listeMesVentesEnCours.add(vente);
+					}
 				}
+					
 			}
 		}
 		return listeMesVentesEnCours;
@@ -148,19 +155,27 @@ public class FiltreManager {
 		List<Vente> autresEncheres = new ArrayList<Vente>();
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
-
-		for (Vente vente : allVentes) {
-			if (vente.getUtilisateurVendeur() != utilisateurConnect
-					&& vente.getUtilisateurAcheteur() != utilisateurConnect) {
-				if (categorie == null) {
+		
+		if (utilisateurConnect != null) {
+			int noUtilisateurConnect = utilisateurConnect.getNoUtilisateur();
+			for (Vente vente : allVentes) {
+				//Si il n'y a pas d'utilisateur acheteur ET que je ne suis pas le vendeur de la vente
+				if (vente.getUtilisateurAcheteur() == null 
+						&& vente.getUtilisateurVendeur().getNoUtilisateur() != noUtilisateurConnect) {
 					autresEncheres.add(vente);
-				} else if (vente.getCategorie() == categorie) {
+					//Si il y a un utilisateur acheteur 
+					//ET que je ne suis pas le vendeur de la vente
+					//ET que je ne suis pas l'acheteur de la vente
+				} else if (vente.getUtilisateurAcheteur() != null 
+						&& vente.getUtilisateurVendeur().getNoUtilisateur() != noUtilisateurConnect 
+						&& vente.getUtilisateurAcheteur().getNoUtilisateur() != noUtilisateurConnect) {
 					autresEncheres.add(vente);
 				}
 			}
+		} else {
+			autresEncheres = VenteManager.getVenteManager().selectAll();
 		}
 //		Collections.sort(autresEncheres, Collections.reverseOrder()); 
-
 		return autresEncheres;
 	}
 

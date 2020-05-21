@@ -230,11 +230,11 @@ public class VenteManager  {
 		
 		return listVentes;
 	}
-	public List<Vente> selectByMotCle(String motCle) throws BllException{
+	
+	public List<Vente> selectByMotCle(List<Vente> listeVente, String motCle) throws BllException{
 		List<Vente> aRetourner = new ArrayList<Vente>();
 		
-		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
-		for (Vente vente : listeVentes) {
+		for (Vente vente : listeVente) {
 			if (vente.getDescription().toLowerCase().contains(motCle.toLowerCase())
 					|| vente.getNomArticle().toLowerCase().contains(motCle.toLowerCase())) {
 				aRetourner.add(vente);
