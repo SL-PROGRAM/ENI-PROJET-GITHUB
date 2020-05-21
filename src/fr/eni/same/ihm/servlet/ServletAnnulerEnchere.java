@@ -48,7 +48,7 @@ public class ServletAnnulerEnchere extends HttpServlet {
 					enchereToDelete = enchere;
 				}
 			}if(vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
-				msgErreur += "Vous etes actuellement l'acheteur principal, vous ne pouvez pas annuler vous offres";
+				msgErreur += "Vous etes actuellement l'acheteur principal, vous ne pouvez pas annuler votre offre";
 			}
 			else if(enchereToDelete == null) {
 				msgErreur += "Vous n'avez pas fait d'enchère sur ce produit";
