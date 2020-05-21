@@ -59,8 +59,8 @@
 					<div class="form-group row">
 						<label for="selectCategorie" class="col-2 col-form-label">Catégories</label>
 						<div class="offset-1 col-9">
-							<select class="custom-select" id="selectCategorie">
-								<option selected>Toutes</option>
+							<select class="custom-select" id="selectCategorie" name="selectCategorie">
+								<option selected value="">Toutes</option>
 								<c:forEach var="c" items="${listeCategories }">
 									<option value="${c.noCategorie }">${c.libelle }</option>
 								</c:forEach>

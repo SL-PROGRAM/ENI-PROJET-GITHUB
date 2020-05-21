@@ -56,78 +56,82 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 			throws ServletException, IOException {
 
 		String msgErreur = "";
-		boolean estDeconnecte = getIsUserDeleted(request);
+		if(request.getParameter("suppressionCompte") != null) {
+			boolean estDeconnecte = getIsUserDeleted(request);
 		//Si oui, rediriger vers ServletListeEncheres
-		if (estDeconnecte) {
-			RequestDispatcher rd = request.getRequestDispatcher("/ServletListeEncheres");
-			rd.forward(request, response);
-			return;
-		}
-		
-		//motDePasse = nouveau mot de passe lorsqu'un utilisateur connecté veut faire une update
-		String motDePasse = request.getParameter("txtMotDePasse");
-		String confirmationMotDePasse = request.getParameter("txtConfirmation");
-		String erreurSaisie = "";
-		if (request.getSession().getAttribute("utilisateur") == null) {
-			if (motDePasse.equals(confirmationMotDePasse)) {
-				Utilisateur utilisateur = new Utilisateur();
-				setUtilisateurInfos(utilisateur, request);
-				utilisateur.setMotDePasse(motDePasse);
-				try {
-					erreurSaisie = UtilisateurManager.getUtilisateurManager().controleUpdateAndInsert(utilisateur);
-					System.out.println("Je suis après le controlle");
-					System.out.println(erreurSaisie);
-					if (erreurSaisie.equals("")) {
-						System.out.println("Je suis dans l'insert utilisateur");
-						UtilisateurManager.getUtilisateurManager().insert(utilisateur);
-					}
-//					RequestDispatcher rd = request.getRequestDispatcher("/ServletConnexion");
-//					rd.forward(request, response);
-				} catch (BllException e) {
-					
-					msgErreur += FonctionGenerique.gestionErreur("");
-					request.setAttribute("erreur", msgErreur);
-					RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
-					rd.forward(request, response);
-				}
-			} else {
-				erreurSaisie += "Les mots de passe ne correspondent pas !";
-				request.setAttribute("erreurSaisie", erreurSaisie);
+			if (estDeconnecte) {
+				RequestDispatcher rd = request.getRequestDispatcher("/ServletListeEncheres");
+				rd.forward(request, response);
 			}
 		} else {
-			String ancienMotDePasse = request.getParameter("txtAncienMotDePasse");
-			String confirmAncienMotDePasse = request.getParameter("txtConfirmAncienMotDePasse");
-			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-				if (ancienMotDePasse.equals(confirmAncienMotDePasse) 
-						&& ancienMotDePasse != null 
-						&& ancienMotDePasse.equals(utilisateur.getMotDePasse())) {
+			//motDePasse = nouveau mot de passe lorsqu'un utilisateur connecté veut faire une update
+			String motDePasse = request.getParameter("txtMotDePasse");
+			String confirmationMotDePasse = request.getParameter("txtConfirmation");
+			String erreurSaisie = "";
+			if (request.getSession().getAttribute("utilisateur") == null) {
+				if (motDePasse.equals(confirmationMotDePasse)) {
+					Utilisateur utilisateur = new Utilisateur();
 					setUtilisateurInfos(utilisateur, request);
-					if (motDePasse.equals(confirmationMotDePasse)) {
-						utilisateur.setMotDePasse(motDePasse);
-					} else {
-						System.out.println("Le mot de passe ne correspondait pas. J'ai donc update avec l'ancien mot de passe");
-						utilisateur.setMotDePasse(ancienMotDePasse);
-					}
+					utilisateur.setMotDePasse(motDePasse);
 					try {
 						erreurSaisie = UtilisateurManager.getUtilisateurManager().controleUpdateAndInsert(utilisateur);
+						System.out.println("Je suis après le controlle");
+						System.out.println(erreurSaisie);
 						if (erreurSaisie.equals("")) {
-//							System.out.println("Je suis dans l'update utilisateur");
-							UtilisateurManager.getUtilisateurManager().update(utilisateur);
-							request.getSession().setAttribute("utilisateur", utilisateur);
+							System.out.println("Je suis dans l'insert utilisateur");
+							UtilisateurManager.getUtilisateurManager().insert(utilisateur);
 						}
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+						rd.forward(request, response);
 					} catch (BllException e) {
-						e.printStackTrace();
+						
+//						msgErreur += FonctionGenerique.gestionErreur("");
+//						request.setAttribute("erreur", msgErreur);
+//						RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+//						rd.forward(request, response);
 					}
 				} else {
 					erreurSaisie += "Les mots de passe ne correspondent pas !";
 					request.setAttribute("erreurSaisie", erreurSaisie);
 				}
-		//	}
+			} else {
+				String ancienMotDePasse = request.getParameter("txtAncienMotDePasse");
+				String confirmAncienMotDePasse = request.getParameter("txtConfirmAncienMotDePasse");
+				Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
+					if (ancienMotDePasse.equals(confirmAncienMotDePasse) 
+							&& ancienMotDePasse != null 
+							&& ancienMotDePasse.equals(utilisateur.getMotDePasse())) {
+						setUtilisateurInfos(utilisateur, request);
+						if (motDePasse.equals(confirmationMotDePasse)) {
+							utilisateur.setMotDePasse(motDePasse);
+						} else {
+							System.out.println("Le mot de passe ne correspondait pas. J'ai donc update avec l'ancien mot de passe");
+							utilisateur.setMotDePasse(ancienMotDePasse);
+						}
+						try {
+							erreurSaisie = UtilisateurManager.getUtilisateurManager().controleUpdateAndInsert(utilisateur);
+							if (erreurSaisie.equals("")) {
+//								System.out.println("Je suis dans l'update utilisateur");
+								UtilisateurManager.getUtilisateurManager().update(utilisateur);
+								request.getSession().setAttribute("utilisateur", utilisateur);
+							}
+						} catch (BllException e) {
+							e.printStackTrace();
+						}
+					} else {
+						erreurSaisie += "Les mots de passe ne correspondent pas !";
+						request.setAttribute("erreurSaisie", erreurSaisie);
+					}
+			//	}
 
+			}
 		}
-		System.out.println(erreurSaisie);
-		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
-		rd.forward(request, response);
+		
+		
+		
+//		System.out.println(erreurSaisie);
+//		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+//		rd.forward(request, response);
 
 	}
 	
@@ -166,8 +170,13 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 		if (request.getParameter("suppressionCompte") != null) {
 			if (request.getSession().getAttribute("utilisateur") != null) {
 				try {
-					UtilisateurManager.getUtilisateurManager().delete(((Utilisateur) (request.getSession().getAttribute("utilisateur"))));
+					Utilisateur utilisateur = (Utilisateur) (request.getSession().getAttribute("utilisateur"));
+					System.out.println(utilisateur.toString());
+					
+					UtilisateurManager.getUtilisateurManager().delete(utilisateur);
 					request.getSession().invalidate();
+					
+					
 					return true;
 				} catch (BllException e) {
 					e.printStackTrace();

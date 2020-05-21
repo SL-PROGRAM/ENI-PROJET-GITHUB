@@ -165,14 +165,14 @@ public class ServletTestBLL extends HttpServlet {
 		FiltreManager.getFiltreManager().filtreAutresEncheres(session, categorie);
 		FiltreManager.getFiltreManager().filtreMesAcquisitions(session, categorie);
 		FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session, categorie);
-		FiltreManager.getFiltreManager().filtreMesVentesPubliées(session, categorie);
+		FiltreManager.getFiltreManager().filtreMesVentesPubliees(session, categorie);
 		
 		categorie = CategorieManager.getCategorieManager().select(22);
 		
 		FiltreManager.getFiltreManager().filtreAutresEncheres(session, categorie);
 		FiltreManager.getFiltreManager().filtreMesAcquisitions(session, categorie);
 		FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session, categorie);
-		FiltreManager.getFiltreManager().filtreMesVentesPubliées(session, categorie);
+		FiltreManager.getFiltreManager().filtreMesVentesPubliees(session, categorie);
 		
 	}
 	

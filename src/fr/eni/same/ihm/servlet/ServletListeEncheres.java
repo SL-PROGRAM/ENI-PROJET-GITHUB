@@ -40,8 +40,12 @@ public class ServletListeEncheres extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 5
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		request.setAttribute("erreur", "");
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
+		
+		
 		//Utilisateur utilisateur = null;
 		if (request.getSession().getAttribute("utilisateur") != null) {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
@@ -50,6 +54,8 @@ public class ServletListeEncheres extends HttpServlet {
 		
 		List<List<Vente>> listes = new ArrayList<List<Vente>>();
 		List<Vente> listeVentesByMotCle = null;
+		List<Vente> listeVentesByCategorie= null;
+		List<Vente> listeFinale = new ArrayList<Vente>();
 		Set set = new HashSet();
 		
 		if (request.getParameter("supprimmerCompteUtilisateur") != null) {
@@ -65,14 +71,7 @@ public class ServletListeEncheres extends HttpServlet {
 			}
 		}
 		
-//		if (request.getParameter("txtMotCle")!=null) {
-//			try {
-//				listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
-//			} catch (BllException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
+		
 		
 		
 		if (request.getParameterValues("filtres")!=null) {
@@ -80,9 +79,7 @@ public class ServletListeEncheres extends HttpServlet {
 			for (int i = 0; i < valeurs.length; i++) {
 				if (valeurs[i].equals("mesVentes")) {
 					try {
-						System.out.println("JE SUIS DANS MES VENTES");
-						//listes.add(i, FiltreManager.getFiltreManager().filtreMesVentesPubliées(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliées(request.getSession());
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliees(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
 						// TODO Auto-generated catch block
@@ -99,19 +96,19 @@ public class ServletListeEncheres extends HttpServlet {
 //					}
 //				}
 
-//				if (valeurs[i].equals("mesEncheresEnCours")) {
-//					try {
-//						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
-//						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
-//						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
-//						for (Vente v : listeVentes) {
-//							System.out.println(v.toString());
-//						}
-//						set.addAll(listeVentes);
-//					} catch (BllException e) {
-//						e.printStackTrace();
-//					}
-//				}
+				if (valeurs[i].equals("mesEncheresEnCours")) {
+					try {
+						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
+						System.out.println("filtre 1 je suis sortie");
+						for (Vente v : listeVentes) {
+							System.out.println(v.toString());
+						}
+						set.addAll(listeVentes);
+					} catch (BllException e) {
+						e.printStackTrace();
+					}
+				}
 
 				if (valeurs[i].equals("mesAcquisitions")) {
 					try {
@@ -140,20 +137,81 @@ public class ServletListeEncheres extends HttpServlet {
 				
 			}
 			
+			List<Vente> listeFiltres = new ArrayList<Vente>(set);
 			/*******************************************************************************************************************************/
 						//SELECT PAR CATEGORIE + SELECT PAR MOT CLE
 			/*******************************************************************************************************************************/
 			
-			//VenteManager.getVenteManager().s
+			if (request.getParameter("txtMotCle")!=null) {
+				try {
+					listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
+					for (Vente vente : listeFiltres) {
+						for (Vente vente2 : listeVentesByMotCle) {
+							if (vente == vente2) {
+								listeFinale.add(vente);
+							}
+						}
+					}
+				} catch (BllException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 			
-			List<Vente> listeFinale = new ArrayList<Vente>(set);
+			
+			
+		
+			if (request.getParameter("selectCategorie") != "") {
+				int noCategorie = Integer.parseInt(request.getParameter("selectCategorie"));
+				Categorie categorie;
+				try {
+					categorie = CategorieManager.getCategorieManager().select(noCategorie);
+					listeVentesByCategorie = VenteManager.getVenteManager().selectByCategorie(categorie);
+						if (!listeVentesByCategorie.isEmpty()) {
+							for (int j = 0; j < listeVentesByCategorie.size(); j++) {
+								for (int j2 = 0; j2 < listeFinale.size(); j2++) {
+									if (listeVentesByCategorie.get(j).getCategorie().getNoCategorie() != listeFinale.get(j2).getCategorie().getNoCategorie()) {
+										listeFinale.remove(j2);
+									}
+								}
+							}
+						} else {
+							listeFinale.clear();
+						}
+				} catch (BllException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			
+			
+			
+			
 				
 			System.out.println("COUCOU");
 			for (int i = 0; i < listeFinale.size(); i++) {
 				System.out.println(listeFinale.get(i).toString());
 			}
-			request.setAttribute("listeVentes", listeFinale);
+			
+			
+		} else {
+			//Gestion affichage listeEnchere lors de la premiere arrivée sur la page
+			
+			try {
+				System.out.println("JE SUIS DANS AUTRES ENCHERES SANS CONNECTION OU PREMIERE ARRIVEE SUR CETTE PAGE");
+				//listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
+				listeFinale = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
+				for (Vente vente : listeFinale) {
+					System.out.println(vente.toString());
+				}
+				set.addAll(listeFinale);
+			} catch (BllException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		request.setAttribute("listeVentes", listeFinale);
 		
 		List<Categorie> listeCategories;
 		try {

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.same.bll.RetraitManager;
-import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Utilisateur;

@@ -1,6 +1,8 @@
 package fr.eni.same.bll;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,12 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
 import fr.eni.same.helpers.AdresseUtils;
 import fr.eni.same.helpers.FonctionGenerique;
+
 /**
  * @author sl
  * @author etienne
@@ -29,7 +34,7 @@ public class UtilisateurManager {
 	private final int PSEUDO_LONGUEUR_MIN = 4;
 	private final int PRENOM_LONGUEUR_MAX = 30;
 	private final int PRENOM_LONGUEUR_MIN = 5;
-	private final int EMAIL_LONGUEUR_MAX = 30;
+	private final int EMAIL_LONGUEUR_MAX = 20;
 	private final int EMAIL_LONGUEUR_MIN = 4;
 	private final int TELEPHONE_LONGUEUR_MAX = 15;
 	private final int TELEPHONE_LONGUEUR_MIN = 10;
@@ -84,6 +89,7 @@ public class UtilisateurManager {
 		String msgErreur = "";
 		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
 		msgErreur += controleUpdateAndInsert(t);
+		System.out.println("Message d'erreur : " + msgErreur);
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
@@ -109,6 +115,19 @@ public class UtilisateurManager {
 		}
 	}
 
+	public void updateCreditUtilisateur(Utilisateur t) {
+		try {
+			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
+			for (int i = 0; i < listeUtilisateurs.size(); i++) {
+				if(listeUtilisateurs.get(i).getNoUtilisateur() == t.getNoUtilisateur()) {
+					listeUtilisateurs.get(i).setCredit(t.getCredit());
+				}
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void updateMotDePasse(Utilisateur t, String motDePasse, String motDePasseVerif) throws BllException {
 		String msgErreur = "";
 		msgErreur += motDePasseIdentique(motDePasse, motDePasseVerif);
@@ -131,8 +150,14 @@ public class UtilisateurManager {
 	
 	
 	
-	public void delete(Utilisateur t) throws BllException {
+	public String delete(Utilisateur t) throws BllException {
 		String msgErreur = controleDelete(t);
+		
+		msgErreur += supprimerVenteLiee(t);
+		msgErreur += suppressionAchatLiee(t);
+		supprimerEnchereLier(t);
+		
+		
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
@@ -147,6 +172,8 @@ public class UtilisateurManager {
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer en base de donnée l'utilisateur");
 		}
+		
+		return msgErreur;
 	}
 
 
@@ -222,7 +249,58 @@ public class UtilisateurManager {
 	// * Implementation des méthodes de gestion de compte										 * //
 	//*********************************************************************************************//
 
+
+	private String supprimerVenteLiee(Utilisateur utilisateur) throws BllException {
+		String msgErreur = "";
+		List<Vente> listVentesToDelete = new ArrayList<Vente>();
+		List<Vente> listVentes = VenteManager.getVenteManager().selectAll();
+		for (Vente vente : listVentes) {
+			if(vente.getUtilisateurVendeur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
+				listVentesToDelete.add(vente);
+			}
+		}
+		for (Vente vente : listVentesToDelete) {
+			msgErreur = VenteManager.getVenteManager().delete(vente);
+		}
+		return msgErreur;
+	}
 	
+	private String suppressionAchatLiee(Utilisateur utilisateur) throws BllException {
+		String msgErreur = "";
+		List<Vente> listVentesToDelete = new ArrayList<Vente>();
+		List<Vente> listVentes = VenteManager.getVenteManager().selectAll();
+		Timestamp now =  new Timestamp(System.currentTimeMillis());
+		System.out.println("suppression");
+		for (Vente vente : listVentes) {
+			if(vente.getUtilisateurAcheteur() != null) {
+				if(vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()
+					&& vente.getDateFinEncheres().before(now)) {
+					listVentesToDelete.add(vente);
+				}
+			}
+			
+		}
+		System.out.println("venteToDelete");
+		for (Vente vente : listVentesToDelete) {
+			vente.toString();
+			msgErreur = VenteManager.getVenteManager().delete(vente);
+		}
+		return msgErreur;
+	}
+	
+	private void supprimerEnchereLier(Utilisateur utilisateur) throws BllException {
+		List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
+		List<Enchere> listEncheresToDelete = new ArrayList<Enchere>();
+		
+		for (Enchere enchere : listEncheres) {
+			if(enchere.getUtilisateurEnchere().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
+				listEncheresToDelete.add(enchere);
+			}
+		}
+		for (Enchere enchere : listEncheresToDelete) {
+			EnchereManager.getEnchereManager().delete(enchere);
+		}
+	}
 	
 	
 	
@@ -307,6 +385,7 @@ public class UtilisateurManager {
 		String msgErreur = "";
 		Pattern pattern = Pattern.compile(EMAIL_REGEX);
 		Matcher matcher = pattern.matcher(email);
+		
 		if(!FonctionGenerique.isLongueurMax(email, EMAIL_LONGUEUR_MAX)) {
 			msgErreur = ("Longueur de l'email trop importante - Longueur maximum : "+ EMAIL_LONGUEUR_MAX + "caractères\n");
 		}

@@ -2,6 +2,8 @@ package fr.eni.same.bll;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class PublierVente {
 			categorie = selectCategorie(noCategorie);
 			Vente newVente;
 			newVente = creerVente(request, session, date, categorie);
-			savePhoto(request);
+			savePhoto(request, newVente);
 			creerRetrait(request, newVente);
 		} catch (NumberFormatException e) {
 			System.out.println(e);
@@ -51,48 +53,38 @@ public class PublierVente {
 		return msgErreur;
 	}
 
-
-
-
-
-	private static void savePhoto(HttpServletRequest request) throws IOException, ServletException {
-		if(request.getParameter("file" ) != null) {
-			// gets absolute path of the web application
-		    String appPath = request.getServletContext().getRealPath("");
-		    // constructs path of the directory to save uploaded file
-		    String savePath = appPath + File.separator + "imageUpload";
-		     
-		    // creates the save directory if it does not exists
-		    File fileSaveDir = new File(savePath);
-		    if (!fileSaveDir.exists()) {
-		        fileSaveDir.mkdir();
-		    }
-		     
-		    for (Part part : request.getParts()) {
-		        String fileName = extractFileName(part);
-		        // refines the fileName in case it is an absolute path
-		        fileName = new File(fileName).getName();
-		        part.write(savePath + File.separator + fileName);
-		    }
-		    request.setAttribute("message", "Upload has been done successfully!");
-		}
+	private static void savePhoto(HttpServletRequest request, Vente vente) throws IOException, ServletException {
+		Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
+	    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+	    //InputStream fileContent = filePart.getInputStream();
+	    
+	    System.out.println(fileName);
+	    
+	    
+		System.out.println(" XXXXXXXXXXXXXXXXXXX photo XXXXXXXXXXXXXXXXXxxx");
+		System.out.println(request.getParameter("file"));
+		//if(request.getParameter("file" ) != null) {
+		System.out.println("save photo");
+		// gets absolute path of the web application
+	    String appPath = request.getServletContext().getRealPath("");
+	    // constructs path of the directory to save uploaded file
+	    String savePath = appPath + "imageUpload";
+	    System.out.println(savePath);
+	     
+	    // creates the save directory if it does not exists
+	    File fileSaveDir = new File(savePath);
+	    if (!fileSaveDir.exists()) {
+	        fileSaveDir.mkdir();
+	    }
+	    for (Part part : request.getParts()) {
+	        fileName = vente.getNoVente() +".png";
+	        System.out.println(fileName);
+	        // refines the fileName in case it is an absolute path
+	        fileName = new File(fileName).getName();
+	        part.write(savePath + File.separator + fileName);
+	    }
+		//}
 	}
-
-	 /**
-     * Extracts file name from HTTP header content-disposition
-     */
-    private static String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length()-1);
-            }
-        }
-        return "";
-    }
-
-
 
 
 	private static String testInputRequest(HttpServletRequest request, String msgErreur) {
