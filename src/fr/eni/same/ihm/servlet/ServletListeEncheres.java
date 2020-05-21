@@ -79,7 +79,7 @@ public class ServletListeEncheres extends HttpServlet {
 			for (int i = 0; i < valeurs.length; i++) {
 				if (valeurs[i].equals("mesVentes")) {
 					try {
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliées(request.getSession());
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliees(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
 						// TODO Auto-generated catch block
