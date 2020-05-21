@@ -84,6 +84,7 @@ public class UtilisateurManager {
 		String msgErreur = "";
 		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
 		msgErreur += controleUpdateAndInsert(t);
+		System.out.println("Message d'erreur : " + msgErreur);
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
@@ -109,6 +110,19 @@ public class UtilisateurManager {
 		}
 	}
 
+	public void updateCreditUtilisateur(Utilisateur t) {
+		try {
+			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
+			for (int i = 0; i < listeUtilisateurs.size(); i++) {
+				if(listeUtilisateurs.get(i).getNoUtilisateur() == t.getNoUtilisateur()) {
+					listeUtilisateurs.get(i).setCredit(t.getCredit());
+				}
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void updateMotDePasse(Utilisateur t, String motDePasse, String motDePasseVerif) throws BllException {
 		String msgErreur = "";
 		msgErreur += motDePasseIdentique(motDePasse, motDePasseVerif);
