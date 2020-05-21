@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
+import com.sun.tools.classfile.Annotation.element_value;
+
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
@@ -149,18 +151,26 @@ public class FiltreManager {
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 		
-		for (Vente vente : allVentes) {
-			if (vente.getUtilisateurVendeur().getNoUtilisateur() != utilisateurConnect.getNoUtilisateur()
-					&& vente.getUtilisateurAcheteur().getNoUtilisateur() != utilisateurConnect.getNoUtilisateur()) {
-				if (categorie == null) {
+		if (utilisateurConnect != null) {
+			int noUtilisateurConnect = utilisateurConnect.getNoUtilisateur();
+			for (Vente vente : allVentes) {
+				//Si il n'y a pas d'utilisateur acheteur ET que je ne suis pas le vendeur de la vente
+				if (vente.getUtilisateurAcheteur() == null 
+						&& vente.getUtilisateurVendeur().getNoUtilisateur() != noUtilisateurConnect) {
 					autresEncheres.add(vente);
-				} else if (vente.getCategorie() == categorie) {
+					//Si il y a un utilisateur acheteur 
+					//ET que je ne suis pas le vendeur de la vente
+					//ET que je ne suis pas l'acheteur de la vente
+				} else if (vente.getUtilisateurAcheteur() != null 
+						&& vente.getUtilisateurVendeur().getNoUtilisateur() != noUtilisateurConnect 
+						&& vente.getUtilisateurAcheteur().getNoUtilisateur() != noUtilisateurConnect) {
 					autresEncheres.add(vente);
 				}
 			}
+		} else {
+			autresEncheres = VenteManager.getVenteManager().selectAll();
 		}
 //		Collections.sort(autresEncheres, Collections.reverseOrder()); 
-
 		return autresEncheres;
 	}
 
