@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package fr.eni.same.bo;
 
 import java.sql.Timestamp;
@@ -100,11 +103,7 @@ public class Vente {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		if(utilisateurAcheteur == null) {
-			this.utilisateurAcheteur = utilisateurVendeur;
-		}else {
-			this.utilisateurAcheteur = utilisateurAcheteur;
-		}
+		this.utilisateurAcheteur = utilisateurAcheteur;
 		this.utilisateurVendeur = utilisateurVendeur;
 		this.categorie = categorie;
 	}
@@ -129,11 +128,8 @@ public class Vente {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		if(utilisateurAcheteur == null) {
-			this.utilisateurAcheteur = utilisateurVendeur;
-		}else {
-			this.utilisateurAcheteur = utilisateurAcheteur;
-		}		this.utilisateurVendeur = utilisateurVendeur;
+		this.utilisateurAcheteur = utilisateurAcheteur;
+		this.utilisateurVendeur = utilisateurVendeur;
 		this.categorie = categorie;
 	}
 	
@@ -157,11 +153,8 @@ public class Vente {
 		this.description = description;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
-		if(utilisateurAcheteur == null) {
-			this.utilisateurAcheteur = utilisateurVendeur;
-		}else {
-			this.utilisateurAcheteur = utilisateurAcheteur;
-		}		this.utilisateurVendeur = utilisateurVendeur;
+		this.utilisateurAcheteur = utilisateurAcheteur;
+		this.utilisateurVendeur = utilisateurVendeur;
 		this.categorie = categorie;
 	}
 	
@@ -184,11 +177,8 @@ public class Vente {
 		this.description = description;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
-		if(utilisateurAcheteur == null) {
-			this.utilisateurAcheteur = utilisateurVendeur;
-		}else {
-			this.utilisateurAcheteur = utilisateurAcheteur;
-		}		this.utilisateurVendeur = utilisateurVendeur;
+		this.utilisateurAcheteur = utilisateurAcheteur;
+		this.utilisateurVendeur = utilisateurVendeur;
 		this.categorie = categorie;
 	}
 	
@@ -211,11 +201,8 @@ public class Vente {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateFinEncheres = dateFinEncheres;
-		if(utilisateurAcheteur == null) {
-			this.utilisateurAcheteur = utilisateurVendeur;
-		}else {
-			this.utilisateurAcheteur = utilisateurAcheteur;
-		}		this.utilisateurVendeur = utilisateurVendeur;
+		this.utilisateurAcheteur = utilisateurAcheteur;
+		this.utilisateurVendeur = utilisateurVendeur;
 		this.categorie = categorie;
 	}
 	
@@ -281,11 +268,8 @@ public class Vente {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateFinEncheres = dateFinEncheres;
-		if(utilisateurAcheteur == null) {
-			this.utilisateurAcheteur = utilisateurVendeur;
-		}else {
-			this.utilisateurAcheteur = utilisateurAcheteur;
-		}		this.utilisateurVendeur = utilisateurVendeur;
+		this.utilisateurAcheteur = utilisateurAcheteur;
+		this.utilisateurVendeur = utilisateurVendeur;
 		this.categorie = categorie;
 	}
 	
