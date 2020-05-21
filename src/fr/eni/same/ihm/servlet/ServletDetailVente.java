@@ -60,6 +60,7 @@ public class ServletDetailVente extends HttpServlet {
 				}
 
 				Timestamp heureServer = new Timestamp(System.currentTimeMillis());
+				System.out.println("SERVLET DETAIL VENTE : " + vente.toString());
 				request.setAttribute("vente", vente);
 				request.setAttribute("heureServer", heureServer);
 

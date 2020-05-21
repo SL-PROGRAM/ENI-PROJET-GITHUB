@@ -199,6 +199,11 @@ public class UtilisateurManager {
 
 	
 	public List<Utilisateur> selectAll() throws BllException {
+		try {
+			listeUtilisateurs = DALFactory.getUtilisateurDAOJdbcImpl().selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 		return listeUtilisateurs;
 	}
 	
@@ -440,6 +445,14 @@ public class UtilisateurManager {
 		return msgErreur;
 	}
 	
+	public boolean chkIfUserExist(int noUtilisateur) {
+		for (int i = 0; i < listeUtilisateurs.size(); i++) {
+			if(listeUtilisateurs.get(i).getNoUtilisateur() == noUtilisateur) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 
 	//*************************************************************************************************//
