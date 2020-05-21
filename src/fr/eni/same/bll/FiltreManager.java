@@ -86,11 +86,16 @@ public class FiltreManager {
 		List<Enchere> listeEncheres = EnchereManager.getEnchereManager().selectEnchereEnCours();
 		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
-		for (int i = 0; i < listeVentes.size(); i++) {
-			if (listeVentes.get(i).getUtilisateurAcheteur() != null && utilisateurConnect != null) {
-				if (listeVentes.get(i).getUtilisateurAcheteur().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()) {
-					listeMesVentesEnCours.add(listeVentes.get(i));
+		
+		if (utilisateurConnect != null) {
+			for (Enchere enchere : listeEncheres) {
+				for (Vente vente : listeVentes) {
+					if (enchere.getUtilisateurEnchere().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()
+							&& enchere.getVenteEnchere().getNoVente() == vente.getNoVente()) {
+						listeMesVentesEnCours.add(vente);
+					}
 				}
+					
 			}
 		}
 		return listeMesVentesEnCours;
