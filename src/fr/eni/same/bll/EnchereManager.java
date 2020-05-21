@@ -3,7 +3,9 @@ package fr.eni.same.bll;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
 import fr.eni.same.bo.Enchere;
+import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
@@ -57,6 +59,8 @@ public class EnchereManager {
 		try {
 			DALFactory.getEnchereDAOJdbcImpl().insert(enchere);
 			listeEncheres.add(enchere);
+			Vente vente = VenteManager.getVenteManager().select(enchere.getVenteEnchere().getNoVente());
+			VenteManager.getVenteManager().updateAcheteur(vente);
 			System.out.println("Enchere : insert réalisé : " + enchere.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
@@ -80,24 +84,14 @@ public class EnchereManager {
 					listeEncheres.get(i).setVenteEnchere(enchere.getVenteEnchere());
 				}
 			}
+			Vente vente = VenteManager.getVenteManager().select(enchere.getVenteEnchere().getNoVente());
+			VenteManager.getVenteManager().updateAcheteur(vente);
 			System.out.println("Enchere : Update réalisé : " + enchere.toString());
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void updateEnchereur(Enchere enchere, int ancienEnchereur, int nouvelEnchereur) {
-		try {
-			DALFactory.getEnchereDAOJdbcImpl().updateEnchereur(enchere, ancienEnchereur, nouvelEnchereur);
-			for(int i = 0; i < listeEncheres.size(); i++) {
-				if(listeEncheres.get(i).getVenteEnchere().getNoVente() == enchere.getVenteEnchere().getNoVente()){
-					listeEncheres.get(i).setUtilisateurEnchere(enchere.getUtilisateurEnchere());
-				}
-			}
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	/**
 	 * Méthode de suppression d'une Enchère dans la base de donnée
@@ -136,7 +130,20 @@ public class EnchereManager {
 		return enchere;
 	}
 
-	
+	public boolean chkIfUserExist(int noUtilisateur, int noVente) {
+		try {
+			listeEncheres = selectAll();
+		} catch (BllException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < listeEncheres.size(); i++) {
+			if(listeEncheres.get(i).getUtilisateurEnchere().getNoUtilisateur() == noUtilisateur
+			&& listeEncheres.get(i).getVenteEnchere().getNoVente() == noVente){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * Méthode de sélectionner de la liste des enchères
@@ -144,8 +151,10 @@ public class EnchereManager {
 	 * @throws BllException
 	 */
 	public List<Enchere> selectAll() throws BllException {
-		for(Enchere e : listeEncheres){
-			System.out.println("Enchere : Select ALL réalisé : " + e.toString());
+		try {
+			listeEncheres = DALFactory.getEnchereDAOJdbcImpl().selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
 		}
 		return listeEncheres;
 	}

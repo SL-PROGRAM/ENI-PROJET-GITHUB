@@ -2,7 +2,6 @@ package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +14,7 @@ import fr.eni.same.bll.EnchereManager;
 import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Enchere;
+import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.exception.BllException;
@@ -34,7 +34,6 @@ public class ServletEncherir extends HttpServlet {
 	 * 		   Vérification que l'utilisateur qui accède à la vente n'est pas l'utilisateur vendant l'article
 	 * 		   Récupération de la dernière enchère de l'utilisateur voulant encherir sur la vente. Si pas de dernière enchère, 
 	 * 		   annuler ma dernière enchère n'apparait pas.
-	 * 
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 6 et 7
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,7 +41,6 @@ public class ServletEncherir extends HttpServlet {
 
 		//afficher infos de la vente ->recup id pr avoir les infos? liste?
 		//iterartion 2:verif si l utilisateur arrivant sur cette page est le dernier a avoir encheri, si oui possibilité d annuler l enchere
-		
 		
 		//Je pas oublier de recréditer au précédant acheteur sa mise.
 
@@ -59,95 +57,120 @@ public class ServletEncherir extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//check si mon credit ne devient pas négatif, si ok alors encherir
 		//debiter les points de mon credit de points
-		
+		request.setAttribute("erreur", "");
 		System.out.println("DO POST - SERVLET ENCHERIR");
-		
-		//Récupère l'utilisateur qui essaye d'enchérir
-		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-		System.out.println("Utilisateur connecté : " + utilisateur.getPseudo());
-		
+		String errorMsg ="";
+		Vente venteEnCours = null;
+		Retrait retrait = (Retrait) request.getAttribute("retrait");
+		/**
+		 * Vérification des crédits en cours de l'utilisateur
+		 */
 		if(request.getSession().getAttribute("utilisateur") == null) {
-			System.out.println("Vous n'êtes pas connecté !");
 			return;
 		}
-		
-		Vente venteConcernee = null;
-		//Récupère le numéro de la vente concernée
-		int noVente = Integer.parseInt(request.getParameter("venteConcernee"));
-		System.out.println("Vente concernée : " + noVente);
-		try {
-				venteConcernee = VenteManager.getVenteManager().select(noVente);
-		} catch (BllException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		//Contient la nouvelle proposition 
-		String propositionPrix= request.getParameter("propositionPrix");
-		int propositionPrixInt = Integer.parseInt(propositionPrix);
-		
-		
-		if(request.getParameter("noUtilisateurMeilleurOffre") == null) {System.out.println("NULL");}
-		//Récupère l'utilisateur qui vend l'article
-		Utilisateur utilisateurVendeur = null;
-		int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateurMeilleurOffre"));
-		try {
-			utilisateurVendeur = UtilisateurManager.getUtilisateurManager().select(noUtilisateur);
-		} catch (BllException e1) {
-			e1.printStackTrace();
-		}
-
-		
-		
-		//Si l'utilisateur a assez de points
-		//Son nombre de points devient nombre de points - propositionPrix
-		//Vérifier que la date n'est pas passée, sinon renvoyer sur la page avec une erreur
-		//TODO
-		if(utilisateur.getNoUtilisateur() == utilisateurVendeur.getNoUtilisateur()) {
-			System.out.println("Vous ne pouvez pas enchérir sur votre propre enchère");
-			request.setAttribute("erreur", "Vous ne pouvez pas enchérir sur votre propre enchère");
-
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
-			rd.forward(request, response);
-			return;
-		}
-		if(utilisateur.getCredit() > propositionPrixInt) {
-			utilisateur.setCredit(utilisateur.getCredit()-propositionPrixInt);
+		Utilisateur utilisateurEnCours = (Utilisateur) request.getSession().getAttribute("utilisateur");
+		int propositionPrix = Integer.parseInt(request.getParameter("propositionPrix"));
+		if(utilisateurEnCours.getCredit() >= propositionPrix) {
+			System.out.println("L'utilisateur a suffisamment de crédits pour enchérir");
 			try {
-				UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateur);
-				//Il devient ensuite l'enchérisseur (l'utilisateurAcheteur) sur cette vente
-				venteConcernee.setUtilisateurAcheteur(utilisateur);
-				venteConcernee.setPrixVente(propositionPrixInt);
-//				System.out.println("UTILISATEUR ACHETEUR " + venteConcernee.getUtilisateurAcheteur());
-//				System.out.println("Vente concernée  : vente n°" + venteConcernee.getNoVente() + ", vendeur initial : " + utilisateurVendeur.getNoUtilisateur());
-				
-				Enchere enchereAModifier = EnchereManager.getEnchereManager().select(venteConcernee.getNoVente(), utilisateurVendeur.getNoUtilisateur());
-				enchereAModifier.setUtilisateurEnchere(utilisateur);
-//				EnchereManager.getEnchereManager().update(enchereAModifier);
-				EnchereManager.getEnchereManager().updateEnchereur(enchereAModifier, utilisateurVendeur.getNoUtilisateur(), utilisateur.getNoUtilisateur());
-//				
-//				System.out.println("UTILISATEUR ACHETEUR 1: " + venteConcernee.getUtilisateurAcheteur());
-////				VenteManager.getVenteManager().updateAcheteur(venteConcernee);
-////				System.out.println("UTILISATEUR ACHETEUR 2: " + venteConcernee.getUtilisateurAcheteur());
-//
-//				VenteManager.getVenteManager().update(venteConcernee);
-				System.out.println("Sur la vente n°" + venteConcernee.getNoVente() + " l'utilisateur acheteur est maintenant : " + venteConcernee.getUtilisateurAcheteur().getPseudo());
-				request.setAttribute("erreur", "Votre enchère a bien été prise en compte");
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
-				rd.forward(request, response);
+				//Récupérer la vente en cours
+				venteEnCours = VenteManager.getVenteManager().select(Integer.parseInt(request.getParameter("venteConcernee")));
+				System.out.println("Vente concernée : " + venteEnCours.toString());
+
+				if(propositionPrix > venteEnCours.getPrixVente()) {
+					//Récupère le timestamp actuel
+					Timestamp timeStampNow = new Timestamp(System.currentTimeMillis());
+					if(timeStampNow.before(venteEnCours.getDateFinEncheres())) {
+						
+						//Vérifie qu'il existe au moins une enchère
+						if(venteEnCours.getUtilisateurAcheteur() == null) {
+							System.out.println(venteEnCours.toString());
+							System.out.println("Il n'existe pas d'enchères sur cette vente, j'insert");
+							
+							insertNouvelleEnchere(utilisateurEnCours, propositionPrix, venteEnCours, timeStampNow);
+							
+						} else if (venteEnCours.getUtilisateurAcheteur().getNoUtilisateur() == utilisateurEnCours.getNoUtilisateur()){
+							errorMsg += "Vous êtes déjà propriétaire de cette vente";
+						} else {
+							//Récupère les crédits du vendeur et les lui réattribuent
+							crediteAncienUtilisateurAcheteur(venteEnCours);
+							
+							if(EnchereManager.getEnchereManager().chkIfUserExist(utilisateurEnCours.getNoUtilisateur(),venteEnCours.getNoVente())) {
+								System.out.println("J'ai déjà fait une offre, j'update");
+								updateEnchere(utilisateurEnCours, propositionPrix, venteEnCours, timeStampNow);
+								
+							} else {
+								System.out.println("J'insert");
+								insertNouvelleEnchere(utilisateurEnCours, propositionPrix, venteEnCours, timeStampNow);	
+							}
+						}
+					}
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
 			} catch (BllException e) {
 				e.printStackTrace();
+			} finally {
+				request.setAttribute("erreur", errorMsg);
+				System.out.println("JUSTE AVANT ENVOI : " + venteEnCours.toString());
+				request.setAttribute("vente", venteEnCours);
+				request.setAttribute("retrait", retrait);
 			}
+			
+			//SET ATTRIBUTES
+			
+			System.out.println("Enchère effectuée");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
+			rs.forward(request, response);
 		}else {
-			request.setAttribute("erreur", "PAS ASSEZ DE CREDIT");
-			System.out.println("PAS ASSEZ DE CREDIT");
-			//Vérifier que l'utilisateur a assez points pour enchérir, sinon renvoyer sur la page avec une erreur
-			//TODO
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
-			rd.forward(request, response);
+			System.out.println("L'utilisateur n'a pas assez de crédits");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
+			rs.forward(request, response);
 		}
+		
+	}
+
+	private void crediteAncienUtilisateurAcheteur(Vente venteEnCours) throws BllException {
+		Utilisateur ancienUtilisateurAcheteur = venteEnCours.getUtilisateurAcheteur();
+		ancienUtilisateurAcheteur.setCredit(ancienUtilisateurAcheteur.getCredit() + venteEnCours.getPrixVente());
+		UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(ancienUtilisateurAcheteur);
+	}
+
+	private void updateEnchere(Utilisateur utilisateurEnCours, int propositionPrix, Vente venteEnCours,
+		Timestamp timeStampNow) throws BllException {
+		//Retire les crédits de l'utilisateur en cours
+		utilisateurEnCours.setCredit(utilisateurEnCours.getCredit() - propositionPrix);
+		UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateurEnCours);
+		
+		//Met à jour l'enchère correspondante à la vente et mon numéro d'utilisateur
+		Enchere enchereUpdate = EnchereManager.getEnchereManager().select(venteEnCours.getNoVente(), utilisateurEnCours.getNoUtilisateur());
+		enchereUpdate.setDateEnchere(timeStampNow);
+		EnchereManager.getEnchereManager().update(enchereUpdate);
+		
+		System.out.println("PROPOSITION PRIX : " + propositionPrix);
+		//Met à jour le prix de la vente, et l'utilisateur acheteur de la vente
+		venteEnCours.setPrixVente(propositionPrix);
+		venteEnCours.setUtilisateurAcheteur(utilisateurEnCours);
+		VenteManager.getVenteManager().update(venteEnCours);
+		System.out.println("UPDATE VENTE : " + venteEnCours);
+	}
+
+	private void insertNouvelleEnchere(Utilisateur utilisateurEnCours, int propositionPrix, Vente venteEnCours,
+			Timestamp timeStampNow) throws BllException {
+		//Retire les crédits de l'utilisateur en cours
+		utilisateurEnCours.setCredit(utilisateurEnCours.getCredit() - propositionPrix);
+		UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateurEnCours);
+		
+		//Insère une nouvelle enchère
+		Enchere enchereInsert = new Enchere(timeStampNow, utilisateurEnCours, venteEnCours);
+		EnchereManager.getEnchereManager().insert(enchereInsert);
+		
+		//Met à jour le prix de la vente, et l'utilisateur acheteur de la vente
+		venteEnCours.setPrixVente(propositionPrix);
+		venteEnCours.setUtilisateurAcheteur(utilisateurEnCours);
+		System.out.println("vente en cours dans la méthode : " + venteEnCours.toString());
+		VenteManager.getVenteManager().update(venteEnCours);
+		System.out.println(venteEnCours.toString());
 	}
 	
-
 }

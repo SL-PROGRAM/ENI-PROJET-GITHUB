@@ -11,10 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.sun.tools.classfile.Annotation.element_value;
-
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.FiltreManager;
 import fr.eni.same.bll.UtilisateurManager;
@@ -54,9 +50,9 @@ public class ServletListeEncheres extends HttpServlet {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
 			System.out.println(utilisateur.toString());
 		}
-
-		List<Vente> listeVentesByMotCle = null;
-		List<Vente> listeVentesByCategorie = null;
+//
+//		List<Vente> listeVentesByMotCle = null;
+//		List<Vente> listeVentesByCategorie = null;
 		List<Vente> listeFinale = new ArrayList<Vente>();
 		String[] valeurs = null;
 		Set set = new HashSet();
