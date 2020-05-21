@@ -269,13 +269,19 @@ public class UtilisateurManager {
 		List<Vente> listVentesToDelete = new ArrayList<Vente>();
 		List<Vente> listVentes = VenteManager.getVenteManager().selectAll();
 		Timestamp now =  new Timestamp(System.currentTimeMillis());
+		System.out.println("suppression");
 		for (Vente vente : listVentes) {
-			if(vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()
+			if(vente.getUtilisateurAcheteur() != null) {
+				if(vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()
 					&& vente.getDateFinEncheres().before(now)) {
-				listVentesToDelete.add(vente);
+					listVentesToDelete.add(vente);
+				}
 			}
+			
 		}
+		System.out.println("venteToDelete");
 		for (Vente vente : listVentesToDelete) {
+			vente.toString();
 			msgErreur = VenteManager.getVenteManager().delete(vente);
 		}
 		return msgErreur;
