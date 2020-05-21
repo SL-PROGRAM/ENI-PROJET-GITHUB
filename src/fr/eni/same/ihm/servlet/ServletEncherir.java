@@ -109,6 +109,7 @@ public class ServletEncherir extends HttpServlet {
 			utilisateur.setCredit(utilisateur.getCredit()-propositionPrixInt);
 		//Il devient ensuite l'enchérisseur (l'utilisateurAcheteur) sur cette vente
 			try {
+				UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateur);
 				venteConcernee.setUtilisateurAcheteur(utilisateur);
 				venteConcernee.setPrixVente(propositionPrixInt);
 //				System.out.println("UTILISATEUR ACHETEUR " + venteConcernee.getUtilisateurAcheteur());
@@ -118,10 +119,11 @@ public class ServletEncherir extends HttpServlet {
 				enchereAModifier.setUtilisateurEnchere(utilisateur);
 				EnchereManager.getEnchereManager().update(enchereAModifier);
 				
-				UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateur);
-				//VenteManager.getVenteManager().updateAcheteur(venteConcernee);
+				System.out.println("UTILISATEUR ACHETEUR 1: " + venteConcernee.getUtilisateurAcheteur());
+//				VenteManager.getVenteManager().updateAcheteur(venteConcernee);
+//				System.out.println("UTILISATEUR ACHETEUR 2: " + venteConcernee.getUtilisateurAcheteur());
+
 				VenteManager.getVenteManager().update(venteConcernee);
-				
 				System.out.println("Sur la vente n°" + venteConcernee.getNoVente() + " l'utilisateur acheteur est maintenant : " + venteConcernee.getUtilisateurAcheteur().getPseudo());
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 				rd.forward(request, response);
