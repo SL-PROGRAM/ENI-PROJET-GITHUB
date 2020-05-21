@@ -79,8 +79,6 @@ public class ServletListeEncheres extends HttpServlet {
 			for (int i = 0; i < valeurs.length; i++) {
 				if (valeurs[i].equals("mesVentes")) {
 					try {
-						System.out.println("JE SUIS DANS MES VENTES");
-						//listes.add(i, FiltreManager.getFiltreManager().filtreMesVentesPubliées(session));
 						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliées(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
@@ -147,19 +145,19 @@ public class ServletListeEncheres extends HttpServlet {
 			if (request.getParameter("txtMotCle")!=null) {
 				try {
 					listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
+					for (Vente vente : listeFiltres) {
+						for (Vente vente2 : listeVentesByMotCle) {
+							if (vente == vente2) {
+								listeFinale.add(vente);
+							}
+						}
+					}
 				} catch (BllException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 			
-			for (Vente vente : listeFiltres) {
-				for (Vente vente2 : listeVentesByMotCle) {
-					if (vente == vente2) {
-						listeFinale.add(vente);
-					}
-				}
-			}
 			
 			
 		
@@ -198,6 +196,8 @@ public class ServletListeEncheres extends HttpServlet {
 			
 			
 		} else {
+			//Gestion affichage listeEnchere lors de la premiere arrivée sur la page
+			
 			try {
 				System.out.println("JE SUIS DANS AUTRES ENCHERES SANS CONNECTION");
 				//listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
