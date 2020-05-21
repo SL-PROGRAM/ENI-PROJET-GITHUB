@@ -136,8 +136,10 @@ public class CategorieManager{
 	 * @throws BllException
 	 */
 	public List<Categorie> selectAll() throws BllException {
-		for(Categorie c : listeCategories) {
-			System.out.println("Categorie : Select All réalisé : " + c.toString());
+		try {
+			listeCategories = DALFactory.getCategorieDAOJdbcImpl().selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
 		}
 		return listeCategories;
 	}

@@ -2,12 +2,8 @@ package fr.eni.same.bll;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
-
-import com.sun.tools.classfile.Annotation.element_value;
-
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
