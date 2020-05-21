@@ -148,10 +148,10 @@ public class FiltreManager {
 		List<Vente> autresEncheres = new ArrayList<Vente>();
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
-
+		
 		for (Vente vente : allVentes) {
-			if (vente.getUtilisateurVendeur() != utilisateurConnect
-					&& vente.getUtilisateurAcheteur() != utilisateurConnect) {
+			if (vente.getUtilisateurVendeur().getNoUtilisateur() != utilisateurConnect.getNoUtilisateur()
+					&& vente.getUtilisateurAcheteur().getNoUtilisateur() != utilisateurConnect.getNoUtilisateur()) {
 				if (categorie == null) {
 					autresEncheres.add(vente);
 				} else if (vente.getCategorie() == categorie) {
