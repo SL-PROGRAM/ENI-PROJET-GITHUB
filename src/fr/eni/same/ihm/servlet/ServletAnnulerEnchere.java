@@ -43,21 +43,16 @@ public class ServletAnnulerEnchere extends HttpServlet {
 			Vente vente = VenteManager.getVenteManager().select(noVente);
 			
 			for (Enchere enchere : listEncheres) {
-				if(enchere.getUtilisateurEnchere().getNoUtilisateur() == noUtilisateur
+				if(enchere.getUtilisateurEnchere().getNoUtilisateur() == utilisateur.getNoUtilisateur()
 						&& enchere.getVenteEnchere().getNoVente() == noVente) {
 					enchereToDelete = enchere;
 				}
 			}if(vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
-				msgErreur += "Vous etes actuellement l'acheteur principal, vous ne pouvez pas annuler vous offres";
+				msgErreur += "Vous etes actuellement l'acheteur principal, vous ne pouvez pas annuler votre offre";
 			}
 			else if(enchereToDelete == null) {
 				msgErreur += "Vous n'avez pas fait d'enchère sur ce produit";
 			}else {
-				if(vente.getUtilisateurAcheteur().getNoUtilisateur() == enchereToDelete.getUtilisateurEnchere().getNoUtilisateur()) {
-					int prixDeVente = vente.getPrixVente();
-					int creditActuel = enchereToDelete.getUtilisateurEnchere().getCredit();
-					enchereToDelete.getUtilisateurEnchere().setCredit(prixDeVente + creditActuel);
-				}
 				EnchereManager.getEnchereManager().delete(enchereToDelete);
 				msgErreur += "Votre enchère a bien été supprimée";
 			}	

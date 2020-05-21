@@ -46,7 +46,14 @@
 				<p>Fin de l'enchère : </p>
 			</div>	
 			<div class="col-6 col-lg-3 order-lg-6">
-				<p>${vente.prixVente} pts par ${vente.utilisateurAcheteur.pseudo}</p>
+				<c:choose>
+					<c:when test="${!empty vente.utilisateurAcheteur}">
+						<p>${vente.prixVente} pts par ${vente.utilisateurAcheteur.pseudo }</p>
+					</c:when >
+					<c:when test="${empty vente.utilisateurAcheteur.noUtilisateur}">
+						<p>Pas d'offres pour le moment.</p>
+					</c:when>
+				</c:choose>
 				<p>${vente.miseAPrix}</p>
 				<p>${vente.dateFinEncheres}</p>
 				
@@ -67,22 +74,32 @@
 			<div class="col-6 col-lg-3 order-lg-10">
 			<form action="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
 				<input type = "submit" value="${vente.utilisateurVendeur.pseudo}">
-				<input hidden="true"value="${vente.utilisateurVendeur.noUtilisateur }" name="noUtilisateurVendeur">
+				<input hidden="true"value="${vente.utilisateurVendeur.noUtilisateur }" name="noVendeur">
 			</form>
 			<%-- <a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo}</a> --%>
 			</div>
 			
 			<div class="col-6 col-lg-3 offset-lg-4 order-lg-11">	
-				<p>Ma proposition : </p>
-				
+				<c:if test="${utilisateur.noUtilisateur != vente.utilisateurAcheteur.noUtilisateur }">
+					<p>Ma proposition : </p>
+				</c:if>
 			</div>
 			<div class="col-6 col-lg-5 order-lg-12">
 				<form class="form-inline" action="<%=request.getContextPath() %>/ServletEncherir" method="post" >
-					<input type="number" id="" name="propositionPrix" min="${vente.prixVente}">
-					<input type="submit" value="Enchérir" id="encherir" name="encherir"><!-- verif si login, si oui alors credit à update et meilleur offre a update, si pas login redirect page login -->
+					<c:if test="${utilisateur.noUtilisateur != vente.utilisateurAcheteur.noUtilisateur }">
+						<input type="number" id="" name="propositionPrix" min="${vente.prixVente}">
+						<input type="submit" value="Enchérir" id="encherir" name="encherir"><!-- verif si login, si oui alors credit à update et meilleur offre a update, si pas login redirect page login -->
+					</c:if>
 					<input hidden="true" name="venteConcernee" value="${vente.noVente }">
 					<input hidden="true" name=noVendeurInitial value="${vente.utilisateurVendeur.noUtilisateur }">
-					<input hidden="true" name="noUtilisateurMeilleurOffre" value="${vente.utilisateurAcheteur.noUtilisateur }">
+					<c:choose>
+					<c:when test="${!empty vente.utilisateurAcheteur }">
+						<input hidden="true" name="noUtilisateurMeilleurOffre" value="${vente.utilisateurAcheteur.noUtilisateur }">
+					</c:when >
+					<c:when test="${empty vente.utilisateurAcheteur }">
+						<input hidden="true" name="noUtilisateurMeilleurOffre" value="${vente.utilisateurVendeur.noUtilisateur }">
+					</c:when>
+				</c:choose>
 				</form>
 			</div>
 			
@@ -92,11 +109,10 @@
 		<div class="row">	<!-- si enhereutilsateur == utilisateur session et date enchere en cours afficher -->
 			
 			<div class="col-6 col-lg-3 offset-lg-4">
-				<c:if test="vente.getUtilisateurAcheteur().getNoUtilisateur() != utilisateur.getNoUtilisateur()">
+				<c:if test="${utilisateur.noUtilisateur == vente.utilisateurAcheteur.noUtilisateur }">
 					<a class="btn btn-primary btn-block"  
 					href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerEnchere")%>?noVente=${vente.noVente}&noAcheteur=${utilisateur.noUtilisateur}"
 					>Annuler ma dernière enchère</a><!-- si login, sinon redirect pageConnexion, delete update de encherir, restitution ancien credit -->
-			
 				</c:if>
 			</div>
 			

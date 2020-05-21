@@ -26,6 +26,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 	private static EnchereDAOJDBCImpl instance;
 	private static final String INSERT="INSERT INTO encheres(date_enchere, no_utilisateur, no_vente) VALUES(?, ?,?);";
 	private static final String UPDATE="UPDATE `encheres` SET `date_enchere`=? WHERE `no_utilisateur`=? AND `no_vente`=?"; 
+	private static final String UPDATE_ACHETEUR="UPDATE encheres SET no_utilisateur = ? WHERE encheres.no_utilisateur = ? AND encheres.no_vente=?";
 	private static final String DELETE="DELETE FROM `encheres` WHERE `no_utilisateur`=? AND `no_vente`=?"; 
 	
 	private static final String SELECT_BY_ID = "SELECT * FROM encheres"
@@ -82,6 +83,20 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 				pstmt.setInt(3, t.getVenteEnchere().getNoVente());
 				pstmt.executeUpdate();
 				System.out.println("Update réalisée sur l'enchere : " + t.toString());
+			}		
+		} catch (SQLException e) {
+			throw new DALException("Erreur update");
+		}
+	}
+	
+	public void updateEnchereur(Enchere t,int ancienEnchereur ,int nouvelEnchereur) throws DALException{
+		try(Connection con = ConnectionProvider.openConnection()) {
+			try(PreparedStatement pstmt = con.prepareStatement(UPDATE_ACHETEUR)){
+				pstmt.setInt(1, ancienEnchereur);
+				pstmt.setInt(2, nouvelEnchereur);
+				pstmt.setInt(3, t.getVenteEnchere().getNoVente());
+				pstmt.executeUpdate();
+				System.out.println("Update Acheteur réalisée sur l'enchere : " + t.toString());
 			}		
 		} catch (SQLException e) {
 			throw new DALException("Erreur update");

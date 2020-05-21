@@ -11,6 +11,6 @@ import fr.eni.same.exception.DALException;
  */
 public interface EnchereDAO extends DAO<Enchere> {
 
-	Enchere select(int noUtlisateur, int noVente) throws DALException;
-
+	public Enchere select(int noUtlisateur, int noVente) throws DALException;
+	public void updateEnchereur(Enchere t,int ancienEnchereur ,int nouvelEnchereur) throws DALException;
 }

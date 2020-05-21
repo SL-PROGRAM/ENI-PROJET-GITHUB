@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.sun.org.apache.xml.internal.serializer.utils.Utils;
-
 import fr.eni.same.bll.EnchereManager;
 import fr.eni.same.bll.RetraitManager;
 import fr.eni.same.bll.UtilisateurManager;

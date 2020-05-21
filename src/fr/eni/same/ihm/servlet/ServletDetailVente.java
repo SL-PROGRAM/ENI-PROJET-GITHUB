@@ -51,6 +51,7 @@ public class ServletDetailVente extends HttpServlet {
 			try {
 				Retrait retrait =null;
 				Vente vente = VenteManager.getVenteManager().select(noVente);
+				System.out.println("MON NUMERO VENTE EST LE : " + noVente);
 				List<Retrait> listeRetrait  = RetraitManager.getRetraitManager().selectAll();
 				for(Retrait retrait2 : listeRetrait) {
 					if(retrait2.getVente()== vente) {
@@ -60,19 +61,24 @@ public class ServletDetailVente extends HttpServlet {
 				}
 
 				Timestamp heureServer = new Timestamp(System.currentTimeMillis());
+				System.out.println("SERVLET DETAIL VENTE : " + vente.toString());
 				request.setAttribute("vente", vente);
 				request.setAttribute("heureServer", heureServer);
 
 				Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				
-				if(vente.getDateFinEncheres().before(heureServer)  ) {
+				if(vente.getDateFinEncheres().before(heureServer)  ) {	
+					System.out.println("VENTE VERIFICATION : " + vente.toString());
+					if (vente.getUtilisateurAcheteur() == null ) {
+					String msgErreur = "personne n a encheri, la vente est annulée";
+					request.setAttribute("erreur", msgErreur);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+					rd.forward(request, response);
 					
-					if(vente.getUtilisateurAcheteur() != null 
+					} else if(vente.getUtilisateurAcheteur() != null 
 							&& vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
 						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/enchereGagnee.jsp");
 					rd.forward(request, response);	
-				
-				
 					}
 					
 					else if (vente.getUtilisateurAcheteur() != null 
@@ -82,26 +88,19 @@ public class ServletDetailVente extends HttpServlet {
 						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 						rd.forward(request, response);
 					
-					}else if(vente.getUtilisateurAcheteur().getNoUtilisateur() != utilisateur.getNoUtilisateur()) {
+					} else if(vente.getUtilisateurAcheteur().getNoUtilisateur() != utilisateur.getNoUtilisateur()) {
 							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 							rd.forward(request, response);
-						}else if (vente.getUtilisateurAcheteur() == null ) {
-							String msgErreur = "personne n a encheri, la vente est annulée";
-							request.setAttribute("erreur", msgErreur);
-							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
-							rd.forward(request, response);
-							
-						}
-					
+					}
 				}
 				
-			
+
 		
 			else if(vente.getUtilisateurVendeur().getNoUtilisateur()==(utilisateur).getNoUtilisateur()) {
 					//UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 					rd.forward(request, response);
-				}else {		
+				} else {		
 					//UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");
 					rd.forward(request, response);

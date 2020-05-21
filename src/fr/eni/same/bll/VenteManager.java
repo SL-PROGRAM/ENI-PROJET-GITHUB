@@ -37,7 +37,7 @@ public class VenteManager  {
     	if(listVentes == null) {
     		try {
 				listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
-				listVentes = getUtilisateursAcheteurs();
+				listVentes = getUtilisateursAcheteurs(listVentes);
 			} catch (DALException e) {
 				throw new BllException("selectAll");
 			}
@@ -90,7 +90,11 @@ public class VenteManager  {
 						listVentes.get(i).setDescription(t.getDescription());
 						listVentes.get(i).setMiseAPrix(t.getMiseAPrix());
 						listVentes.get(i).setNomArticle(t.getNomArticle());
-						listVentes.get(i).setPrixVente(t.getMiseAPrix());
+						if(t.getPrixVente() == 0) {
+							listVentes.get(i).setPrixVente(t.getMiseAPrix());
+						}else {
+							listVentes.get(i).setPrixVente(t.getPrixVente());
+						}
 						listVentes.get(i).setUtilisateurAcheteur(t.getUtilisateurAcheteur());
 						listVentes.get(i).setUtilisateurVendeur(t.getUtilisateurVendeur());
 					}
@@ -193,7 +197,13 @@ public class VenteManager  {
 		if(!msgErreur.equals("")) {
 			throw new BllException(msgErreur);
 		}
-		else {		
+		else {	
+//			try {
+//				vente = DALFactory.getVenteDAOJdbcImpl().select(id);
+//			} catch (DALException e) {
+//				e.printStackTrace();
+//			}
+			listVentes = selectAll();
 			for (int i = 0; i < listVentes.size(); i++) {
 				if(listVentes.get(i).getNoVente() == id) {
 					vente = listVentes.get(i);
@@ -203,38 +213,90 @@ public class VenteManager  {
 				throw new BllException("La vente ciblée n'existe pas");
 			}
 		}
+		System.out.println("Check" + vente.toString());
 		return vente;
 	}
 	
 	public List<Vente> selectAll() throws BllException {
+		try {
+			
+			listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
+			listVentes = getUtilisateursAcheteurs(listVentes);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 		return listVentes;
 	}
 	
-	public List<Vente> getUtilisateursAcheteurs(){
+	public List<Vente> getUtilisateursAcheteurs(List<Vente> listeVentes){
+		List<Vente> listeVenteModifiee = listeVentes;
 		try {
-			List<Utilisateur> listeAcheteurs = UtilisateurManager.getUtilisateurManager().selectAll();
+			List<Vente> listeVenteAvecAcheteur = new ArrayList<Vente>();
 			List<Enchere> listeEncheres = EnchereManager.getEnchereManager().selectAll();
-			for(int i = 0; i < listeEncheres.size(); i++) {
-				for(int j = 0; j < listVentes.size(); j++) {
-					if(listVentes.get(j).getNoVente() == listeEncheres.get(i).getVenteEnchere().getNoVente()) {
-						listVentes.get(j).setUtilisateurAcheteur(listeEncheres.get(i).getUtilisateurEnchere());
+			List<Enchere> listeDernieresEncheres = new ArrayList<Enchere>();
+			List<Enchere> listeVentesIdentiques = new ArrayList<Enchere>();
+			//On doit récupérer les Derniers utilisateurs acheteurs
+			
+			//Récupérer les encheres qui sont d'une même vente -> les mettredans une liste
+			//Sur cette liste on ne garde que l'enchere la plus récente
+			//Sur l'enchere la plus récente on récupère le Utilisateur
+			//On set l'utilisateur sur vente.setUtilisateurAcheteur
+			if(listeEncheres.isEmpty()) {
+				return listeVentes;
+			}
+			do {
+				Enchere enchereDeComparaison = listeEncheres.get(0);
+				for (Enchere enchere : listeEncheres) {
+					if(enchere.getVenteEnchere().getNoVente() == enchereDeComparaison.getVenteEnchere().getNoVente()) {
+						listeVentesIdentiques.add(enchere);
+						System.out.println("AJOUTE");
+					}
+				}
+				System.out.println(listeVentesIdentiques);
+				Enchere dateLaPlusRecente = listeVentesIdentiques.get(0);
+				
+				for (Enchere enchere : listeVentesIdentiques) {
+					listeEncheres.remove(enchere);
+					
+					if(dateLaPlusRecente.getDateEnchere().before(enchere.getDateEnchere())) {
+						dateLaPlusRecente = enchere;
+					}
+				}
+				System.out.println("Fin du remove : " + listeEncheres);
+				
+				listeDernieresEncheres.add(dateLaPlusRecente);
+			} while(!listeEncheres.isEmpty());
+			
+			for (Enchere enchere : listeDernieresEncheres) {
+				Utilisateur utilisateurAcheteur = enchere.getUtilisateurEnchere();
+				Vente vente = enchere.getVenteEnchere();
+				vente.setUtilisateurAcheteur(utilisateurAcheteur);
+				listeVenteAvecAcheteur.add(vente);
+			}
+			
+			
+			for (Vente vente : listeVenteModifiee) {
+				for (Vente venteAvecAcheteur : listeVenteAvecAcheteur) {
+					if(vente.getNoVente() == venteAvecAcheteur.getNoVente()) {
+						vente.setUtilisateurAcheteur(venteAvecAcheteur.getUtilisateurAcheteur());
 					}
 				}
 			}
+			
 		} catch (BllException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		return listVentes;
+		return listeVenteModifiee;
 	}
-	public List<Vente> selectByMotCle(String motCle) throws BllException{
+	
+	
+	
+	
+	
+	public List<Vente> selectByMotCle(List<Vente> listeVente, String motCle) throws BllException{
 		List<Vente> aRetourner = new ArrayList<Vente>();
 		
-		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
-		for (Vente vente : listeVentes) {
+		for (Vente vente : listeVente) {
 			if (vente.getDescription().toLowerCase().contains(motCle.toLowerCase())
 					|| vente.getNomArticle().toLowerCase().contains(motCle.toLowerCase())) {
 				aRetourner.add(vente);

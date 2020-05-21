@@ -107,8 +107,10 @@ public class RetraitManager{
 
 	
 	public List<Retrait> selectAll() throws BllException {
-		for(Retrait r : listeRetraits) {
-			System.out.println("Retrait : Select All réalisé : " + r.toString());
+		try {
+			listeRetraits = DALFactory.getRetraitDAOJdbcImpl().selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
 		}
 		return listeRetraits;
 	}
