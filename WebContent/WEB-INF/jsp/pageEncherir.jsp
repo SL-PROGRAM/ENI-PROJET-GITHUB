@@ -92,9 +92,12 @@
 		<div class="row">	<!-- si enhereutilsateur == utilisateur session et date enchere en cours afficher -->
 			
 			<div class="col-6 col-lg-3 offset-lg-4">
+				<c:if test="vente.getUtilisateurAcheteur().getNoUtilisateur() != utilisateur.getNoUtilisateur()">
 					<a class="btn btn-primary btn-block"  
 					href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerEnchere")%>?noVente=${vente.noVente}&noAcheteur=${utilisateur.noUtilisateur}"
 					>Annuler ma dernière enchère</a><!-- si login, sinon redirect pageConnexion, delete update de encherir, restitution ancien credit -->
+			
+				</c:if>
 			</div>
 			
 				
