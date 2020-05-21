@@ -40,8 +40,12 @@ public class ServletListeEncheres extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge la Maquette 5
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		request.setAttribute("erreur", "");
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
+		
+		
 		//Utilisateur utilisateur = null;
 		if (request.getSession().getAttribute("utilisateur") != null) {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
@@ -50,6 +54,8 @@ public class ServletListeEncheres extends HttpServlet {
 		
 		List<List<Vente>> listes = new ArrayList<List<Vente>>();
 		List<Vente> listeVentesByMotCle = null;
+		List<Vente> listeVentesByCategorie= null;
+		List<Vente> listeFinale = new ArrayList<Vente>();
 		Set set = new HashSet();
 		
 		if (request.getParameter("supprimmerCompteUtilisateur") != null) {
@@ -65,14 +71,7 @@ public class ServletListeEncheres extends HttpServlet {
 			}
 		}
 		
-//		if (request.getParameter("txtMotCle")!=null) {
-//			try {
-//				listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
-//			} catch (BllException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
+		
 		
 		
 		if (request.getParameterValues("filtres")!=null) {
@@ -140,20 +139,76 @@ public class ServletListeEncheres extends HttpServlet {
 				
 			}
 			
+			List<Vente> listeFiltres = new ArrayList<Vente>(set);
 			/*******************************************************************************************************************************/
 						//SELECT PAR CATEGORIE + SELECT PAR MOT CLE
 			/*******************************************************************************************************************************/
 			
-			//VenteManager.getVenteManager().s
+			if (request.getParameter("txtMotCle")!=null) {
+				try {
+					listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
+				} catch (BllException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 			
-			List<Vente> listeFinale = new ArrayList<Vente>(set);
+			for (Vente vente : listeFiltres) {
+				for (Vente vente2 : listeVentesByMotCle) {
+					if (vente == vente2) {
+						listeFinale.add(vente);
+					}
+				}
+			}
+			
+			
+		
+			if (request.getParameter("selectCategorie") != "") {
+				int noCategorie = Integer.parseInt(request.getParameter("selectCategorie"));
+				Categorie categorie;
+				try {
+					categorie = CategorieManager.getCategorieManager().select(noCategorie);
+					listeVentesByCategorie = VenteManager.getVenteManager().selectByCategorie(categorie);
+						if (!listeVentesByCategorie.isEmpty()) {
+							for (int j = 0; j < listeVentesByCategorie.size(); j++) {
+								for (int j2 = 0; j2 < listeFinale.size(); j2++) {
+									if (listeVentesByCategorie.get(j).getCategorie().getNoCategorie() != listeFinale.get(j2).getCategorie().getNoCategorie()) {
+										listeFinale.remove(j2);
+									}
+								}
+							}
+						} else {
+							listeFinale.clear();
+						}
+				} catch (BllException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			
+			
+			
+			
 				
 			System.out.println("COUCOU");
 			for (int i = 0; i < listeFinale.size(); i++) {
 				System.out.println(listeFinale.get(i).toString());
 			}
-			request.setAttribute("listeVentes", listeFinale);
+			
+			
+		} else {
+			try {
+				System.out.println("JE SUIS DANS AUTRES ENCHERES SANS CONNECTION");
+				//listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
+				listeFinale = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
+				set.addAll(listeFinale);
+			} catch (BllException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		request.setAttribute("listeVentes", listeFinale);
 		
 		List<Categorie> listeCategories;
 		try {

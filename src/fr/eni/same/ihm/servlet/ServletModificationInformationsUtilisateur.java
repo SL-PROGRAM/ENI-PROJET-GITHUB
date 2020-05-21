@@ -81,14 +81,14 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 						System.out.println("Je suis dans l'insert utilisateur");
 						UtilisateurManager.getUtilisateurManager().insert(utilisateur);
 					}
-//					RequestDispatcher rd = request.getRequestDispatcher("/ServletConnexion");
-//					rd.forward(request, response);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
+					rd.forward(request, response);
 				} catch (BllException e) {
 					
-					msgErreur += FonctionGenerique.gestionErreur("");
-					request.setAttribute("erreur", msgErreur);
-					RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
-					rd.forward(request, response);
+//					msgErreur += FonctionGenerique.gestionErreur("");
+//					request.setAttribute("erreur", msgErreur);
+//					RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+//					rd.forward(request, response);
 				}
 			} else {
 				erreurSaisie += "Les mots de passe ne correspondent pas !";
@@ -125,9 +125,9 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 		//	}
 
 		}
-		System.out.println(erreurSaisie);
-		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
-		rd.forward(request, response);
+//		System.out.println(erreurSaisie);
+//		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+//		rd.forward(request, response);
 
 	}
 	
