@@ -42,7 +42,8 @@ public class ServletListeEncheres extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		
+		request.setAttribute("erreur", "");
+//		HttpSession session = request.getSession();
 		
 		
 		//Utilisateur utilisateur = null;
