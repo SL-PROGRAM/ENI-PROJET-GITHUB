@@ -46,7 +46,15 @@
 				<p>Fin de l'enchère : </p>
 			</div>	
 			<div class="col-6 col-lg-3 order-lg-6">
-				<p>${vente.prixVente} pts par ${vente.utilisateurAcheteur.pseudo}</p>
+				<p>${vente.prixVente} pts par 
+				<c:choose>
+					<c:when test="${!empty vente.utilisateurAcheteur }">
+						${vente.utilisateurAcheteur.pseudo }
+					</c:when >
+					<c:when test="${empty vente.utilisateurAcheteur }">
+						${vente.utilisateurVendeur.pseudo }
+					</c:when>
+				</c:choose>
 				<p>${vente.miseAPrix}</p>
 				<p>${vente.dateFinEncheres}</p>
 				
@@ -82,7 +90,14 @@
 					<input type="submit" value="Enchérir" id="encherir" name="encherir"><!-- verif si login, si oui alors credit à update et meilleur offre a update, si pas login redirect page login -->
 					<input hidden="true" name="venteConcernee" value="${vente.noVente }">
 					<input hidden="true" name=noVendeurInitial value="${vente.utilisateurVendeur.noUtilisateur }">
-					<input hidden="true" name="noUtilisateurMeilleurOffre" value="${vente.utilisateurAcheteur.noUtilisateur }">
+					<c:choose>
+					<c:when test="${!empty vente.utilisateurAcheteur }">
+						<input hidden="true" name="noUtilisateurMeilleurOffre" value="${vente.utilisateurAcheteur.noUtilisateur }">
+					</c:when >
+					<c:when test="${empty vente.utilisateurAcheteur }">
+						<input hidden="true" name="noUtilisateurMeilleurOffre" value="${vente.utilisateurVendeur.noUtilisateur }">
+					</c:when>
+				</c:choose>
 				</form>
 			</div>
 			

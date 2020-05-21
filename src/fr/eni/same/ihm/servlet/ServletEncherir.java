@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import fr.eni.same.bll.EnchereManager;
 import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bll.VenteManager;
@@ -34,7 +35,6 @@ public class ServletEncherir extends HttpServlet {
 	 * 		   Vérification que l'utilisateur qui accède à la vente n'est pas l'utilisateur vendant l'article
 	 * 		   Récupération de la dernière enchère de l'utilisateur voulant encherir sur la vente. Si pas de dernière enchère, 
 	 * 		   annuler ma dernière enchère n'apparait pas.
-	 * 
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 6 et 7
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,7 +42,6 @@ public class ServletEncherir extends HttpServlet {
 
 		//afficher infos de la vente ->recup id pr avoir les infos? liste?
 		//iterartion 2:verif si l utilisateur arrivant sur cette page est le dernier a avoir encheri, si oui possibilité d annuler l enchere
-		
 		
 		//Je pas oublier de recréditer au précédant acheteur sa mise.
 
@@ -77,7 +76,7 @@ public class ServletEncherir extends HttpServlet {
 		int noVente = Integer.parseInt(request.getParameter("venteConcernee"));
 		System.out.println("Vente concernée : " + noVente);
 		try {
-				venteConcernee = VenteManager.getVenteManager().select(noVente);
+			venteConcernee = VenteManager.getVenteManager().select(noVente);
 		} catch (BllException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,7 +86,7 @@ public class ServletEncherir extends HttpServlet {
 		//Contient la nouvelle proposition 
 		String propositionPrix= request.getParameter("propositionPrix");
 		int propositionPrixInt = Integer.parseInt(propositionPrix);
-		
+		System.out.println("proposition de : " + utilisateur.getPseudo() + " : " + propositionPrixInt);
 		
 		
 		//Récupère l'utilisateur qui vend l'article
@@ -98,7 +97,7 @@ public class ServletEncherir extends HttpServlet {
 		} catch (BllException e1) {
 			e1.printStackTrace();
 		}
-
+		System.out.println("L'utilisateur qui a la meilleure offre actuelle : " + utilisateurVendeur.getPseudo());
 		
 			if(utilisateur.getNoUtilisateur() == utilisateurVendeur.getNoUtilisateur()) {
 			System.out.println("Vous ne pouvez pas enchérir sur votre propre enchère");
@@ -115,8 +114,13 @@ public class ServletEncherir extends HttpServlet {
 				if(EnchereManager.getEnchereManager().chkIfUserExist(utilisateur.getNoUtilisateur())) {
 					//Si c'est le cas, UPDATER la date de l'enchere qui contient son idutilisateur
 					Enchere enchereActuelle = EnchereManager.getEnchereManager().select(noVente, utilisateurVendeur.getNoUtilisateur());
+					//Modifie le prix de vente
+					System.out.println("VENTE ACTUELLE : " + venteConcernee.toString());
+					venteConcernee.setPrixVente(propositionPrixInt);
+					venteConcernee.setUtilisateurAcheteur(utilisateur);
+					VenteManager.getVenteManager().update(venteConcernee);
+					System.out.println("VENTE MODIFIEE : " + VenteManager.getVenteManager().select(venteConcernee.getNoVente()));
 					EnchereManager.getEnchereManager().update(enchereActuelle);
-					
 				} else {
 					Timestamp ts = new Timestamp(System.currentTimeMillis());
 					Enchere nouvelleEnchere = new Enchere(ts, utilisateur, venteConcernee);
@@ -151,6 +155,4 @@ public class ServletEncherir extends HttpServlet {
 			rd.forward(request, response);
 		}
 	}
-	
-
 }
