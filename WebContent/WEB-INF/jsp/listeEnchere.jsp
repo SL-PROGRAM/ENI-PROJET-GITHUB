@@ -27,29 +27,53 @@
 					<div class="offset-1">
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="mesVentes" value="mesVentes" name="filtres"> <label class="custom-control-label"
+								id="mesVentes" value="mesVentes" name="filtres"
+									<c:if test="${mesVentesIsSelected == true}">
+										checked
+									</c:if>
+								> <label class="custom-control-label"
 								for="mesVentes">Mes ventes</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="mesVentesEnregistrees" value="mesVentesEnregistrees" name="filtres"> <label
+								id="mesVentesEnregistrees" value="mesVentesEnregistrees" name="filtres"
+									<c:if test="${mesVentesEnregistreesIsSelected == true}">
+										checked
+									</c:if>
+								> <label
 								class="custom-control-label" for="mesVentesEnregistrees">Mes ventes enregistrées</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="mesEncheresEnCours" value="mesEncheresEnCours" name="filtres"> <label
+								id="mesEncheresEnCours" value="mesEncheresEnCours" name="filtres"
+									<c:if test="${mesEncheresEnCoursIsSelected == true}">
+										checked
+									</c:if>
+								> <label
 								class="custom-control-label" for="mesEncheresEnCours">Mes
 								enchères en cours</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="mesAcquisitions" value="mesAcquisitions" name="filtres"> <label
+								id="mesAcquisitions" value="mesAcquisitions" name="filtres"
+									<c:if test="${mesAcquisitionsIsSelected == true}">
+										checked
+									</c:if>
+								> <label
 								class="custom-control-label" for="mesAcquisitions">Mes
 								acquisitions</label>
 						</div>
 						<div class="custom-control custom-checkbox">
 							<input type="checkbox" class="custom-control-input"
-								id="autresEncheres" value="autresEncheres" checked name="filtres"> <label
+								id="autresEncheres" value="autresEncheres"  name="filtres" 
+								<c:choose>
+									<c:when test="${autresEncheresIsSelected == true}">
+										checked
+									</c:when>
+									<c:when test="${autresEncheresIsSelected == false}">
+									</c:when>
+								</c:choose>
+								> <label
 								class="custom-control-label" for="autresEncheres">Autres
 								enchères</label>
 						</div>
