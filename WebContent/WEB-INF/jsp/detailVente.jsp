@@ -24,7 +24,7 @@
 		<c:if test="${vente.dateFinEncheres.before(heureServer)}">
 			<div class="row">
 				<div class="col-12 col-lg-8 text-center">
-					<h2>${vente.utilisateurAcheteur} a remporté l'enchère !</h2>
+					<h2>${vente.utilisateurAcheteur.pseudo} a remporté l'enchère !</h2>
 					<br/>
 				</div>
 			</div>
@@ -43,7 +43,7 @@
 				</div>
 			<!-- ------------------------------------------------- -->	
 				<div class="col-12 col-lg-12 text-center">
-					<img alt="Image descriptve du produit en vente" src="././img/no-stopping.png" />
+					<img alt="Image descriptve du produit en vente" src="././img/thSansFond.png" width="200" height="200" />
 				</div>
 				<br/>
 			</div>
@@ -74,10 +74,14 @@
 						
 							<c:choose>
 								<c:when test="${vente.dateFinEncheres.before(heureServer)}">
-									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur}</a> </p>
+									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur.pseudo}</a> </p>
 								</c:when>
-								<c:when test="${vente.dateFinEncheres.after(heureServer)}">
-									<p>${vente.prixVente } pts par ${vente.utilisateurAcheteur}</p>
+								<c:when test="${vente.dateFinEncheres.after(heureServer) && vente.utilisateurAcheteur!=null}">
+									<p>${vente.prixVente } pts par ${vente.utilisateurAcheteur.pseudo}</p>
+									
+								</c:when>
+								<c:when test="${vente.dateFinEncheres.after(heureServer) && vente.utilisateurAcheteur== null}">
+									<p>Pas encore d'offre</p>
 									
 								</c:when>
 							</c:choose>

@@ -69,7 +69,7 @@
 					</div>
 					<div class="form-group row">
 						<div class="col-12">
-							<input type="text" class="form-control"
+							<input type="text" class="form-control" name="txtMotCle"
 								placeholder="Le nom de l'article contient">
 						</div>
 					</div>

@@ -1,7 +1,12 @@
 package fr.eni.same.bll;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+
+import fr.eni.same.bo.Categorie;
+import fr.eni.same.bo.Enchere;
+import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
@@ -31,6 +36,7 @@ public class VenteManager  {
     	if(listVentes == null) {
     		try {
 				listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
+				listVentes = getUtilisateursAcheteurs();
 			} catch (DALException e) {
 				throw new BllException("selectAll");
 			}
@@ -94,6 +100,7 @@ public class VenteManager  {
 		}
 		
 	}
+	
 	
 
 	
@@ -163,6 +170,53 @@ public class VenteManager  {
 	public List<Vente> selectAll() throws BllException {
 		return listVentes;
 	}
+	
+	public List<Vente> getUtilisateursAcheteurs(){
+		try {
+			List<Utilisateur> listeAcheteurs = UtilisateurManager.getUtilisateurManager().selectAll();
+			List<Enchere> listeEncheres = EnchereManager.getEnchereManager().selectAll();
+			for(int i = 0; i < listeEncheres.size(); i++) {
+				for(int j = 0; j < listVentes.size(); j++) {
+					if(listVentes.get(j).getNoVente() == listeEncheres.get(i).getVenteEnchere().getNoVente()) {
+						listVentes.get(j).setUtilisateurAcheteur(listeEncheres.get(i).getUtilisateurEnchere());
+					}
+				}
+			}
+		} catch (BllException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return listVentes;
+	}
+	public List<Vente> selectByMotCle(String motCle) throws BllException{
+		List<Vente> aRetourner = new ArrayList<Vente>();
+		
+		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
+		for (Vente vente : listeVentes) {
+			if (vente.getDescription().toLowerCase().contains(motCle.toLowerCase())
+					|| vente.getNomArticle().toLowerCase().contains(motCle.toLowerCase())) {
+				aRetourner.add(vente);
+			}
+		}
+		return aRetourner;
+	}
+	
+	public List<Vente> selectByCategorie(Categorie categorie) throws BllException{
+		List<Vente> aRetourner = new ArrayList<Vente>();
+		
+		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
+		for (Vente vente : listeVentes) {
+			if (vente.getCategorie().getNoCategorie() == categorie.getNoCategorie()) {
+				System.out.println(vente.toString());
+				aRetourner.add(vente);
+			}
+		}
+		return aRetourner;
+	}
+	
 	
 		//***********************************************************************************************//
 		// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
@@ -248,13 +302,13 @@ public class VenteManager  {
 	public String prixInitialPositif(int prixInitial) throws BllException {
 		String msgErreur = "";
 		if(prixInitial < 0) {
-			msgErreur = ("Le prix de vente minium est de 0");
+			msgErreur = ("Le prix de vente minimum est de 0");
 		}
 		return msgErreur;
 		
 	}
 
-
+	
 	
 
 }
