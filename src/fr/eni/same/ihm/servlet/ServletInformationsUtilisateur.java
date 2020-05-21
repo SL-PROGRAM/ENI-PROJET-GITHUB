@@ -32,10 +32,16 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 4 et 12
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("erreur", "");
+		System.out.println("Debut de la servlet information utilisateur");
+		
+		if(request.getAttribute("erreur") != null) {
+			request.setAttribute("erreur", "");			
+		}
+		
 		String msgErreur = "";
 		if (request.getParameter("noUtilisateurAcheteur") != null) {
 			int noUtilisateurAcheteur = Integer.parseInt(request.getParameter("noUtilisateurAcheteur"));
+			System.out.println("Option 1");
 			try {
 				Utilisateur utilisateurAcheteur = UtilisateurManager.getUtilisateurManager().select(noUtilisateurAcheteur);
 				request.setAttribute("utilisateurAcheteur", utilisateurAcheteur);
@@ -48,7 +54,9 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 			}
 			
 		} else {
-			int noUtilisateurVendeur = (Integer.parseInt(request.getParameter("noUtilisateurVendeur"))) ;
+			if(request.getParameter("noUtilisateurVendeur") != null) {
+				int noUtilisateurVendeur = (Integer.parseInt(request.getParameter("noUtilisateurVendeur"))) ;				
+			System.out.println("Option 2");
 			try {
 				Utilisateur utilisateurVendeur = UtilisateurManager.getUtilisateurManager().select(noUtilisateurVendeur);
 				request.setAttribute("utilisateurVendeur", utilisateurVendeur);
@@ -59,7 +67,9 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.jsp");
 				rd.forward(request, response);
 			}
-		}	
+		}
+	}	
+		System.out.println("Fin de la servlet information utilisateur");
 	}
 
 	/**
