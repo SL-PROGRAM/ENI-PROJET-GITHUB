@@ -1,7 +1,6 @@
 package fr.eni.same.bll;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
