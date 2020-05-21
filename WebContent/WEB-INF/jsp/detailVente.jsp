@@ -24,7 +24,7 @@
 		<c:if test="${vente.dateFinEncheres.before(heureServer)}">
 			<div class="row">
 				<div class="col-12 col-lg-8 text-center">
-					<h2>${vente.utilisateurAcheteur} a remporté l'enchère !</h2>
+					<h2>${enchere.utilisateurEnchere.pseudo} a remporté l'enchère !</h2>
 					<br/>
 				</div>
 			</div>
@@ -74,10 +74,10 @@
 						
 							<c:choose>
 								<c:when test="${vente.dateFinEncheres.before(heureServer)}">
-									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur}</a> </p>
+									<p>${vente.prixVente } pts par <a href="<%= request.getContextPath() %>/ServletInformationsUtilisateur">${vente.utilisateurAcheteur.pseudo}</a> </p>
 								</c:when>
 								<c:when test="${vente.dateFinEncheres.after(heureServer)}">
-									<p>${vente.prixVente } pts par ${vente.utilisateurAcheteur}</p>
+									<p>${vente.prixVente } pts par ${vente.utilisateurAcheteur.pseudo}</p>
 									
 								</c:when>
 							</c:choose>
@@ -127,9 +127,10 @@
 							<!-- Redirige vers ServletInformationsUtilisateur -->
 							
 							<div class="col-4 col-lg-4">
-							<form action="<%= request.getContextPath()%>/ServletDetailVente" method="post">
-								<input type="submit" class="btn btn-primary btn-block" role="button" name="retraitEffectue" value="Retrait effectué"/>
-							</form>
+						<a href="<%=response.encodeURL(request.getContextPath()+"/ServletRetraitEffectue")%>?noVente=${vente.noVente}" 
+								class="btn btn-primary btn-block" role="button">
+								Retrait effectué
+								</a>
 							</div>
 							
 							<div class="col-4 col-lg-4">
@@ -145,16 +146,21 @@
 						<c:when test="${vente.dateFinEncheres.after(heureServer)}">
 							<!-- Boutons à afficher dans la version Maquette 9 -->
 							<!-- Redirige vers ServletListeEnchere. cette servlet gère la suppression de la vente en BDD puis redirige vers la maquette 5 -->
+							<c:if test="utilisateur.noUtilisateur == vente.utilisateurVendeur.noUtilisateur">
 							<div class="col-6 col-lg-6">
-							<a href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerVente?noVente=${vente.noVente}")%>" 
+							<a href="<%=response.encodeURL(request.getContextPath()+"/ServletAnnulerVente")%>?noVente=${vente.noVente}" 
 								class="btn btn-primary btn-block" role="button">
 									Annuler la vente
 								</a>
+							
 							</div>
+							</c:if>
+							
+							
 							
 							<!-- Redirige vers ServletListeEnchere -->
 							<div class="col-6 col-lg-6">
-								<a class="btn btn-danger btn-block" role="button" href="<%= request.getContextPath()%>/ServletListeEncheres">
+								<a class="btn btn-danger btn-block" role="button" href="<%= response.encodeURL(request.getContextPath()+"/ServletListeEncheres")%>">
 									Retour</a>
 							</div>
 						</c:when>

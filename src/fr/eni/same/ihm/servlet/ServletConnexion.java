@@ -40,6 +40,7 @@ public class ServletConnexion extends HttpServlet {
 	 * Cette Servlet et la jsp correspondante prennent en charge la Maquette 1
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		String identifiant = getCookieValue(request, "connexionID");
 		String mdp = getCookieValue(request, "connexionMDP");
 		
@@ -66,7 +67,7 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setAttribute("erreur", "");
 		String identifiant = request.getParameter("txtIdentifiant");
 		String password = request.getParameter("txtPassword");
 		System.out.println(request.getParameter("rememberMe"));

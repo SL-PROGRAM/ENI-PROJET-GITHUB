@@ -2,7 +2,6 @@ package fr.eni.same.ihm.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -22,20 +21,18 @@ import fr.eni.same.bo.Vente;
 import fr.eni.same.exception.BllException;
 
 /**
- * Servlet implementation class ServletAnnulerVente
+ * Servlet implementation class ServletRetraitEffectue
  */
-@WebServlet("/ServletAnnulerVente")
-public class ServletAnnulerVente extends HttpServlet {
+@WebServlet("/ServletRetraitEffectue")
+public class ServletRetraitEffectue extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-  
+   
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("erreur", "");
-
-		
 		if (request.getSession().getAttribute("utilisateur") == null){
 			response.sendRedirect("ServletConnexion");
 		}else {
@@ -63,7 +60,7 @@ public class ServletAnnulerVente extends HttpServlet {
 			
 		}
 	}
-
+	
 	private void supprimerEnchereLier(Vente vente) throws BllException {
 		List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
 		List<Enchere> listEncheresToDelete = new ArrayList<Enchere>();
@@ -77,11 +74,11 @@ public class ServletAnnulerVente extends HttpServlet {
 			Utilisateur encherisseur = enchere.getUtilisateurEnchere();
             int prixDeVente = vente.getPrixVente();
             int crditActuelEncherisseur = encherisseur.getCredit();
-            encherisseur.setCredit(prixDeVente + crditActuelEncherisseur);
+            encherisseur.setCredit(prixDeVente - crditActuelEncherisseur);
 			EnchereManager.getEnchereManager().delete(enchere);
 		}
 	}
-
+	
 	private void supprimerRetraitLier(Vente vente) throws BllException {
 		List<Retrait> listRetrait = RetraitManager.getRetraitManager().selectAll();
 		Retrait retraitToDelete = null;
@@ -95,9 +92,7 @@ public class ServletAnnulerVente extends HttpServlet {
 		RetraitManager.getRetraitManager().delete(retraitToDelete);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

@@ -28,8 +28,13 @@ public class ServletEncherir extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 6 et 7
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("erreur", "");
+
 		//afficher infos de la vente ->recup id pr avoir les infos? liste?
 		//iterartion 2:verif si l utilisateur arrivant sur cette page est le dernier a avoir encheri, si oui possibilité d annuler l enchere
+		
+		
+		//Je pas oublier de recréditer au précédant acheteur sa mise.
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/pageEncherir.jsp");

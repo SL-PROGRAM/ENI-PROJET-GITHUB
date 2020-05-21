@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.exception.BllException;
+import fr.eni.same.helpers.FonctionGenerique;
 
 /**
  * Servlet implementation class ServletCreerCompte
@@ -41,8 +42,8 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	 *      Cette Servlet et la jsp correspondante prennent en charge les Maquettes
 	 *      2 et 3
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/modificationInformationsUtilisateur.jsp");
 		rd.forward(request, response);
 	}
@@ -83,7 +84,11 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 					RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/connexion.jsp");
 					rd.forward(request, response);
 				} catch (BllException e) {
-					e.printStackTrace();
+					
+					msgErreur += FonctionGenerique.gestionErreur("");
+					request.setAttribute("erreur", msgErreur);
+					RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+					rd.forward(request, response);
 				}
 			} else {
 				erreurSaisie += "Les mots de passe ne correspondent pas !";
@@ -121,8 +126,8 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 
 		}
 		System.out.println(erreurSaisie);
-//		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
-//		rd.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+		rd.forward(request, response);
 
 	}
 	
