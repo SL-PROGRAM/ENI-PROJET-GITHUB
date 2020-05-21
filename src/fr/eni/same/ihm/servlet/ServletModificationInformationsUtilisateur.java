@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.exception.BllException;
+import fr.eni.same.helpers.FonctionGenerique;
 
 /**
  * Servlet implementation class ServletCreerCompte
@@ -41,8 +42,8 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	 *      Cette Servlet et la jsp correspondante prennent en charge les Maquettes
 	 *      2 et 3
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/modificationInformationsUtilisateur.jsp");
 		rd.forward(request, response);
 	}
@@ -51,9 +52,9 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
+		request.setAttribute("erreur", "");
+		String msgErreur = "";
 		String pseudo = request.getParameter("txtPseudo");
 		String nom = request.getParameter("txtNom");
 		String prenom = request.getParameter("txtPrenom");
@@ -70,11 +71,14 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 					UtilisateurManager.getUtilisateurManager().delete(((Utilisateur) (request.getSession().getAttribute("utilisateur"))));
 					request.getSession().invalidate();
 					estDeconnecte = true;
+					
+				} catch (BllException e) {
+					msgErreur += FonctionGenerique.gestionErreur("");
+				} finally {
+					request.setAttribute("erreur", msgErreur);
 					RequestDispatcher rd = request.getRequestDispatcher("/ServletListeEncheres");
 					rd.forward(request, response);
-				} catch (BllException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				}
 			}
 		}
@@ -113,7 +117,11 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 //					rd.forward(request, response);
 
 				} catch (BllException e) {
-					e.printStackTrace();
+					
+					msgErreur += FonctionGenerique.gestionErreur("");
+					request.setAttribute("erreur", msgErreur);
+					RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+					rd.forward(request, response);
 				}
 
 			} else {
@@ -152,8 +160,9 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 							request.getSession().setAttribute("utilisateur", utilisateur);
 						}
 					} catch (BllException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						msgErreur += FonctionGenerique.gestionErreur("");
+						RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+						rd.forward(request, response);
 					}
 				} else {
 					erreurSaisie += "Les mots de passe ne correspondent pas !";
@@ -163,8 +172,8 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 
 		}
 		System.out.println(erreurSaisie);
-//		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
-//		rd.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
+		rd.forward(request, response);
 
 
 		

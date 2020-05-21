@@ -3,7 +3,6 @@ package fr.eni.same.helpers;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -12,6 +11,7 @@ import java.util.Date;
  *
  */
 public class FonctionGenerique {
+	static String msgErreur = "";
 
 	public static boolean isLongueurMax(String stringAtest, int longueurMax) {
 		boolean isUnique = false;
@@ -41,5 +41,10 @@ public class FonctionGenerique {
 			e.printStackTrace();
 		}
 		return null; 
+	}
+	
+	public static String gestionErreur(String message) {
+		msgErreur += message;
+		return msgErreur;
 	}
 }

@@ -1,15 +1,18 @@
 package fr.eni.same.ihm.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.PublierVente;
@@ -23,6 +26,9 @@ import fr.eni.same.exception.BllException;
  * Servlet implementation class ServletCreerVente
  */
 @WebServlet("/ServletCreerVente")
+@MultipartConfig(fileSizeThreshold=	1024*1024*2, // 2MB
+									maxFileSize=1024*1024*10,      // 10MB
+									maxRequestSize=1024*1024*50)   // 50MB
 public class ServletCreerVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,6 +42,7 @@ public class ServletCreerVente extends HttpServlet {
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		if (request.getSession().getAttribute("utilisateur") == null){
 		response.sendRedirect("ServletConnexion");
     	return;
@@ -58,14 +65,15 @@ public class ServletCreerVente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("erreur", "");
 		//todo: verif si tous les champs remplis
 		//verif date fin enchere si superieur au jour actuel
 		
 		
+
 		
-		//recup info dans string d abbord car je sais pas comment coder le parse avec getParameter
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
-		System.out.println(request.getParameter("publierVente"));
+		
+		//recup info dans string d abbord car je sais pas comment coder le parse avec getParamete
 		
 		if(request.getParameter("publierVente").equals("Publier")) {
 			HttpSession session = request.getSession();

@@ -21,15 +21,13 @@
 			<div class="col-12 col-lg-9 offset-lg-3 text-center">
 				<h3>Nouvelle Vente</h3>
 			</div>
-			<c:if test=" ${!empty erreur }">
-				<div class="col-12 col-lg-9 offset-lg-3 text-center">
-					<p>${erreur }</p>
-				</div>
-			</c:if>
+			<div class="col-12 col-lg-12 text-center">
+					<p class="text-danger">${erreur }</p>
+			</div>
 		</div><!-- fin div row -->
 		
 		
-	<form  action="ServletCreerVente" method="post">
+	<form  action="ServletCreerVente" method="post" enctype="multipart/form-data">
 		<div class="row">
 			<!-- image caché quand size xs -->
 			<div class="col-12 col-lg-4 d-none d-sm-block">

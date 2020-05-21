@@ -1,10 +1,14 @@
 package fr.eni.same.bll;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Retrait;
@@ -23,7 +27,7 @@ public class PublierVente {
 	
 	
 	
-	public static String enregistrerVente(HttpSession session, HttpServletRequest request ) {
+	public static String enregistrerVente(HttpSession session, HttpServletRequest request ) throws IOException, ServletException {
 		String msgErreur = "";
 		Categorie categorie;
 		msgErreur = testInputRequest(request, msgErreur);
@@ -34,6 +38,7 @@ public class PublierVente {
 			categorie = selectCategorie(noCategorie);
 			Vente newVente;
 			newVente = creerVente(request, session, date, categorie);
+			savePhoto(request);
 			creerRetrait(request, newVente);
 		} catch (NumberFormatException e) {
 			System.out.println(e);
@@ -46,6 +51,46 @@ public class PublierVente {
 		return msgErreur;
 	}
 
+
+
+
+
+	private static void savePhoto(HttpServletRequest request) throws IOException, ServletException {
+		if(request.getParameter("file" ) != null) {
+			// gets absolute path of the web application
+		    String appPath = request.getServletContext().getRealPath("");
+		    // constructs path of the directory to save uploaded file
+		    String savePath = appPath + File.separator + "imageUpload";
+		     
+		    // creates the save directory if it does not exists
+		    File fileSaveDir = new File(savePath);
+		    if (!fileSaveDir.exists()) {
+		        fileSaveDir.mkdir();
+		    }
+		     
+		    for (Part part : request.getParts()) {
+		        String fileName = extractFileName(part);
+		        // refines the fileName in case it is an absolute path
+		        fileName = new File(fileName).getName();
+		        part.write(savePath + File.separator + fileName);
+		    }
+		    request.setAttribute("message", "Upload has been done successfully!");
+		}
+	}
+
+	 /**
+     * Extracts file name from HTTP header content-disposition
+     */
+    private static String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length()-1);
+            }
+        }
+        return "";
+    }
 
 
 

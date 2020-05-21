@@ -15,11 +15,9 @@
 	<br/>
 	<div class="container">
 		<div class="row">
-			<c:if test="${!empty utilisateur.pseudo }">
-				<div class="col-12 col-lg-3 text-right d-lg-none">
-					<p class="m-0">${utilisateur.pseudo} est connecté</p>
-				</div>
-			</c:if>
+			<div class="col-12 col-lg-12 text-center">
+				<p class="text-danger">${erreur }</p>
+			</div>
 		</div>
 
 		<form action="<%=request.getContextPath()%>/ServletListeEncheres">

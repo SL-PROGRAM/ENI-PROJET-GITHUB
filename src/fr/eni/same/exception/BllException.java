@@ -1,5 +1,7 @@
 package fr.eni.same.exception;
 
+import fr.eni.same.helpers.FonctionGenerique;
+
 /**
  * 
  * @author sl
@@ -25,7 +27,8 @@ public class BllException extends Exception {
 	}
 
 	public BllException(String message) {
-		super(message);
+		FonctionGenerique.gestionErreur(message);
+		
 		// TODO Auto-generated constructor stub
 	}
 
