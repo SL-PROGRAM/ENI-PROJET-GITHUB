@@ -81,7 +81,7 @@ public class EnchereDAOJDBCImpl implements EnchereDAO {
 				pstmt.setInt(2, t.getUtilisateurEnchere().getNoUtilisateur());
 				pstmt.setInt(3, t.getVenteEnchere().getNoVente());
 				pstmt.executeUpdate();
-	//			System.out.println("Update réalisée sur l'enchere : " + t.toString());
+				System.out.println("Update réalisée sur l'enchere : " + t.toString());
 			}		
 		} catch (SQLException e) {
 			throw new DALException("Erreur update");
