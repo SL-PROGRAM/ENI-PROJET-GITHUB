@@ -195,18 +195,20 @@ public class ServletListeEncheres extends HttpServlet {
 			for (int i = 0; i < listeFinale.size(); i++) {
 				System.out.println(listeFinale.get(i).toString());
 			}
-			request.setAttribute("listeVentes", listeFinale);
+			
+			
 		} else {
 			try {
-				System.out.println("JE SUIS DANS AUTRES ENCHERES");
+				System.out.println("JE SUIS DANS AUTRES ENCHERES SANS CONNECTION");
 				//listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
-				List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
-				set.addAll(listeVentes);
+				listeFinale = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
+				set.addAll(listeFinale);
 			} catch (BllException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		request.setAttribute("listeVentes", listeFinale);
 		
 		List<Categorie> listeCategories;
 		try {
