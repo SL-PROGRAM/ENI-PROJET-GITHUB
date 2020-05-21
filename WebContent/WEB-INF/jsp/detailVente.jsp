@@ -122,7 +122,7 @@
 							
 							<div class="col-4 col-lg-4">
 								<a class="btn btn-primary btn-block" role="button" href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
-									Contacter ${vente.utilisateurAcheteur }</a>
+									Contacter ${vente.utilisateurAcheteur.pseudo }</a>
 							</div>
 							<!-- Redirige vers ServletListeEnchere -->
 							<div class="col-4 col-lg-4">
