@@ -76,11 +76,13 @@ public class ServletDetailVente extends HttpServlet {
 							&& vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
 						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/enchereGagnee.jsp");
 					rd.forward(request, response);
+					}else {
+						String msgErreur = "Cette vente est terminée, vous n'êtes pas le grand gagnant désolé";
+						request.setAttribute("erreur", msgErreur);
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+						rd.forward(request, response);
 					}
-					String msgErreur = "Cette vente est terminée, vous n'êtes pas le grand gagnant désolé";
-					request.setAttribute("erreur", msgErreur);
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
-					rd.forward(request, response);
+					
 				}
 		
 			else if(vente.getUtilisateurVendeur().getNoUtilisateur()==(utilisateur).getNoUtilisateur()) {
