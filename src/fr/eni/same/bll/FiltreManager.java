@@ -87,7 +87,7 @@ public class FiltreManager {
 		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 		for (int i = 0; i < listeVentes.size(); i++) {
-			if (listeVentes.get(i).getUtilisateurAcheteur() != null) {
+			if (listeVentes.get(i).getUtilisateurAcheteur() != null && utilisateurConnect != null) {
 				if (listeVentes.get(i).getUtilisateurAcheteur().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()) {
 					listeMesVentesEnCours.add(listeVentes.get(i));
 				}
