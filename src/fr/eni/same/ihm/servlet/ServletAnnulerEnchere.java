@@ -47,7 +47,7 @@ public class ServletAnnulerEnchere extends HttpServlet {
 				}
 			}
 			if(enchereToDelete == null) {
-				msgErreur += "Vous n'avez pas fait d'enchère sur se produit";
+				msgErreur += "Vous n'avez pas fait d'enchère sur ce produit";
 			}else {
 				if(vente.getUtilisateurAcheteur().getNoUtilisateur() == enchereToDelete.getUtilisateurEnchere().getNoUtilisateur()) {
 					int prixDeVente = vente.getPrixVente();

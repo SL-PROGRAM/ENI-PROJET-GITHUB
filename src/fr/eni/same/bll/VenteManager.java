@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Enchere;
+import fr.eni.same.bo.Retrait;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
@@ -36,7 +37,7 @@ public class VenteManager  {
     	if(listVentes == null) {
     		try {
 				listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
-				listVentes = setVenteUtilisateursAcheteurs();
+				listVentes = getUtilisateursAcheteurs();
 			} catch (DALException e) {
 				throw new BllException("selectAll");
 			}
@@ -125,13 +126,19 @@ public class VenteManager  {
 	}
 
 	
-	public void delete(Vente t) throws BllException {
+	public String delete(Vente t) throws BllException {
 		String msgErreur = controleDelete(t);
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
 		else {
 			try {
+				//1 - supprimer le Retrait
+				supprimerRetraitLier(t);				
+				//2 - annuler les encheres
+				supprimerEnchereLier(t);
+
+				//3 - supprimer la vente
 				DALFactory.getVenteDAOJdbcImpl().delete(t);
 				for (int i = 0; i < listVentes.size(); i++) {
 					if(listVentes.get(i).getNoVente() == t.getNoVente()) {
@@ -143,9 +150,41 @@ public class VenteManager  {
 				throw new BllException("Impossible de supprimer en base de donnée la vente");
 			}
 		}
-		
+		return msgErreur;
 		
 	}
+	
+	private void supprimerEnchereLier(Vente vente) throws BllException {
+		List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
+		List<Enchere> listEncheresToDelete = new ArrayList<Enchere>();
+		
+		for (Enchere enchere : listEncheres) {
+			if(enchere.getVenteEnchere().getNoVente() == vente.getNoVente()) {
+				listEncheresToDelete.add(enchere);
+			}
+		}
+		for (Enchere enchere : listEncheresToDelete) {
+			Utilisateur encherisseur = enchere.getUtilisateurEnchere();
+            int prixDeVente = vente.getPrixVente();
+            int crditActuelEncherisseur = encherisseur.getCredit();
+            encherisseur.setCredit(prixDeVente + crditActuelEncherisseur);
+			EnchereManager.getEnchereManager().delete(enchere);
+		}
+	}
+
+	private void supprimerRetraitLier(Vente vente) throws BllException {
+		List<Retrait> listRetrait = RetraitManager.getRetraitManager().selectAll();
+		Retrait retraitToDelete = null;
+		
+		for (Retrait retrait : listRetrait) {
+			if (retrait.getVente().getNoVente() == vente.getNoVente()) {
+		    	retraitToDelete = retrait;
+		    }
+		}
+		
+		RetraitManager.getRetraitManager().delete(retraitToDelete);
+	}
+
 
 	
 	public Vente select(int id) throws BllException {
@@ -171,8 +210,9 @@ public class VenteManager  {
 		return listVentes;
 	}
 	
-	public List<Vente> setVenteUtilisateursAcheteurs(){
+	public List<Vente> getUtilisateursAcheteurs(){
 		try {
+			List<Utilisateur> listeAcheteurs = UtilisateurManager.getUtilisateurManager().selectAll();
 			List<Enchere> listeEncheres = EnchereManager.getEnchereManager().selectAll();
 			for(int i = 0; i < listeEncheres.size(); i++) {
 				for(int j = 0; j < listVentes.size(); j++) {
@@ -185,6 +225,9 @@ public class VenteManager  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
 		return listVentes;
 	}
 	public List<Vente> selectByMotCle(String motCle) throws BllException{
@@ -297,7 +340,7 @@ public class VenteManager  {
 	public String prixInitialPositif(int prixInitial) throws BllException {
 		String msgErreur = "";
 		if(prixInitial < 0) {
-			msgErreur = ("Le prix de vente minium est de 0");
+			msgErreur = ("Le prix de vente minimum est de 0");
 		}
 		return msgErreur;
 		
