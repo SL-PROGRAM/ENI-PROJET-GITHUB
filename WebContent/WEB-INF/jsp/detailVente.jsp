@@ -43,7 +43,7 @@
 				</div>
 			<!-- ------------------------------------------------- -->	
 				<div class="col-12 col-lg-12 text-center">
-					<img alt="Image descriptve du produit en vente" src="././img/no-stopping.png" />
+					<img alt="Image descriptve du produit en vente" src="././img/thSansFond.png" width="200" height="200" />
 				</div>
 				<br/>
 			</div>
