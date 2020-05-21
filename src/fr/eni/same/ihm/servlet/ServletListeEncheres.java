@@ -162,25 +162,25 @@ public class ServletListeEncheres extends HttpServlet {
 			}
 			
 			
-			if (request.getParameter("selectCategorie") != null) {
-				int noCategorie = Integer.parseInt(request.getParameter("selectCategorie"));
-				Categorie categorie;
-				try {
-					categorie = CategorieManager.getCategorieManager().select(noCategorie);
-					listeVentesByCategorie = VenteManager.getVenteManager().selectByCategorie(categorie);
-					
-					for (int j = 0; j < listeVentesByCategorie.size(); j++) {
-						for (int j2 = 0; j2 < listeFinale.size(); j2++) {
-							if (listeVentesByCategorie.get(j).getCategorie().getNoCategorie() != listeFinale.get(j2).getCategorie().getNoCategorie()) {
-								listeFinale.remove(j2);
-							}
-						}
-					}
-				} catch (BllException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+//			if (request.getParameter("selectCategorie") != null) {
+//				int noCategorie = Integer.parseInt(request.getParameter("selectCategorie"));
+//				Categorie categorie;
+//				try {
+//					categorie = CategorieManager.getCategorieManager().select(noCategorie);
+//					listeVentesByCategorie = VenteManager.getVenteManager().selectByCategorie(categorie);
+//					
+//					for (int j = 0; j < listeVentesByCategorie.size(); j++) {
+//						for (int j2 = 0; j2 < listeFinale.size(); j2++) {
+//							if (listeVentesByCategorie.get(j).getCategorie().getNoCategorie() != listeFinale.get(j2).getCategorie().getNoCategorie()) {
+//								listeFinale.remove(j2);
+//							}
+//						}
+//					}
+//				} catch (BllException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
 			
 			
 			
