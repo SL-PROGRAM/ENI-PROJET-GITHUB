@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.exception.BllException;
+import fr.eni.same.helpers.FonctionGenerique;
 
 /**
  * Servlet implementation class ServletInformationsAcheteur
@@ -32,14 +33,18 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("erreur", "");
+		String msgErreur = "";
 		if (request.getParameter("noUtilisateurAcheteur") != null) {
 			int noUtilisateurAcheteur = Integer.parseInt(request.getParameter("noUtilisateurAcheteur"));
 			try {
 				Utilisateur utilisateurAcheteur = UtilisateurManager.getUtilisateurManager().select(noUtilisateurAcheteur);
 				request.setAttribute("utilisateurAcheteur", utilisateurAcheteur);
 			} catch (BllException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				msgErreur += FonctionGenerique.gestionErreur("");
+			}finally {
+				request.setAttribute("erreur", msgErreur);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.jsp");
+				rd.forward(request, response);
 			}
 			
 		} else {
@@ -48,13 +53,13 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 				Utilisateur utilisateurVendeur = UtilisateurManager.getUtilisateurManager().select(noUtilisateurVendeur);
 				request.setAttribute("utilisateurVendeur", utilisateurVendeur);
 			} catch (BllException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				msgErreur += FonctionGenerique.gestionErreur("");
+			}finally {
+				request.setAttribute("erreur", msgErreur);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.jsp");
+				rd.forward(request, response);
 			}
-		}
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.jsp");
-		rd.forward(request, response);
+		}	
 	}
 
 	/**
