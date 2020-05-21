@@ -80,8 +80,8 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 						System.out.println("Je suis dans l'insert utilisateur");
 						UtilisateurManager.getUtilisateurManager().insert(utilisateur);
 					}
-//					RequestDispatcher rd = request.getRequestDispatcher("/ServletConnexion");
-//					rd.forward(request, response);
+					RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/connexion.jsp");
+					rd.forward(request, response);
 				} catch (BllException e) {
 					e.printStackTrace();
 				}
