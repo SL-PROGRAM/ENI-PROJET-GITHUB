@@ -52,59 +52,27 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)	throws ServletException, IOException {
-		request.setAttribute("erreur", "");
-		String msgErreur = "";
-		String pseudo = request.getParameter("txtPseudo");
-		String nom = request.getParameter("txtNom");
-		String prenom = request.getParameter("txtPrenom");
-		String email = request.getParameter("txtEmail");
-		String telephone = request.getParameter("txtTelephone");
-		String rue = request.getParameter("txtRue");
-		String codePostal = request.getParameter("numCodePostal");
-		String ville = request.getParameter("txtVille");
-		boolean estDeconnecte = false;
-		
-		if (request.getParameter("suppressionCompte") != null) {
-			if (request.getSession().getAttribute("utilisateur") != null) {
-				try {
-					UtilisateurManager.getUtilisateurManager().delete(((Utilisateur) (request.getSession().getAttribute("utilisateur"))));
-					request.getSession().invalidate();
-					estDeconnecte = true;
-					
-				} catch (BllException e) {
-					msgErreur += FonctionGenerique.gestionErreur("");
-				} finally {
-					request.setAttribute("erreur", msgErreur);
-					RequestDispatcher rd = request.getRequestDispatcher("/ServletListeEncheres");
-					rd.forward(request, response);
-					
-				}
-			}
-		}
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+
+		boolean estDeconnecte = getIsUserDeleted(request);
+		//Si oui, rediriger vers ServletListeEncheres
 		if (estDeconnecte) {
+			RequestDispatcher rd = request.getRequestDispatcher("/ServletListeEncheres");
+			rd.forward(request, response);
 			return;
 		}
-		//motDePasse = nouveau mot de passe lorsqu'un utilisateur connecter veut faire une update
+		
+		//motDePasse = nouveau mot de passe lorsqu'un utilisateur connecté veut faire une update
 		String motDePasse = request.getParameter("txtMotDePasse");
 		String confirmationMotDePasse = request.getParameter("txtConfirmation");
 		String erreurSaisie = "";
-
 		if (request.getSession().getAttribute("utilisateur") == null) {
-
 			if (motDePasse.equals(confirmationMotDePasse)) {
 				Utilisateur utilisateur = new Utilisateur();
-				utilisateur.setPseudo(pseudo);
-				utilisateur.setNom(nom);
-				utilisateur.setPrenom(prenom);
-				utilisateur.setEmail(email);
-				utilisateur.setTelephone(telephone);
-				utilisateur.setRue(rue);
-				utilisateur.setCodePostal(codePostal);
-				utilisateur.setVille(ville);
+				setUtilisateurInfos(utilisateur, request);
 				utilisateur.setMotDePasse(motDePasse);
-
 				try {
 					erreurSaisie = UtilisateurManager.getUtilisateurManager().controleUpdateAndInsert(utilisateur);
 					System.out.println("Je suis après le controlle");
@@ -115,7 +83,6 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 					}
 //					RequestDispatcher rd = request.getRequestDispatcher("/ServletConnexion");
 //					rd.forward(request, response);
-
 				} catch (BllException e) {
 					
 					msgErreur += FonctionGenerique.gestionErreur("");
@@ -123,46 +90,33 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 					RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
 					rd.forward(request, response);
 				}
-
 			} else {
 				erreurSaisie += "Les mots de passe ne correspondent pas !";
 				request.setAttribute("erreurSaisie", erreurSaisie);
-
 			}
-
 		} else {
 			String ancienMotDePasse = request.getParameter("txtAncienMotDePasse");
 			String confirmAncienMotDePasse = request.getParameter("txtConfirmAncienMotDePasse");
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-			
-			
-				if (ancienMotDePasse.equals(confirmAncienMotDePasse) && ancienMotDePasse != null && ancienMotDePasse.equals(utilisateur.getMotDePasse())) {
-					utilisateur.setPseudo(pseudo);
-					utilisateur.setNom(nom);
-					utilisateur.setPrenom(prenom);
-					utilisateur.setEmail(email);
-					utilisateur.setTelephone(telephone);
-					utilisateur.setRue(rue);
-					utilisateur.setCodePostal(codePostal);
-					utilisateur.setVille(ville);
+				if (ancienMotDePasse.equals(confirmAncienMotDePasse) 
+						&& ancienMotDePasse != null 
+						&& ancienMotDePasse.equals(utilisateur.getMotDePasse())) {
+					setUtilisateurInfos(utilisateur, request);
 					if (motDePasse.equals(confirmationMotDePasse)) {
 						utilisateur.setMotDePasse(motDePasse);
 					} else {
 						System.out.println("Le mot de passe ne correspondait pas. J'ai donc update avec l'ancien mot de passe");
 						utilisateur.setMotDePasse(ancienMotDePasse);
 					}
-	
 					try {
 						erreurSaisie = UtilisateurManager.getUtilisateurManager().controleUpdateAndInsert(utilisateur);
 						if (erreurSaisie.equals("")) {
-							System.out.println("Je suis dans l'update utilisateur");
+//							System.out.println("Je suis dans l'update utilisateur");
 							UtilisateurManager.getUtilisateurManager().update(utilisateur);
 							request.getSession().setAttribute("utilisateur", utilisateur);
 						}
 					} catch (BllException e) {
-						msgErreur += FonctionGenerique.gestionErreur("");
-						RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
-						rd.forward(request, response);
+						e.printStackTrace();
 					}
 				} else {
 					erreurSaisie += "Les mots de passe ne correspondent pas !";
@@ -175,13 +129,52 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");
 		rd.forward(request, response);
 
-
+	}
+	
+	/**
+	 * Méthode permettant l'update ou la création d'un nouvel utilisateur
+	 * @param utilisateur l'utilisateur à mettre à jour ou un nouvel utilisateur
+	 * @param request 
+	 */
+	private void setUtilisateurInfos(Utilisateur utilisateur, HttpServletRequest request) {
+		String pseudo = request.getParameter("txtPseudo");
+		String nom = request.getParameter("txtNom");
+		String prenom = request.getParameter("txtPrenom");
+		String email = request.getParameter("txtEmail");
+		String telephone = request.getParameter("txtTelephone");
+		String rue = request.getParameter("txtRue");
+		String codePostal = request.getParameter("numCodePostal");
+		String ville = request.getParameter("txtVille");
 		
-		
-		
-		
-		
-		
+		utilisateur.setPseudo(pseudo);
+		utilisateur.setNom(nom);
+		utilisateur.setPrenom(prenom);
+		utilisateur.setEmail(email);
+		utilisateur.setTelephone(telephone);
+		utilisateur.setRue(rue);
+		utilisateur.setCodePostal(codePostal);
+		utilisateur.setVille(ville);
+	}
+	
+	/**
+	 * Vérifie que l'utilisateur a cliqué sur "Supprimer mon compte" ou non
+	 * @Return true : si l'utilisateur a cliqué sur le bouton
+	 * @Return false : si l'utilisateur n'a pas cliqué sur le bouton
+	 */
+	private boolean getIsUserDeleted(HttpServletRequest request)
+			throws ServletException, IOException {
+		if (request.getParameter("suppressionCompte") != null) {
+			if (request.getSession().getAttribute("utilisateur") != null) {
+				try {
+					UtilisateurManager.getUtilisateurManager().delete(((Utilisateur) (request.getSession().getAttribute("utilisateur"))));
+					request.getSession().invalidate();
+					return true;
+				} catch (BllException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
 	}
 
 }

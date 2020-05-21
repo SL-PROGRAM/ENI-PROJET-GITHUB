@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.FiltreManager;
 import fr.eni.same.bll.UtilisateurManager;
+import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
@@ -48,6 +49,7 @@ public class ServletListeEncheres extends HttpServlet {
 		}
 		
 		List<List<Vente>> listes = new ArrayList<List<Vente>>();
+		List<Vente> listeVentesByMotCle = null;
 		Set set = new HashSet();
 		
 		if (request.getParameter("supprimmerCompteUtilisateur") != null) {
@@ -62,6 +64,15 @@ public class ServletListeEncheres extends HttpServlet {
 				}
 			}
 		}
+		
+//		if (request.getParameter("txtMotCle")!=null) {
+//			try {
+//				listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
+//			} catch (BllException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		}
 		
 		
 		if (request.getParameterValues("filtres")!=null) {
@@ -128,6 +139,12 @@ public class ServletListeEncheres extends HttpServlet {
 				}
 				
 			}
+			
+			/*******************************************************************************************************************************/
+						//SELECT PAR CATEGORIE + SELECT PAR MOT CLE
+			/*******************************************************************************************************************************/
+			
+			//VenteManager.getVenteManager().s
 			
 			List<Vente> listeFinale = new ArrayList<Vente>(set);
 				
