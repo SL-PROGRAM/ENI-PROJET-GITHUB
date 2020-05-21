@@ -36,7 +36,7 @@ public class VenteManager  {
     	if(listVentes == null) {
     		try {
 				listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
-				listVentes = setVenteUtilisateursAcheteurs();
+				listVentes = getUtilisateursAcheteurs();
 			} catch (DALException e) {
 				throw new BllException("selectAll");
 			}
@@ -171,8 +171,9 @@ public class VenteManager  {
 		return listVentes;
 	}
 	
-	public List<Vente> setVenteUtilisateursAcheteurs(){
+	public List<Vente> getUtilisateursAcheteurs(){
 		try {
+			List<Utilisateur> listeAcheteurs = UtilisateurManager.getUtilisateurManager().selectAll();
 			List<Enchere> listeEncheres = EnchereManager.getEnchereManager().selectAll();
 			for(int i = 0; i < listeEncheres.size(); i++) {
 				for(int j = 0; j < listVentes.size(); j++) {
@@ -185,6 +186,9 @@ public class VenteManager  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
 		return listVentes;
 	}
 	public List<Vente> selectByMotCle(String motCle) throws BllException{
