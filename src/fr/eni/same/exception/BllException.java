@@ -27,8 +27,8 @@ public class BllException extends Exception {
 	}
 
 	public BllException(String message) {
-		FonctionGenerique.gestionErreur(message);
-		
+//		FonctionGenerique.gestionErreur(message);
+		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
