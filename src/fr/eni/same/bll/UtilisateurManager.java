@@ -1,6 +1,8 @@
 package fr.eni.same.bll;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
 import fr.eni.same.exception.DALException;
@@ -145,8 +149,14 @@ public class UtilisateurManager {
 	
 	
 	
-	public void delete(Utilisateur t) throws BllException {
+	public String delete(Utilisateur t) throws BllException {
 		String msgErreur = controleDelete(t);
+		
+		msgErreur += supprimerVenteLiee(t);
+		msgErreur += suppressionAchatLiee(t);
+		supprimerEnchereLier(t);
+		
+		
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
@@ -161,6 +171,8 @@ public class UtilisateurManager {
 		} catch (DALException e) {
 			throw new BllException("Impossible de supprimer en base de donnée l'utilisateur");
 		}
+		
+		return msgErreur;
 	}
 
 
@@ -236,7 +248,52 @@ public class UtilisateurManager {
 	// * Implementation des méthodes de gestion de compte										 * //
 	//*********************************************************************************************//
 
+
+	private String supprimerVenteLiee(Utilisateur utilisateur) throws BllException {
+		String msgErreur = "";
+		List<Vente> listVentesToDelete = new ArrayList<Vente>();
+		List<Vente> listVentes = VenteManager.getVenteManager().selectAll();
+		for (Vente vente : listVentes) {
+			if(vente.getUtilisateurVendeur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
+				listVentesToDelete.add(vente);
+			}
+		}
+		for (Vente vente : listVentesToDelete) {
+			msgErreur = VenteManager.getVenteManager().delete(vente);
+		}
+		return msgErreur;
+	}
 	
+	private String suppressionAchatLiee(Utilisateur utilisateur) throws BllException {
+		String msgErreur = "";
+		List<Vente> listVentesToDelete = new ArrayList<Vente>();
+		List<Vente> listVentes = VenteManager.getVenteManager().selectAll();
+		Timestamp now =  new Timestamp(System.currentTimeMillis());
+		for (Vente vente : listVentes) {
+			if(vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()
+					&& vente.getDateFinEncheres().before(now)) {
+				listVentesToDelete.add(vente);
+			}
+		}
+		for (Vente vente : listVentesToDelete) {
+			msgErreur = VenteManager.getVenteManager().delete(vente);
+		}
+		return msgErreur;
+	}
+	
+	private void supprimerEnchereLier(Utilisateur utilisateur) throws BllException {
+		List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
+		List<Enchere> listEncheresToDelete = new ArrayList<Enchere>();
+		
+		for (Enchere enchere : listEncheres) {
+			if(enchere.getUtilisateurEnchere().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
+				listEncheresToDelete.add(enchere);
+			}
+		}
+		for (Enchere enchere : listEncheresToDelete) {
+			EnchereManager.getEnchereManager().delete(enchere);
+		}
+	}
 	
 	
 	
