@@ -55,7 +55,7 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-
+		String msgErreur = "";
 		boolean estDeconnecte = getIsUserDeleted(request);
 		//Si oui, rediriger vers ServletListeEncheres
 		if (estDeconnecte) {
