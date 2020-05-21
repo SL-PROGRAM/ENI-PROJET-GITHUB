@@ -52,6 +52,7 @@ public class ServletListeEncheres extends HttpServlet {
 		
 		List<List<Vente>> listes = new ArrayList<List<Vente>>();
 		List<Vente> listeVentesByMotCle = null;
+		List<Vente> listeFinale = new ArrayList<Vente>();
 		Set set = new HashSet();
 		
 		if (request.getParameter("supprimmerCompteUtilisateur") != null) {
@@ -67,14 +68,7 @@ public class ServletListeEncheres extends HttpServlet {
 			}
 		}
 		
-//		if (request.getParameter("txtMotCle")!=null) {
-//			try {
-//				listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
-//			} catch (BllException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
+		
 		
 		
 		if (request.getParameterValues("filtres")!=null) {
@@ -142,13 +136,27 @@ public class ServletListeEncheres extends HttpServlet {
 				
 			}
 			
+			List<Vente> listeFiltres = new ArrayList<Vente>(set);
 			/*******************************************************************************************************************************/
 						//SELECT PAR CATEGORIE + SELECT PAR MOT CLE
 			/*******************************************************************************************************************************/
 			
-			//VenteManager.getVenteManager().s
+			if (request.getParameter("txtMotCle")!=null) {
+				try {
+					listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
+				} catch (BllException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 			
-			List<Vente> listeFinale = new ArrayList<Vente>(set);
+			for (Vente vente : listeFiltres) {
+				for (Vente vente2 : listeVentesByMotCle) {
+					if (vente == vente2) {
+						listeFinale.add(vente);
+					}
+				}
+			}
 				
 			System.out.println("COUCOU");
 			for (int i = 0; i < listeFinale.size(); i++) {
