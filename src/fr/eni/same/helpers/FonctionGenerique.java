@@ -14,19 +14,19 @@ import java.util.Date;
 public class FonctionGenerique {
 
 	public static boolean isLongueurMax(String stringAtest, int longueurMax) {
-		boolean isUnique = false;
+		boolean resultat = false;
 		if(stringAtest.length() <= longueurMax) {
-			isUnique = true;
+			resultat = true;
 		}
-		return isUnique;
+		return resultat;
 	}
 
 	public static boolean isLongueurMin(String stringAtest, int longueurMin) {
-		boolean isUnique = false;
+		boolean resultat = false;
 		if(stringAtest.length() >= longueurMin) {
-			isUnique = true;
+			resultat = true;
 		}
-		return isUnique;
+		return resultat;
 	}
 	
 	public static Timestamp dateToTimestamp(String dateFinEnchere) {
