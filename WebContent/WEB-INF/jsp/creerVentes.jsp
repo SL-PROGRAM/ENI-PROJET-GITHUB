@@ -27,7 +27,7 @@
 		</div><!-- fin div row -->
 		
 		
-	<form  action="ServletCreerVente" method="post">
+	<form  action="ServletCreerVente" method="post" enctype="multipart/form-data">
 		<div class="row">
 			<!-- image caché quand size xs -->
 			<div class="col-12 col-lg-4 d-none d-sm-block">
