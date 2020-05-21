@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.sun.tools.classfile.Annotation.element_value;
+
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.FiltreManager;
 import fr.eni.same.bll.UtilisateurManager;
@@ -52,10 +55,10 @@ public class ServletListeEncheres extends HttpServlet {
 			System.out.println(utilisateur.toString());
 		}
 
-		List<List<Vente>> listes = new ArrayList<List<Vente>>();
 		List<Vente> listeVentesByMotCle = null;
 		List<Vente> listeVentesByCategorie = null;
 		List<Vente> listeFinale = new ArrayList<Vente>();
+		String[] valeurs = null;
 		Set set = new HashSet();
 
 		if (request.getParameter("supprimmerCompteUtilisateur") != null) {
@@ -73,7 +76,7 @@ public class ServletListeEncheres extends HttpServlet {
 		}
 
 		if (request.getParameterValues("filtres") != null) {
-			String[] valeurs = request.getParameterValues("filtres");
+			valeurs = request.getParameterValues("filtres");
 			for (int i = 0; i < valeurs.length; i++) {
 				if (valeurs[i].equals("mesVentes")) {
 					try {
@@ -146,56 +149,7 @@ public class ServletListeEncheres extends HttpServlet {
 
 			}
 
-			List<Vente> listeFiltres = new ArrayList<Vente>(set);
-			/*******************************************************************************************************************************/
-			// SELECT PAR CATEGORIE + SELECT PAR MOT CLE
-			/*******************************************************************************************************************************/
-
-			if (request.getParameter("txtMotCle") != null) {
-				try {
-					listeVentesByMotCle = VenteManager.getVenteManager()
-							.selectByMotCle(request.getParameter("txtMotCle"));
-					for (Vente vente : listeFiltres) {
-						for (Vente vente2 : listeVentesByMotCle) {
-							if (vente == vente2) {
-								listeFinale.add(vente);
-							}
-						}
-					}
-				} catch (BllException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-
-			if (request.getParameter("selectCategorie") != "") {
-				int noCategorie = Integer.parseInt(request.getParameter("selectCategorie"));
-				Categorie categorie;
-				try {
-					categorie = CategorieManager.getCategorieManager().select(noCategorie);
-					listeVentesByCategorie = VenteManager.getVenteManager().selectByCategorie(categorie);
-					if (!listeVentesByCategorie.isEmpty()) {
-						for (int j = 0; j < listeVentesByCategorie.size(); j++) {
-							for (int j2 = 0; j2 < listeFinale.size(); j2++) {
-								if (listeVentesByCategorie.get(j).getCategorie().getNoCategorie() != listeFinale.get(j2)
-										.getCategorie().getNoCategorie()) {
-									listeFinale.remove(j2);
-								}
-							}
-						}
-					} else {
-						listeFinale.clear();
-					}
-				} catch (BllException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			System.out.println("COUCOU");
-			for (int i = 0; i < listeFinale.size(); i++) {
-				System.out.println(listeFinale.get(i).toString());
-			}
+			listeFinale = new ArrayList<Vente>(set);
 
 		} else {
 			// Gestion affichage listeEnchere lors de la premiere arrivée sur la page
@@ -207,7 +161,43 @@ public class ServletListeEncheres extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
+		
+		/*******************************************************************************************************************************/
+		// SELECT PAR CATEGORIE + SELECT PAR MOT CLE
+		/*******************************************************************************************************************************/
+
+		
+		if (request.getParameter("selectCategorie") == null) {
+			System.out.println("JE SUIS SELECT CATEGORIE = NULL");
+		} else {
+			List<Vente> nouvelleListe = new ArrayList<Vente>();
+			for (int i = 0; i < listeFinale.size(); i++) {
+				if (listeFinale.get(i).getCategorie().getLibelle().equals((request.getParameter("selectCategorie"))) 
+						|| request.getParameter("selectCategorie").equals("Toutes")) {
+					nouvelleListe.add(listeFinale.get(i));
+				}
+			}
+			listeFinale = nouvelleListe;
+				
+		}
+		
+		if (request.getParameter("txtMotCle") == null) {
+			System.out.println("MOT CLE NULL");
+		} else {
+			List<Vente> nouvelleListe = new ArrayList<Vente>();
+			for (int i = 0; i < listeFinale.size(); i++) {
+				try {
+					nouvelleListe = VenteManager.getVenteManager().selectByMotCle(listeFinale, request.getParameter("txtMotCle"));
+				} catch (BllException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			listeFinale = nouvelleListe;
+		}
+		
 			request.setAttribute("listeVentes", listeFinale);
 
 			List<Categorie> listeCategories;
