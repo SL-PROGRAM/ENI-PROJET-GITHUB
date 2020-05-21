@@ -43,16 +43,18 @@ public class FiltreManager {
 		return instance;
 	}
 
-	public List<Vente> filtreMesVentesPubliées(HttpSession session, Categorie categorie) throws BllException {
+	public List<Vente> filtreMesVentesPubliees(HttpSession session, Categorie categorie) throws BllException {
 		List<Vente> mesVentesPubliées = new ArrayList<Vente>();
 		List<Vente> allVentes = VenteManager.getVenteManager().selectAll();
 		Utilisateur utilisateurConnect = (Utilisateur) session.getAttribute("utilisateur");
 		for (int i = 0; i < allVentes.size(); i++) {
-			if (allVentes.get(i).getUtilisateurVendeur().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()) {
-				if (categorie == null) {
-					mesVentesPubliées.add(allVentes.get(i));
-				} else if (allVentes.get(i).getCategorie() == categorie) {
-					mesVentesPubliées.add(allVentes.get(i));
+			if (utilisateurConnect != null) {
+				if (allVentes.get(i).getUtilisateurVendeur().getNoUtilisateur() == utilisateurConnect.getNoUtilisateur()) {
+					if (categorie == null) {
+						mesVentesPubliées.add(allVentes.get(i));
+					} else if (allVentes.get(i).getCategorie() == categorie) {
+						mesVentesPubliées.add(allVentes.get(i));
+					}
 				}
 			}
 		}
@@ -61,8 +63,8 @@ public class FiltreManager {
 		return mesVentesPubliées;
 	}
 
-	public List<Vente> filtreMesVentesPubliées(HttpSession session) throws BllException {
-		List<Vente> mesVentesPubliées = filtreMesVentesPubliées(session, null);
+	public List<Vente> filtreMesVentesPubliees(HttpSession session) throws BllException {
+		List<Vente> mesVentesPubliées = filtreMesVentesPubliees(session, null);
 		return mesVentesPubliées;
 	}
 
