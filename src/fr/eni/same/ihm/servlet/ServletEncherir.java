@@ -64,8 +64,8 @@ public class ServletEncherir extends HttpServlet {
 		
 		//Récupère l'utilisateur qui essaye d'enchérir
 		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-//		System.out.println("Utilisateur connecté : " + utilisateur.getPseudo());
-
+		System.out.println("Utilisateur connecté : " + utilisateur.getPseudo());
+		
 		if(request.getSession().getAttribute("utilisateur") == null) {
 			System.out.println("Vous n'êtes pas connecté !");
 			return;
@@ -74,7 +74,7 @@ public class ServletEncherir extends HttpServlet {
 		Vente venteConcernee = null;
 		//Récupère le numéro de la vente concernée
 		int noVente = Integer.parseInt(request.getParameter("venteConcernee"));
-//		System.out.println("Vente concernée : " + noVente);
+		System.out.println("Vente concernée : " + noVente);
 		try {
 				venteConcernee = VenteManager.getVenteManager().select(noVente);
 		} catch (BllException e) {
@@ -88,7 +88,7 @@ public class ServletEncherir extends HttpServlet {
 		int propositionPrixInt = Integer.parseInt(propositionPrix);
 		
 		
-		
+		if(request.getParameter("noUtilisateurMeilleurOffre") == null) {System.out.println("NULL");}
 		//Récupère l'utilisateur qui vend l'article
 		Utilisateur utilisateurVendeur = null;
 		int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateurMeilleurOffre"));
@@ -106,6 +106,8 @@ public class ServletEncherir extends HttpServlet {
 		//TODO
 		if(utilisateur.getNoUtilisateur() == utilisateurVendeur.getNoUtilisateur()) {
 			System.out.println("Vous ne pouvez pas enchérir sur votre propre enchère");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+			rd.forward(request, response);
 			return;
 		}
 		if(utilisateur.getCredit() > propositionPrixInt) {
