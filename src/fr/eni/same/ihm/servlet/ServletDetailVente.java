@@ -86,9 +86,17 @@ public class ServletDetailVente extends HttpServlet {
 					}else if(vente.getUtilisateurAcheteur().getNoUtilisateur() != utilisateur.getNoUtilisateur()) {
 							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
 							rd.forward(request, response);
+						}else if (vente.getUtilisateurAcheteur() == null ) {
+							String msgErreur = "personne n a encheri, la vente est annulée";
+							request.setAttribute("erreur", msgErreur);
+							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+							rd.forward(request, response);
+							
 						}
 					
 				}
+				
+			
 		
 			else if(vente.getUtilisateurVendeur().getNoUtilisateur()==(utilisateur).getNoUtilisateur()) {
 					//UtilisateurManager.getUtilisateurManager().verificationSessionActive(request, response, session, "/WEB-INF/jsp/listeEnchere.jsp");
