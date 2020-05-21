@@ -79,8 +79,6 @@ public class ServletListeEncheres extends HttpServlet {
 			for (int i = 0; i < valeurs.length; i++) {
 				if (valeurs[i].equals("mesVentes")) {
 					try {
-						System.out.println("JE SUIS DANS MES VENTES");
-						//listes.add(i, FiltreManager.getFiltreManager().filtreMesVentesPubliées(session));
 						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliées(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
@@ -98,19 +96,19 @@ public class ServletListeEncheres extends HttpServlet {
 //					}
 //				}
 
-//				if (valeurs[i].equals("mesEncheresEnCours")) {
-//					try {
-//						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
-//						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
-//						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
-//						for (Vente v : listeVentes) {
-//							System.out.println(v.toString());
-//						}
-//						set.addAll(listeVentes);
-//					} catch (BllException e) {
-//						e.printStackTrace();
-//					}
-//				}
+				if (valeurs[i].equals("mesEncheresEnCours")) {
+					try {
+						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
+						System.out.println("filtre 1 je suis sortie");
+						for (Vente v : listeVentes) {
+							System.out.println(v.toString());
+						}
+						set.addAll(listeVentes);
+					} catch (BllException e) {
+						e.printStackTrace();
+					}
+				}
 
 				if (valeurs[i].equals("mesAcquisitions")) {
 					try {
@@ -147,40 +145,44 @@ public class ServletListeEncheres extends HttpServlet {
 			if (request.getParameter("txtMotCle")!=null) {
 				try {
 					listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
+					for (Vente vente : listeFiltres) {
+						for (Vente vente2 : listeVentesByMotCle) {
+							if (vente == vente2) {
+								listeFinale.add(vente);
+							}
+						}
+					}
 				} catch (BllException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 			
-			for (Vente vente : listeFiltres) {
-				for (Vente vente2 : listeVentesByMotCle) {
-					if (vente == vente2) {
-						listeFinale.add(vente);
-					}
+			
+			
+		
+			if (request.getParameter("selectCategorie") != "") {
+				int noCategorie = Integer.parseInt(request.getParameter("selectCategorie"));
+				Categorie categorie;
+				try {
+					categorie = CategorieManager.getCategorieManager().select(noCategorie);
+					listeVentesByCategorie = VenteManager.getVenteManager().selectByCategorie(categorie);
+						if (!listeVentesByCategorie.isEmpty()) {
+							for (int j = 0; j < listeVentesByCategorie.size(); j++) {
+								for (int j2 = 0; j2 < listeFinale.size(); j2++) {
+									if (listeVentesByCategorie.get(j).getCategorie().getNoCategorie() != listeFinale.get(j2).getCategorie().getNoCategorie()) {
+										listeFinale.remove(j2);
+									}
+								}
+							}
+						} else {
+							listeFinale.clear();
+						}
+				} catch (BllException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
-			
-			
-//			if (request.getParameter("selectCategorie") != null) {
-//				int noCategorie = Integer.parseInt(request.getParameter("selectCategorie"));
-//				Categorie categorie;
-//				try {
-//					categorie = CategorieManager.getCategorieManager().select(noCategorie);
-//					listeVentesByCategorie = VenteManager.getVenteManager().selectByCategorie(categorie);
-//					
-//					for (int j = 0; j < listeVentesByCategorie.size(); j++) {
-//						for (int j2 = 0; j2 < listeFinale.size(); j2++) {
-//							if (listeVentesByCategorie.get(j).getCategorie().getNoCategorie() != listeFinale.get(j2).getCategorie().getNoCategorie()) {
-//								listeFinale.remove(j2);
-//							}
-//						}
-//					}
-//				} catch (BllException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
 			
 			
 			
@@ -191,18 +193,25 @@ public class ServletListeEncheres extends HttpServlet {
 			for (int i = 0; i < listeFinale.size(); i++) {
 				System.out.println(listeFinale.get(i).toString());
 			}
-			request.setAttribute("listeVentes", listeFinale);
+			
+			
 		} else {
+			//Gestion affichage listeEnchere lors de la premiere arrivée sur la page
+			
 			try {
-				System.out.println("JE SUIS DANS AUTRES ENCHERES");
+				System.out.println("JE SUIS DANS AUTRES ENCHERES SANS CONNECTION OU PREMIERE ARRIVEE SUR CETTE PAGE");
 				//listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
-				List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
-				set.addAll(listeVentes);
+				listeFinale = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
+				for (Vente vente : listeFinale) {
+					System.out.println(vente.toString());
+				}
+				set.addAll(listeFinale);
 			} catch (BllException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		request.setAttribute("listeVentes", listeFinale);
 		
 		List<Categorie> listeCategories;
 		try {

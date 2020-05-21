@@ -206,7 +206,6 @@ public class VenteManager  {
 		List<Vente> listeVentes = VenteManager.getVenteManager().selectAll();
 		for (Vente vente : listeVentes) {
 			if (vente.getCategorie().getNoCategorie() == categorie.getNoCategorie()) {
-				System.out.println(vente.toString());
 				aRetourner.add(vente);
 			}
 		}
