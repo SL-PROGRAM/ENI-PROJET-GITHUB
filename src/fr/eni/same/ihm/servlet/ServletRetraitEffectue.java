@@ -10,9 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.sun.org.apache.xml.internal.serializer.utils.Utils;
 
 import fr.eni.same.bll.EnchereManager;
 import fr.eni.same.bll.RetraitManager;
+import fr.eni.same.bll.UtilisateurManager;
 import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Enchere;
 import fr.eni.same.bo.Retrait;
@@ -27,7 +31,7 @@ import fr.eni.same.exception.BllException;
 public class ServletRetraitEffectue extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-   
+	 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -75,6 +79,11 @@ public class ServletRetraitEffectue extends HttpServlet {
             int prixDeVente = vente.getPrixVente();
             int crditActuelEncherisseur = encherisseur.getCredit();
             encherisseur.setCredit(prixDeVente - crditActuelEncherisseur);
+            UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(encherisseur);
+            // todo crediter le vendeur:
+         //   Utilisateur moi=  
+            
+          
 			EnchereManager.getEnchereManager().delete(enchere);
 		}
 	}
