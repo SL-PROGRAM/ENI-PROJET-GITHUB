@@ -64,8 +64,8 @@ public class ServletEncherir extends HttpServlet {
 		
 		//Récupère l'utilisateur qui essaye d'enchérir
 		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-//		System.out.println("Utilisateur connecté : " + utilisateur.getPseudo());
-
+		System.out.println("Utilisateur connecté : " + utilisateur.getPseudo());
+		
 		if(request.getSession().getAttribute("utilisateur") == null) {
 			System.out.println("Vous n'êtes pas connecté !");
 			return;
@@ -74,7 +74,7 @@ public class ServletEncherir extends HttpServlet {
 		Vente venteConcernee = null;
 		//Récupère le numéro de la vente concernée
 		int noVente = Integer.parseInt(request.getParameter("venteConcernee"));
-//		System.out.println("Vente concernée : " + noVente);
+		System.out.println("Vente concernée : " + noVente);
 		try {
 				venteConcernee = VenteManager.getVenteManager().select(noVente);
 		} catch (BllException e) {
@@ -88,7 +88,7 @@ public class ServletEncherir extends HttpServlet {
 		int propositionPrixInt = Integer.parseInt(propositionPrix);
 		
 		
-		
+		if(request.getParameter("noUtilisateurMeilleurOffre") == null) {System.out.println("NULL");}
 		//Récupère l'utilisateur qui vend l'article
 		Utilisateur utilisateurVendeur = null;
 		int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateurMeilleurOffre"));
@@ -104,11 +104,17 @@ public class ServletEncherir extends HttpServlet {
 		//Son nombre de points devient nombre de points - propositionPrix
 		//Vérifier que la date n'est pas passée, sinon renvoyer sur la page avec une erreur
 		//TODO
-
+		if(utilisateur.getNoUtilisateur() == utilisateurVendeur.getNoUtilisateur()) {
+			System.out.println("Vous ne pouvez pas enchérir sur votre propre enchère");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
+			rd.forward(request, response);
+			return;
+		}
 		if(utilisateur.getCredit() > propositionPrixInt) {
 			utilisateur.setCredit(utilisateur.getCredit()-propositionPrixInt);
-		//Il devient ensuite l'enchérisseur (l'utilisateurAcheteur) sur cette vente
 			try {
+				UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateur);
+				//Il devient ensuite l'enchérisseur (l'utilisateurAcheteur) sur cette vente
 				venteConcernee.setUtilisateurAcheteur(utilisateur);
 				venteConcernee.setPrixVente(propositionPrixInt);
 //				System.out.println("UTILISATEUR ACHETEUR " + venteConcernee.getUtilisateurAcheteur());
@@ -117,11 +123,12 @@ public class ServletEncherir extends HttpServlet {
 				Enchere enchereAModifier = EnchereManager.getEnchereManager().select(venteConcernee.getNoVente(), utilisateurVendeur.getNoUtilisateur());
 				enchereAModifier.setUtilisateurEnchere(utilisateur);
 				EnchereManager.getEnchereManager().update(enchereAModifier);
-				
-				UtilisateurManager.getUtilisateurManager().updateCreditUtilisateur(utilisateur);
-				//VenteManager.getVenteManager().updateAcheteur(venteConcernee);
-				VenteManager.getVenteManager().update(venteConcernee);
-				
+//				
+//				System.out.println("UTILISATEUR ACHETEUR 1: " + venteConcernee.getUtilisateurAcheteur());
+////				VenteManager.getVenteManager().updateAcheteur(venteConcernee);
+////				System.out.println("UTILISATEUR ACHETEUR 2: " + venteConcernee.getUtilisateurAcheteur());
+//
+//				VenteManager.getVenteManager().update(venteConcernee);
 				System.out.println("Sur la vente n°" + venteConcernee.getNoVente() + " l'utilisateur acheteur est maintenant : " + venteConcernee.getUtilisateurAcheteur().getPseudo());
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 				rd.forward(request, response);
