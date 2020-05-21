@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.same.bo.Categorie;
+import fr.eni.same.bo.Enchere;
+import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
 import fr.eni.same.dal.DALFactory;
 import fr.eni.same.exception.BllException;
@@ -34,7 +36,7 @@ public class VenteManager  {
     	if(listVentes == null) {
     		try {
 				listVentes = DALFactory.getVenteDAOJdbcImpl().selectAll();
-				listVentes = getUtilisateursAcheteurs();
+				listVentes = setVenteUtilisateursAcheteurs();
 			} catch (DALException e) {
 				throw new BllException("selectAll");
 			}
@@ -169,6 +171,22 @@ public class VenteManager  {
 		return listVentes;
 	}
 	
+	public List<Vente> setVenteUtilisateursAcheteurs(){
+		try {
+			List<Enchere> listeEncheres = EnchereManager.getEnchereManager().selectAll();
+			for(int i = 0; i < listeEncheres.size(); i++) {
+				for(int j = 0; j < listVentes.size(); j++) {
+					if(listVentes.get(j).getNoVente() == listeEncheres.get(i).getVenteEnchere().getNoVente()) {
+						listVentes.get(j).setUtilisateurAcheteur(listeEncheres.get(i).getUtilisateurEnchere());
+					}
+				}
+			}
+		} catch (BllException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listVentes;
+	}
 	public List<Vente> selectByMotCle(String motCle) throws BllException{
 		List<Vente> aRetourner = new ArrayList<Vente>();
 		
