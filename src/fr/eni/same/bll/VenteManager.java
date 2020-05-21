@@ -298,7 +298,7 @@ public class VenteManager  {
 	public String prixInitialPositif(int prixInitial) throws BllException {
 		String msgErreur = "";
 		if(prixInitial < 0) {
-			msgErreur = ("Le prix de vente minium est de 0");
+			msgErreur = ("Le prix de vente minimum est de 0");
 		}
 		return msgErreur;
 		
