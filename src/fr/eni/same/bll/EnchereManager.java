@@ -86,6 +86,19 @@ public class EnchereManager {
 		}
 	}
 	
+	public void updateEnchereur(Enchere enchere, int ancienEnchereur, int nouvelEnchereur) {
+		try {
+			DALFactory.getEnchereDAOJdbcImpl().updateEnchereur(enchere, ancienEnchereur, nouvelEnchereur);
+			for(int i = 0; i < listeEncheres.size(); i++) {
+				if(listeEncheres.get(i).getVenteEnchere().getNoVente() == enchere.getVenteEnchere().getNoVente()){
+					listeEncheres.get(i).setUtilisateurEnchere(enchere.getUtilisateurEnchere());
+				}
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Méthode de suppression d'une Enchère dans la base de donnée
 	 * @param enchere : L'enchère à supprimer
@@ -122,6 +135,8 @@ public class EnchereManager {
 		}
 		return enchere;
 	}
+
+	
 	
 	/**
 	 * Méthode de sélectionner de la liste des enchères

@@ -122,7 +122,8 @@ public class ServletEncherir extends HttpServlet {
 				
 				Enchere enchereAModifier = EnchereManager.getEnchereManager().select(venteConcernee.getNoVente(), utilisateurVendeur.getNoUtilisateur());
 				enchereAModifier.setUtilisateurEnchere(utilisateur);
-				EnchereManager.getEnchereManager().update(enchereAModifier);
+//				EnchereManager.getEnchereManager().update(enchereAModifier);
+				EnchereManager.getEnchereManager().updateEnchereur(enchereAModifier, utilisateurVendeur.getNoUtilisateur(), utilisateur.getNoUtilisateur());
 //				
 //				System.out.println("UTILISATEUR ACHETEUR 1: " + venteConcernee.getUtilisateurAcheteur());
 ////				VenteManager.getVenteManager().updateAcheteur(venteConcernee);
