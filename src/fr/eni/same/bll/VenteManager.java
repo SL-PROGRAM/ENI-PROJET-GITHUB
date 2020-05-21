@@ -198,11 +198,12 @@ public class VenteManager  {
 			throw new BllException(msgErreur);
 		}
 		else {	
-			try {
-				vente = DALFactory.getVenteDAOJdbcImpl().select(id);
-			} catch (DALException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				vente = DALFactory.getVenteDAOJdbcImpl().select(id);
+//			} catch (DALException e) {
+//				e.printStackTrace();
+//			}
+			listVentes = selectAll();
 			for (int i = 0; i < listVentes.size(); i++) {
 				if(listVentes.get(i).getNoVente() == id) {
 					vente = listVentes.get(i);
@@ -212,6 +213,7 @@ public class VenteManager  {
 				throw new BllException("La vente ciblée n'existe pas");
 			}
 		}
+		System.out.println("Check" + vente.toString());
 		return vente;
 	}
 	

@@ -37,7 +37,11 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 		if(request.getAttribute("erreur") != null) {
 			request.setAttribute("erreur", "");			
 		}
-		
+//		if(request.getParameter("noVendeur") != null) {
+//			int noUtilisateurVendeur = Integer.parseInt(request.getParameter("noVendeur"));
+//
+//		}
+//		
 		String msgErreur = "";
 		if (request.getParameter("noUtilisateurAcheteur") != null) {
 			int noUtilisateurAcheteur = Integer.parseInt(request.getParameter("noUtilisateurAcheteur"));
@@ -54,8 +58,8 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 			}
 			
 		} else {
-			if(request.getParameter("noUtilisateurVendeur") != null) {
-				int noUtilisateurVendeur = (Integer.parseInt(request.getParameter("noUtilisateurVendeur"))) ;				
+			if(request.getParameter("noVendeur") != null) {
+				int noUtilisateurVendeur = (Integer.parseInt(request.getParameter("noVendeur"))) ;				
 			System.out.println("Option 2");
 			try {
 				Utilisateur utilisateurVendeur = UtilisateurManager.getUtilisateurManager().select(noUtilisateurVendeur);

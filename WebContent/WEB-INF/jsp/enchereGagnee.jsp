@@ -93,9 +93,10 @@
 						<!-- Récupérer nom de l'utilisateur (vendeur) à afficher -->
 						<!-- Redirige vers ServletInformationsUtilisateur (maquette 4 + 12) -->
 						<a class="btn btn-success btn-block" role="button" type="submit"
-							href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">
-							${vente.utilisateurVendeur.pseudo } </a>
-						<p>${vente.utilisateurVendeur.telephone }</p>
+							href="<%=response.encodeURL(request.getContextPath()+"/ServletInformationsUtilisateur")%>?noVendeur=${vente.utilisateurVendeur.noUtilisateur}" 
+                                class="btn btn-primary btn-block" role="button"> 
+                                ${vente.utilisateurVendeur.pseudo }</a>
+                                <p>${vente.utilisateurVendeur.telephone }</p>
 					</div>
 					<br />
 					<div class="col-3 col-lg-3">
