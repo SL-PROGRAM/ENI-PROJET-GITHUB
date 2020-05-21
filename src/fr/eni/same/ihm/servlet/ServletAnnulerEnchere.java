@@ -37,7 +37,6 @@ public class ServletAnnulerEnchere extends HttpServlet {
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		String msgErreur = "";
 		
-		
 		try {
 			List<Enchere> listEncheres = EnchereManager.getEnchereManager().selectAll();
 			Enchere enchereToDelete = null;
