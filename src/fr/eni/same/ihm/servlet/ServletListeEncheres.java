@@ -96,19 +96,19 @@ public class ServletListeEncheres extends HttpServlet {
 //					}
 //				}
 
-//				if (valeurs[i].equals("mesEncheresEnCours")) {
-//					try {
-//						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
-//						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
-//						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
-//						for (Vente v : listeVentes) {
-//							System.out.println(v.toString());
-//						}
-//						set.addAll(listeVentes);
-//					} catch (BllException e) {
-//						e.printStackTrace();
-//					}
-//				}
+				if (valeurs[i].equals("mesEncheresEnCours")) {
+					try {
+						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
+						System.out.println("filtre 1 je suis sortie");
+						for (Vente v : listeVentes) {
+							System.out.println(v.toString());
+						}
+						set.addAll(listeVentes);
+					} catch (BllException e) {
+						e.printStackTrace();
+					}
+				}
 
 				if (valeurs[i].equals("mesAcquisitions")) {
 					try {
@@ -199,9 +199,12 @@ public class ServletListeEncheres extends HttpServlet {
 			//Gestion affichage listeEnchere lors de la premiere arrivée sur la page
 			
 			try {
-				System.out.println("JE SUIS DANS AUTRES ENCHERES SANS CONNECTION");
+				System.out.println("JE SUIS DANS AUTRES ENCHERES SANS CONNECTION OU PREMIERE ARRIVEE SUR CETTE PAGE");
 				//listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
 				listeFinale = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
+				for (Vente vente : listeFinale) {
+					System.out.println(vente.toString());
+				}
 				set.addAll(listeFinale);
 			} catch (BllException e) {
 				// TODO Auto-generated catch block
