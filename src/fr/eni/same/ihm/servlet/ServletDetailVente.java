@@ -65,8 +65,14 @@ public class ServletDetailVente extends HttpServlet {
 
 				Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				
-				if(vente.getDateFinEncheres().before(heureServer) ) {
-					if(vente.getUtilisateurAcheteur() != null 
+				if(vente.getDateFinEncheres().before(heureServer)  ) {
+					if(vente.getUtilisateurAcheteur().getNoUtilisateur() != utilisateur.getNoUtilisateur()) {
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp");
+						rd.forward(request, response);
+					}
+					
+					
+					else if(vente.getUtilisateurAcheteur() != null 
 							&& vente.getUtilisateurAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur()) {
 						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/enchereGagnee.jsp");
 					rd.forward(request, response);
