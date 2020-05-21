@@ -1,7 +1,8 @@
 package fr.eni.same.ihm.servlet;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -84,7 +85,13 @@ public class ServletCreerVente extends HttpServlet {
 //				e.printStackTrace();
 //			}
 			
-			String msgErreur = PublierVente.enregistrerVente(session, request );
+			String msgErreur = null;
+			try {
+				msgErreur = PublierVente.enregistrerVente(session, request );
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (!msgErreur.equals("")) {
 				request.setAttribute("erreur", msgErreur);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/creerVentes.jsp");

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>PageAnnulerEnchere</title>
+<title>PageEncherir</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -46,7 +46,7 @@
 				<p>Fin de l'enchère : </p>
 			</div>	
 			<div class="col-6 col-lg-3 order-lg-6">
-				<p>${vente.prixVente}pts par ${vente.utilisateurAcheteur.pseudo}</p>
+				<p>${vente.prixVente} pts par ${vente.utilisateurAcheteur.pseudo}</p>
 				<p>${vente.miseAPrix}</p>
 				<p>${vente.dateFinEncheres}</p>
 				
@@ -65,7 +65,11 @@
 				
 			</div>
 			<div class="col-6 col-lg-3 order-lg-10">
-			<a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo}</a>
+			<form action="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
+				<input type = "submit" value="${vente.utilisateurVendeur.pseudo}">
+				<input hidden="true"value="${vente.utilisateurVendeur.noUtilisateur }" name="noUtilisateurVendeur">
+			</form>
+			<%-- <a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo}</a> --%>
 			</div>
 			
 			<div class="col-6 col-lg-3 offset-lg-4 order-lg-11">	
@@ -76,6 +80,9 @@
 				<form class="form-inline" action="<%=request.getContextPath() %>/ServletEncherir" method="post" >
 					<input type="number" id="" name="propositionPrix" min="${vente.prixVente}">
 					<input type="submit" value="Enchérir" id="encherir" name="encherir"><!-- verif si login, si oui alors credit à update et meilleur offre a update, si pas login redirect page login -->
+					<input hidden="true" name="venteConcernee" value="${vente.noVente }">
+					<input hidden="true" name=noVendeurInitial value="${vente.utilisateurVendeur.noUtilisateur }">
+					<input hidden="true" name="noUtilisateurMeilleurOffre" value="${vente.utilisateurAcheteur.noUtilisateur }">
 				</form>
 			</div>
 			
