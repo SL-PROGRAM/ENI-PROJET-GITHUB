@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Page Profil vendeur</title>
+		<title>Page Profil</title>
 		<meta name="viewport" content="width=device-width"/>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -20,41 +20,90 @@
 		
 				<div class ="row">
 					<div class="col-12 text-center">
-						<h3>${utilisateur.pseudo}</h3><!-- recuperer info du vendeur de l article, en lien avec page encherir et listeEnchere, y acceder que si login sinon redirection login -->
+						
+							<c:choose>
+								<c:when test="${!empty utilisateurVendeur }">
+									<h3>Profil de ${utilisateurVendeur.pseudo }</h3>
+								</c:when>
+								<c:when test="${!empty utilisateurAcheteur }">	
+									<h3>Profil de ${utilisateurAcheteur.pseudo }</h3>
+								</c:when>			
+							</c:choose>
+						
+			<!-- recuperer info du vendeur de l article, en lien avec page encherir et listeEnchere, y acceder que si login sinon redirection login -->
 					</div>
 				</div>
 		
 				<div class="row">
 					<div class="col-6 text-right">
-						<p>Pseudo:</p>
-						<p>Nom:</p>
-						<p>Prénom:</p>
-						<p>Email:</p>
-						<p>Telephone:</p>
-						<p>Rue:</p>
-						<p>Code Postal:</p>
-						<p>Ville:</p>
+					
+					<c:choose>
+						<c:when test="${!empty utilisateurVendeur }">
+							<p>Pseudo:</p>
+							<p>Nom:</p>
+							<p>Prénom:</p>
+							<p>Email:</p>
+								<c:if test="${!empty utilisateurVendeur.telephone }">
+									<p>Telephone:</p>
+								</c:if>
+							<p>Rue:</p>
+							<p>Code Postal:</p>
+							<p>Ville:</p>
+						</c:when>
+						
+						
+						<c:when test="${!empty utilisateurAcheteur }">
+							<p>Pseudo:</p>
+								<c:if test="${!empty utilisateurAcheteur.telephone }">
+									<p>Telephone:</p>
+								</c:if>
+							<p>Adresse:</p>
+						</c:when>
+					</c:choose>
 					</div>
 				
 			
 					<div class="col-6">
-						<p>${utilisateur.pseudo}</p>
-						<p>${utilisateur.nom}</p>
-						<p>${utilisateur.prenom}</p>
-						<p>${utilisateur.email}</p>
-						<p>${utilisateur.telephone}</p>
-						<p>${utilisateur.rue}</p>
-						<p>${utilisateur.codePostal}</p>
-						<p>${utilisateur.ville}</p>
-			
+					<c:choose>
+					
+						<c:when test="${!empty utilisateurVendeur }">
+							<p>${utilisateurVendeur.pseudo}</p>
+							<p>${utilisateurVendeur.nom}</p>
+							<p>${utilisateurVendeur.prenom}</p>
+							<p>${utilisateurVendeur.email}</p>
+								<c:if test="${!empty utilisateurVendeur.telephone }">
+									<p>${utilisateurVendeur.telephone}</p>
+								</c:if>
+							<p>${utilisateurVendeur.rue}</p>
+							<p>${utilisateurVendeur.codePostal}</p>
+							<p>${utilisateurVendeur.ville}</p>
+						</c:when>
+						
+						
+						<c:when test="${!empty utilisateurAcheteur }">
+							<p>${utilisateurAcheteur.pseudo}</p>
+								<c:if test="${!empty utilisateurAcheteur.telephone }">
+									<p>${utilisateurAcheteur.telephone}</p>
+								</c:if>
+							<p>${utilisateurAcheteur.rue}</p>
+							<p>${utilisateurAcheteur.codePostal} ${utilisateurAcheteur.ville}</p>
+						</c:when>
+					</c:choose>
 					</div>
 			</div>
 			<div class="row">
 				<div class="col-12 text-center">
 				<p>
-					
 					<a class="btn btn-primary"  href="<%= request.getContextPath()%>/ServletListeEncheres">Retour</a>
 				</p>
+				</div>
+				<div class="col-12 text-center">
+					<c:if test="${utilisateur.administrateur == true}">
+						<form action="<%= request.getContextPath()%>/ServletListeEncheres">
+							<input value="${utilisateurVendeur.noUtilisateur }" name="noUtilisateurVendeur" hidden="true">
+							<input class="btn btn-primary" type="submit" value="Supprimer le compte utilisateur" name="supprimmerCompteUtilisateur"/>
+						</form>
+					</c:if>					
 				</div>
 			</div>
 			

@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.same.bll.UtilisateurManager;
+import fr.eni.same.bo.Utilisateur;
+import fr.eni.same.exception.BllException;
+
 /**
  * Servlet implementation class ServletInformationsAcheteur
  * @author Mathieu/Etienne
@@ -27,11 +31,27 @@ public class ServletInformationsUtilisateur extends HttpServlet {
 	 *  Cette Servlet et la jsp correspondante prennent en charge les Maquettes 4 et 12
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		if (request.getSession().getAttribute("utilisateur") == null){
-//		response.sendRedirect("connexion");
-//    	return;
-//    }else recuperer les infos du vendeur par rapport  à la vente
-//	
+
+		if (request.getParameter("noUtilisateurAcheteur") != null) {
+			int noUtilisateurAcheteur = Integer.parseInt(request.getParameter("noUtilisateurAcheteur"));
+			try {
+				Utilisateur utilisateurAcheteur = UtilisateurManager.getUtilisateurManager().select(noUtilisateurAcheteur);
+				request.setAttribute("utilisateurAcheteur", utilisateurAcheteur);
+			} catch (BllException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} else {
+			int noUtilisateurVendeur = (Integer.parseInt(request.getParameter("noUtilisateurVendeur"))) ;
+			try {
+				Utilisateur utilisateurVendeur = UtilisateurManager.getUtilisateurManager().select(noUtilisateurVendeur);
+				request.setAttribute("utilisateurVendeur", utilisateurVendeur);
+			} catch (BllException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/informationsUtilisateur.jsp");
 		rd.forward(request, response);

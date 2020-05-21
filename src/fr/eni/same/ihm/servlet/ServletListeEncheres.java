@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import fr.eni.same.bll.CategorieManager;
 import fr.eni.same.bll.FiltreManager;
+import fr.eni.same.bll.UtilisateurManager;
+import fr.eni.same.bll.VenteManager;
 import fr.eni.same.bo.Categorie;
 import fr.eni.same.bo.Utilisateur;
 import fr.eni.same.bo.Vente;
@@ -39,11 +41,40 @@ public class ServletListeEncheres extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-		System.out.println(utilisateur.toString());
+		
+		
+		
+		//Utilisateur utilisateur = null;
+		if (request.getSession().getAttribute("utilisateur") != null) {
+			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
+			System.out.println(utilisateur.toString());
+		}
+		
 		List<List<Vente>> listes = new ArrayList<List<Vente>>();
+		List<Vente> listeVentesByMotCle = null;
 		Set set = new HashSet();
+		
+		if (request.getParameter("supprimmerCompteUtilisateur") != null) {
+			if (request.getParameter("noUtilisateurVendeur") != null) {
+				int noUtilisateurSuppression = Integer.parseInt(request.getParameter("noUtilisateurVendeur"));
+				try {
+					Utilisateur utilisateurSuppression = UtilisateurManager.getUtilisateurManager().select(noUtilisateurSuppression);
+					UtilisateurManager.getUtilisateurManager().delete(utilisateurSuppression);
+				} catch (BllException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+//		if (request.getParameter("txtMotCle")!=null) {
+//			try {
+//				listeVentesByMotCle = VenteManager.getVenteManager().selectByMotCle(request.getParameter("txtMotCle"));
+//			} catch (BllException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		}
 		
 		
 		if (request.getParameterValues("filtres")!=null) {
@@ -53,7 +84,7 @@ public class ServletListeEncheres extends HttpServlet {
 					try {
 						System.out.println("JE SUIS DANS MES VENTES");
 						//listes.add(i, FiltreManager.getFiltreManager().filtreMesVentesPubliées(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliées(session);
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesPubliées(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
 						// TODO Auto-generated catch block
@@ -72,9 +103,14 @@ public class ServletListeEncheres extends HttpServlet {
 
 //				if (valeurs[i].equals("mesEncheresEnCours")) {
 //					try {
-//						listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
+//						System.out.println("JE SUIS DANS MES ENCHERES EN COURS");
+//						//listes.add(i, FiltreManager.getFiltreManager().filtreMesEncheresEnCours(session));
+//						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesVentesEnCours(request.getSession(), null);
+//						for (Vente v : listeVentes) {
+//							System.out.println(v.toString());
+//						}
+//						set.addAll(listeVentes);
 //					} catch (BllException e) {
-//						// TODO Auto-generated catch block
 //						e.printStackTrace();
 //					}
 //				}
@@ -83,7 +119,7 @@ public class ServletListeEncheres extends HttpServlet {
 					try {
 						System.out.println("JE SUIS DANS MES ACQUISITIONS");
 						//listes.add(i, FiltreManager.getFiltreManager().filtreMesAcquisitions(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesAcquisitions(session);
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreMesAcquisitions(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
 						// TODO Auto-generated catch block
@@ -95,7 +131,7 @@ public class ServletListeEncheres extends HttpServlet {
 					try {
 						System.out.println("JE SUIS DANS AUTRES ENCHERES");
 						//listes.add(i, FiltreManager.getFiltreManager().filtreAutresEncheres(session));
-						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreAutresEncheres(session);
+						List<Vente> listeVentes = FiltreManager.getFiltreManager().filtreAutresEncheres(request.getSession());
 						set.addAll(listeVentes);
 					} catch (BllException e) {
 						// TODO Auto-generated catch block
@@ -105,6 +141,12 @@ public class ServletListeEncheres extends HttpServlet {
 				}
 				
 			}
+			
+			/*******************************************************************************************************************************/
+						//SELECT PAR CATEGORIE + SELECT PAR MOT CLE
+			/*******************************************************************************************************************************/
+			
+			//VenteManager.getVenteManager().s
 			
 			List<Vente> listeFinale = new ArrayList<Vente>(set);
 				
@@ -121,7 +163,7 @@ public class ServletListeEncheres extends HttpServlet {
 			
 			request.setAttribute("listeCategories", listeCategories);
 			//	request.setAttribute("listeVentes", listeFinal);
-			request.setAttribute("utilisateur", utilisateur);
+			//request.setAttribute("utilisateur", utilisateur);
 		} catch (BllException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,6 +172,7 @@ public class ServletListeEncheres extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/listeEnchere.jsp");
 		rd.forward(request, response);
+		
 	}
 
 	/**

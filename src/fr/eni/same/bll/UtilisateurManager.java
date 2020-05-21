@@ -81,7 +81,9 @@ public class UtilisateurManager {
 
 	
 	public void update(Utilisateur t) throws BllException {
-		String msgErreur = controleUpdateAndInsert(t);
+		String msgErreur = "";
+		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
+		msgErreur += controleUpdateAndInsert(t);
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
 		}
@@ -107,8 +109,10 @@ public class UtilisateurManager {
 		}
 	}
 
-	public void updateMotDePasse(Utilisateur t) throws BllException {
-		String msgErreur = controleUpdateAndInsert(t);
+	public void updateMotDePasse(Utilisateur t, String motDePasse, String motDePasseVerif) throws BllException {
+		String msgErreur = "";
+		msgErreur += motDePasseIdentique(motDePasse, motDePasseVerif);
+		msgErreur += controleUpdateAndInsert(t);
 		String MotDePasse = securisationMotDePass(t.getMotDePasse());
 		if (!msgErreur.equals("")){
 			throw new BllException(msgErreur);
@@ -116,7 +120,6 @@ public class UtilisateurManager {
 		try {
 			DALFactory.getUtilisateurDAOJdbcImpl().update(t);
 			for (int i = 0; i < listeUtilisateurs.size(); i++) {
-				//Pas de mise a jour Admin et mot de passe
 				if(listeUtilisateurs.get(i).getNoUtilisateur() == t.getNoUtilisateur()) {
 					listeUtilisateurs.get(i).setMotDePasse(MotDePasse);
 				}
@@ -172,10 +175,12 @@ public class UtilisateurManager {
 		return listeUtilisateurs;
 	}
 	
-	private String controleUpdateAndInsert(Utilisateur t) throws BllException {
+	public String controleUpdateAndInsert(Utilisateur t) throws BllException {
 		String msgErreur = "";
 		msgErreur += utilisateurNull(t);
-		msgErreur += noUtilisateurNull(t.getNoUtilisateur());
+		msgErreur += pseudoUnique(t.getPseudo());
+		msgErreur += emailUnique(t.getEmail());
+		msgErreur += telephoneUnique(t.getTelephone());
 		msgErreur += pseudoLongueurCorrect(t.getPseudo());
 		msgErreur += nomLongueurCorrect(t.getNom());
 		msgErreur += prenomLongueurCorrect(t.getPrenom());
@@ -213,6 +218,14 @@ public class UtilisateurManager {
 		return msgErreur;
 	}
 	
+	//*********************************************************************************************//
+	// * Implementation des méthodes de gestion de compte										 * //
+	//*********************************************************************************************//
+
+	
+	
+	
+	
 	//***********************************************************************************************//
 	// * Implementation des méthodes de test avant validation et tentative d'enregistrement en BDD * //
 	//***********************************************************************************************//
@@ -231,8 +244,35 @@ public class UtilisateurManager {
 	}
 	
 	public String pseudoUnique(String pseudo) throws BllException {
-		return pseudo;
-		//PAS DANS LA SPEC MAIS PREVU		
+		String msgErreur = "";
+		for (Utilisateur utilisateur : listeUtilisateurs) {
+			if(utilisateur.getPseudo() == pseudo) {
+				msgErreur = "Ce pseudo est déja utilisé";
+			}
+		}
+		return msgErreur;	
+	}
+	
+	public String emailUnique(String email) throws BllException {
+		String msgErreur = "";
+		for (Utilisateur utilisateur : listeUtilisateurs) {
+			if(utilisateur.getEmail() == email) {
+				msgErreur = "Cette email est déja utilisé";
+			}
+		}
+		return msgErreur;	
+	}
+	
+	public String telephoneUnique(String telephone) throws BllException {
+		String msgErreur = "";
+		if(telephone != null) {
+			for (Utilisateur utilisateur : listeUtilisateurs) {
+				if(utilisateur.getTelephone() == telephone) {
+					msgErreur = "Ce numéro de téléphone est déja utilisé";
+				}
+			}
+		}
+		return msgErreur;		
 	}
 
 	
@@ -275,7 +315,7 @@ public class UtilisateurManager {
 		}			
 		if(!matcher.matches()) {
 			msgErreur = ("Ce n'est pas un email valide");
-		};
+		}
 		return msgErreur;
 	}
 		

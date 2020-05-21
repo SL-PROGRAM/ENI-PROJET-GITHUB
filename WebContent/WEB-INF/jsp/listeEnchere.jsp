@@ -71,7 +71,7 @@
 					</div>
 					<div class="form-group row">
 						<div class="col-12">
-							<input type="text" class="form-control"
+							<input type="text" class="form-control" name="txtMotCle"
 								placeholder="Le nom de l'article contient">
 						</div>
 					</div>
@@ -99,8 +99,9 @@
 		<div class="row">
 			<c:forEach items="${listeVentes}" var="vente">
 				<div class="col-12 col-lg-6 pb-3">
-					<form action="<%=request.getContextPath()%>/ServletDetailVente?noVente="${vente.noVente }
+					<form action="<%=request.getContextPath()%>/ServletDetailVente?noVente=${vente.noVente}"
 						method="get">
+						<input hidden="true" value="${vente.noVente }" name="noVente">
 						<button class="container" type="submit">
 							
 							<div class="row">
@@ -134,7 +135,7 @@
 										</div>
 	
 										<div class="col-6">
-											<p>Classement : ${vente.commande }</p>
+											<p>Classement : ${classement }</p>
 											<p>${vente.dateFinEncheres }</p>
 										</div>
 										
@@ -157,7 +158,7 @@
 													<p>${vente.utilisateurVendeur.pseudo } </p>
 												</c:when>
 												<c:when test="${!vente.utilisateurVendeur.noUtilisateur.equals(utilisateur.noUtilisateur) }">
-													<p><a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo } </a></p>
+													<p><a href="<%=request.getContextPath()%>/ServletInformationsUtilisateur?noUtilisateurVendeur=${vente.utilisateurVendeur.noUtilisateur}">${vente.utilisateurVendeur.pseudo } </a></p>
 												</c:when>
 											</c:choose>
 										</div>

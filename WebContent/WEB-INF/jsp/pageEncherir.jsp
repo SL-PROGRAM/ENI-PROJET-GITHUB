@@ -43,8 +43,8 @@
 				<p>Fin de l'enchère : </p>
 			</div>	
 			<div class="col-6 col-lg-3 order-lg-6">
-				<p>${vente.prixVente}pts par ${enchere.utilisateurEnchere}</p>
-				<p>${vente.misaAPrix}</p>
+				<p>${vente.prixVente}pts par ${vente.utilisateurAcheteur}</p>
+				<p>${vente.miseAPrix}</p>
 				<p>${vente.dateFinEncheres}</p>
 				
 			</div>
