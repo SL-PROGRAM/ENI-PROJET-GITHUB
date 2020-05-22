@@ -193,11 +193,11 @@
 					<input class="btn btn-primary btn-block" name="publierVente"
 						type="submit" value="Publier"/>
 				</div>
-				<div class="col-4 col-lg-3">
-				<!-- info a enregistrer ds cookie jusqu a fin session -->
+<!-- 				<div class="col-4 col-lg-3">
+				info a enregistrer ds cookie jusqu a fin session
 					<input class="btn btn-primary btn-block" onclick="return false;" name="enregistrerVente"
 						type="submit" value="Enregistrer"/>
-				</div>
+				</div> -->
 				
 				<div class="col-4 col-lg-3">
 					<a class="btn btn-danger btn-block" role="button" href="<%= response.encodeURL(request.getContextPath()+"/ServletListeEncheres")%>">

@@ -74,7 +74,7 @@
 			<div class="col-6 col-lg-3 order-lg-10">
 			<form action="<%= request.getContextPath()%>/ServletInformationsUtilisateur">
 				<input type = "submit" value="${vente.utilisateurVendeur.pseudo}">
-				<input hidden="true"value="${vente.utilisateurVendeur.noUtilisateur }" name="noUtilisateurVendeur">
+				<input hidden="true"value="${vente.utilisateurVendeur.noUtilisateur }" name="noVendeur">
 			</form>
 			<%-- <a href="<%= request.getContextPath()%>/ServletInformationsUtilisateur">${vente.utilisateurVendeur.pseudo}</a> --%>
 			</div>
