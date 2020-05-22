@@ -405,14 +405,18 @@ public class UtilisateurManager {
 		
 
 	
+	
 	public String telephoneLongueurCorrect(String libelle) throws BllException {
 		String msgErreur = "";
-		if(!FonctionGenerique.isLongueurMax(libelle, TELEPHONE_LONGUEUR_MAX)) {
-			msgErreur = ("Longueur du téléphone trop importante - Longueur maximum : "+ TELEPHONE_LONGUEUR_MAX+ "caractères\n");
+		if(libelle != null) {
+			if(!FonctionGenerique.isLongueurMax(libelle, TELEPHONE_LONGUEUR_MAX)) {
+				msgErreur = ("Longueur du téléphone trop importante - Longueur maximum : "+ TELEPHONE_LONGUEUR_MAX+ "caractères\n");
+			}
+			if(!FonctionGenerique.isLongueurMin(libelle, TELEPHONE_LONGUEUR_MIN)) {
+				msgErreur = ("Longueur du téléphone trop courte - Longueur minimum : "+ TELEPHONE_LONGUEUR_MIN + "caractères\n");
+			}
 		}
-		if(!FonctionGenerique.isLongueurMin(libelle, TELEPHONE_LONGUEUR_MIN)) {
-			msgErreur = ("Longueur du téléphone trop courte - Longueur minimum : "+ TELEPHONE_LONGUEUR_MIN + "caractères\n");
-		}
+		
 		return msgErreur;				
 	}
 

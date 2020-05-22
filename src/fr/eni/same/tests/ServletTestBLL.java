@@ -183,7 +183,7 @@ public class ServletTestBLL extends HttpServlet {
 		String motCleNomArticle2 = "lo";
 		String motCleDescriptionNomArticle = "pc";
 		String motCleTestCaseSensitive = "Une";
-		
+		/*
 		System.out.println("----------DESCRIPTION MOTCLE COMPLET----------");
 		List<Vente> listeByMotCleDescription1 = VenteManager.getVenteManager().selectByMotCle(motCleDescription1);
 		System.out.println("Voici la liste de votre recherche par mot clé");
@@ -224,7 +224,7 @@ public class ServletTestBLL extends HttpServlet {
 		System.out.println("Voici la liste de votre recherche par mot clé");
 		for (Vente vente : listeByMotCleTestCaseSensitive) {
 			System.out.println(vente.toString());
-		}
+		}*/
 	}
 	
 	public void testSelectByCategorie() throws BllException {

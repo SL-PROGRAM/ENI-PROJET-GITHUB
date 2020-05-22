@@ -79,10 +79,12 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 						System.out.println(erreurSaisie);
 						if (erreurSaisie.equals("")) {
 							System.out.println("Je suis dans l'insert utilisateur");
+							utilisateur.setCredit(15000);
 							UtilisateurManager.getUtilisateurManager().insert(utilisateur);
 						}
 						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp");
 						rd.forward(request, response);
+						return;
 					} catch (BllException e) {
 						
 //						msgErreur += FonctionGenerique.gestionErreur("");
@@ -114,6 +116,9 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 //								System.out.println("Je suis dans l'update utilisateur");
 								UtilisateurManager.getUtilisateurManager().update(utilisateur);
 								request.getSession().setAttribute("utilisateur", utilisateur);
+								RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/modificationInformationsUtilisateur.jsp");
+								rd.forward(request, response);
+								return;
 							}
 						} catch (BllException e) {
 							e.printStackTrace();
@@ -127,7 +132,8 @@ public class ServletModificationInformationsUtilisateur extends HttpServlet {
 			}
 		}
 		
-		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/modificationInformationsUtilisateur.jsp");
+		rd.forward(request, response);
 		
 //		System.out.println(erreurSaisie);
 //		RequestDispatcher rd = request.getRequestDispatcher("/ServletModificationInformationsUtilisateur");

@@ -37,7 +37,7 @@
 			</div>
 			<div class="col-12 col-lg-4 order-lg-1">
 				<p>
-					<img alt="Image à inserer" src="">
+					<img alt="Image descriptve du produit en vente" src="././img/thSansFond.png" width="200" height="200" />
 				</p>
 			</div>
 			<div class="col-6 col-lg-3 offset-lg-4 order-lg-5">
